@@ -1,51 +1,60 @@
 import Image from "next/image";
 import Link from "next/link";
+import { IoSunnyOutline } from "react-icons/io5";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { CiSearch } from "react-icons/ci";
+import { FaBarsStaggered } from "react-icons/fa6";
+import Button from "./Button";
+
 const Navbar = () => {
+  const links = ["blogs", "contact"];
+
   return (
-    <nav className="bg-gray-200  w-full z-20 top-0 start-0 border-b border-default">
-      <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link
-          href={"/"}
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <Image
-            src="https://flowbite.com/docs/images/logo.svg"
-            alt="Flowbite Logo"
-            width={30}
-            height={30}
-          />
-          <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
-            Flowbite
-          </span>
+    <nav className="py-4">
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center">
+          <Image src="/logo.svg" width={100} height={100} alt="logo" />
         </Link>
-        <button
-          data-collapse-toggle="navbar-default"
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
-          aria-controls="navbar-default"
-          aria-expanded="false"
-        >
-          <span className="sr-only">Open main menu</span>
-        </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
-            <li>
-              <Link
-                href="/aboutMe"
-                className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-              >
-                About me{" "}
-              </Link>
+
+        {/* Desktop Links */}
+        <ul className="hidden lg:flex items-center gap-6 capitalize">
+          {links.map((link,index) => (
+            <li
+              key={index}
+              className="cursor-pointer transition hover:text-blue-400"
+            >
+              {link}
             </li>
-            <li>
-              <Link
-                href="/blogs"
-                className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-              >
-                Blogs
-              </Link>
-            </li>
-          </ul>
+          ))}
+        </ul>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-4">
+          {/* Theme Toggle  */}
+          <div className="hidden lg:flex items-center gap-3 text-xl">
+            <MdOutlineDarkMode className="cursor-pointer" />
+            <IoSunnyOutline className="cursor-pointer" />
+          </div>
+
+          {/* Search + Menu  */}
+          <div className="flex items-center gap-4 text-xl lg:hidden">
+            <CiSearch className="cursor-pointer" />
+            <FaBarsStaggered className="cursor-pointer" />
+          </div>
+
+          {/* Auth Buttons  */}
+          <div className="hidden lg:flex items-center gap-2">
+            <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
+              sign in
+            </Button>
+            <Button
+              bgColor="bg-black"
+              className="capitalize px-6 py-1.5 font-medium text-white"
+            >
+              sign up
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
