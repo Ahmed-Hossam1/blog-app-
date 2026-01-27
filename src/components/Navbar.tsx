@@ -1,49 +1,119 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { IoSunnyOutline } from "react-icons/io5";
-import { MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { FaBarsStaggered } from "react-icons/fa6";
 import Button from "./Button";
+import { useState } from "react";
+import { navLinksData } from "@/data";
 
 const Navbar = () => {
-  const links = ["blogs", "contact"];
+  /*===== STATE ===== */
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+
+  /*===== HANDLERS ===== */
+  const changeTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  /*===== RENDER ===== */
+  const renderThemeIcon = (
+    theme: "light" | "dark",
+    changeTheme: () => void,
+  ) => {
+    return theme === "light" ? (
+      <MdOutlineDarkMode onClick={changeTheme} className="cursor-pointer" />
+    ) : (
+      <IoSunnyOutline onClick={changeTheme} className="cursor-pointer" />
+    );
+  };
+
+  const renderDesktopLinks = navLinksData.map((link) => (
+    <Link
+      key={link.id}
+      className="cursor-pointer capitalize text-sm font-medium transition hover:text-blue-500"
+      href={link.to}
+    >
+      {link.name}
+    </Link>
+  ));
+
+  const renderMobileLinks = navLinksData.map((link) => (
+    <Link
+      key={link.id}
+      className="px-3 py-2 block text-base capitalize cursor-pointer rounded-md  transition hover:bg-blue-100 hover:text-blue-600"
+      href={link.to}
+    >
+      {link.name}
+    </Link>
+  ));
 
   return (
-    <nav className="py-4">
-      <div className="container mx-auto flex items-center justify-between">
+    <nav>
+      <div className="container mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image src="/logo.svg" width={100} height={100} alt="logo" />
         </Link>
 
         {/* Desktop Links */}
-        <ul className="hidden lg:flex items-center gap-6 capitalize">
-          {links.map((link,index) => (
-            <li
-              key={index}
-              className="cursor-pointer transition hover:text-blue-400"
+        <div className="hidden lg:flex items-center gap-8">
+          {renderDesktopLinks}
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-40 bg-black/40 lg:hidden">
+            <aside
+              className={`absolute right-0 top-0 h-full w-72 bg-white p-5 shadow-lg`}
             >
-              {link}
-            </li>
-          ))}
-        </ul>
+              <div className="flex items-center justify-between border-b pb-3">
+                <h2 className="text-lg font-semibold capitalize">menu</h2>
+                <MdOutlineCancel
+                  className="cursor-pointer text-xl hover:text-red-700 hover:transition hover:duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                />
+              </div>
+
+              <div className="mt-6 space-y-2">{renderMobileLinks}</div>
+
+              <div className="mt-6 flex flex-col gap-2">
+                <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
+                  sign in
+                </Button>
+                <Button
+                  bgColor="bg-black"
+                  className="w-full capitalize py-2 font-medium text-white"
+                >
+                  sign up
+                </Button>
+              </div>
+            </aside>
+          </div>
+        )}
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
-          {/* Theme Toggle  */}
-          <div className="hidden lg:flex items-center gap-3 text-xl">
-            <MdOutlineDarkMode className="cursor-pointer" />
-            <IoSunnyOutline className="cursor-pointer" />
-          </div>
-
-          {/* Search + Menu  */}
-          <div className="flex items-center gap-4 text-xl lg:hidden">
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex items-center gap-4 text-xl">
+            {renderThemeIcon(theme, changeTheme)}
             <CiSearch className="cursor-pointer" />
-            <FaBarsStaggered className="cursor-pointer" />
           </div>
 
-          {/* Auth Buttons  */}
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-4 text-xl lg:hidden">
+            {renderThemeIcon(theme, changeTheme)}
+            <CiSearch className="cursor-pointer" />
+            <FaBarsStaggered
+              className="cursor-pointer"
+              onClick={() => setIsMobileMenuOpen(true)}
+            />
+          </div>
+
+          {/* Auth Buttons */}
           <div className="hidden lg:flex items-center gap-2">
             <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
               sign in
