@@ -3,8 +3,8 @@ import ArticleCard from "../cards/ArticleCard";
 import SectionWrapper from "../SectionWrapper";
 
 const HeroSection = () => {
-  const renderImages = imagesData.map((image) => (
-    <ArticleCard key={image.id} src={image.path} alt={image.path} />
+  const renderImages = imagesData.map((image,index) => (
+    <ArticleCard className={index === 0 ? "md:col-span-2" : ""} key={image.id} src={image.path} alt={image.path} />
   ));
   return (
     <SectionWrapper>

@@ -12,10 +12,11 @@ interface IProps {
   // views: number;
   // comments: number;
   // date: string;
+  className?: string;
 }
-const ArticleCard = ({ src, alt }: IProps) => {
+const ArticleCard = ({ src, alt, className }: IProps) => {
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className={`max-w-5xl ${className}`}>
       <div className="relative overflow-hidden rounded-2xl shadow-lg group">
         {/* Image */}
         <Image
