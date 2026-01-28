@@ -3,7 +3,7 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 interface IProps {
-  pageTitle: string;
+  title: string;
   src: string;
   alt: string;
   avatarSrc: string;
@@ -15,7 +15,7 @@ interface IProps {
   className?: string;
 }
 const FeaturedCard = ({
-  pageTitle,
+  title,
   src,
   alt,
   avatarSrc,
@@ -60,7 +60,7 @@ const FeaturedCard = ({
         {/* Content */}
         <div className="absolute w-full bottom-0 left-0 p-6 text-white">
           <h2 className="mb-4 max-w-xl text-2xl font-semibold leading-snug">
-            {pageTitle}
+            {title}
           </h2>
 
           <div className="flex items-center justify-between  text-sm text-gray-300">

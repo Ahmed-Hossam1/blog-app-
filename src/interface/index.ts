@@ -34,3 +34,8 @@ export interface IBlog {
     comment: string;
   }[];
 }
+
+export interface ITab {
+  id: number;
+  name: string;
+}

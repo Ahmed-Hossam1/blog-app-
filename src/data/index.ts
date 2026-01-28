@@ -1,4 +1,4 @@
-import { IBlog, INavLinks } from "@/interface";
+import { IBlog, INavLinks, ITab } from "@/interface";
 
 export const navLinksData: INavLinks[] = [
   {
@@ -122,7 +122,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Manpreet Singh Minhas", avatar:"avatar2.jpg", },
+    author: { name: "Manpreet Singh Minhas", avatar: "avatar2.jpg" },
     coverImage: "image2.jpg",
     content: [
       {
@@ -195,7 +195,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Sanjida windx", avatar: "avatar1.jpg", },
+    author: { name: "Sanjida windx", avatar: "avatar1.jpg" },
     coverImage: "image3.jpg",
     content: [
       {
@@ -230,7 +230,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Manpreet Singh Minhas", avatar: "avatar2.jpg", },
+    author: { name: "Manpreet Singh Minhas", avatar: "avatar2.jpg" },
     coverImage: "image4.jpg",
     content: [
       {
@@ -265,7 +265,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Sanjida windx", avatar: "avatar1.jpg", },
+    author: { name: "Sanjida windx", avatar: "avatar1.jpg" },
     coverImage: "image5.jpg",
     content: [
       {
@@ -285,6 +285,38 @@ export const blogsData: IBlog[] = [
         comment: "Wish I read this earlier!",
       },
     ],
+  },
+];
+
+export const tabsData: ITab[] = [
+  {
+    id: 1,
+    name: "All",
+  },
+
+  {
+    id: 2,
+    name: "Technology",
+  },
+  {
+    id: 3,
+    name: "Health",
+  },
+  {
+    id: 4,
+    name: "Culture",
+  },
+  {
+    id: 5,
+    name: "Knowledge",
+  },
+  {
+    id: 6,
+    name: "Travel",
+  },
+  {
+    id: 7,
+    name: "Lifestyle",
   },
 ];
 

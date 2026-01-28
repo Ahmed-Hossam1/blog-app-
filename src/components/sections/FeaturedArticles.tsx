@@ -7,7 +7,7 @@ const FeaturedArticles = () => {
     <FeaturedCard
       className={index === 0 ? "md:col-span-2" : ""}
       key={blog.id}
-      pageTitle={blog.pageTitle}
+      title={blog.title}
       src={blog.coverImage}
       alt={blog.title}
       avatarSrc={blog.author.avatar}
