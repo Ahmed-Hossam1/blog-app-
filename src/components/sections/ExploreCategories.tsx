@@ -1,15 +1,29 @@
+"use client";
 import { blogsData, tabsData } from "@/data";
 import Button from "../Button";
 import ExploreCard from "../cards/ExploreCard";
 import SectionWrapper from "../SectionWrapper";
 import Link from "next/link";
+import { useState } from "react";
 
 const ExploreCategories = () => {
-  const renderTabs = tabsData.map((tab, idx) => (
+  /*===== STATE ===== */
+  const [activeTab, setActiveTab] = useState<string>("All");
+  const [category, setCategory] = useState<string>("All");
+
+  /*===== HANDLER ===== */
+  const handleCategoryChange = (name: string): void => {
+    setActiveTab(name);
+    setCategory(name);
+  };
+  /*===== RENDER ===== */
+
+  const renderTabs = tabsData.map((tab) => (
     <Button
+      onClick={() => handleCategoryChange(tab.name)}
       key={tab.id}
-      className={`border px-4 py-1 text-sm  transition duration-400 ${
-        idx === 0
+      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${
+        tab.name === activeTab
           ? "bg-black text-white"
           : "bg-white text-gray-700 hover:bg-baseInk hover:text-white "
       }`}
@@ -18,7 +32,12 @@ const ExploreCategories = () => {
     </Button>
   ));
 
-  const renderCards = blogsData.map((blog) => (
+  const filteredCards =
+    category === "All"
+      ? blogsData
+      : blogsData.filter((blog) => blog.category === category);
+
+  const renderCards = filteredCards.map((blog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
       <ExploreCard
         title={blog.title}
@@ -32,6 +51,7 @@ const ExploreCategories = () => {
       />
     </Link>
   ));
+
   return (
     <SectionWrapper>
       <div className="container mx-auto">
@@ -49,15 +69,15 @@ const ExploreCategories = () => {
         </div>
 
         {/* Cards Grid */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
           {renderCards}
         </div>
 
         {/* Button */}
-        <div className="mt-12">
-          <button className="rounded-lg border px-6 py-2 text-sm font-medium hover:bg-gray-100">
+        <div className="mt-12 flex justify-center ">
+          <Button className="border px-6 py-2 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
             View All Blogs
-          </button>
+          </Button>
         </div>
       </div>
     </SectionWrapper>
