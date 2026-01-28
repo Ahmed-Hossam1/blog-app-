@@ -14,7 +14,7 @@ interface IProps {
   date: string;
   className?: string;
 }
-const ArticleCard = ({
+const FeaturedCard = ({
   pageTitle,
   src,
   alt,
@@ -49,7 +49,7 @@ const ArticleCard = ({
         {/* Author Avatar */}
         <div className="absolute left-4 top-4">
           <Image
-            src={`/${src}`}
+            src={`/${avatarSrc}`}
             alt={avatarAlt}
             width={40}
             height={40}
@@ -85,4 +85,4 @@ const ArticleCard = ({
   );
 };
 
-export default ArticleCard;
+export default FeaturedCard;

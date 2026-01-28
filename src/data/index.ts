@@ -32,7 +32,7 @@ export const blogsData: IBlog[] = [
 
     author: {
       name: "Manpreet Singh Minhas",
-      avatar: "author-image",
+      avatar: "avatar1.jpg",
     },
     coverImage: "image1.jpg",
     content: [
@@ -122,7 +122,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Manpreet Singh Minhas", avatar: "author-image" },
+    author: { name: "Manpreet Singh Minhas", avatar:"avatar2.jpg", },
     coverImage: "image2.jpg",
     content: [
       {
@@ -195,7 +195,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Sanjida windx", avatar: "author-image" },
+    author: { name: "Sanjida windx", avatar: "avatar1.jpg", },
     coverImage: "image3.jpg",
     content: [
       {
@@ -230,7 +230,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Manpreet Singh Minhas", avatar: "author-image" },
+    author: { name: "Manpreet Singh Minhas", avatar: "avatar2.jpg", },
     coverImage: "image4.jpg",
     content: [
       {
@@ -265,7 +265,7 @@ export const blogsData: IBlog[] = [
       views: 213,
       commentsCount: 3,
     },
-    author: { name: "Sanjida windx", avatar: "author-image" },
+    author: { name: "Sanjida windx", avatar: "avatar1.jpg", },
     coverImage: "image5.jpg",
     content: [
       {

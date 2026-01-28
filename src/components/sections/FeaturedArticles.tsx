@@ -1,10 +1,10 @@
 import { blogsData } from "@/data";
-import ArticleCard from "../cards/ArticleCard";
+import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../SectionWrapper";
 
-const HeroSection = () => {
+const FeaturedArticles = () => {
   const renderArticles = blogsData.map((blog, index) => (
-    <ArticleCard
+    <FeaturedCard
       className={index === 0 ? "md:col-span-2" : ""}
       key={blog.id}
       pageTitle={blog.pageTitle}
@@ -29,4 +29,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default FeaturedArticles;
