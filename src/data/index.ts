@@ -1,4 +1,4 @@
-import { IImages, INavLinks } from "@/interface";
+import { IBlog, INavLinks } from "@/interface";
 
 export const navLinksData: INavLinks[] = [
   {
@@ -13,30 +13,7 @@ export const navLinksData: INavLinks[] = [
   },
 ];
 
-export const imagesData: IImages[] = [
-  {
-    id: 1,
-    path: "/image1.jpg",
-  },
-  {
-    id: 2,
-    path: "/image2.jpg",
-  },
-  {
-    id: 3,
-    path: "/image3.jpg",
-  },
-  {
-    id: 4,
-    path: "/image4.jpg",
-  },
-  {
-    id: 5,
-    path: "/image5.jpg",
-  },
-];
-
-export const blogsData = [
+export const blogsData: IBlog[] = [
   {
     id: 1,
     slug: "understanding-react-server-components",
@@ -57,12 +34,7 @@ export const blogsData = [
       name: "Manpreet Singh Minhas",
       avatar: "author-image",
     },
-
-    coverImage: "cover-image",
-
-    excerpt:
-      "React Server Components (RSC) are a powerful new addition to the React ecosystem. They allow you to render components on the server without sending unnecessary JavaScript to the browser.",
-
+    coverImage: "image1.jpg",
     content: [
       {
         type: "paragraph",
@@ -70,11 +42,11 @@ export const blogsData = [
       },
       {
         type: "heading",
-        level: "h2",
         text: "Benefits of Server Components",
       },
       {
         type: "list",
+        text: "",
         items: [
           "Less JavaScript sent to the client",
           "Faster initial page loads",
@@ -84,7 +56,6 @@ export const blogsData = [
       },
       {
         type: "heading",
-        level: "h2",
         text: "Conclusion",
       },
       {
@@ -93,11 +64,11 @@ export const blogsData = [
       },
       {
         type: "heading",
-        level: "h2",
         text: "How to Use",
       },
       {
         type: "list",
+        text: "",
         items: [
           "Open the Body field in your blog post in Sanity Studio",
           "Paste the above content",
@@ -152,7 +123,7 @@ export const blogsData = [
       commentsCount: 3,
     },
     author: { name: "Manpreet Singh Minhas", avatar: "author-image" },
-    coverImage: "cover-image",
+    coverImage: "image2.jpg",
     content: [
       {
         type: "paragraph",
@@ -162,9 +133,10 @@ export const blogsData = [
         type: "paragraph",
         text: "They allow you to render components on the server without sending unnecessary JavaScript to the browser.",
       },
-      { type: "heading", level: "h2", text: "Benefits of Server Components" },
+      { type: "heading", text: "Benefits of Server Components" },
       {
         type: "list",
+        text: "",
         items: [
           "Less JavaScript sent to the client",
           "Faster initial page loads",
@@ -172,7 +144,7 @@ export const blogsData = [
           "Easier data fetching patterns",
         ],
       },
-      { type: "heading", level: "h2", text: "Conclusion" },
+      { type: "heading", text: "Conclusion" },
       {
         type: "paragraph",
         text: "React Server Components are still evolving, but they show great promise for the future of web development.",
@@ -224,7 +196,7 @@ export const blogsData = [
       commentsCount: 3,
     },
     author: { name: "Sanjida windx", avatar: "author-image" },
-    coverImage: "cover-image",
+    coverImage: "image3.jpg",
     content: [
       {
         type: "paragraph",
@@ -259,7 +231,7 @@ export const blogsData = [
       commentsCount: 3,
     },
     author: { name: "Manpreet Singh Minhas", avatar: "author-image" },
-    coverImage: "cover-image",
+    coverImage: "image4.jpg",
     content: [
       {
         type: "paragraph",
@@ -294,7 +266,7 @@ export const blogsData = [
       commentsCount: 3,
     },
     author: { name: "Sanjida windx", avatar: "author-image" },
-    coverImage: "cover-image",
+    coverImage: "image5.jpg",
     content: [
       {
         type: "paragraph",
@@ -314,6 +286,9 @@ export const blogsData = [
       },
     ],
   },
+];
+
+/* 
 
   {
     id: 6,
@@ -456,4 +431,4 @@ export const blogsData = [
       },
     ],
   },
-];
+  */

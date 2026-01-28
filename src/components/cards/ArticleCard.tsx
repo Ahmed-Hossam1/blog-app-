@@ -3,24 +3,35 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 interface IProps {
+  pageTitle: string;
   src: string;
   alt: string;
-  // category: string;
-  // avatarSrc: string;
-  // avatarAlt: string;
-  // content: string;
-  // views: number;
-  // comments: number;
-  // date: string;
+  avatarSrc: string;
+  avatarAlt: string;
+  category: string;
+  views: number;
+  comments: number;
+  date: string;
   className?: string;
 }
-const ArticleCard = ({ src, alt, className }: IProps) => {
+const ArticleCard = ({
+  pageTitle,
+  src,
+  alt,
+  avatarSrc,
+  avatarAlt,
+  category,
+  views,
+  comments,
+  date,
+  className,
+}: IProps) => {
   return (
     <div className={`max-w-5xl ${className}`}>
       <div className="relative overflow-hidden rounded-2xl shadow-lg group">
         {/* Image */}
         <Image
-          src={src}
+          src={`/${src}`}
           alt={alt}
           width={1200}
           height={600}
@@ -32,14 +43,14 @@ const ArticleCard = ({ src, alt, className }: IProps) => {
 
         {/* Category Badge */}
         <span className="absolute right-4 top-4 rounded-full bg-blue-500 px-4 py-1 text-sm font-medium text-white">
-          Technology
+          {category}
         </span>
 
         {/* Author Avatar */}
         <div className="absolute left-4 top-4">
           <Image
-            src="https://i.pravatar.cc/40"
-            alt="Author"
+            src={`/${src}`}
+            alt={avatarAlt}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"
@@ -49,22 +60,22 @@ const ArticleCard = ({ src, alt, className }: IProps) => {
         {/* Content */}
         <div className="absolute w-full bottom-0 left-0 p-6 text-white">
           <h2 className="mb-4 max-w-xl text-2xl font-semibold leading-snug">
-            Top Articles to Read on Technology
+            {pageTitle}
           </h2>
 
           <div className="flex items-center justify-between  text-sm text-gray-300">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <FaRegEye /> 213
+                <FaRegEye /> {views}
               </span>
               <span className="flex items-center gap-1">
-                <FaRegComment /> 3
+                <FaRegComment /> {comments}
               </span>
             </div>
             <div>
               <span className="flex items-center gap-1">
                 {" "}
-                <BsCalendar2Date /> 6/10/2025
+                <BsCalendar2Date /> {date}
               </span>
             </div>
           </div>
