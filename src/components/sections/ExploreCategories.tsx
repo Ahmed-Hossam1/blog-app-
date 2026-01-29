@@ -75,9 +75,11 @@ const ExploreCategories = () => {
 
         {/* Button */}
         <div className="mt-12 flex justify-center ">
-          <Button className="border px-6 py-2 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
-            View All Blogs
-          </Button>
+          <Link href={"/blogs"}>
+            <Button className="border px-6 py-2 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
+              View All Blogs
+            </Button>
+          </Link>
         </div>
       </div>
     </SectionWrapper>
