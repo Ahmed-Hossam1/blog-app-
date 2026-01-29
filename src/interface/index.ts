@@ -39,3 +39,11 @@ export interface ITab {
   id: number;
   name: string;
 }
+
+export interface IAuthor {
+  id: number;
+  name: string;
+  role: string;
+  bio: string;
+  avatar: string;
+}

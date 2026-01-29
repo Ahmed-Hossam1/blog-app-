@@ -5,7 +5,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { FaBarsStaggered } from "react-icons/fa6";
-import Button from "./Button";
+import Button from "./Ui/Button";
 import { useState } from "react";
 import { navLinksData } from "@/data";
 

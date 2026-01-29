@@ -1,6 +1,6 @@
 "use client";
 import { blogsData, tabsData } from "@/data";
-import Button from "../Button";
+import Button from "../Ui/Button";
 import ExploreCard from "../cards/ExploreCard";
 import SectionWrapper from "../SectionWrapper";
 import Link from "next/link";
@@ -76,7 +76,7 @@ const ExploreCategories = () => {
         {/* Button */}
         <div className="mt-12 flex justify-center ">
           <Link href={"/blogs"}>
-            <Button className="border px-6 py-2 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
+            <Button className="border px-6 py-3 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
               View All Blogs
             </Button>
           </Link>

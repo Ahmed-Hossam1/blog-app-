@@ -1,5 +1,7 @@
 import ExploreCategories from "@/components/sections/ExploreCategories";
 import FeaturedArticles from "@/components/sections/FeaturedArticles";
+import MeetOurAuthors from "@/components/sections/MeetOurAuthors";
+import NewsletterSubscribe from "@/components/sections/NewsletterSubscribe";
 import SectionWrapper from "@/components/SectionWrapper";
 
 export default async function Home() {
@@ -7,8 +9,10 @@ export default async function Home() {
     <div>
       <SectionWrapper>
         <FeaturedArticles />
-        <ExploreCategories /> 
-      </SectionWrapper>{" "}
+        <ExploreCategories />
+        <MeetOurAuthors />
+        <NewsletterSubscribe />
+      </SectionWrapper>
     </div>
   );
 }

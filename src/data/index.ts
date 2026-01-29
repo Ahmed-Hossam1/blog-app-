@@ -1,4 +1,4 @@
-import { IBlog, INavLinks, ITab } from "@/interface";
+import { IAuthor, IBlog, INavLinks, ITab } from "@/interface";
 
 export const navLinksData: INavLinks[] = [
   {
@@ -464,3 +464,27 @@ export const tabsData: ITab[] = [
     ],
   },
   */
+
+export const authorData: IAuthor[] = [
+  {
+    id: 1,
+    name: "Manpreet Singh Minhas",
+    role: "Staff Writer",
+    bio: "DL/CV Research Engineer sharing insights on technical blogging.",
+    avatar: "/avatar1.jpg",
+  },
+  {
+    id: 2,
+    name: "Sanjida windx",
+    role: "Guest Author",
+    bio: "Health writer focusing on wellness and lifestyle improvements.",
+    avatar: "/avatar2.jpg",
+  },
+  {
+    id: 3,
+    name: "Alice Ben",
+    role: "Co-Author",
+    bio: "Travel enthusiast sharing tips and stories about various tourist destinations.",
+    avatar: "/avatar3.jpg",
+  },
+];
