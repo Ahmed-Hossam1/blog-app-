@@ -33,7 +33,7 @@ const ExploreCard = ({
       {/* Image */}
       <div className="relative h-48">
         <Image src={`/${src}`} alt={alt} fill className="object-cover" />
-        <span className="absolute bottom-3 right-3 rounded-full bg-white px-3 py-1 text-xs font-medium">
+        <span className="absolute bottom-3 right-3 rounded-full backdrop-blur-3xl text-white px-4 py-2 text-xs font-semibold capitalize">
           {readTime}
         </span>
         <div className="absolute left-4 -bottom-4">

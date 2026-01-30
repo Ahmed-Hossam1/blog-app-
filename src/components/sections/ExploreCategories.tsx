@@ -75,7 +75,7 @@ const ExploreCategories = () => {
 
         {/* Button */}
         <div className="mt-12 flex justify-center ">
-          <Link href={"/blogs"}>
+          <Link href={"/blog"}>
             <Button className="border px-6 py-3 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
               View All Blogs
             </Button>

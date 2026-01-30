@@ -42,7 +42,7 @@ const FeaturedCard = ({
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
         {/* Category Badge */}
-        <span className="absolute right-4 top-4 rounded-full bg-blue-500 px-4 py-1 text-sm font-medium text-white">
+        <span className="absolute right-4 top-4 rounded-full backdrop-blur-3xl px-6 py-2 text-sm font-medium text-white">
           {category}
         </span>
 
