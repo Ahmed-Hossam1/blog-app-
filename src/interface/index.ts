@@ -5,7 +5,7 @@ export interface INavLinks {
 }
 
 export interface IBlog {
-  id: number;
+  id: string | number;
   slug: string;
   pageTitle: string;
   title: string;

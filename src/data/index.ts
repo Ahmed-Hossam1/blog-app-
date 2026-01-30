@@ -19,7 +19,7 @@ export const blogsData: IBlog[] = [
     slug: "understanding-react-server-components",
     pageTitle: "Blog Detail | BlogForge Sanity Blog Template",
 
-    title: "Understanding React Server Components",
+    title: "Top Articles to Read on Technology",
     subtitle: "Understanding React Server Components",
     category: "Technology",
 
@@ -81,28 +81,28 @@ export const blogsData: IBlog[] = [
       {
         id: 1,
         author: "Sophie Hamilton",
-        avatar: "commenter-img",
+        avatar: "avatar1.jpg",
         comment:
           "This blog was incredibly insightful! I’ve always wanted to explore Thailand beyond the typical tourist spots. Thanks for the travel tips!",
       },
       {
         id: 2,
         author: "Don Turner",
-        avatar: "commenter-img",
+        avatar: "avatar2.jpg",
         comment:
           "I loved reading about the hidden gems in Thailand. The writing style is engaging, and the photos really brought the places to life.",
       },
       {
         id: 3,
         author: "Rodney Russell",
-        avatar: "commenter-img",
+        avatar: "avatar1.jpg",
         comment:
           "Great article. I’ve visited Thailand twice, and this gave me new ideas for my next trip.",
       },
       {
         id: 4,
         author: "Lelia Mason",
-        avatar: "commenter-img",
+        avatar: "avatar1.jpg",
         comment:
           "This was such a refreshing read. It’s nice to see a blog that focuses on more than just the popular beaches.",
       },

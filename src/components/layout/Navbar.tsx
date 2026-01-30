@@ -5,7 +5,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { FaBarsStaggered } from "react-icons/fa6";
-import Button from "./Ui/Button";
+import Button from "../Ui/Button";
 import { useState } from "react";
 import { navLinksData } from "@/data";
 
@@ -52,7 +52,7 @@ const Navbar = () => {
   ));
 
   return (
-    <nav>
+    <nav className="fixed w-full z-50 bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
