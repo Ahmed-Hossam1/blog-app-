@@ -1,3 +1,4 @@
+import { truncateText } from "@/utils";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
@@ -52,7 +53,7 @@ const ExploreCard = ({
           {category}
         </span>
 
-        <h3 className="mt-2 line-clamp-2 text-base font-semibold">{title}</h3>
+        <h3 className="mt-2 line-clamp-2 text-base font-semibold">{truncateText(title)}</h3>
 
         <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-4">
