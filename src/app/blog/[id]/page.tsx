@@ -77,7 +77,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                     <div key={index} className="mb-5">
                       {/* Heading */}
                       {content.type === "heading" && (
-                        <h3 className="mb-3 text-xl font-semibold text-baseInk">
+                        <h3 className="mb-3 text-xl font-semibold text-navyGray">
                           {content.text}
                         </h3>
                       )}
@@ -107,7 +107,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               {/* Comments Container */}
               <div className="mt-5 border-b pb-4  border-gray">
                 {/* Comments Header */}
-                <h3 className="mb-6 text-lg font-semibold">
+                <h3 className="mb-6 text-lg text-navyGray font-semibold">
                   Comments
                   <span className="ml-2 rounded-full bg-blue-100 px-2 py-0.5 text-xs">
                     {data.comments?.length}
@@ -147,28 +147,20 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
               {/* Leave Comment */}
               <div className="mt-5">
-                <h3 className="mb-6 text-lg font-semibold">
+                <h3 className="mb-3 text-lg text-navyGray font-semibold">
                   Leave a Comment on this post
                 </h3>
 
                 <div className="rounded-2xl bg-slate-50 p-8">
                   <form className="space-y-4">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      className="w-full rounded-lg border px-4 py-3 text-sm outline-none"
-                    />
                     <textarea
-                      placeholder="Your Comment"
+                      placeholder="Write Your Comment"
                       rows={4}
                       className="w-full rounded-lg border px-4 py-3 text-sm outline-none"
                     />
-                    <button
-                      type="button"
-                      className="rounded-lg bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                    >
+                    <Button className=" bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 transition">
                       Post Comment
-                    </button>
+                    </Button>
                   </form>
                 </div>
               </div>
