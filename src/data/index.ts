@@ -29,7 +29,7 @@ export const tabsData: ITab[] = [
   },
   {
     id: 4,
-    name: "Culture",
+    name: "Development",
   },
   {
     id: 5,

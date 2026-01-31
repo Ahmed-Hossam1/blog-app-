@@ -231,6 +231,28 @@ export async function GET() {
       ],
     },
 
+//     {
+//   id: 6,
+//   slug: "daily-health-journal",
+//   title: "Daily Health Journal",
+//   category: "Health",
+//   price: 19.99,
+//   rating: 4.7,
+//   reviewsCount: 128,
+
+//   image: "health.jpg",
+
+//   description:
+//     "A simple and effective journal designed to help you track your daily habits, mental health, and overall well-being.",
+
+//   features: [
+//     "Daily mood tracking",
+//     "Habit and sleep monitoring",
+//     "Minimal and calming design",
+//     "Perfect for mental wellness",
+//   ],
+// }
+// ,
     {
       id: 4,
       slug: "building-scalable-frontend-apps",

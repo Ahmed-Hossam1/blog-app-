@@ -1,3 +1,4 @@
+"use client";
 import { Input } from "@headlessui/react";
 import { InputHTMLAttributes } from "react";
 
@@ -5,7 +6,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string | undefined;
   name: string;
   type: string;
-//   value: string | number;
+  //   value: string | number;
   placeholder: string;
   className?: string;
 }
@@ -13,7 +14,7 @@ const MyInput = ({
   id,
   name,
   type,
-//   value,
+  //   value,
   placeholder,
   className,
 
@@ -21,11 +22,11 @@ const MyInput = ({
 }: IProps) => {
   return (
     <Input
-      className={`block w-full px-3 bg-white/5  text-sm/6 text-black focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25 ${className}`}
+      className={`${className} w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 `}
       id={id}
       name={name}
       type={type}
-    //   value={value}
+      //   value={value}
       placeholder={placeholder}
       {...res}
     />
@@ -33,4 +34,3 @@ const MyInput = ({
 };
 
 export default MyInput;
-

@@ -56,7 +56,13 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image src="/logo.svg" width={100} height={100} alt="logo" />
+          <Image
+            src="/logo.svg"
+            width={100}
+            height={100}
+            alt="logo"
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* Desktop Links */}
@@ -115,15 +121,19 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden lg:flex items-center gap-2">
-            <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
-              sign in
-            </Button>
-            <Button
-              bgColor="bg-black"
-              className="capitalize px-6 py-1.5 font-medium text-white"
-            >
-              sign up
-            </Button>
+            <Link href={"signIn"}>
+              <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
+                sign in
+              </Button>
+            </Link>
+            <Link href={"signUp"}>
+              <Button
+                bgColor="bg-black"
+                className="capitalize px-6 py-1.5 font-medium text-white"
+              >
+                sign up
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

@@ -50,7 +50,7 @@ const FeaturedCard = ({
         <div className="absolute left-4 top-4">
           <Image
             src={`/${avatarSrc}`}
-            alt={avatarAlt}
+            alt={"Dasdo"}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"

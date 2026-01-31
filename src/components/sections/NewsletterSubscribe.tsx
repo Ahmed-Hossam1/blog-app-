@@ -1,5 +1,6 @@
 import SectionWrapper from "../Ui/SectionWrapper";
 import MyInput from "../Ui/Input";
+import Button from "../Ui/Button";
 
 const NewsletterSubscribe = () => {
   return (
@@ -28,9 +29,9 @@ const NewsletterSubscribe = () => {
                 placeholder="Enter your email address"
                 className="h-full flex-1 py-1.5"
               />
-              <button className="whitespace-nowrap bg-primary px-9 py-5 text-sm font-medium text-white transition hover:bg-blue-800">
+              <Button className="whitespace-nowrap bg-primary px-9 py-5 text-sm font-medium text-white transition hover:bg-blue-800">
                 Subscribe
-              </button>
+              </Button>
             </div>
           </div>
         </div>

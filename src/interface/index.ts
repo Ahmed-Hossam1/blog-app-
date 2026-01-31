@@ -47,3 +47,55 @@ export interface IAuthor {
   bio: string;
   avatar: string;
 }
+
+interface Filed {
+  id: string | number;
+  name: string;
+  type: string;
+  placeholder: string;
+  label?: string;
+}
+
+export const formConfig: Record<string, Filed[]> = {
+  signIn: [
+    {
+      id: 1,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+    },
+    {
+      id: 2,
+      name: "password",
+      type: "password",
+      placeholder: "password",
+    },
+  ],
+
+  singUp: [
+    {
+      id: 1,
+      name: "user_name",
+      placeholder: "please enter your user name",
+      type: "text",
+    },
+    {
+      id: 2,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+    },
+    {
+      id: 3,
+      name: "password",
+      type: "password",
+      placeholder: "password",
+    },
+    {
+      id: 4,
+      name: "confirm_password",
+      type: "password",
+      placeholder: "confirm password",
+    },
+  ],
+};

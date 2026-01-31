@@ -32,7 +32,7 @@ const ExploreCard = ({
     <div className="overflow-hidden rounded-2xl  bg-white shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
       <div className="relative h-48">
-        <Image src={`/${src}`} alt={alt} fill className="object-cover" />
+        <Image src={`/${src}`} alt={alt} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
         <span className="absolute bottom-3 right-3 rounded-full backdrop-blur-3xl text-white px-4 py-2 text-xs font-semibold capitalize">
           {readTime}
         </span>

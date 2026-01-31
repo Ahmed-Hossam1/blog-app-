@@ -2,6 +2,7 @@ import { IBlog } from "@/interface";
 import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../Ui/SectionWrapper";
 
+
 const FeaturedArticles = async () => {
   /*===== Fetch ===== */
   const res = await fetch("http://localhost:3000/api/blogs");
@@ -15,12 +16,12 @@ const FeaturedArticles = async () => {
       title={blog.title}
       src={blog.coverImage}
       alt={blog.title}
-      avatarSrc={blog.author.avatar}
-      avatarAlt={blog.author.name}
+      avatarSrc={blog.author?.avatar}
+      avatarAlt={blog.author?.name}
       category={blog.category}
-      views={blog.meta.views}
-      comments={blog.meta.commentsCount}
-      date={blog.meta.publishDate}
+      views={blog.meta?.views}
+      comments={blog.meta?.commentsCount}
+      date={blog.meta?.publishDate}
     />
   ));
 
