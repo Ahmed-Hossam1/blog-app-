@@ -1,15 +1,29 @@
 "use client";
-import { blogsData, tabsData } from "@/data";
+import { tabsData } from "@/data";
 import Button from "../Ui/Button";
 import ExploreCard from "../cards/ExploreCard";
 import SectionWrapper from "../SectionWrapper";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { IBlog } from "@/interface";
 
 const ExploreCategories = () => {
   /*===== STATE ===== */
   const [activeTab, setActiveTab] = useState<string>("All");
   const [category, setCategory] = useState<string>("All");
+  const [blogs, setBlogs] = useState([]);
+
+  /*===== Fetch ===== */
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const res = await fetch("http://localhost:3000/api/blogs");
+      const data = await res.json();
+      setBlogs(data);
+    };
+
+    fetchBlogs();
+  }, []);
 
   /*===== HANDLER ===== */
   const handleCategoryChange = (name: string): void => {
@@ -34,10 +48,10 @@ const ExploreCategories = () => {
 
   const filteredCards =
     category === "All"
-      ? blogsData
-      : blogsData.filter((blog) => blog.category === category);
+      ? blogs
+      : blogs.filter((blog: IBlog) => blog.category === category);
 
-  const renderCards = filteredCards.map((blog) => (
+  const renderCards = filteredCards.map((blog: IBlog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
       <ExploreCard
         title={blog.title}

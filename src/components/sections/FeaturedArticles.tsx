@@ -1,9 +1,14 @@
-import { blogsData } from "@/data";
+import { IBlog } from "@/interface";
 import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../SectionWrapper";
 
-const FeaturedArticles = () => {
-  const renderArticles = blogsData.map((blog, index) => (
+const FeaturedArticles = async () => {
+  /*===== Fetch ===== */
+  const res = await fetch("http://localhost:3000/api/blogs");
+  const data = await res.json();
+
+  /*===== RENDER ===== */
+  const newArticles = data.map((blog: IBlog, index: number) => (
     <FeaturedCard
       className={index === 0 ? "md:col-span-2" : ""}
       key={blog.id}
@@ -18,6 +23,8 @@ const FeaturedArticles = () => {
       date={blog.meta.publishDate}
     />
   ));
+
+  const renderArticles = newArticles.slice(0, 5);
   return (
     <SectionWrapper>
       <div className="container mx-auto">
