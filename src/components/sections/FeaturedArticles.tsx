@@ -9,10 +9,12 @@ interface IProps {
 const FeaturedArticles = async ({ numberOfArticles }: IProps) => {
   /*===== Fetch ===== */
   const res = await fetch("http://localhost:3000/api/blogs");
-  if (!res.ok) return null;
+  if (!res.ok) return ;
   const data: IBlog[] = await res.json();
 
   /*===== CONSTANTS ===== */
+
+  // limit card number for display 
   const limit = numberOfArticles > data.length ? data.length : numberOfArticles;
 
   /*===== RENDER ===== */

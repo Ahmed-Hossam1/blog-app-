@@ -16,15 +16,23 @@ const ExploreCategories = () => {
   /*===== Fetch ===== */
   useEffect(() => {
     const fetchBlogs = async () => {
-      const res = await fetch("http://localhost:3000/api/blogs");
-      const data: IBlog[] = await res.json();
-      setBlogs(data);
+      try {
+        const res = await fetch("http://localhost:3000/api/blasdogs");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data: IBlog[] = await res.json();
+        setBlogs(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchBlogs();
   }, []);
 
   /*===== CONSTANT ===== */
+
+  /* filter blogs base on category state
+   if all back all blogs otherwise back filtered */
   const filteredCards =
     category === "All"
       ? blogs
