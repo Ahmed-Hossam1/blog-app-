@@ -1,5 +1,5 @@
 import ExploreCard from "@/components/cards/ExploreCard";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/Ui/SectionWrapper";
 import { IBlog } from "@/interface";
 import Link from "next/link";
 

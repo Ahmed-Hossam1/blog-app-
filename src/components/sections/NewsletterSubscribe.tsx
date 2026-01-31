@@ -1,4 +1,4 @@
-import SectionWrapper from "../SectionWrapper";
+import SectionWrapper from "../Ui/SectionWrapper";
 import MyInput from "../Ui/Input";
 
 const NewsletterSubscribe = () => {

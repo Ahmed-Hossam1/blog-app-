@@ -1,6 +1,6 @@
 import { IBlog } from "@/interface";
 import FeaturedCard from "../cards/FeaturedCard";
-import SectionWrapper from "../SectionWrapper";
+import SectionWrapper from "../Ui/SectionWrapper";
 
 const FeaturedArticles = async () => {
   /*===== Fetch ===== */

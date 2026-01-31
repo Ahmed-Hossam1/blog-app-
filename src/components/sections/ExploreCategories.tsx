@@ -2,7 +2,7 @@
 import { tabsData } from "@/data";
 import Button from "../Ui/Button";
 import ExploreCard from "../cards/ExploreCard";
-import SectionWrapper from "../SectionWrapper";
+import SectionWrapper from "../Ui/SectionWrapper";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IBlog } from "@/interface";
