@@ -10,18 +10,17 @@ import { FcGoogle } from "react-icons/fc";
 
 const page = () => {
   /*===== CONSTANTS ===== */
-  const signUpInputs = formConfig["signUp"];
-  console.log(signUpInputs)
+  const signUpInputs = formConfig?.signUp ?? [];
 
   /*===== RENDER ===== */
-  const renderInputs = signUpInputs?.map((input) => (
+  const renderInputs = signUpInputs.map((input) => (
     <MyInput
       key={input.id}
       name={input.name}
       id={input.name}
       type={input.type}
       placeholder={input.placeholder}
-      className="rounded-md mb-4"
+      className="rounded-md mb-4 "
     />
   ));
 
@@ -68,7 +67,7 @@ const page = () => {
           </Button>
 
           <div className="mt-4 text-sm text-gray-600">
-            <Link href="/sign-in" className="hover:underline">
+            <Link href="/signIn" className="hover:underline">
               Already have an account? Sign In
             </Link>
           </div>

@@ -11,27 +11,32 @@ const ExploreCategories = () => {
   /*===== STATE ===== */
   const [activeTab, setActiveTab] = useState<string>("All");
   const [category, setCategory] = useState<string>("All");
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
 
   /*===== Fetch ===== */
-
   useEffect(() => {
     const fetchBlogs = async () => {
       const res = await fetch("http://localhost:3000/api/blogs");
-      const data = await res.json();
+      const data: IBlog[] = await res.json();
       setBlogs(data);
     };
 
     fetchBlogs();
   }, []);
 
+  /*===== CONSTANT ===== */
+  const filteredCards =
+    category === "All"
+      ? blogs
+      : blogs.filter((blog: IBlog) => blog.category === category);
+
   /*===== HANDLER ===== */
   const handleCategoryChange = (name: string): void => {
     setActiveTab(name);
     setCategory(name);
   };
-  /*===== RENDER ===== */
 
+  /*===== RENDER ===== */
   const renderTabs = tabsData.map((tab) => (
     <Button
       onClick={() => handleCategoryChange(tab.name)}
@@ -46,17 +51,14 @@ const ExploreCategories = () => {
     </Button>
   ));
 
-  const filteredCards =
-    category === "All"
-      ? blogs
-      : blogs.filter((blog: IBlog) => blog.category === category);
-
   const renderCards = filteredCards.map((blog: IBlog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
       <ExploreCard
         title={blog.title}
-        src={blog.coverImage}
-        alt={blog.title}
+        coverImage={blog.coverImage}
+        coverImageAlt={blog.title}
+        authorImageSrc={blog.author?.avatar}
+        authorImageAlt={blog.author?.name}
         readTime={blog.meta.readTime}
         views={blog.meta.views}
         comments={blog.meta.commentsCount}

@@ -76,7 +76,7 @@ export const formConfig: Record<string, Filed[]> = {
     {
       id: 1,
       name: "user_name",
-      placeholder: "please enter your user name",
+      placeholder: "user name",
       type: "text",
     },
     {

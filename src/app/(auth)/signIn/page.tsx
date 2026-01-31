@@ -10,9 +10,10 @@ import { FcGoogle } from "react-icons/fc";
 
 const page = () => {
   /*===== CONSTANTS ===== */
-  const signInInputs = formConfig["signIn"];
+  const signInInputs = formConfig?.signIn ?? [];
+
   /*===== RENDER ===== */
-  const renderInputs = signInInputs?.map((input) => (
+  const renderInputs = signInInputs.map((input) => (
     <MyInput
       key={input.id}
       name={input.name}
@@ -65,9 +66,12 @@ const page = () => {
           </Button>
 
           <div className="mt-4 text-sm text-gray-600">
-            <p className="mb-2 cursor-pointer hover:underline">
+            <Link
+              href={"/ForgetPassword"}
+              className="mb-2 block cursor-pointer hover:underline"
+            >
               Forgot Password?
-            </p>
+            </Link>
 
             <Link href="/signUp" className="hover:underline ">
               Not a member yet? Sign Up

@@ -11,7 +11,7 @@ export default async function Home() {
     <>
       <Navbar />
       <SectionWrapper>
-        <FeaturedArticles />
+        <FeaturedArticles numberOfArticles={5} />
         <ExploreCategories />
         <MeetOurAuthors />
         <NewsletterSubscribe />

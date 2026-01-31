@@ -4,10 +4,10 @@ import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 interface IProps {
   title: string;
-  src: string;
-  alt: string;
-  //   avatarSrc: string;
-  //   avatarAlt: string;
+  coverImage: string;
+  coverImageAlt: string;
+  authorImageSrc: string;
+  authorImageAlt: string;
   category: string;
   readTime: string;
   views: number;
@@ -18,10 +18,10 @@ interface IProps {
 
 const ExploreCard = ({
   title,
-  src,
-  alt,
-  //   avatarSrc,
-  //   avatarAlt,
+  coverImage,
+  coverImageAlt,
+  authorImageSrc,
+  authorImageAlt,
   category,
   readTime,
   views,
@@ -32,14 +32,20 @@ const ExploreCard = ({
     <div className="overflow-hidden rounded-2xl  bg-white shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
       <div className="relative h-48">
-        <Image src={`/${src}`} alt={alt} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
+        <Image
+          src={`/${coverImage}`}
+          alt={coverImageAlt}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+        />
         <span className="absolute bottom-3 right-3 rounded-full backdrop-blur-3xl text-white px-4 py-2 text-xs font-semibold capitalize">
           {readTime}
         </span>
         <div className="absolute left-4 -bottom-4">
           <Image
-            src={`/avatar1.jpg`}
-            alt={"test"}
+            src={`/${authorImageSrc}`}
+            alt={`/${authorImageAlt}`}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"
@@ -53,7 +59,9 @@ const ExploreCard = ({
           {category}
         </span>
 
-        <h3 className="mt-2 line-clamp-2 text-base font-semibold">{truncateText(title)}</h3>
+        <h3 className="mt-2 line-clamp-2 text-base font-semibold">
+          {truncateText(title)}
+        </h3>
 
         <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-4">

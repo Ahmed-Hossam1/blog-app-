@@ -2,14 +2,23 @@ import { IBlog } from "@/interface";
 import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../Ui/SectionWrapper";
 
+interface IProps {
+  numberOfArticles: number;
+}
 
-const FeaturedArticles = async () => {
+const FeaturedArticles = async ({ numberOfArticles }: IProps) => {
   /*===== Fetch ===== */
   const res = await fetch("http://localhost:3000/api/blogs");
-  const data = await res.json();
+  if (!res.ok) return null;
+  const data: IBlog[] = await res.json();
+
+  /*===== CONSTANTS ===== */
+  const limit = numberOfArticles > data.length ? data.length : numberOfArticles;
 
   /*===== RENDER ===== */
-  const newArticles = data.map((blog: IBlog, index: number) => (
+  const articles = data.slice(0, limit);
+
+  const articleCards = articles.map((blog: IBlog, index: number) => (
     <FeaturedCard
       className={index === 0 ? "md:col-span-2" : ""}
       key={blog.id}
@@ -25,12 +34,11 @@ const FeaturedArticles = async () => {
     />
   ));
 
-  const renderArticles = newArticles.slice(0, 5);
   return (
     <SectionWrapper>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {renderArticles}
+          {articleCards}
         </div>
       </div>
     </SectionWrapper>
