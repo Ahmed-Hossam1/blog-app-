@@ -72,7 +72,7 @@ export const formConfig: Record<string, Filed[]> = {
     },
   ],
 
-  singUp: [
+  signUp: [
     {
       id: 1,
       name: "user_name",

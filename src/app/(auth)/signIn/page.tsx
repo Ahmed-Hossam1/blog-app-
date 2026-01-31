@@ -12,7 +12,7 @@ const page = () => {
   /*===== CONSTANTS ===== */
   const signInInputs = formConfig["signIn"];
   /*===== RENDER ===== */
-  const renderInputs = signInInputs.map((input) => (
+  const renderInputs = signInInputs?.map((input) => (
     <MyInput
       key={input.id}
       name={input.name}
