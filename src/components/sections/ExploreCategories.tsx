@@ -59,11 +59,11 @@ const ExploreCategories = () => {
         coverImageAlt={blog.title}
         authorImageSrc={blog.author?.avatar}
         authorImageAlt={blog.author?.name}
-        readTime={blog.meta.readTime}
-        views={blog.meta.views}
-        comments={blog.meta.commentsCount}
+        readTime={blog.meta?.readTime}
+        views={blog.meta?.views}
+        comments={blog.meta?.commentsCount}
         category={blog.category}
-        date={blog.meta.publishDate}
+        date={blog.meta?.publishDate}
       />
     </Link>
   ));
