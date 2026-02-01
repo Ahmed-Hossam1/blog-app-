@@ -6,20 +6,23 @@ import Link from "next/link";
 const page = async () => {
   /*===== Fetch ===== */
   const res = await fetch("http://localhost:3000/api/blogs");
+  if (!res.ok) throw new Error("Failed to fetch");
   const data = await res.json();
 
-  /*===== HANDLERS ===== */
-  const renderCards = data.map((blog: IBlog) => (
+  /*===== UI ===== */
+  const renderCards = data?.map((blog: IBlog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
       <ExploreCard
         title={blog.title}
-        src={blog.coverImage}
-        alt={blog.title}
-        readTime={blog.meta.readTime}
-        views={blog.meta.views}
-        comments={blog.meta.commentsCount}
+        coverImage={blog.coverImage}
+        coverImageAlt={blog.title}
+        authorImageSrc={blog.author?.avatar}
+        authorImageAlt={blog.author?.name}
+        readTime={blog.meta?.readTime}
+        views={blog.meta?.views}
+        comments={blog.meta?.commentsCount}
         category={blog.category}
-        date={blog.meta.publishDate}
+        date={blog.meta?.publishDate}
       />
     </Link>
   ));

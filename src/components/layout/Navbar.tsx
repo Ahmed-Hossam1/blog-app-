@@ -87,15 +87,19 @@ const Navbar = () => {
               <div className="mt-6 space-y-2">{renderMobileLinks}</div>
 
               <div className="mt-6 flex flex-col gap-2">
+                <Link href={"/signIn"}>
                 <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
                   sign in
                 </Button>
+                </Link>
+                <Link href={"/signUp"}>
                 <Button
                   bgColor="bg-black"
                   className="w-full capitalize py-2 font-medium text-white"
-                >
+                  >
                   sign up
                 </Button>
+                  </Link>
               </div>
             </aside>
           </div>

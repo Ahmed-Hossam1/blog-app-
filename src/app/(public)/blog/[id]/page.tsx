@@ -8,9 +8,9 @@ import { FaRegComment, FaRegEye, FaReply } from "react-icons/fa6";
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const res = await fetch(`http://localhost:3000/api/blogs/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch");
   const data: IBlog = await res.json();
 
-  if (!data) return;
   return (
     <SectionWrapper className="pt-40">
       <div className="container mx-auto max-w-5xl ">
