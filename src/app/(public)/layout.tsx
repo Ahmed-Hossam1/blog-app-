@@ -6,7 +6,9 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Navbar />
+      <main className="main pt-20">
       {children}
+      </main>
       <Footer />
     </>
   );

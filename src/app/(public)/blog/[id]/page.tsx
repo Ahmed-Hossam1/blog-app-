@@ -12,7 +12,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const data: IBlog = await res.json();
 
   return (
-    <SectionWrapper className="pt-40">
+    <SectionWrapper>
       <div className="container mx-auto max-w-5xl ">
         <div id="card_details" className=" bg-gray-50 pb-5 rounded-xl ">
           {/* Card Head */}

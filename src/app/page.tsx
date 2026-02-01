@@ -10,12 +10,14 @@ export default async function Home() {
   return (
     <>
       <Navbar />
-      <SectionWrapper>
-        <FeaturedArticles numberOfArticles={5} />
-        <ExploreCategories />
-        <MeetOurAuthors />
-        <NewsletterSubscribe />
-      </SectionWrapper>
+      <main className="main pt-20">
+        <SectionWrapper>
+          <FeaturedArticles numberOfArticles={5} />
+          <ExploreCategories />
+          <MeetOurAuthors />
+          <NewsletterSubscribe />
+        </SectionWrapper>
+      </main>
       <Footer />
     </>
   );
