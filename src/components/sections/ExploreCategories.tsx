@@ -98,13 +98,21 @@ const ExploreCategories = () => {
         </div>
 
         {/* Button */}
-        <div className="mt-12 flex justify-center ">
-          <Link href={"/blog"}>
-            <Button className="border px-6 py-3 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
-              View All Blogs
-            </Button>
-          </Link>
-        </div>
+        {renderCards.length === 0 ? (
+          <div className="flex items-center justify-center mt-12">
+            <p className="text-sm text-gray-500 capitalize font-semibold ">
+              No blogs found for this category
+            </p>
+          </div>
+        ) : (
+          <div className="mt-12 flex justify-center ">
+            <Link href={"/blog"}>
+              <Button className="border px-6 py-3 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 ">
+                View All Blogs
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </SectionWrapper>
   );
