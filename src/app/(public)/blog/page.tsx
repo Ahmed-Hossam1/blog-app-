@@ -7,9 +7,9 @@ const page = async () => {
   /*===== Fetch ===== */
   const res = await fetch("http://localhost:3000/api/blogs");
   if (!res.ok) throw new Error("Failed to fetch");
-  const data = await res.json();
+  const data: IBlog[] = await res.json();
 
-  /*===== UI ===== */
+  /*===== HANDLERS ===== */
   const renderCards = data?.map((blog: IBlog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
       <ExploreCard

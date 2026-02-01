@@ -18,12 +18,11 @@ const ExploreCategories = () => {
     const fetchBlogs = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/blogs");
-        if(!res.ok) throw new Error("Failed to fetch");
+        if (!res.ok) throw new Error("Failed to fetch");
         const data: IBlog[] = await res.json();
         setBlogs(data);
-        
       } catch (error) {
-        console.log(error)
+        console.log("error", error);
       }
     };
 
@@ -46,7 +45,7 @@ const ExploreCategories = () => {
   };
 
   /*===== RENDER ===== */
-  const renderTabs = tabsData.map((tab) => (
+  const renderTabs = tabsData?.map((tab) => (
     <Button
       onClick={() => handleCategoryChange(tab.name)}
       key={tab.id}

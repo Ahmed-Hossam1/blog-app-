@@ -25,6 +25,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               height={600}
               className="h-105 w-full object-cover"
             />
+
             <span className="absolute bottom-5 right-4 rounded-md bg-white px-3 py-1 text-xs font-medium">
               {data.meta?.readTime}
             </span>
@@ -156,7 +157,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                     <textarea
                       placeholder="Write Your Comment"
                       rows={4}
-                      className="w-full rounded-lg border px-4 py-3 text-sm outline-none"
+                      className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition py-2 px-4 rounded-md"
                     />
                     <Button className=" bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 transition">
                       Post Comment
