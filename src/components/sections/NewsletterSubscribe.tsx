@@ -1,6 +1,6 @@
-import SectionWrapper from "../Ui/SectionWrapper";
-import MyInput from "../Ui/Input";
-import Button from "../Ui/Button";
+import SectionWrapper from "../ui/SectionWrapper";
+import MyInput from "../ui/Input";
+import Button from "../ui/Button";
 
 const NewsletterSubscribe = () => {
   return (

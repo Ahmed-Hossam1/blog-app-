@@ -5,7 +5,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { FaBarsStaggered } from "react-icons/fa6";
-import Button from "../Ui/Button";
+import Button from "../ui/Button";
 import { useState } from "react";
 import { navLinksData } from "@/data";
 
@@ -87,19 +87,19 @@ const Navbar = () => {
               <div className="mt-6 space-y-2">{renderMobileLinks}</div>
 
               <div className="mt-6 flex flex-col gap-2">
-                <Link href={"/signIn"}>
-                <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
-                  sign in
-                </Button>
+                <Link href={"/sign-in"}>
+                  <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
+                    sign in
+                  </Button>
                 </Link>
-                <Link href={"/signUp"}>
-                <Button
-                  bgColor="bg-black"
-                  className="w-full capitalize py-2 font-medium text-white"
+                <Link href={"/sign-up"}>
+                  <Button
+                    bgColor="bg-black"
+                    className="w-full capitalize py-2 font-medium text-white"
                   >
-                  sign up
-                </Button>
-                  </Link>
+                    sign up
+                  </Button>
+                </Link>
               </div>
             </aside>
           </div>
@@ -125,12 +125,12 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden lg:flex items-center gap-2">
-            <Link href={"signIn"}>
+            <Link href={"sign-in"}>
               <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
                 sign in
               </Button>
             </Link>
-            <Link href={"signUp"}>
+            <Link href={"sign-up"}>
               <Button
                 bgColor="bg-black"
                 className="capitalize px-6 py-1.5 font-medium text-white"

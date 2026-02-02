@@ -1,8 +1,8 @@
 "use client";
 
-import Button from "@/components/Ui/Button";
-import MyInput from "@/components/Ui/Input";
-import { formConfig } from "@/interface";
+import Button from "@/components/ui/Button";
+import MyInput from "@/components/ui/Input";
+import { formConfig } from "@/constants/forms";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
@@ -10,17 +10,17 @@ import { FcGoogle } from "react-icons/fc";
 
 const page = () => {
   /*===== CONSTANTS ===== */
-  const signInInputs = formConfig?.signIn ?? [];
+  const signUpInputs = formConfig?.signUp ?? [];
 
   /*===== RENDER ===== */
-  const renderInputs = signInInputs.map((input) => (
+  const renderInputs = signUpInputs.map((input) => (
     <MyInput
       key={input.id}
       name={input.name}
       id={input.name}
       type={input.type}
       placeholder={input.placeholder}
-      className="rounded-md mb-4"
+      className="rounded-md mb-4 "
     />
   ));
 
@@ -39,19 +39,20 @@ const page = () => {
         {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
           <Button className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100">
-            <span>Sign In </span>
+            <span>Sign Up</span>
             <FcGoogle className="text-2xl" />
           </Button>
-          <Button className="flex-1 flex items-center justify-center  gap-4 border border-gray p-3 hover:bg-gray-100">
-            <span>Sign In</span>
+
+          <Button className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100">
+            <span>Sign Up</span>
             <FaGithub className="text-2xl" />
           </Button>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
-          <span className="bg-gray flex-1 h-px " />
+          <span className="bg-gray flex-1 h-px" />
           <p className="text-gray-400 text-sm uppercase">or</p>
-          <span className="bg-gray flex-1 h-px " />
+          <span className="bg-gray flex-1 h-px" />
         </div>
 
         {/* Form */}
@@ -60,21 +61,14 @@ const page = () => {
 
           <Button
             bgColor="bg-baseInk"
-            className="w-full hover:bg-black transition  text-white py-2"
+            className="w-full hover:bg-black transition text-white py-2"
           >
-            Sign In
+            Sign Up
           </Button>
 
           <div className="mt-4 text-sm text-gray-600">
-            <Link
-              href={"/ForgetPassword"}
-              className="mb-2 block cursor-pointer hover:underline"
-            >
-              Forgot Password?
-            </Link>
-
-            <Link href="/signUp" className="hover:underline ">
-              Not a member yet? Sign Up
+            <Link href="/sign-in" className="hover:underline">
+              Already have an account? Sign In
             </Link>
           </div>
         </form>

@@ -1,29 +1,20 @@
-import ExploreCard from "@/components/cards/ExploreCard";
-import SectionWrapper from "@/components/Ui/SectionWrapper";
-import { IBlog } from "@/interface";
+import CardSkeleton from "@/components/ui/CardSkeleton";
+import SectionWrapper from "@/components/ui/SectionWrapper";
+import { IBlog } from "@/types";
 import Link from "next/link";
+import { lazy, Suspense } from "react";
 
+import { getBlogs } from "@/services/blogService";
+
+const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
 const page = async () => {
   /*===== Fetch ===== */
-  const res = await fetch("http://localhost:3000/api/blogs");
-  if (!res.ok) throw new Error("Failed to fetch");
-  const data: IBlog[] = await res.json();
+  const data: IBlog[] = await getBlogs();
 
   /*===== HANDLERS ===== */
   const renderCards = data?.map((blog: IBlog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
-      <ExploreCard
-        title={blog.title}
-        coverImage={blog.coverImage}
-        coverImageAlt={blog.title}
-        authorImageSrc={blog.author?.avatar}
-        authorImageAlt={blog.author?.name}
-        readTime={blog.meta?.readTime}
-        views={blog.meta?.views}
-        comments={blog.meta?.commentsCount}
-        category={blog.category}
-        date={blog.meta?.publishDate}
-      />
+      <ExploreCard blog={blog} />
     </Link>
   ));
 
@@ -43,7 +34,9 @@ const page = async () => {
 
         {/* Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {renderCards}
+          <Suspense fallback={<CardSkeleton numberOfSkeleton={9} />}>
+            {renderCards}
+          </Suspense>
         </div>
       </div>
     </SectionWrapper>

@@ -1,11 +1,14 @@
 "use client";
 import { tabsData } from "@/data";
-import Button from "../Ui/Button";
-import ExploreCard from "../cards/ExploreCard";
-import SectionWrapper from "../Ui/SectionWrapper";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { IBlog } from "@/interface";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { IBlog } from "@/types";
+import { getBlogs } from "@/services/blogService";
+import Button from "@/components/ui/Button";
+import SectionWrapper from "@/components/ui/SectionWrapper";
+import CardSkeleton from "@/components/ui/CardSkeleton";
+
+const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
 
 const ExploreCategories = () => {
   /*===== STATE ===== */
@@ -17,10 +20,8 @@ const ExploreCategories = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/blogs");
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data: IBlog[] = await res.json();
-        setBlogs(data);
+        const blogs = await getBlogs();
+        setBlogs(blogs);
       } catch (error) {
         console.log("error", error);
       }
@@ -30,7 +31,6 @@ const ExploreCategories = () => {
   }, []);
 
   /*===== CONSTANT ===== */
-
   /* filter blogs base on category state
    if all back all blogs otherwise back filtered */
   const filteredCards =
@@ -49,30 +49,18 @@ const ExploreCategories = () => {
     <Button
       onClick={() => handleCategoryChange(tab.name)}
       key={tab.id}
-      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${
-        tab.name === activeTab
+      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${tab.name === activeTab
           ? "bg-black text-white"
           : "bg-white text-gray-700 hover:bg-baseInk hover:text-white "
-      }`}
+        }`}
     >
       {tab.name}
     </Button>
   ));
 
-  const renderCards = filteredCards.map((blog: IBlog) => (
+  const renderCards = filteredCards?.map((blog: IBlog) => (
     <Link href={`/blog/${blog.id}`} key={blog.id}>
-      <ExploreCard
-        title={blog.title}
-        coverImage={blog.coverImage}
-        coverImageAlt={blog.title}
-        authorImageSrc={blog.author?.avatar}
-        authorImageAlt={blog.author?.name}
-        readTime={blog.meta?.readTime}
-        views={blog.meta?.views}
-        comments={blog.meta?.commentsCount}
-        category={blog.category}
-        date={blog.meta?.publishDate}
-      />
+      <ExploreCard blog={blog} />
     </Link>
   ));
 
@@ -94,7 +82,9 @@ const ExploreCategories = () => {
 
         {/* Cards Grid */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
-          {renderCards}
+          <Suspense fallback={<CardSkeleton numberOfSkeleton={9} />}>
+            {renderCards}
+          </Suspense>
         </div>
 
         {/* Button */}

@@ -1,6 +1,7 @@
-import { IBlog } from "@/interface";
+import { getBlogs } from "@/services/blogService";
+import { IBlog } from "@/types";
 import FeaturedCard from "../cards/FeaturedCard";
-import SectionWrapper from "../Ui/SectionWrapper";
+import SectionWrapper from "../ui/SectionWrapper";
 
 interface IProps {
   numberOfArticles: number;
@@ -8,9 +9,7 @@ interface IProps {
 
 const FeaturedArticles = async ({ numberOfArticles }: IProps) => {
   /*===== Fetch ===== */
-  const res = await fetch("http://localhost:3000/api/blogs");
-  if (!res.ok) return ;
-  const data: IBlog[] = await res.json();
+  const data: IBlog[] = await getBlogs();
 
   /*===== CONSTANTS ===== */
 

@@ -1,6 +1,6 @@
-import SectionWrapper from "@/components/Ui/SectionWrapper";
-import Button from "@/components/Ui/Button";
-import { IBlog } from "@/interface";
+import SectionWrapper from "@/components/ui/SectionWrapper";
+import Button from "@/components/ui/Button";
+import { IBlog } from "@/types";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye, FaReply } from "react-icons/fa6";

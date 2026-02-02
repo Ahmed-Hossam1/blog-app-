@@ -1,4 +1,4 @@
-import { IAuthor, INavLinks, ITab } from "@/interface";
+import { IAuthor, INavLinks, ITab } from "@/types";
 
 export const navLinksData: INavLinks[] = [
   {
