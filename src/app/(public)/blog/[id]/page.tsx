@@ -1,4 +1,4 @@
-import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { IBlog } from "@/types";
 import Image from "next/image";

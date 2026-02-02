@@ -1,7 +1,7 @@
 import { getBlogs } from "@/services/blogService";
 import { IBlog } from "@/types";
 import FeaturedCard from "../cards/FeaturedCard";
-import SectionWrapper from "../ui/SectionWrapper";
+import SectionWrapper from "../SectionWrapper";
 
 interface IProps {
   numberOfArticles: number;
@@ -13,7 +13,7 @@ const FeaturedArticles = async ({ numberOfArticles }: IProps) => {
 
   /*===== CONSTANTS ===== */
 
-  // limit card number for display 
+  // limit card number for display
   const limit = numberOfArticles > data.length ? data.length : numberOfArticles;
 
   /*===== RENDER ===== */

@@ -5,7 +5,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { IBlog } from "@/types";
 import { getBlogs } from "@/services/blogService";
 import Button from "@/components/ui/Button";
-import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionWrapper from "@/components/SectionWrapper";
 import CardSkeleton from "@/components/Skeleton/CardSkeleton";
 import HeaderSkeleton from "../Skeleton/HeaderSkeleton";
 import TabsSkeleton from "../Skeleton/TabsSkeleton";

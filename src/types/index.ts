@@ -48,3 +48,24 @@ export interface IAuthor {
   avatar: string;
 }
 
+export interface IField {
+  id: string | number;
+  name: "user_name" | "email" | "password" | "confirm_password";
+  type: string;
+  placeholder: string;
+  label?: string;
+}
+
+export interface IErrors {
+  user_name: string;
+  email: string ;
+  password: string;
+  confirm_password: string;
+}
+
+export interface ISignUpForm {
+  user_name: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+}

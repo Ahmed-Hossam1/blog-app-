@@ -7,7 +7,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string | undefined;
   name: string;
   type: string;
-  //   value: string | number;
+  value: string | number;
   placeholder: string;
   className?: string;
 }
@@ -15,11 +15,11 @@ const MyInput = ({
   id,
   name,
   type,
-  //   value,
+  value,
   placeholder,
   className,
 
-  ...res
+  ...rest
 }: IProps) => {
   return (
     <Input
@@ -27,9 +27,9 @@ const MyInput = ({
       id={id}
       name={name}
       type={type}
-      //   value={value}
+      value={value}
       placeholder={placeholder}
-      {...res}
+      {...rest}
     />
   );
 };

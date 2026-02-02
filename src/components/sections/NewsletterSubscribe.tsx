@@ -1,4 +1,4 @@
-import SectionWrapper from "../ui/SectionWrapper";
+import SectionWrapper from "../SectionWrapper";
 import MyInput from "../ui/Input";
 import Button from "../ui/Button";
 

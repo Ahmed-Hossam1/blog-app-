@@ -1,5 +1,5 @@
 import CardSkeleton from "@/components/Skeleton/CardSkeleton";
-import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionWrapper from "@/components/SectionWrapper";
 import { IBlog } from "@/types";
 import Link from "next/link";
 import { lazy, Suspense } from "react";
