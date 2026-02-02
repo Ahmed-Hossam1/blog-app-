@@ -6,10 +6,9 @@ import { IBlog } from "@/types";
 
 interface IProps {
   blog: IBlog;
-  className?: string;
 }
 
-const ExploreCard = ({ blog, className }: IProps) => {
+const ExploreCard = ({ blog }: IProps) => {
   return (
     <div className="overflow-hidden rounded-2xl  bg-white shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}

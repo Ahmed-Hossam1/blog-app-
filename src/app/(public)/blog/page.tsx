@@ -1,9 +1,8 @@
-import CardSkeleton from "@/components/ui/CardSkeleton";
+import CardSkeleton from "@/components/Skeleton/CardSkeleton";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import { IBlog } from "@/types";
 import Link from "next/link";
 import { lazy, Suspense } from "react";
-
 import { getBlogs } from "@/services/blogService";
 
 const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));

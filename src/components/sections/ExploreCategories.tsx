@@ -6,7 +6,9 @@ import { IBlog } from "@/types";
 import { getBlogs } from "@/services/blogService";
 import Button from "@/components/ui/Button";
 import SectionWrapper from "@/components/ui/SectionWrapper";
-import CardSkeleton from "@/components/ui/CardSkeleton";
+import CardSkeleton from "@/components/Skeleton/CardSkeleton";
+import HeaderSkeleton from "../Skeleton/HeaderSkeleton";
+import TabsSkeleton from "../Skeleton/TabsSkeleton";
 
 const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
 
@@ -49,10 +51,11 @@ const ExploreCategories = () => {
     <Button
       onClick={() => handleCategoryChange(tab.name)}
       key={tab.id}
-      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${tab.name === activeTab
+      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${
+        tab.name === activeTab
           ? "bg-black text-white"
           : "bg-white text-gray-700 hover:bg-baseInk hover:text-white "
-        }`}
+      }`}
     >
       {tab.name}
     </Button>
@@ -64,6 +67,16 @@ const ExploreCategories = () => {
     </Link>
   ));
 
+  if (blogs.length === 0)
+    return (
+      <div>
+        <HeaderSkeleton />
+        <TabsSkeleton numberOfSkeleton={7} />
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
+          <CardSkeleton numberOfSkeleton={9} />
+        </div>
+      </div>
+    );
   return (
     <SectionWrapper>
       <div className="container mx-auto">
