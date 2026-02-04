@@ -4,8 +4,9 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
-import { IErrors, ISignUpForm } from "@/types";
-import { errorsHandler } from "@/utils";
+import { ISignUpErrors, ISignUpForm } from "@/types";
+import { signUpErrors } from "@/utils";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -19,7 +20,7 @@ const signUpObj: ISignUpForm = {
   confirm_password: "",
 };
 
-const errorObj: IErrors = {
+const errorObj: ISignUpErrors = {
   user_name: "",
   email: "",
   password: "",
@@ -29,7 +30,7 @@ const errorObj: IErrors = {
 const Page = () => {
   /*======= STATE ======*/
   const [signUp, setSignUp] = useState<ISignUpForm>(signUpObj);
-  const [errors, setErrors] = useState<IErrors>(errorObj);
+  const [errors, setErrors] = useState<ISignUpErrors>(errorObj);
 
   /*======= CONSTANTS ======*/
   // inputs config used to render sign up form dynamically
@@ -46,18 +47,19 @@ const Page = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const validationErrors = errorsHandler(signUp);
+    const validationErrors = signUpErrors(signUp);
     setErrors(validationErrors);
 
     const isFormValid = Object.values(validationErrors).every(
       (value) => value === "",
     );
-    console.log(isFormValid);
+
     if (!isFormValid) return;
 
-    console.log("FORM IS VALID");
-  };
+    localStorage.setItem("user", JSON.stringify(signUp.user_name));
 
+    window.location.href = "/";
+  };
   /*======= RENDER ======*/
 
   const renderInputs = signUpInputs.map((input) => (
@@ -70,7 +72,7 @@ const Page = () => {
         onChange={handleInputChange}
         className="rounded-md"
       />
-      <ErrorMessage msg={errors[input.name as keyof IErrors]} />
+      <ErrorMessage msg={errors[input.name as keyof ISignUpErrors]} />
     </div>
   ));
 
@@ -89,12 +91,18 @@ const Page = () => {
 
         {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
-          <Button className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100">
+          <Button
+            onClick={() => signIn("google", { callbackUrl: "/" })}
+            className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100"
+          >
             <span>Sign Up</span>
             <FcGoogle className="text-2xl" />
           </Button>
 
-          <Button className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100">
+          <Button
+            onClick={() => signIn("github", { callbackUrl: "/" })}
+            className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100"
+          >
             <span>Sign Up</span>
             <FaGithub className="text-2xl" />
           </Button>

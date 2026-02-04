@@ -1,27 +1,67 @@
 "use client";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
+import { ISignInErrors, ISignInForm } from "@/types";
+import { signInErrors } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
 
-const page = () => {
+const signInObj: ISignInForm = {
+  email: "",
+  password: "",
+};
+
+const errorObj: ISignInErrors = {
+  email: "",
+  password: "",
+};
+
+const Page = () => {
+  /*===== STATES ===== */
+  const [sign_In, setSignIn] = useState<ISignInForm>(signInObj);
+  const [errors, setErrors] = useState<ISignInErrors>(errorObj);
+
   /*===== CONSTANTS ===== */
   const signInInputs = formConfig?.signIn ?? [];
+  /*===== HANDLERS ===== */
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignIn((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const validationErrors = signInErrors(sign_In);
+    setErrors(validationErrors);
+    const isFormValid = Object.values(validationErrors).every(
+      (value) => value === "",
+    );
+    if (!isFormValid) return;
+    console.log("Form Is Valid ");
+  };
 
   /*===== RENDER ===== */
   const renderInputs = signInInputs.map((input) => (
-    <MyInput
-      key={input.id}
-      name={input.name}
-      id={input.name}
-      type={input.type}
-      placeholder={input.placeholder}
-      className="rounded-md mb-4"
-    />
+    <div key={input.id}>
+      <MyInput
+        name={input.name}
+        id={input.name}
+        type={input.type}
+        placeholder={input.placeholder}
+        className="rounded-md"
+        value={sign_In[input.name as keyof ISignInForm]}
+        onChange={handleInputChange}
+      />
+      <ErrorMessage msg={errors[input.name as keyof ISignInErrors]} />
+    </div>
   ));
 
   /*===== JSX ===== */
@@ -38,11 +78,17 @@ const page = () => {
 
         {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
-          <Button className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100">
+          <Button
+            onClick={() => signIn("google", { callbackUrl: "/" })}
+            className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100"
+          >
             <span>Sign In </span>
             <FcGoogle className="text-2xl" />
           </Button>
-          <Button className="flex-1 flex items-center justify-center  gap-4 border border-gray p-3 hover:bg-gray-100">
+          <Button
+            onClick={() => signIn("github", { callbackUrl: "/" })}
+            className="flex-1 flex items-center justify-center  gap-4 border border-gray p-3 hover:bg-gray-100"
+          >
             <span>Sign In</span>
             <FaGithub className="text-2xl" />
           </Button>
@@ -55,8 +101,8 @@ const page = () => {
         </div>
 
         {/* Form */}
-        <form method="post" className="flex flex-col space-y-4">
-          <div>{renderInputs}</div>
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          {renderInputs}
 
           <Button
             bgColor="bg-baseInk"
@@ -83,4 +129,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

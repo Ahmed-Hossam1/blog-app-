@@ -1,6 +1,6 @@
-import { Field } from "@/types";
+import { IField } from "@/types";
 
-export const formConfig: Record<string, Field[]> = {
+export const formConfig: Record<string, IField[]> = {
   signIn: [
     {
       id: 1,

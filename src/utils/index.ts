@@ -1,25 +1,33 @@
+import {  ISignInForm, ISignUpErrors, ISignUpForm } from "@/types";
+
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
 }
 
-type SignUpForm = {
-  user_name: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-};
-
-export function errorsHandler(signUpForm: SignUpForm) {
+export function signInErrors(signInForm: ISignInForm) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  type Errors = {
-    user_name: string;
-    email: string;
-    password: string;
-    confirm_password: string;
+  const errors: ISignInForm = {
+    email: "",
+    password: "",
   };
 
-  const errors: Errors = {
+  if (!signInForm.email.trim() || !emailRegex.test(signInForm.email)) {
+    errors.email = "Please enter a valid email address.";
+  }
+
+  if (!signInForm.password.trim() || signInForm.password.length < 6) {
+    errors.password =
+      "Password is required and must be at least 6 characters long.";
+  }
+
+  return errors;
+}
+
+export function signUpErrors(signUpForm: ISignUpForm) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const errors: ISignUpErrors = {
     user_name: "",
     email: "",
     password: "",

@@ -49,18 +49,28 @@ export interface IAuthor {
 }
 
 export interface IField {
-  id: string | number;
+  id: string;
   name: "user_name" | "email" | "password" | "confirm_password";
   type: string;
   placeholder: string;
   label?: string;
 }
 
-export interface IErrors {
+export interface ISignInErrors {
+  email: string;
+  password: string;
+}
+
+export interface ISignUpErrors {
   user_name: string;
-  email: string ;
+  email: string;
   password: string;
   confirm_password: string;
+}
+
+export interface ISignInForm {
+  email: string;
+  password: string;
 }
 
 export interface ISignUpForm {
