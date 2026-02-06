@@ -35,11 +35,6 @@ export interface IBlog {
   }[];
 }
 
-export interface ITab {
-  id: number;
-  name: string;
-}
-
 export interface IAuthor {
   id: number;
   name: string;
@@ -48,8 +43,13 @@ export interface IAuthor {
   avatar: string;
 }
 
+export interface ITab {
+  id: number;
+  name: string;
+}
+
 export interface IField {
-  id: string;
+  id: number;
   name: "user_name" | "email" | "password" | "confirm_password";
   type: string;
   placeholder: string;

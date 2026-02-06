@@ -1,13 +1,12 @@
 "use client";
 
-import { Input } from "@headlessui/react";
 import { InputHTMLAttributes } from "react";
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string | undefined;
   name: string;
   type: string;
-  value: string | number;
+  value?: string | number;
   placeholder: string;
   className?: string;
 }
