@@ -1,4 +1,4 @@
-# 🚀 Modern Blog Application
+# 🚀 Blog Application
 
 A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB**, **Prisma**, and **Tailwind CSS 4**. This project features a robust authentication system, blog management, comments, and a responsive design.
 
@@ -14,7 +14,7 @@ A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 - **Database**: [MongoDB](https://www.mongodb.com/)
 - **ORM**: [Prisma](https://www.prisma.io/)
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/)
@@ -33,7 +33,7 @@ A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB
 
 1. **Clone the repository**:
    ```bash
-   git clone <your-repo-url>
+   git clone <repo-url>
    cd first-next-app
    ```
 
@@ -45,7 +45,7 @@ A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB
 3. **Environment Setup**:
    Create a `.env` file in the root directory and add your credentials:
    ```env
-   DATABASE_URL="mongodb+srv://<user>:<password>@cluster.mongodb.net/blog-app"
+   DATABASE_URL="mongodb+srv://<user>:<password>@cluster.mongodb.net/blogs"
    NEXTAUTH_SECRET="your-secret-key"
    NEXTAUTH_URL="http://localhost:3000"
    ```
@@ -54,7 +54,7 @@ A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB
    ```bash
    npx prisma generate
    npx prisma db push
-   npm run seed
+   npx prisma db seed
    ```
 
 5. **Run the Development Server**:
@@ -71,12 +71,6 @@ A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB
 - `prisma`: Database schema and seeding scripts.
 - `public`: Static assets and images.
 
-## 📜 Available Scripts
-
-- `npm run dev`: Starts the development server.
-- `npm run build`: Builds the application for production.
-- `npm run start`: Starts the production server.
-- `npm run lint`: Runs ESLint for code quality checks.
 
 ---
-Built with ❤️ for a modern web experience.
+Built with Ahmed Hossam ❤️ for a modern web experience.
