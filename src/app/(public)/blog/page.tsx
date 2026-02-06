@@ -3,16 +3,17 @@ import SectionWrapper from "@/components/SectionWrapper";
 import { IBlog } from "@/types";
 import Link from "next/link";
 import { lazy, Suspense } from "react";
-import { getBlogs } from "@/services/blogService";
 
 const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
 const page = async () => {
   /*===== Fetch ===== */
-  const data: IBlog[] = await getBlogs();
+  const res = await fetch("http://localhost:3000/api/blogs");
+  if (!res.ok) throw new Error("Failed to fetch blogs");
+  const data = await res.json();
 
-  /*===== HANDLERS ===== */
+  /*===== RENDER ===== */
   const renderCards = data?.map((blog: IBlog) => (
-    <Link href={`/blog/${blog.id}`} key={blog.id}>
+    <Link href={`/blog/${blog.slug}`} key={blog.slug}>
       <ExploreCard blog={blog} />
     </Link>
   ));

@@ -26,7 +26,7 @@ const ExploreCard = ({ blog }: IProps) => {
         <div className="absolute left-4 -bottom-4">
           <Image
             src={`/${blog.author?.avatar}`}
-            alt={`/${blog.author?.name}`}
+            alt={`${blog.author?.name}`}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"

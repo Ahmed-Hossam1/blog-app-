@@ -11,38 +11,39 @@ export interface IBlog {
   title: string;
   subtitle: string;
   category: string;
+  coverImage: string;
+  published: boolean;
+  createdAt: string;
+  updatedAt: string;
+  authorId: string;
   meta: {
     readTime: string;
     publishDate: string;
     views: number;
     commentsCount: number;
   };
-  author: {
-    name: string;
-    avatar: string;
-  };
-  coverImage: string;
   content: {
     type: string;
     text: string;
-    items?: string[];
+    listItems?: string[];
   }[];
-  comments: {
-    id: number;
-    author: string;
-    avatar: string;
-    comment: string;
-  }[];
+  author?: IAuthor;
+  comments?: IComment[];
 }
 
 export interface IAuthor {
   id: number;
+  email: string;
   name: string;
-  role: string;
-  bio: string;
   avatar: string;
 }
 
+export interface IComment {
+  id: number;
+  author: string;
+  avatar: string;
+  comment: string;
+}
 export interface ITab {
   id: number;
   name: string;

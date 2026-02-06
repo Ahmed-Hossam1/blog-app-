@@ -42,12 +42,8 @@ const MeetOurAuthors = () => {
               </Link>
 
               {/* Role */}
-              <p className="mt-1 text-sm text-gray-500">{author.role}</p>
 
               {/* Bio */}
-              <p className="mt-4 text-sm leading-relaxed text-gray-600">
-                {author.bio}
-              </p>
             </div>
           ))}
         </div>

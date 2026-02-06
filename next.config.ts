@@ -5,20 +5,15 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'i.pravatar.cc',
-        port: '',
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+        port: "",
       },
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
       },
-       {
-        protocol: 'https',
-        hostname: 'cdn.dummyjson.com',
-        port: '',
-       }
     ],
   },
 

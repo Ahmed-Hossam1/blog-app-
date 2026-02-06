@@ -5,12 +5,15 @@ import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye, FaReply } from "react-icons/fa6";
 
-const page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-  const res = await fetch(`http://localhost:3000/api/blogs/${id}`);
+const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
+  
+  /*===== Fetch ===== */
+  const res = await fetch(`http://localhost:3000/api/blogs/${slug}`);
   if (!res.ok) throw new Error("Failed to fetch");
   const data: IBlog = await res.json();
 
+  console.log(data);
   return (
     <SectionWrapper>
       <div className="container mx-auto max-w-5xl ">
@@ -20,7 +23,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             {/* Cover Image */}
             <Image
               src={`/${data.coverImage}`}
-              alt={`/${data.slug}`}
+              alt={`${data.slug}`}
               width={1200}
               height={600}
               className="h-105 w-full object-cover"
@@ -93,7 +96,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                       {/* List */}
                       {content.type === "list" && (
                         <ul className="mb-4 list-disc pl-6 space-y-2 text-gray-700">
-                          {content.items?.map((item, i) => (
+                          {content.listItems?.map((item, i) => (
                             <li key={i} className="leading-7">
                               {item}
                             </li>
@@ -121,7 +124,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                       {/* Header */}
                       <div className="mb-3 flex items-center gap-3">
                         <Image
-                          src={`/${comment.avatar}`}
+                          src={`${comment.avatar}`}
                           alt={comment.author}
                           width={40}
                           height={40}

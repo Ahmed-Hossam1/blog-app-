@@ -6,8 +6,8 @@ interface IProps {
   title: string;
   src: string;
   alt: string;
-  avatarSrc: string;
-  avatarAlt: string;
+  avatarSrc: string | undefined;
+  avatarAlt: string | undefined;
   category: string;
   views: number;
   comments: number;
@@ -50,7 +50,7 @@ const FeaturedCard = ({
         <div className="absolute left-4 top-4">
           <Image
             src={`/${avatarSrc}`}
-            alt={"Dasdo"}
+            alt={`${avatarAlt}`}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"

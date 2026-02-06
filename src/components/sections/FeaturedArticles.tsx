@@ -1,4 +1,3 @@
-import { getBlogs } from "@/services/blogService";
 import { IBlog } from "@/types";
 import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../SectionWrapper";
@@ -9,7 +8,9 @@ interface IProps {
 
 const FeaturedArticles = async ({ numberOfArticles }: IProps) => {
   /*===== Fetch ===== */
-  const data: IBlog[] = await getBlogs();
+  const res = await fetch("http://localhost:3000/api/blogs");
+  if (!res.ok) throw new Error("Failed to fetch");
+  const data = await res.json();
 
   /*===== CONSTANTS ===== */
 

@@ -1,12 +1,11 @@
 "use client";
-import { tabsData } from "@/data";
-import Link from "next/link";
-import { lazy, Suspense, useEffect, useState } from "react";
-import { IBlog } from "@/types";
-import { getBlogs } from "@/services/blogService";
-import Button from "@/components/ui/Button";
 import SectionWrapper from "@/components/SectionWrapper";
 import CardSkeleton from "@/components/Skeleton/CardSkeleton";
+import Button from "@/components/ui/Button";
+import { tabsData } from "@/data";
+import { IBlog } from "@/types";
+import Link from "next/link";
+import { lazy, Suspense, useEffect, useState } from "react";
 import HeaderSkeleton from "../Skeleton/HeaderSkeleton";
 import TabsSkeleton from "../Skeleton/TabsSkeleton";
 
@@ -22,10 +21,12 @@ const ExploreCategories = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const blogs = await getBlogs();
-        setBlogs(blogs);
+        const res = await fetch("http://localhost:3000/api/blogs");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        setBlogs(data);
       } catch (error) {
-        console.log("error", error);
+        console.error("error", error);
       }
     };
 
@@ -62,7 +63,7 @@ const ExploreCategories = () => {
   ));
 
   const renderCards = filteredCards?.map((blog: IBlog) => (
-    <Link href={`/blog/${blog.id}`} key={blog.id}>
+    <Link href={`/blog/${blog.slug}`} key={blog.slug}>
       <ExploreCard blog={blog} />
     </Link>
   ));
