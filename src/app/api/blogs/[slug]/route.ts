@@ -12,8 +12,13 @@ export async function GET(
       slug: slug,
     },
     include: {
-      author: true,
       comments: true,
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
     },
   });
 

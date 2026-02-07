@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "i.pravatar.cc",
         port: "",
       },
+       {
+        protocol: "https",
+        hostname: "randomuser.me",
+        port: "",
+       },
       {
         protocol: "https",
         hostname: "images.unsplash.com",

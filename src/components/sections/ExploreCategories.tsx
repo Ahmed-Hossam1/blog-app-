@@ -1,37 +1,26 @@
 "use client";
 import SectionWrapper from "@/components/SectionWrapper";
-import CardSkeleton from "@/components/Skeleton/CardSkeleton";
 import Button from "@/components/ui/Button";
 import { tabsData } from "@/data";
-import { IBlog } from "@/types";
+import { IBaseBlog } from "@/types";
 import Link from "next/link";
-import { lazy, Suspense, useEffect, useState } from "react";
-import HeaderSkeleton from "../Skeleton/HeaderSkeleton";
-import TabsSkeleton from "../Skeleton/TabsSkeleton";
+import { useState } from "react";
+import ExploreCard from "../cards/ExploreCard";
 
-const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
+interface ExploreCategoriesProps {
+  blogs: IBaseBlog[];
+  numberOfShownArticles: number;
+}
 
-const ExploreCategories = () => {
+const ExploreCategories = ({
+  blogs,
+  numberOfShownArticles,
+}: ExploreCategoriesProps) => {
   /*===== STATE ===== */
   const [activeTab, setActiveTab] = useState<string>("All");
   const [category, setCategory] = useState<string>("All");
-  const [blogs, setBlogs] = useState<IBlog[]>([]);
 
   /*===== Fetch ===== */
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/blogs");
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data = await res.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error("error", error);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
 
   /*===== CONSTANT ===== */
   /* filter blogs base on category state
@@ -39,12 +28,10 @@ const ExploreCategories = () => {
   const filteredCards =
     category === "All"
       ? blogs
-      : blogs.filter((blog: IBlog) => blog.category === category);
-      
-  const ITEMS_PER_PAGE = 9;
+      : blogs.filter((blog: IBaseBlog) => blog.category === category);
 
   /*===== SlICE ===== */
-  const slicedBlogs = filteredCards.slice(0, ITEMS_PER_PAGE);
+  const slicedBlogs = filteredCards.slice(0, numberOfShownArticles);
   /*===== HANDLER ===== */
   const handleCategoryChange = (name: string): void => {
     setActiveTab(name);
@@ -66,22 +53,12 @@ const ExploreCategories = () => {
     </Button>
   ));
 
-  const renderCards = slicedBlogs?.map((blog: IBlog) => (
+  const renderCards = slicedBlogs?.map((blog: IBaseBlog) => (
     <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-      <ExploreCard blog={blog} />
+      <ExploreCard {...blog} />
     </Link>
   ));
 
-  if (blogs.length === 0)
-    return (
-      <div>
-        <HeaderSkeleton />
-        <TabsSkeleton numberOfSkeleton={7} />
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
-          <CardSkeleton numberOfSkeleton={9} />
-        </div>
-      </div>
-    );
   return (
     <SectionWrapper>
       <div className="container mx-auto">
@@ -100,9 +77,7 @@ const ExploreCategories = () => {
 
         {/* Cards Grid */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
-          <Suspense fallback={<CardSkeleton numberOfSkeleton={9} />}>
-            {renderCards}
-          </Suspense>
+          {renderCards}
         </div>
 
         {/* Button */}

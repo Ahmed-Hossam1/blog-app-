@@ -1,4 +1,4 @@
-import { IAuthor, ISignInForm } from "@/types";
+import { ISignInForm, ISignUpForm } from "@/types";
 
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
@@ -24,10 +24,10 @@ export function signInErrors(signInForm: ISignInForm) {
   return errors;
 }
 
-export function signUpErrors(signUpForm: IAuthor) {
+export function signUpErrors(signUpForm: ISignUpForm) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const errors: IAuthor = {
+  const errors: ISignUpForm = {
     name: "",
     email: "",
     password: "",

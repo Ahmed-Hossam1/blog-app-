@@ -12,15 +12,15 @@ export const formConfig: Record<string, IField[]> = {
       id: 2,
       name: "password",
       type: "password",
-      placeholder: "password",
-    },
+      placeholder: "Password",
+    }
   ],
 
   signUp: [
     {
       id: 1,
       name: "name",
-      placeholder: " name",
+      placeholder: "Name",
       type: "text",
     },
     {
@@ -33,7 +33,7 @@ export const formConfig: Record<string, IField[]> = {
       id: 3,
       name: "password",
       type: "password",
-      placeholder: "password",
+      placeholder: "Password",
     },
   ],
 };

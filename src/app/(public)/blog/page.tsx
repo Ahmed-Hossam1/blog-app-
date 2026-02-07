@@ -1,13 +1,12 @@
 "use client";
-import CardSkeleton from "@/components/Skeleton/CardSkeleton";
 import SectionWrapper from "@/components/SectionWrapper";
 import { IBlog } from "@/types";
 import Link from "next/link";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PageLoader from "@/components/PageLoader";
+import ExploreCard from "@/components/cards/ExploreCard";
 
-const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
 const Page = () => {
   /*===== STATE ===== */
   const [data, setData] = useState<IBlog[]>([]);
@@ -16,7 +15,9 @@ const Page = () => {
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        const res = await fetch("http://localhost:3000/api/blogs");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs`,
+        );
         if (!res.ok) throw new Error("Failed to fetch blogs");
         const data = await res.json();
         setData(data);
@@ -35,8 +36,14 @@ const Page = () => {
 
   /*===== RENDER ===== */
   const renderCards = currentData?.map((blog: IBlog) => (
-    <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-      <ExploreCard blog={blog} />
+    <Link href={`/blog/${blog.slug}`} key={blog.id}>
+      <ExploreCard
+        title={blog.title}
+        image={blog.image}
+        category={blog.category}
+        meta={blog.meta}
+        author={blog.author}
+      />
     </Link>
   ));
 
@@ -58,9 +65,7 @@ const Page = () => {
 
         {/* Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <Suspense fallback={<CardSkeleton numberOfSkeleton={9} />}>
-            {renderCards}
-          </Suspense>
+          {renderCards}
         </div>
 
         {data.length > 0 && (

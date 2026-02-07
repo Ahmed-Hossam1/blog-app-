@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 import { Prisma } from "../../../../../generated/prisma/client";
-import { IAuthor } from "@/types";
+import { ISignUpForm } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {
     // Parse the request body
-    const body: IAuthor = await req.json();
+    const body: ISignUpForm = await req.json();
 
     const newUser = await prisma.user.create({
       data: {

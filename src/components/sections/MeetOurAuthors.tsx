@@ -1,7 +1,16 @@
-import { authorData } from "@/data";
+import { IAuthor } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-const MeetOurAuthors = () => {
+
+interface MeetOurAuthorsProps {
+  numberOfShownAuthors: number;
+  authors: IAuthor[];
+}
+const MeetOurAuthors = ({
+  authors,
+  numberOfShownAuthors,
+}: MeetOurAuthorsProps) => {
+  const slicedAuthors = authors.slice(0, numberOfShownAuthors);
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -17,16 +26,16 @@ const MeetOurAuthors = () => {
         </div>
 
         {/* Cards */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {authorData.map((author, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  gap-8">
+          {slicedAuthors.map((author) => (
             <div
-              key={i}
+              key={author.name}
               className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm  hover:shadow-md hover:scale-105 hover:transition duration-500"
             >
               {/* Avatar */}
               <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full bg-gray-100">
                 <Image
-                  src={author.avatar}
+                  src={`${author.image}`}
                   alt={author.name}
                   width={80}
                   height={80}

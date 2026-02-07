@@ -7,9 +7,10 @@ import { FaRegComment, FaRegEye, FaReply } from "react-icons/fa6";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  
+
   /*===== Fetch ===== */
-  const res = await fetch(`http://localhost:3000/api/blogs/${slug}`);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const res = await fetch(`${baseUrl}/api/blogs/${slug}`);
   if (!res.ok) throw new Error("Failed to fetch");
   const data: IBlog = await res.json();
 
@@ -21,7 +22,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           <div className="relative mb-10 overflow-hidden rounded-xl">
             {/* Cover Image */}
             <Image
-              src={`/${data.coverImage}`}
+              src={data.image}
               alt={`${data.slug}`}
               width={1200}
               height={600}
@@ -123,14 +124,14 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                       {/* Header */}
                       <div className="mb-3 flex items-center gap-3">
                         <Image
-                          src={`${comment.avatar}`}
-                          alt={comment.author}
+                          src={comment.image}
+                          alt={comment.authorName}
                           width={40}
                           height={40}
                           className=" rounded-full object-cover"
                         />
                         <h4 className="font-semibold text-baseInk">
-                          {comment.author}
+                          {comment.authorName}
                         </h4>
                       </div>
 

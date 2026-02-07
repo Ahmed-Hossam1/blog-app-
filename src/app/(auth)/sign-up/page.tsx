@@ -4,7 +4,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
-import { IAuthor } from "@/types";
+import { ISignUpForm } from "@/types";
 import { signUpErrors } from "@/utils";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -16,17 +16,17 @@ import { toast } from "react-toastify";
 
 const Page = () => {
   /*======= STATE ======*/
-  const [signUp, setSignUp] = useState<IAuthor>({
+  const [signUp, setSignUp] = useState<ISignUpForm>({
     name: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<IAuthor>({
+  const [errors, setErrors] = useState<ISignUpForm>({
     name: "",
     email: "",
     password: "",
   });
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   /*======= CONSTANTS ======*/
   // inputs config used to render sign up form dynamically
   const signUpInputs = formConfig?.signUp ?? [];
@@ -53,7 +53,9 @@ const Page = () => {
     if (!isFormValid) return;
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/sign-up", {
+      setIsLoading(true);
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const res = await fetch(`${baseUrl}/api/auth/sign-up`, {
         method: "POST",
         body: JSON.stringify(signUp),
       });
@@ -66,6 +68,8 @@ const Page = () => {
       }, 1500);
     } catch (error) {
       toast.error(`${error as Error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
   /*======= RENDER ======*/
@@ -75,11 +79,11 @@ const Page = () => {
         {...input}
         id={input.name}
         name={input.name}
-        value={signUp[input.name as keyof IAuthor]}
+        value={signUp[input.name as keyof ISignUpForm]}
         onChange={handleInputChange}
         className="rounded-md"
       />
-      <ErrorMessage msg={`${errors[input.name as keyof IAuthor]}`} />
+      <ErrorMessage msg={`${errors[input.name as keyof ISignUpForm]}`} />
     </div>
   ));
 
@@ -127,10 +131,11 @@ const Page = () => {
 
           <Button
             bgColor="bg-baseInk"
-            className="w-full hover:bg-black transition text-white py-2"
+            disabled={isLoading}
+            className="w-full text-white py-2"
             type="submit"
           >
-            Sign Up
+            {isLoading ? "signing up..." : "Sign Up"}
           </Button>
 
           <div className="mt-4 text-sm text-gray-600">

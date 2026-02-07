@@ -1,21 +1,31 @@
 "use client";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-  children: ReactNode;
   bgColor?: string;
 }
+
 const Button = ({
-  className,
+  className = "",
   children,
-  bgColor = "none",
-  ...res
+  bgColor = "",
+  disabled,
+  ...rest
 }: ButtonProps) => {
   return (
     <button
-      className={`rounded-md  cursor-pointer  ${className}  ${bgColor} `}
-      {...res}
+      disabled={disabled}
+      className={`
+        rounded-md transition
+        ${bgColor}
+        ${
+          disabled
+            ? "cursor-not-allowed opacity-50"
+            : "cursor-pointer hover:bg-black"
+        }
+        ${className}
+      `}
+      {...rest}
     >
       {children}
     </button>

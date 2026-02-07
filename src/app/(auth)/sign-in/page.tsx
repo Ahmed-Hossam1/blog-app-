@@ -45,7 +45,8 @@ const Page = () => {
     );
     if (!isFormValid) return;
     try {
-      const res = await fetch("http://localhost:3000/api/auth/sign-in", {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const res = await fetch(`${baseUrl}/api/auth/sign-in`, {
         method: "POST",
         body: JSON.stringify(sign_In),
       });

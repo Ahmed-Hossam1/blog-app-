@@ -1,38 +1,26 @@
+import { IBaseBlog } from "@/types";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
-interface IProps {
-  title: string;
-  src: string;
-  alt: string;
-  avatarSrc: string | undefined;
-  avatarAlt: string | undefined;
-  category: string;
-  views: number;
-  comments: number;
-  date: string;
+interface FeaturedCardProps extends IBaseBlog {
   className?: string;
 }
 const FeaturedCard = ({
   title,
-  src,
-  alt,
-  avatarSrc,
-  avatarAlt,
+  image,
   category,
-  views,
-  comments,
-  date,
+  meta,
+  author,
   className,
-}: IProps) => {
+}: FeaturedCardProps) => {
   return (
     <div className={`max-w-5xl ${className}`}>
       <div className="relative overflow-hidden rounded-2xl shadow-lg group">
         {/* Image */}
         <Image
-          src={`/${src}`}
-          alt={alt}
+          src={image}
+          alt={title}
           width={1200}
           height={600}
           className="h-105 w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -49,8 +37,8 @@ const FeaturedCard = ({
         {/* Author Avatar */}
         <div className="absolute left-4 top-4">
           <Image
-            src={`/${avatarSrc}`}
-            alt={`${avatarAlt}`}
+            src={`${author.image}`}
+            alt={author.name}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"
@@ -66,16 +54,16 @@ const FeaturedCard = ({
           <div className="flex items-center justify-between  text-sm text-gray-300">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <FaRegEye /> {views}
+                <FaRegEye /> {meta.views}
               </span>
               <span className="flex items-center gap-1">
-                <FaRegComment /> {comments}
+                <FaRegComment /> {meta.commentsCount}
               </span>
             </div>
             <div>
               <span className="flex items-center gap-1">
                 {" "}
-                <BsCalendar2Date /> {date}
+                <BsCalendar2Date /> {meta.publishDate}
               </span>
             </div>
           </div>

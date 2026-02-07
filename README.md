@@ -1,6 +1,6 @@
 # 🚀 Blog Application
 
-A full-stack, feature-rich blog application built with **Next.js 15**, **MongoDB**, **Prisma**, and **Tailwind CSS 4**. This project features a robust authentication system, blog management, comments, and a responsive design.
+A full-stack, feature-rich blog application built with **Next.js 16**, **MongoDB**, **Prisma**, and **Tailwind CSS 4**. This project features a robust authentication system, blog management, comments, and a responsive design.
 
 ## ✨ Key Features
 

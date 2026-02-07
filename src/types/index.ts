@@ -4,47 +4,37 @@ export interface INavLinks {
   to: string;
 }
 
-export interface IBlog {
+export interface IBaseBlog {
   id: string;
-  slug: string;
-  pageTitle: string;
+  authorId: string;
   title: string;
   subtitle: string;
+  slug: string;
+  seoTitle: string;
   category: string;
-  coverImage: string;
-  published: boolean;
-  createdAt: string;
-  updatedAt: string;
-  authorId: string;
+  image: string;
   meta: {
     readTime: string;
     publishDate: string;
     views: number;
     commentsCount: number;
   };
-  content: {
-    type: string;
-    text: string;
-    listItems?: string[];
-  }[];
-  author?: IAuthor;
-  comments?: IComment[];
+  published: boolean;
+  author: IAuthor;
 }
 
 export interface IAuthor {
-  id?: number;
   name: string;
-  email: string;
-  password: string;
-  image?: string;
+  image: string | null;
+}
+export interface IComment {
+  id: string;
+  authorName: string;
+  image: string;
+  comment: string;
+  createdAt: Date;
 }
 
-export interface IComment {
-  id: number;
-  author: string;
-  avatar: string;
-  comment: string;
-}
 export interface ITab {
   id: number;
   name: string;
@@ -59,6 +49,23 @@ export interface IField {
 }
 
 export interface ISignInForm {
+  email: string;
+  password: string;
+}
+
+export interface IContent {
+  type: string;
+  text: string;
+  listItems: string[];
+}
+
+export interface IBlog extends IBaseBlog {
+  content: IContent[];
+  comments: IComment[];
+}
+
+export interface ISignUpForm {
+  name: string;
   email: string;
   password: string;
 }

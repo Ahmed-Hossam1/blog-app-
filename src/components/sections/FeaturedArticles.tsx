@@ -1,38 +1,28 @@
-import { IBlog } from "@/types";
+import { IBaseBlog } from "@/types";
 import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../SectionWrapper";
 
-interface IProps {
-  numberOfArticles: number;
+interface FeaturedArticlesProps {
+  blogs: IBaseBlog[];
+  numberOfShownArticles: number;
 }
 
-const FeaturedArticles = async ({ numberOfArticles }: IProps) => {
-  /*===== Fetch ===== */
-  const res = await fetch("http://localhost:3000/api/blogs");
-  if (!res.ok) throw new Error("Failed to fetch");
-  const data = await res.json();
-
+const FeaturedArticles = async ({
+  blogs,
+  numberOfShownArticles,
+}: FeaturedArticlesProps) => {
   /*===== CONSTANTS ===== */
 
   // limit card number for display
-  const limit = numberOfArticles > data.length ? data.length : numberOfArticles;
 
   /*===== RENDER ===== */
-  const articles = data.slice(0, limit);
+  const slicedData = blogs.slice(0, numberOfShownArticles);
 
-  const articleCards = articles.map((blog: IBlog, index: number) => (
+  const articleCards = slicedData.map((blog: IBaseBlog, index: number) => (
     <FeaturedCard
       className={index === 0 ? "md:col-span-2" : ""}
       key={blog.id}
-      title={blog.title}
-      src={blog.coverImage}
-      alt={blog.title}
-      avatarSrc={blog.author?.avatar}
-      avatarAlt={blog.author?.name}
-      category={blog.category}
-      views={blog.meta?.views}
-      comments={blog.meta?.commentsCount}
-      date={blog.meta?.publishDate}
+      {...blog}
     />
   ));
 
