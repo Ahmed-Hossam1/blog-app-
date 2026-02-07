@@ -14,6 +14,11 @@ export async function POST(req: NextRequest) {
         email: body.email,
         password: body.password,
       },
+
+      select: {
+        name: true,
+        email: true,
+      },
     });
 
     return NextResponse.json(newUser, { status: 201 });
