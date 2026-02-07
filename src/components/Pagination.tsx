@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Button from "./ui/Button";
 
 interface IPaginationProps {
@@ -19,6 +20,10 @@ const Pagination = ({
   const handleNext = () => {
     if (!isLastPage) onPageChange(currentPage + 1);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const handlePrevious = () => {
     if (!isFirstPage) onPageChange(currentPage - 1);

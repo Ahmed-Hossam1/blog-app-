@@ -32,10 +32,11 @@ export interface IBlog {
 }
 
 export interface IAuthor {
-  id: number;
-  email: string;
+  id?: number;
   name: string;
-  avatar: string;
+  email: string;
+  password: string;
+  image?: string;
 }
 
 export interface IComment {
@@ -51,32 +52,13 @@ export interface ITab {
 
 export interface IField {
   id: number;
-  name: "user_name" | "email" | "password" | "confirm_password";
+  name: "name" | "email" | "password";
   type: string;
   placeholder: string;
   label?: string;
 }
 
-export interface ISignInErrors {
-  email: string;
-  password: string;
-}
-
-export interface ISignUpErrors {
-  user_name: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}
-
 export interface ISignInForm {
   email: string;
   password: string;
-}
-
-export interface ISignUpForm {
-  user_name: string;
-  email: string;
-  password: string;
-  confirm_password: string;
 }

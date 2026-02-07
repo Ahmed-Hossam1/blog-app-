@@ -27,7 +27,7 @@ const Page = () => {
     fetchBlogs();
   }, []);
 
-  const ITEM_PER_PAGE = 10;
+  const ITEM_PER_PAGE = 20;
   const totalPages = Math.ceil(data.length / ITEM_PER_PAGE);
   const firstIndex = (currentPage - 1) * ITEM_PER_PAGE;
   const lastIndex = firstIndex + ITEM_PER_PAGE;

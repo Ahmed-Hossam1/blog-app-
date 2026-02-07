@@ -4,7 +4,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
-import { ISignUpErrors, ISignUpForm } from "@/types";
+import { IAuthor } from "@/types";
 import { signUpErrors } from "@/utils";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -12,25 +12,20 @@ import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-
-const signUpObj: ISignUpForm = {
-  user_name: "",
-  email: "",
-  password: "",
-  confirm_password: "",
-};
-
-const errorObj: ISignUpErrors = {
-  user_name: "",
-  email: "",
-  password: "",
-  confirm_password: "",
-};
+import { toast } from "react-toastify";
 
 const Page = () => {
   /*======= STATE ======*/
-  const [signUp, setSignUp] = useState<ISignUpForm>(signUpObj);
-  const [errors, setErrors] = useState<ISignUpErrors>(errorObj);
+  const [signUp, setSignUp] = useState<IAuthor>({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState<IAuthor>({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   /*======= CONSTANTS ======*/
   // inputs config used to render sign up form dynamically
@@ -44,10 +39,11 @@ const Page = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const validationErrors = signUpErrors(signUp);
+    // set errors in state to render it in UI only but validate on the variable
     setErrors(validationErrors);
 
     const isFormValid = Object.values(validationErrors).every(
@@ -56,23 +52,34 @@ const Page = () => {
 
     if (!isFormValid) return;
 
-    localStorage.setItem("user", JSON.stringify(signUp.user_name));
-
-    window.location.href = "/";
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/sign-up", {
+        method: "POST",
+        body: JSON.stringify(signUp),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      localStorage.setItem("user", JSON.stringify(data));
+      toast.success("user created successfully");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    } catch (error) {
+      toast.error(`${error as Error}`);
+    }
   };
   /*======= RENDER ======*/
-
   const renderInputs = signUpInputs.map((input) => (
     <div key={input.id}>
       <MyInput
         {...input}
         id={input.name}
         name={input.name}
-        value={signUp[input.name as keyof ISignUpForm]}
+        value={signUp[input.name as keyof IAuthor]}
         onChange={handleInputChange}
         className="rounded-md"
       />
-      <ErrorMessage msg={errors[input.name as keyof ISignUpErrors]} />
+      <ErrorMessage msg={`${errors[input.name as keyof IAuthor]}`} />
     </div>
   ));
 

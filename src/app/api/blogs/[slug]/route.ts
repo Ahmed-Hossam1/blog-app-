@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
@@ -16,6 +16,8 @@ export async function GET(
       comments: true,
     },
   });
+
+  if (!blog) return NextResponse.json("blog Not Found", { status: 404 });
 
   return NextResponse.json(blog);
 }

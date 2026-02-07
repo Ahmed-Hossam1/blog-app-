@@ -4,29 +4,26 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
-import { ISignInErrors, ISignInForm } from "@/types";
+import { ISignInForm } from "@/types";
 import { signInErrors } from "@/utils";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
-
-const signInObj: ISignInForm = {
-  email: "",
-  password: "",
-};
-
-const errorObj: ISignInErrors = {
-  email: "",
-  password: "",
-};
+import { toast } from "react-toastify";
 
 const Page = () => {
   /*===== STATES ===== */
-  const [sign_In, setSignIn] = useState<ISignInForm>(signInObj);
-  const [errors, setErrors] = useState<ISignInErrors>(errorObj);
+  const [sign_In, setSignIn] = useState<ISignInForm>({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState<ISignInForm>({
+    email: "",
+    password: "",
+  });
 
   /*===== CONSTANTS ===== */
   const signInInputs = formConfig?.signIn ?? [];
@@ -37,15 +34,31 @@ const Page = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = signInErrors(sign_In);
+    // set errors in state to render it in UI only but validate on the variable
     setErrors(validationErrors);
+
     const isFormValid = Object.values(validationErrors).every(
       (value) => value === "",
     );
     if (!isFormValid) return;
-    console.log("Form Is Valid ");
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/sign-in", {
+        method: "POST",
+        body: JSON.stringify(sign_In),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      localStorage.setItem("user", JSON.stringify(data));
+      toast.success("logged in successfully");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    } catch (error) {
+      toast.error(`${error as Error}`);
+    }
   };
 
   /*===== RENDER ===== */
@@ -60,7 +73,7 @@ const Page = () => {
         value={sign_In[input.name as keyof ISignInForm]}
         onChange={handleInputChange}
       />
-      <ErrorMessage msg={errors[input.name as keyof ISignInErrors]} />
+      <ErrorMessage msg={errors[input.name as keyof ISignInForm]} />
     </div>
   ));
 
