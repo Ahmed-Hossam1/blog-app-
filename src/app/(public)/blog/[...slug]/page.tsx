@@ -13,7 +13,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   if (!res.ok) throw new Error("Failed to fetch");
   const data: IBlog = await res.json();
 
-  console.log(data);
   return (
     <SectionWrapper>
       <div className="container mx-auto max-w-5xl ">

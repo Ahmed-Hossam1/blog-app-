@@ -1,23 +1,47 @@
+"use client";
 import CardSkeleton from "@/components/Skeleton/CardSkeleton";
 import SectionWrapper from "@/components/SectionWrapper";
 import { IBlog } from "@/types";
 import Link from "next/link";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import Pagination from "@/components/Pagination";
+import PageLoader from "@/components/PageLoader";
 
 const ExploreCard = lazy(() => import("@/components/cards/ExploreCard"));
-const page = async () => {
-  /*===== Fetch ===== */
-  const res = await fetch("http://localhost:3000/api/blogs");
-  if (!res.ok) throw new Error("Failed to fetch blogs");
-  const data = await res.json();
+const Page = () => {
+  /*===== STATE ===== */
+  const [data, setData] = useState<IBlog[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  /*===== FETCH ===== */
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const res = await fetch("http://localhost:3000/api/blogs");
+        if (!res.ok) throw new Error("Failed to fetch blogs");
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        console.error("error:", error);
+      }
+    }
+    fetchBlogs();
+  }, []);
+
+  const ITEM_PER_PAGE = 10;
+  const totalPages = Math.ceil(data.length / ITEM_PER_PAGE);
+  const firstIndex = (currentPage - 1) * ITEM_PER_PAGE;
+  const lastIndex = firstIndex + ITEM_PER_PAGE;
+  const currentData = data.slice(firstIndex, lastIndex);
 
   /*===== RENDER ===== */
-  const renderCards = data?.map((blog: IBlog) => (
+  const renderCards = currentData?.map((blog: IBlog) => (
     <Link href={`/blog/${blog.slug}`} key={blog.slug}>
       <ExploreCard blog={blog} />
     </Link>
   ));
 
+  /*===== UI ===== */
+  if (data.length === 0) return <PageLoader />;
   return (
     <SectionWrapper>
       <div className="container mx-auto">
@@ -38,8 +62,16 @@ const page = async () => {
             {renderCards}
           </Suspense>
         </div>
+
+        {data.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </div>
     </SectionWrapper>
   );
 };
-export default page;
+export default Page;

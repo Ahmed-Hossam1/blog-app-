@@ -40,7 +40,11 @@ const ExploreCategories = () => {
     category === "All"
       ? blogs
       : blogs.filter((blog: IBlog) => blog.category === category);
+      
+  const ITEMS_PER_PAGE = 9;
 
+  /*===== SlICE ===== */
+  const slicedBlogs = filteredCards.slice(0, ITEMS_PER_PAGE);
   /*===== HANDLER ===== */
   const handleCategoryChange = (name: string): void => {
     setActiveTab(name);
@@ -62,7 +66,7 @@ const ExploreCategories = () => {
     </Button>
   ));
 
-  const renderCards = filteredCards?.map((blog: IBlog) => (
+  const renderCards = slicedBlogs?.map((blog: IBlog) => (
     <Link href={`/blog/${blog.slug}`} key={blog.slug}>
       <ExploreCard blog={blog} />
     </Link>
