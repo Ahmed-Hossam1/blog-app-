@@ -48,14 +48,12 @@ const Page = () => {
     if (!isFormValid) return;
     try {
       setIsLoading(true);
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-      const res = await fetch(`${baseUrl}/api/auth/sign-in`, {
-        method: "POST",
-        body: JSON.stringify(sign_In),
+      const result = await signIn("credentials", {
+        email: sign_In.email,
+        password: sign_In.password,
+        redirect: false,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-      localStorage.setItem("user", JSON.stringify(data));
+      if (result?.error) throw new Error("invalid credentials");
       toast.success("logged in successfully");
       setTimeout(() => {
         window.location.href = "/";

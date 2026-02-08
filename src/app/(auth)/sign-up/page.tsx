@@ -61,7 +61,12 @@ const Page = () => {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      localStorage.setItem("user", JSON.stringify(data));
+      const result = await signIn("credentials", {
+        email: signUp.email,
+        password: signUp.password,
+        redirect: false,
+      });
+      if (result?.error) throw new Error("failed to create user");
       toast.success("user created successfully");
       setTimeout(() => {
         window.location.href = "/";
