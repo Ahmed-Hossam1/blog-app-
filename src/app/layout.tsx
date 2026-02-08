@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Blog App | Modern Blogging Platform",
-  description: "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
+  description:
+    "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
 };
 
 export default function RootLayout({

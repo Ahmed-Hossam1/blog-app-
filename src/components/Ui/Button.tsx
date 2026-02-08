@@ -1,8 +1,13 @@
 "use client";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
+import Spinner from "./Spinner";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+  disabled?: boolean;
   bgColor?: string;
+  isLoading?: boolean;
+  children: ReactNode;
 }
 
 const Button = ({
@@ -10,24 +15,22 @@ const Button = ({
   children,
   bgColor = "",
   disabled,
+  isLoading,
   ...rest
 }: ButtonProps) => {
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       className={`
         rounded-md transition
+        ${isLoading ? "flex items-center justify-center" : ""}
         ${bgColor}
-        ${
-          disabled
-            ? "cursor-not-allowed opacity-50"
-            : "cursor-pointer hover:bg-black"
-        }
+        ${isLoading || disabled ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}
         ${className}
       `}
       {...rest}
     >
-      {children}
+      {isLoading ? <Spinner /> : children}
     </button>
   );
 };

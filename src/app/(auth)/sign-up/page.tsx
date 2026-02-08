@@ -67,9 +67,8 @@ const Page = () => {
         window.location.href = "/";
       }, 1500);
     } catch (error) {
-      toast.error(`${error as Error}`);
-    } finally {
       setIsLoading(false);
+      toast.error(`${error as Error}`);
     }
   };
   /*======= RENDER ======*/
@@ -130,12 +129,11 @@ const Page = () => {
           {renderInputs}
 
           <Button
-            bgColor="bg-baseInk"
             disabled={isLoading}
-            className="w-full text-white py-2"
-            type="submit"
+            isLoading={isLoading}
+            className="w-full bg-baseInk hover:bg-black transition  text-white py-2"
           >
-            {isLoading ? "signing up..." : "Sign Up"}
+            Sign Up
           </Button>
 
           <div className="mt-4 text-sm text-gray-600">

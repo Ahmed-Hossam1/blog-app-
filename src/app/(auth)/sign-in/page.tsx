@@ -25,6 +25,7 @@ const Page = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   /*===== CONSTANTS ===== */
   const signInInputs = formConfig?.signIn ?? [];
   /*===== HANDLERS ===== */
@@ -45,6 +46,7 @@ const Page = () => {
     );
     if (!isFormValid) return;
     try {
+      setIsLoading(true);
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       const res = await fetch(`${baseUrl}/api/auth/sign-in`, {
         method: "POST",
@@ -58,6 +60,7 @@ const Page = () => {
         window.location.href = "/";
       }, 1500);
     } catch (error) {
+      setIsLoading(false);
       toast.error(`${error as Error}`);
     }
   };
@@ -119,8 +122,9 @@ const Page = () => {
           {renderInputs}
 
           <Button
-            bgColor="bg-baseInk"
-            className="w-full hover:bg-black transition  text-white py-2"
+            disabled={isLoading}
+            isLoading={isLoading}
+            className={`w-full bg-baseInk  hover:bg-black transition  text-white py-2`}
           >
             Sign In
           </Button>
