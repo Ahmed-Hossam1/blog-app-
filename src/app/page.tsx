@@ -5,6 +5,7 @@ import FeaturedArticles from "@/components/sections/FeaturedArticles";
 import MeetOurAuthors from "@/components/sections/MeetOurAuthors";
 import NewsletterSubscribe from "@/components/sections/NewsletterSubscribe";
 import SectionWrapper from "@/components/SectionWrapper";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -20,6 +21,8 @@ export default async function Home() {
   const blogs = await blogsRes.json();
   const authors = await authorsRes.json();
 
+  const test = await getServerSession()
+  console.log(test)
   return (
     <>
       <Navbar />

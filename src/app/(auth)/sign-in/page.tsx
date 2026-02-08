@@ -26,6 +26,7 @@ const Page = () => {
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
   /*===== CONSTANTS ===== */
   const signInInputs = formConfig?.signIn ?? [];
   /*===== HANDLERS ===== */
@@ -65,6 +66,26 @@ const Page = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      setAuthLoading(true);
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      setAuthLoading(false);
+      toast.error(`${error as Error}`);
+    }
+  };
+
+  const handleGithubSignIn = async () => {
+    try {
+      setAuthLoading(true);
+      await signIn("github", { callbackUrl: "/" });
+    } catch (error) {
+      setAuthLoading(false);
+      toast.error(`${error as Error}`);
+    }
+  };
+
   /*===== RENDER ===== */
   const renderInputs = signInInputs.map((input) => (
     <div key={input.id}>
@@ -96,14 +117,16 @@ const Page = () => {
         {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
           <Button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={handleGoogleSignIn}
+            disabled={authLoading}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100"
           >
             <span>Sign In </span>
             <FcGoogle className="text-2xl" />
           </Button>
           <Button
-            onClick={() => signIn("github", { callbackUrl: "/" })}
+            onClick={handleGithubSignIn}
+            disabled={authLoading}
             className="flex-1 flex items-center justify-center  gap-4 border border-gray p-3 hover:bg-gray-100"
           >
             <span>Sign In</span>
