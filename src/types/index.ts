@@ -69,3 +69,15 @@ export interface ISignUpForm {
   email: string;
   password: string;
 }
+
+export interface ISessionResponse {
+  data: {
+    user: {
+      name: string;
+      email: string;
+      image: string | null;
+    };
+    expires: string;
+  };
+  status: "authenticated" | "unauthenticated" | "loading";
+}
