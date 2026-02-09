@@ -10,7 +10,8 @@ type ExploreCardProps = Pick<
 const ExploreCard = (ExploreCardProps: ExploreCardProps) => {
   const { title, image, category, meta, author } = ExploreCardProps;
   return (
-    <div className="overflow-hidden rounded-2xl  bg-white shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
+    <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
+
       {/* Image */}
       <div className="relative h-48">
         <Image
@@ -36,15 +37,18 @@ const ExploreCard = (ExploreCardProps: ExploreCardProps) => {
 
       {/* Content */}
       <div className="p-5 text-left">
-        <span className="my-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-sm text-navyGray">
+        <span className="my-2 inline-block rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-sm text-navyGray dark:text-gray-300">
           {category}
         </span>
 
-        <h3 className="mt-2 line-clamp-2 text-base font-semibold">
+
+        <h3 className="mt-2 line-clamp-2 text-base font-semibold dark:text-white">
           {truncateText(title)}
         </h3>
 
-        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+
+        <div className="mt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <FaRegEye /> {meta?.views}

@@ -16,10 +16,12 @@ const MeetOurAuthors = ({
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-12 flex items-center justify-between">
-          <h2 className="text-3xl font-semibold">Explore Authors</h2>
+          <h2 className="text-3xl font-semibold dark:text-white">
+            Explore Authors
+          </h2>
           <Link
             href="/authors"
-            className="text-sm font-medium text-primary underline underline-offset-4 hover:text-blue-800"
+            className="text-sm font-medium text-primary underline underline-offset-4 hover:text-blue-800 dark:text-gray-200 dark:hover:text-blue-400"
           >
             View all Authors
           </Link>
@@ -30,10 +32,10 @@ const MeetOurAuthors = ({
           {slicedAuthors.map((author) => (
             <div
               key={author.name}
-              className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm  hover:shadow-md hover:scale-105 hover:transition duration-500"
+              className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm  hover:shadow-md hover:scale-105 hover:transition duration-500 dark:bg-surfaceDark"
             >
               {/* Avatar */}
-              <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full bg-gray-100">
+              <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                 <Image
                   src={`${author.image}`}
                   alt={author.name}
@@ -45,7 +47,7 @@ const MeetOurAuthors = ({
               {/* Name */}
               <Link
                 href={`/author/${author.name.split(" ").join("-")}`}
-                className="text-lg font-semibold hover:text-primary"
+                className="text-lg font-semibold hover:text-primary dark:text-white"
               >
                 {author.name}
               </Link>

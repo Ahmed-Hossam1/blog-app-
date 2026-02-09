@@ -1,33 +1,32 @@
 "use client";
+import { navLinksData } from "@/data";
 import Image from "next/image";
 import Link from "next/link";
-import { IoSunnyOutline } from "react-icons/io5";
-import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaBarsStaggered } from "react-icons/fa6";
+import { IoSunnyOutline } from "react-icons/io5";
+import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import Button from "../ui/Button";
-import { useState } from "react";
-import { navLinksData } from "@/data";
+
 import { useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const { status, data } = useSession();
   const src = data?.user?.image ?? "https://i.pravatar.cc/150?img=3";
 
   /*===== STATE ===== */
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   /*===== HANDLERS ===== */
   const changeTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   /*===== RENDER ===== */
-  const renderThemeIcon = (
-    theme: "light" | "dark",
-    changeTheme: () => void,
-  ) => {
+  const renderThemeIcon = () => {
     return theme === "light" ? (
       <MdOutlineDarkMode onClick={changeTheme} className="cursor-pointer" />
     ) : (
@@ -38,7 +37,7 @@ const Navbar = () => {
   const renderDesktopLinks = navLinksData.map((link) => (
     <Link
       key={link.id}
-      className="cursor-pointer capitalize text-sm font-medium transition hover:text-blue-500"
+      className="cursor-pointer capitalize text-sm font-medium transition hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
       href={link.to}
     >
       {link.name}
@@ -48,7 +47,7 @@ const Navbar = () => {
   const renderMobileLinks = navLinksData.map((link) => (
     <Link
       key={link.id}
-      className="px-3 py-2 block text-base capitalize cursor-pointer rounded-md  transition hover:bg-blue-100 hover:text-blue-600"
+      className="px-3 py-2 block text-base capitalize cursor-pointer rounded-md transition hover:bg-blue-100 hover:text-blue-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-blue-400"
       href={link.to}
     >
       {link.name}
@@ -56,7 +55,7 @@ const Navbar = () => {
   ));
 
   return (
-    <nav className="fixed w-full z-50 bg-white shadow-lg">
+    <nav className="fixed w-full z-50 bg-white shadow-lg dark:bg-surfaceDark dark:border-b dark:border-gray-800 transition-colors duration-300">
       <div className="container mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
@@ -78,7 +77,7 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="fixed inset-0 z-40 bg-black/40 lg:hidden">
             <aside
-              className={`absolute right-0 top-0 h-full w-72 bg-white p-5 shadow-lg`}
+              className={`absolute right-0 top-0 h-full w-72 bg-white p-5 shadow-lg dark:bg-surfaceDark dark:text-white transition-colors duration-300`}
             >
               <div className="flex items-center justify-between border-b pb-3">
                 <h2 className="text-lg font-semibold capitalize">menu</h2>
@@ -115,14 +114,15 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4 text-xl">
-            {renderThemeIcon(theme, changeTheme)}
-            <CiSearch className="cursor-pointer" />
+            {renderThemeIcon()}
+            <CiSearch className="cursor-pointer dark:text-white" />
           </div>
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-4 text-xl lg:hidden">
-            {renderThemeIcon(theme, changeTheme)}
-            <CiSearch className="cursor-pointer" />
+            {renderThemeIcon()}
+            <CiSearch className="cursor-pointer dark:text-white" />
+
             <FaBarsStaggered
               className="cursor-pointer"
               onClick={() => setIsMobileMenuOpen(true)}

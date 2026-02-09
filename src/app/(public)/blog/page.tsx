@@ -54,10 +54,11 @@ const Page = () => {
       <div className="container mx-auto">
         {/* Header */}
         <div className=" mb-14 text-center">
-          <h1 className="mb-3 text-4xl font-semibold text-black">
+          <h1 className="mb-3 text-4xl font-semibold text-black dark:text-white">
             Read, Learn & Grow
           </h1>
-          <p className="mx-auto max-w-2xl text-gray-500">
+          <p className="mx-auto max-w-2xl text-gray-500 dark:text-gray-400">
+
             From expert advice to behind-the-scenes stories – explore content
             designed for curious minds.
           </p>

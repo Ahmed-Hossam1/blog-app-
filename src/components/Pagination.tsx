@@ -39,14 +39,17 @@ const Pagination = ({
           px-3 py-2 text-sm font-medium text-gray-600
           hover:text-black transition
           disabled:text-gray-300 disabled:cursor-not-allowed
+          dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
         "
+
       >
         ← Prev
       </Button>
 
       {/* Page Info */}
-      <div className="flex items-center gap-2 text-sm text-gray-500">
-        <span className="font-semibold text-black">{currentPage}</span>
+      <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+        <span className="font-semibold text-black dark:text-white">{currentPage}</span>
+
         <span>/</span>
         <span>{totalPages}</span>
       </div>
@@ -59,6 +62,7 @@ const Pagination = ({
           px-3 py-2 text-sm font-medium text-gray-600
           hover:text-black transition
           disabled:text-gray-300 disabled:cursor-not-allowed
+          dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
         "
       >
         Next →

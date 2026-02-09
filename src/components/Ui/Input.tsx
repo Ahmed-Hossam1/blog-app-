@@ -22,7 +22,8 @@ const MyInput = ({
 }: IProps) => {
   return (
     <input
-      className={`${className} capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 `}
+      className={`${className} capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 dark:bg-transparent dark:text-white dark:border-gray-600`}
+
       id={id}
       name={name}
       type={type}
