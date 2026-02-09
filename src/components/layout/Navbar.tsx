@@ -59,13 +59,23 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image
-            src="/logo.svg"
-            width={100}
-            height={100}
-            alt="logo"
-            className="h-8 w-auto"
-          />
+          {theme === "light" ? (
+            <Image
+              src="/logo-black.svg"
+              width={100}
+              height={100}
+              alt="logo"
+              className="h-8 w-auto"
+            />
+          ) : (
+            <Image
+              src="/logo-white.svg"
+              width={100}
+              height={100}
+              alt="logo"
+              className="h-8 w-auto"
+            />
+          )}
         </Link>
 
         {/* Desktop Links */}
