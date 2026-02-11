@@ -46,7 +46,7 @@ const MeetOurAuthors = ({
               </div>
               {/* Name */}
               <Link
-                href={`/author/${author.name.split(" ").join("-")}`}
+                href={`/authors/${author.id}`}
                 className="text-lg font-semibold hover:text-primary dark:text-white"
               >
                 {author.name}

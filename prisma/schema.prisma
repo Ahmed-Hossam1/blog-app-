@@ -36,7 +36,7 @@ model Blog {
   content   Content[]
 
   published Boolean  @default(false)
-
+  createdAt  DateTime @default(now())
   // Relations
   authorId String @db.ObjectId
   author   User   @relation(fields: [authorId], references: [id])

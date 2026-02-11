@@ -20,6 +20,7 @@ export interface IBaseBlog {
     commentsCount: number;
   };
   published: boolean;
+  createdAt: Date;
   author: IAuthor;
 }
 

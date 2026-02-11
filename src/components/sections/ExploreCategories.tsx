@@ -43,11 +43,11 @@ const ExploreCategories = ({
     <Button
       onClick={() => handleCategoryChange(tab.name)}
       key={tab.id}
-      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${tab.name === activeTab
+      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${
+        tab.name === activeTab
           ? "bg-black text-white dark:bg-white dark:text-black"
           : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
-        }`}
-
+      }`}
     >
       {tab.name}
     </Button>
@@ -71,7 +71,6 @@ const ExploreCategories = ({
           Choose a category to explore related content - Find what interests you
         </p>
 
-
         {/* Tabs (UI only) */}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {renderTabs}
@@ -88,7 +87,6 @@ const ExploreCategories = ({
             <p className="text-sm text-gray-500 capitalize font-semibold dark:text-gray-400">
               No blogs found for this category
             </p>
-
           </div>
         ) : (
           <div className="mt-12 flex justify-center ">
@@ -97,7 +95,6 @@ const ExploreCategories = ({
                 View All Blogs
               </Button>
             </Link>
-
           </div>
         )}
       </div>

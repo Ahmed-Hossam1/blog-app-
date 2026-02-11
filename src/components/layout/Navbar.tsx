@@ -124,14 +124,20 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4 text-xl">
+            {/* Theme Icon */}
             {renderThemeIcon()}
-            <CiSearch className="cursor-pointer dark:text-white" />
+            {/* search Link with search Query Icon */}
+            <Link href={`/search?query=`}>
+              <CiSearch className="cursor-pointer dark:text-white" />
+            </Link>
           </div>
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-4 text-xl lg:hidden">
             {renderThemeIcon()}
-            <CiSearch className="cursor-pointer dark:text-white" />
+            <Link href={`/search?query=`}>
+              <CiSearch className="cursor-pointer dark:text-white" />
+            </Link>
 
             <FaBarsStaggered
               className="cursor-pointer"
