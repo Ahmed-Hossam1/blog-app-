@@ -152,12 +152,12 @@ const Navbar = () => {
             </Link>
           ) : (
             <div className="hidden lg:flex items-center gap-2">
-              <Link href={"sign-in"}>
+              <Link href={"/sign-in"}>
                 <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
                   sign in
                 </Button>
               </Link>
-              <Link href={"sign-up"}>
+              <Link href={"/sign-up"}>
                 <Button
                   bgColor="bg-black"
                   className="capitalize px-6 py-1.5 font-medium text-white"
