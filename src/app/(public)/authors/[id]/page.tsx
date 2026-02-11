@@ -3,6 +3,7 @@ import SectionWrapper from "@/components/SectionWrapper";
 // import { authorsData } from "@/data"; // Removed dependency on mock data for the profile itself
 import { IBaseBlog } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -75,15 +76,16 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               </h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {author?.blogs.map((post: IBaseBlog) => (
-                  <ExploreCard
-                    key={post.id}
-                    title={post.title}
-                    image={post.image}
-                    category={post.category}
-                    meta={post.meta}
-                    // author from author Table not from Blogs
-                    author={author}
-                  />
+                  <Link href={`/blog/${post.slug}`} key={post.id}>
+                    <ExploreCard
+                      title={post.title}
+                      image={post.image}
+                      category={post.category}
+                      meta={post.meta}
+                      // author from author Table not from Blogs
+                      author={author}
+                    />
+                  </Link>
                 ))}
               </div>
             </>
