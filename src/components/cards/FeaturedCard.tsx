@@ -19,7 +19,7 @@ const FeaturedCard = ({
       <div className="relative overflow-hidden rounded-2xl shadow-lg group">
         {/* Image */}
         <Image
-          src={image}
+          src={image || "/default-image.png"}
           alt={title}
           width={1200}
           height={600}

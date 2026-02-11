@@ -63,7 +63,8 @@ model User {
   email     String @unique
   password  String
   image     String?
-
+  title     String?
+  bio       String?
   blogs    Blog[]
 }
 

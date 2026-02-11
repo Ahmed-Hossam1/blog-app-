@@ -17,7 +17,10 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   return (
     <SectionWrapper>
       <div className="container mx-auto max-w-5xl ">
-        <div id="card_details" className=" bg-gray-50 pb-5 rounded-xl dark:bg-surfaceDark">
+        <div
+          id="card_details"
+          className=" bg-gray-50 pb-5 rounded-xl dark:bg-surfaceDark"
+        >
           {/* Card Head */}
 
           <div className="relative mb-10 overflow-hidden rounded-xl">
@@ -33,7 +36,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <span className="absolute bottom-5 right-4 rounded-md bg-white px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-gray-200">
               {data.meta?.readTime}
             </span>
-
           </div>
 
           {/* Card Body */}
@@ -49,7 +51,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               </h1>
 
               <div className="mt-4 flex flex-wrap items-center justify-between  text-sm text-gray-500 dark:text-gray-400">
-
                 <div className="flex items-center gap-4">
                   <span className="flex items-center gap-1 ">
                     <FaRegEye />
@@ -71,7 +72,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
             {/* body */}
             <article className="prose  px-8  max-w-none prose-h2:mt-10 prose-p:text-gray-600 dark:prose-invert">
-
               {/* details */}
               <div className="border-b border-gray-200 pb-6">
                 <div className="mb-10">
@@ -79,7 +79,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                   <h2 className="mb-5 text-2xl font-semibold text-baseInk dark:text-white">
                     {data.subtitle}
                   </h2>
-
 
                   {/* Content */}
                   {data.content?.map((content, index) => (
@@ -89,7 +88,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                         <h3 className="mb-3 text-xl font-semibold text-navyGray dark:text-gray-200">
                           {content.text}
                         </h3>
-
                       )}
 
                       {/* Paragraph */}
@@ -97,13 +95,11 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                         <p className="mb-4 leading-8 text-gray-700 dark:text-gray-300">
                           {content.text}
                         </p>
-
                       )}
 
                       {/* List */}
                       {content.type === "list" && (
                         <ul className="mb-4 list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-
                           {content.listItems?.map((item, i) => (
                             <li key={i} className="leading-7">
                               {item}
@@ -124,13 +120,14 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                   <span className="ml-2 rounded-full bg-blue-100 px-2 py-0.5 text-xs dark:bg-blue-900 dark:text-white">
                     {data.comments?.length}
                   </span>
-
                 </h3>
                 {/* Comments Body */}
                 <div className="space-y-6">
                   {data.comments?.map((comment) => (
-                    <div key={comment.id} className="rounded-xl bg-blue-50 p-6 dark:bg-gray-800">
-
+                    <div
+                      key={comment.id}
+                      className="rounded-xl bg-blue-50 p-6 dark:bg-gray-800"
+                    >
                       {/* Header */}
                       <div className="mb-3 flex items-center gap-3">
                         <Image
@@ -143,12 +140,10 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                         <h4 className="font-semibold text-baseInk dark:text-white">
                           {comment.authorName}
                         </h4>
-
                       </div>
 
                       {/* Comment Text */}
                       <p className="mb-4 leading-7 text-gray-700 dark:text-gray-300">
-
                         {comment.comment}
                       </p>
 
@@ -167,9 +162,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                   Leave a Comment on this post
                 </h3>
 
-
                 <div className="rounded-2xl bg-slate-50 p-8 dark:bg-gray-800">
-
                   <form className="space-y-4">
                     <textarea
                       placeholder="Write Your Comment"

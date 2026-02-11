@@ -1,11 +1,11 @@
 "use client";
+import PageLoader from "@/components/PageLoader";
+import Pagination from "@/components/Pagination";
 import SectionWrapper from "@/components/SectionWrapper";
+import ExploreCard from "@/components/cards/ExploreCard";
 import { IBlog } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Pagination from "@/components/Pagination";
-import PageLoader from "@/components/PageLoader";
-import ExploreCard from "@/components/cards/ExploreCard";
 
 const Page = () => {
   /*===== STATE ===== */
@@ -36,7 +36,7 @@ const Page = () => {
 
   /*===== RENDER ===== */
   const renderCards = currentData?.map((blog: IBlog) => (
-    <Link href={`/blog/${blog.slug}`} key={blog.id}>
+    <Link href={`/blog/${blog.slug}`} key={blog.slug}>
       <ExploreCard
         title={blog.title}
         image={blog.image}
@@ -58,7 +58,6 @@ const Page = () => {
             Read, Learn & Grow
           </h1>
           <p className="mx-auto max-w-2xl text-gray-500 dark:text-gray-400">
-
             From expert advice to behind-the-scenes stories – explore content
             designed for curious minds.
           </p>

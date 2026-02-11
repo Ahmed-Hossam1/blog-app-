@@ -7,6 +7,8 @@ export async function GET() {
       id: true,
       name: true,
       image: true,
+      bio: true,
+      title: true,
     },
   });
   return NextResponse.json(authors, { status: 200 });

@@ -24,8 +24,11 @@ export interface IBaseBlog {
 }
 
 export interface IAuthor {
+  id?: string;
   name: string;
   image: string | null;
+  title?: string;
+  bio?: string;
 }
 export interface IComment {
   id: string;

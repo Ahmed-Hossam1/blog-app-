@@ -15,7 +15,6 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
 
-
 const Page = () => {
   /*======= STATE ======*/
   const [signUp, setSignUp] = useState<ISignUpForm>({
@@ -28,10 +27,8 @@ const Page = () => {
     email: "",
     password: "",
   });
-
-  const { theme } = useTheme();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { theme } = useTheme();
 
   /*======= CONSTANTS ======*/
   // inputs config used to render sign up form dynamically
@@ -102,7 +99,6 @@ const Page = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black transition-colors duration-300">
       <div className="bg-white shadow-md rounded-xl py-12 px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">
-
         {theme === "light" ? (
           <Image
             src="/logo-black.svg"
@@ -121,14 +117,12 @@ const Page = () => {
           />
         )}
 
-
         {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
           <Button
             onClick={() => signIn("google", { callbackUrl: "/" })}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
-
             <span>Sign Up</span>
             <FcGoogle className="text-2xl" />
           </Button>
@@ -137,7 +131,6 @@ const Page = () => {
             onClick={() => signIn("github", { callbackUrl: "/" })}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
-
             <span>Sign Up</span>
             <FaGithub className="text-2xl" />
           </Button>
@@ -149,7 +142,6 @@ const Page = () => {
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
         </div>
 
-
         {/* Form */}
         <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
           {renderInputs}
@@ -157,14 +149,12 @@ const Page = () => {
           <Button
             disabled={isLoading}
             isLoading={isLoading}
-            className="w-full bg-baseInk hover:bg-black transition  text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+            className="w-full bg-baseInk hover:bg-black transition text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >
-
             Sign Up
           </Button>
 
           <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-
             <Link href="/sign-in" className="hover:underline">
               Already have an account? Sign In
             </Link>

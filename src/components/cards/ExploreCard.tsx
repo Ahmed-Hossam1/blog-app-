@@ -11,11 +11,10 @@ const ExploreCard = (ExploreCardProps: ExploreCardProps) => {
   const { title, image, category, meta, author } = ExploreCardProps;
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
-
       {/* Image */}
       <div className="relative h-48">
         <Image
-          src={image}
+          src={image || "/default-image.png"}
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -26,8 +25,8 @@ const ExploreCard = (ExploreCardProps: ExploreCardProps) => {
         </span>
         <div className="absolute left-4 -bottom-4">
           <Image
-            src={`${author.image}`}
-            alt={author.name}
+            src={author?.image || "/default-image.png"}
+            alt={author?.name || "Author"}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"
@@ -41,14 +40,11 @@ const ExploreCard = (ExploreCardProps: ExploreCardProps) => {
           {category}
         </span>
 
-
         <h3 className="mt-2 line-clamp-2 text-base font-semibold dark:text-white">
           {truncateText(title)}
         </h3>
 
-
         <div className="mt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <FaRegEye /> {meta?.views}
