@@ -8,9 +8,8 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import Button from "../ui/Button";
-
-import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { status, data } = useSession();
@@ -19,6 +18,7 @@ const Navbar = () => {
   /*===== STATE ===== */
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
 
   /*===== HANDLERS ===== */
   const changeTheme = () => {
@@ -147,15 +147,76 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           {status === "authenticated" ? (
-            <Link href={`/profile/${data.user?.name}`}>
-              <Image
-                src={src}
-                alt={`${data?.user?.name}`}
-                width={40}
-                height={40}
-                className="rounded-full border-2 border-white cursor-pointer"
-              />
-            </Link>
+            <div
+              className="relative "
+              tabIndex={0}
+              onBlur={(e) => {
+                /*
+When the element loses focus, check where focus moved:
+If it moved outside the menu → close it
+If it moved to an element inside (like Logout button) → keep it open
+*/
+                const nextElementFocus = e.relatedTarget as Node | null;
+
+                if (!e.currentTarget.contains(nextElementFocus)) {
+                  setOpenUserMenu(false);
+                }
+              }}
+            >
+              {/* Avatar */}
+              <Button
+                onClick={() => setOpenUserMenu((prev) => !prev)}
+                className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <Image
+                  src={src}
+                  alt={data?.user?.name || "user"}
+                  width={40}
+                  height={40}
+                  className="rounded-full border-2 border-white"
+                />
+              </Button>
+
+              {/* User Dropdown */}
+              <div
+                className={`absolute right-0 mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
+                  ${
+                    openUserMenu
+                      ? "opacity-100 translate-y-0"
+                      : "pointer-events-none opacity-0 -translate-y-2"
+                  }`}
+              >
+                <div className="p-2">
+                  {/* User info */}
+                  <div className="px-3 py-2">
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                      {data?.user?.name}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      {data?.user?.email}
+                    </p>
+                  </div>
+
+                  <div className="my-2 h-px bg-gray-200 dark:bg-gray-700" />
+
+                  {/* Dashboard */}
+                  <Link
+                    href="/dashboard"
+                    className="block rounded-lg px-3 py-2 text-sm transition hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    Dashboard
+                  </Link>
+
+                  {/* Logout */}
+                  <Button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="mt-1 w-full text-left rounded-lg px-3 py-2 text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="hidden lg:flex items-center gap-2">
               <Link href={"/sign-in"}>

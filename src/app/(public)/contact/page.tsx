@@ -78,9 +78,9 @@ We only use it to access e.target (the <form> element).
       if (res.status !== 200) return;
       toast.success("message sent successfully");
     } catch (error) {
-      setIsLoading(false);
       toast.error("failed to send message");
       console.log(error);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
