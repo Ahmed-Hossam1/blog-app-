@@ -1,6 +1,6 @@
-import { IField } from "@/types";
+import { ContactFields, IField, SignInFields, SignUpFields } from "@/types";
 
-export const formConfig: Record<string, IField[]> = {
+export const formConfig = {
   signIn: [
     {
       id: 1,
@@ -13,8 +13,8 @@ export const formConfig: Record<string, IField[]> = {
       name: "password",
       type: "password",
       placeholder: "Password",
-    }
-  ],
+    },
+  ] as IField<SignInFields>[],
 
   signUp: [
     {
@@ -35,5 +35,29 @@ export const formConfig: Record<string, IField[]> = {
       type: "password",
       placeholder: "Password",
     },
-  ],
+  ] as IField<SignUpFields>[],
+
+  contactForm: [
+    {
+      id: 1,
+      name: "name",
+      placeholder: "John Doe",
+      type: "text",
+      label: "Your Name",
+    },
+    {
+      id: 2,
+      name: "email",
+      type: "email",
+      placeholder: "John@example.com",
+      label: "Email Address",
+    },
+    {
+      id: 3,
+      name: "message",
+      type: "textarea",
+      placeholder: "Write Your Message Here...",
+      label: "Message",
+    },
+  ] as IField<ContactFields>[],
 };

@@ -19,7 +19,7 @@ export default async function Home() {
 
   const blogs = await blogsRes.json();
   const authors = await authorsRes.json();
-
+  
   return (
     <>
       <Navbar />
@@ -27,7 +27,7 @@ export default async function Home() {
         <SectionWrapper>
           <FeaturedArticles blogs={blogs} numberOfShownArticles={5} />
           <ExploreCategories blogs={blogs} numberOfShownArticles={9} />
-          <MeetOurAuthors authors={authors} numberOfShownAuthors={6} />
+          <MeetOurAuthors authors={authors} numberOfShownAuthors={8} />
           <NewsletterSubscribe />
         </SectionWrapper>
       </main>

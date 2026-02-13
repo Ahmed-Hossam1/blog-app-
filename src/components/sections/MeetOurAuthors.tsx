@@ -52,9 +52,15 @@ const MeetOurAuthors = ({
                 {author.name}
               </Link>
 
-              {/* Role */}
+              {/* title */}
+              <div className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
+                {author.title}
+              </div>
 
               {/* Bio */}
+              <div className="mt-4 max-w-2xl text-base leading-relaxed text-gray-700 dark:text-gray-300">
+                {author.bio}
+              </div>
             </div>
           ))}
         </div>

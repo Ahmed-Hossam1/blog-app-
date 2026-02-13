@@ -4,6 +4,11 @@ export interface INavLinks {
   to: string;
 }
 
+export interface ITab {
+  id: number;
+  name: string;
+}
+
 export interface IBaseBlog {
   id: string;
   authorId: string;
@@ -39,24 +44,6 @@ export interface IComment {
   createdAt: Date;
 }
 
-export interface ITab {
-  id: number;
-  name: string;
-}
-
-export interface IField {
-  id: number;
-  name: "name" | "email" | "password";
-  type: string;
-  placeholder: string;
-  label?: string;
-}
-
-export interface ISignInForm {
-  email: string;
-  password: string;
-}
-
 export interface IContent {
   type: string;
   text: string;
@@ -68,10 +55,33 @@ export interface IBlog extends IBaseBlog {
   comments: IComment[];
 }
 
+export interface IField<T> {
+  id: number;
+  name: T;
+  type: string;
+  placeholder: string;
+  label?: string;
+}
+
+export type ContactFields = "name" | "email" | "message";
+export type SignInFields = "email" | "password";
+export type SignUpFields = "name" | "email" | "password";
+
+export interface ISignInForm {
+  email: string;
+  password: string;
+}
+
 export interface ISignUpForm {
   name: string;
   email: string;
   password: string;
+}
+
+export interface IContactForm {
+  name: string;
+  email: string;
+  message: string;
 }
 
 export interface ISessionResponse {
