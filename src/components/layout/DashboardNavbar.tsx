@@ -28,14 +28,6 @@ export default function DashboardNavbar() {
           </Button>
 
           {/* Title */}
-          <div className="hidden sm:block">
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Overview
-            </h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Growth reporting of your account
-            </p>
-          </div>
         </div>
 
         {/* Right Section */}
