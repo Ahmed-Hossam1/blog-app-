@@ -65,6 +65,25 @@ export const tabsData: ITab[] = [
   },
 ];
 
+export const DashboardTabsData: ITab[] = [
+  {
+    id: 1,
+    name: "All",
+  },
+  {
+    id: 2,
+    name: "Published",
+  },
+  {
+    id: 3,
+    name: "Draft",
+  },
+  {
+    id: 4,
+    name: "Archived",
+  },
+];
+
 export const authorsData: IAuthor[] = [
   {
     id: "1",

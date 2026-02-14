@@ -6,6 +6,7 @@ import { IBaseBlog } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
 import ExploreCard from "../cards/ExploreCard";
+import Tabs from "../Tab";
 
 interface ExploreCategoriesProps {
   blogs: IBaseBlog[];
@@ -40,17 +41,17 @@ const ExploreCategories = ({
 
   /*===== RENDER ===== */
   const renderTabs = tabsData?.map((tab) => (
-    <Button
+    <Tabs
       onClick={() => handleCategoryChange(tab.name)}
       key={tab.id}
-      className={`border border-baseInk rounded-sm px-4 py-2 text-sm  transition duration-500 font-medium ${
+      className={`${
         tab.name === activeTab
           ? "bg-black text-white dark:bg-white dark:text-black"
           : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
       }`}
     >
       {tab.name}
-    </Button>
+    </Tabs>
   ));
 
   const renderCards = slicedBlogs?.map((blog: IBaseBlog) => (

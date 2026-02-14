@@ -1,4 +1,4 @@
-import React from "react";
+import { MOCK_TOP_POSTS } from "@/data/mockData";
 import Image from "next/image";
 import {
   HiOutlineEye,
@@ -6,32 +6,6 @@ import {
   HiOutlineArrowRight,
 } from "react-icons/hi2";
 
-const MOCK_TOP_POSTS = [
-  {
-    id: 1,
-    title: "10 Tips for Better Next.js Performance",
-    views: "12,450",
-    comments: 85,
-    image:
-      "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=100&h=100&fit=crop",
-  },
-  {
-    id: 2,
-    title: "Mastering Tailwind CSS 4.0 Features",
-    views: "8,200",
-    comments: 42,
-    image:
-      "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=100&h=100&fit=crop",
-  },
-  {
-    id: 3,
-    title: "The Future of Web Development in 2026",
-    views: "6,150",
-    comments: 120,
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=100&h=100&fit=crop",
-  },
-];
 
 const TopPosts = () => {
   return (
