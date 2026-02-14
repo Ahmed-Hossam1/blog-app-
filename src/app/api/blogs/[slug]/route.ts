@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
+import { buildCommentsTree } from "@/utils";
 
 export async function GET(
   request: NextRequest,
@@ -22,5 +23,7 @@ export async function GET(
 
   if (!blog) return NextResponse.json("blog Not Found", { status: 404 });
 
-  return NextResponse.json(blog);
+  const nestedComments = buildCommentsTree(blog?.comments);
+
+  return NextResponse.json({ ...blog, nestedComments }, { status: 200 });
 }

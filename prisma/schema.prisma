@@ -47,15 +47,22 @@ model Blog {
 model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
 
-  authorName    String
-  image         String
-  comment       String
+  authorName String
+  image      String
+  comment    String
 
+  //  blog relation
   blogId String @db.ObjectId
   blog   Blog   @relation(fields: [blogId], references: [id])
 
+  //  self relation each comment should know or have it's parent
+  parentId String? @db.ObjectId
+  parent   Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction  )
+  replies  Comment[] @relation("CommentReplies")
+
   createdAt DateTime @default(now())
 }
+
 
 model User {
   id        String @id @default(auto()) @map("_id") @db.ObjectId

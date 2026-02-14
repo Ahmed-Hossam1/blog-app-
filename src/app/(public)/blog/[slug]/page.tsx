@@ -1,9 +1,10 @@
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
+import RecursiveComment from "@/components/ui/RecursiveComment";
 import { IBlog } from "@/types";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
-import { FaRegComment, FaRegEye, FaReply } from "react-icons/fa6";
+import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
@@ -14,9 +15,14 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   if (!res.ok) throw new Error("Failed to fetch");
   const data: IBlog = await res.json();
 
+  
+
   return (
     <SectionWrapper>
       <div className="container mx-auto max-w-5xl ">
+        {/* <MyModal>
+          <textarea />
+        </MyModal> */}
         <div
           id="card_details"
           className=" bg-gray-50 pb-5 rounded-xl dark:bg-surfaceDark"
@@ -113,64 +119,43 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               </div>
 
               {/* Comments Container */}
-              <div className="mt-5 border-b pb-4  border-gray">
+              <div className="mt-12 pt-8 border-t border-zinc-100 dark:border-zinc-800">
                 {/* Comments Header */}
-                <h3 className="mb-6 text-lg text-navyGray font-semibold dark:text-white">
-                  Comments
-                  <span className="ml-2 rounded-full bg-blue-100 px-2 py-0.5 text-xs dark:bg-blue-900 dark:text-white">
-                    {data.comments?.length}
-                  </span>
-                </h3>
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
+                    Comments
+                    <span className="ml-3 inline-flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-bold px-2.5 py-0.5 rounded-full">
+                      {data.comments?.length || 0}
+                    </span>
+                  </h3>
+                </div>
                 {/* Comments Body */}
-                <div className="space-y-6">
-                  {data.comments?.map((comment) => (
-                    <div
+                <div className="space-y-8">
+                  {data?.comments.map((comment) => (
+                    <RecursiveComment
                       key={comment.id}
-                      className="rounded-xl bg-blue-50 p-6 dark:bg-gray-800"
-                    >
-                      {/* Header */}
-                      <div className="mb-3 flex items-center gap-3">
-                        <Image
-                          src={comment.image}
-                          alt={comment.authorName}
-                          width={40}
-                          height={40}
-                          className=" rounded-full object-cover"
-                        />
-                        <h4 className="font-semibold text-baseInk dark:text-white">
-                          {comment.authorName}
-                        </h4>
-                      </div>
-
-                      {/* Comment Text */}
-                      <p className="mb-4 leading-7 text-gray-700 dark:text-gray-300">
-                        {comment.comment}
-                      </p>
-
-                      {/* Reply Button */}
-                      <Button className="flex h-9 w-9 items-center justify-center  bg-primary text-white hover:bg-blue-700 transition">
-                        <FaReply />
-                      </Button>
-                    </div>
+                      comment={comment}
+                      level={0}
+                    />
                   ))}
                 </div>
               </div>
 
               {/* Leave Comment */}
-              <div className="mt-5">
-                <h3 className="mb-3 text-lg text-navyGray font-semibold dark:text-white">
-                  Leave a Comment on this post
+              <div className="mt-12">
+                <h3 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-white">
+                  Leave a Comment
                 </h3>
 
-                <div className="rounded-2xl bg-slate-50 p-8 dark:bg-gray-800">
-                  <form className="space-y-4">
+                <div className="rounded-2xl bg-zinc-50 dark:bg-zinc-900/50 p-6 md:p-8 border border-zinc-100 dark:border-zinc-800">
+                  <form className="space-y-6">
                     <textarea
-                      placeholder="Write Your Comment"
+                      placeholder="Share your thoughts..."
                       rows={4}
-                      className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition py-2 px-4 rounded-md dark:bg-gray-900 dark:text-white dark:border-gray-700"
+                      className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all py-3 px-4 rounded-xl dark:text-white dark:placeholder-zinc-500 shadow-sm"
                     />
 
-                    <Button className=" bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 transition">
+                    <Button className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 active:scale-95">
                       Post Comment
                     </Button>
                   </form>

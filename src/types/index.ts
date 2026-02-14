@@ -42,6 +42,8 @@ export interface IComment {
   image: string;
   comment: string;
   createdAt: Date;
+  parentId?: string | null;
+  replies?: IComment[];
 }
 
 export interface IContent {
