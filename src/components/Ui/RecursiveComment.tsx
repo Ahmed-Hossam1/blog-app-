@@ -1,3 +1,4 @@
+"use client";
 import { IComment } from "@/types";
 import Image from "next/image";
 import { FaReply } from "react-icons/fa6";
@@ -5,15 +6,18 @@ import Button from "./Button";
 import { formatDate } from "@/utils";
 
 interface ICommentProps {
+  handleCommentReply: (parentCommentId: string, authorName: string) => void;
   comment: IComment;
   level?: number;
 }
 
-const RecursiveComment = ({ comment, level = 0 }: ICommentProps) => {
-  const { replies } = comment;
+const RecursiveComment = ({ comment, level = 0, handleCommentReply }: ICommentProps) => {
+  const { id, authorName, image, comment: commentText, createdAt, replies } = comment;
 
   return (
-    <div className={`flex flex-col relative ${level > 0 ? "ml-4 md:ml-8" : ""}`}>
+    <div
+      className={`flex flex-col relative ${level > 0 ? "ml-4 md:ml-8" : ""}`}
+    >
       {/* Enhanced Vertical Thread Line */}
       {level > 0 && (
         <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-[1.5px] bg-zinc-200 dark:bg-zinc-600 transition-colors duration-300" />
@@ -26,23 +30,27 @@ const RecursiveComment = ({ comment, level = 0 }: ICommentProps) => {
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 overflow-hidden rounded-full ring-2 ring-zinc-50 dark:ring-zinc-800 shadow-sm">
                 <Image
-                  src={comment.image}
-                  alt={comment.authorName}
+                  src={image}
+                  alt={authorName}
                   fill
                   className="object-cover"
                 />
               </div>
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-white leading-tight">
-                  {comment.authorName}
+                  {authorName}
                 </h4>
                 <p className="text-[11px] font-medium text-zinc-400">
-                  {formatDate(comment.createdAt)}
+                  {formatDate(createdAt)}
                 </p>
               </div>
             </div>
 
-            <Button className="flex items-center gap-2 bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm transition-all duration-200 hover:text-indigo-600 dark:hover:text-indigo-400">
+            <Button
+              type="button"
+              onClick={() => handleCommentReply(id, authorName)}
+              className="flex items-center gap-2 bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm transition-all duration-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+            >
               <FaReply size={14} />
               <span className="hidden sm:inline font-semibold">Reply</span>
             </Button>
@@ -50,7 +58,7 @@ const RecursiveComment = ({ comment, level = 0 }: ICommentProps) => {
 
           {/* Comment Text */}
           <p className="leading-7 text-zinc-600 dark:text-zinc-400 text-[15px]">
-            {comment.comment}
+            {commentText}
           </p>
         </div>
       </div>
@@ -60,6 +68,7 @@ const RecursiveComment = ({ comment, level = 0 }: ICommentProps) => {
         <div className="mt-4 space-y-4">
           {replies.map((reply) => (
             <RecursiveComment
+              handleCommentReply={handleCommentReply}
               key={reply.id}
               comment={reply}
               level={level + 1}

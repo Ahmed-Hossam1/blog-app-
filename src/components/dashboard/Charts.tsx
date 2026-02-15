@@ -16,7 +16,7 @@ type Props = {
   data: { name: string; users: number }[];
 };
 
-const Chart = ({ title, description, data }: Props) => {
+const Charts = ({ title, description, data }: Props) => {
   return (
     <div className="w-full bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800">
       <div className="flex items-center justify-between mb-6">
@@ -72,4 +72,4 @@ const Chart = ({ title, description, data }: Props) => {
   );
 };
 
-export default Chart;
+export default Charts;

@@ -61,3 +61,27 @@ export const formConfig = {
     },
   ] as IField<ContactFields>[],
 };
+
+export const commentForm = {
+  comment: [
+    {
+      id: 1,
+      name: "parentCommentId",
+      hidden: true,
+      type: "text",
+    },
+    {
+      id: 2,
+      name: "blogId",
+      hidden: true,
+      type: "text",
+    },
+    {
+      id: 3,
+      name: "comment",
+      type: "textarea",
+      placeholder: "Write Your Comment Here...",
+      label: "Comment",
+    },
+  ],
+};

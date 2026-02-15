@@ -34,7 +34,7 @@ export function signUpErrors(signUpForm: ISignUpForm) {
   };
 
   if (!signUpForm.name.trim() || signUpForm.name.length < 3) {
-    errors.name = "name is required and must be at least 3 characters long.";
+    errors.name = "Name is required and must be at least 3 characters long.";
   }
 
   if (!signUpForm.email.trim() || !emailRegex.test(signUpForm.email)) {
@@ -80,7 +80,7 @@ export function formatDate(date: Date | string) {
 export function buildCommentsTree(comments: IComment[]) {
   const root: IComment[] = [];
   // add empty replies array in beginning to each comment
-  comments.forEach((comments) => (comments.replies = []));
+  comments.forEach((c) => (c.replies = []));
 
   comments.forEach((comment) => {
     if (comment.parentId === null) {
@@ -92,4 +92,6 @@ export function buildCommentsTree(comments: IComment[]) {
       }
     }
   });
+
+  return root;
 }

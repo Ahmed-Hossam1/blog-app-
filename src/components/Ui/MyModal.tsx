@@ -1,26 +1,15 @@
 "use client";
-import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { ReactNode, useState } from "react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { ReactNode } from "react";
 
 interface Props {
   title?: string;
+  children: ReactNode;
+  isOpen: boolean;
   open: () => void;
   close: () => void;
-  children: ReactNode;
 }
-export default function MyModal({ title, open, close, children }: Props) {
-  const [isOpen, setIsOpen] = useState(true);
-
-  function open() {
-    setIsOpen(true);
-  }
-
-  function close() {
-    setIsOpen(false);
-  }
-
- 
-
+export default function MyModal({ title, isOpen, close, children }: Props) {
   return (
     <>
       <Dialog
