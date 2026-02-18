@@ -1,4 +1,5 @@
 import { IComment, ISignInForm, ISignUpForm } from "@/types";
+import { prisma } from "../../prisma/prisma";
 
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
@@ -95,3 +96,4 @@ export function buildCommentsTree(comments: IComment[]) {
 
   return root;
 }
+

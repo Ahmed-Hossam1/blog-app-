@@ -1,35 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
 
-export async function POST(req: NextRequest) {
+export async function GET() {
   try {
-    const body = await req.json();
-    const { comment, parentCommentId, blogId } = body;
+    const data = await prisma.comment.findMany();
 
-    if (!comment)
-      return NextResponse.json(
-        { message: "Comment is required" },
-        { status: 400 },
-      );
-    await prisma.comment.create({
-      data: {
-        comment: comment,
-        blogId: blogId,
-        parentId: parentCommentId,
-        // TODO: Get from authenticated user session
-        authorName: "Anonymous User",
-        image: "/default-avatar.png",
-      },
-    });
-
-    return NextResponse.json(
-      { message: "Comment created successfully" },
-      { status: 201 },
-    );
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error creating comment:", error);
+    console.error("Error fetching comments:", error);
     return NextResponse.json(
-      { message: "Failed to create comment" },
+      { message: "Failed to fetch comments" },
       { status: 500 },
     );
   }

@@ -1,11 +1,10 @@
 import SectionWrapper from "@/components/SectionWrapper";
-import { IAuthor } from "@/types";
+import { getAuthors } from "@/services";
 import Image from "next/image";
 import Link from "next/link";
 
-const page = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/authors`);
-  const data: IAuthor[] = await res.json();
+const AuthorsPage = async () => {
+  const authors = await getAuthors();
 
   return (
     <SectionWrapper>
@@ -18,7 +17,7 @@ const page = async () => {
         </p>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {data.map((author) => (
+          {authors.map((author) => (
             <div
               key={author.id}
               className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm duration-500 hover:scale-105 hover:shadow-lg hover:transition dark:bg-surfaceDark"
@@ -58,4 +57,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default AuthorsPage;

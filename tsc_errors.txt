@@ -1,0 +1,5 @@
+src/app/page.tsx(29,29): error TS2322: Type '({ author: { id: string; title: string | null; image: string | null; name: string; bio: string | null; }; } & { id: string; slug: string; seoTitle: string; title: string; subtitle: string; category: string; ... 5 more ...; content: { ...; }[]; })[]' is not assignable to type 'IBaseBlog[]'.
+  Type '{ author: { id: string; title: string | null; image: string | null; name: string; bio: string | null; }; } & { id: string; slug: string; seoTitle: string; title: string; subtitle: string; category: string; ... 5 more ...; content: { ...; }[]; }' is not assignable to type 'IBaseBlog'.
+    The types of 'author.title' are incompatible between these types.
+      Type 'string | null' is not assignable to type 'string | undefined'.
+        Type 'null' is not assignable to type 'string | undefined'.

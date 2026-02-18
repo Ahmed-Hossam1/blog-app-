@@ -23,7 +23,7 @@ export async function GET(
 
   if (!blog) return NextResponse.json("blog Not Found", { status: 404 });
 
-  const nestedComments = buildCommentsTree(blog?.comments);
+  const replies = buildCommentsTree(blog?.comments);
 
-  return NextResponse.json({ ...blog, nestedComments }, { status: 200 });
+  return NextResponse.json({ ...blog, replies }, { status: 200 });
 }

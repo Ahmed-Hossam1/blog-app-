@@ -16,6 +16,7 @@ export async function GET(
       },
     });
     if (!userData) return NextResponse.json("User Not Found", { status: 404 });
+    return NextResponse.json(userData);
   } catch (error) {
     console.log(error);
     return NextResponse.json("Something went wrong", { status: 500 });

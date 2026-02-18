@@ -7,8 +7,8 @@ type ExploreCardProps = Pick<
   IBaseBlog,
   "title" | "image" | "category" | "meta" | "author"
 >;
-const ExploreCard = (ExploreCardProps: ExploreCardProps) => {
-  const { title, image, category, meta, author } = ExploreCardProps;
+
+const ExploreCard = ({ title, image, category, meta, author }: ExploreCardProps) => {
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}

@@ -19,46 +19,15 @@ const ExploreCategories = ({
 }: ExploreCategoriesProps) => {
   /*===== STATE ===== */
   const [activeTab, setActiveTab] = useState<string>("All");
-  const [category, setCategory] = useState<string>("All");
 
-  /*===== Fetch ===== */
-
-  /*===== CONSTANT ===== */
-  /* filter blogs base on category state
-   if all back all blogs otherwise back filtered */
+  /*===== FILTER ===== */
   const filteredCards =
-    category === "All"
+    activeTab === "All"
       ? blogs
-      : blogs.filter((blog: IBaseBlog) => blog.category === category);
+      : blogs.filter((blog: IBaseBlog) => blog.category === activeTab);
 
-  /*===== SlICE ===== */
+  /*===== SLICE ===== */
   const slicedBlogs = filteredCards.slice(0, numberOfShownArticles);
-  /*===== HANDLER ===== */
-  const handleCategoryChange = (name: string): void => {
-    setActiveTab(name);
-    setCategory(name);
-  };
-
-  /*===== RENDER ===== */
-  const renderTabs = tabsData?.map((tab) => (
-    <Tabs
-      onClick={() => handleCategoryChange(tab.name)}
-      key={tab.id}
-      className={`${
-        tab.name === activeTab
-          ? "bg-black text-white dark:bg-white dark:text-black"
-          : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
-      }`}
-    >
-      {tab.name}
-    </Tabs>
-  ));
-
-  const renderCards = slicedBlogs?.map((blog: IBaseBlog) => (
-    <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-      <ExploreCard {...blog} />
-    </Link>
-  ));
 
   return (
     <SectionWrapper>
@@ -74,16 +43,37 @@ const ExploreCategories = ({
 
         {/* Tabs (UI only) */}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {renderTabs}
+          {tabsData.map((tab) => (
+            <Tabs
+              onClick={() => setActiveTab(tab.name)}
+              key={tab.id}
+              className={`${tab.name === activeTab
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
+                }`}
+            >
+              {tab.name}
+            </Tabs>
+          ))}
         </div>
 
         {/* Cards Grid */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
-          {renderCards}
+          {slicedBlogs.map((blog: IBaseBlog) => (
+            <Link href={`/blog/${blog.slug}`} key={blog.slug}>
+              <ExploreCard
+                title={blog.title}
+                image={blog.image}
+                category={blog.category}
+                meta={blog.meta}
+                author={blog.author}
+              />
+            </Link>
+          ))}
         </div>
 
         {/* Button */}
-        {renderCards.length === 0 ? (
+        {slicedBlogs.length === 0 ? (
           <div className="flex items-center justify-center mt-12">
             <p className="text-sm text-gray-500 capitalize font-semibold dark:text-gray-400">
               No blogs found for this category

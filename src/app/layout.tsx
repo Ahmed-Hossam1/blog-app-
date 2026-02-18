@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import ReduxProvider from "@/providers/Redux";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

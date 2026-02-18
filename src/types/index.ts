@@ -33,8 +33,8 @@ export interface IAuthor {
   id?: string;
   name: string;
   image: string | null;
-  title?: string;
-  bio?: string;
+  title?: string | null;
+  bio?: string | null;
 }
 export interface IComment {
   id: string;
@@ -53,6 +53,7 @@ export interface IContent {
 }
 
 export interface IBlog extends IBaseBlog {
+  replies?: IComment[];
   content: IContent[];
   comments: IComment[];
 }
@@ -97,3 +98,5 @@ export interface ISessionResponse {
   };
   status: "authenticated" | "unauthenticated" | "loading";
 }
+
+ 

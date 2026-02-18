@@ -14,6 +14,9 @@ const Pagination = ({
   totalPages,
   onPageChange,
 }: IPaginationProps) => {
+  // const [currentPage, setCurrentPage] = useState<number>(1);
+
+  
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 

@@ -1,18 +1,20 @@
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/SectionWrapper";
-// import { authorsData } from "@/data"; // Removed dependency on mock data for the profile itself
+import { getAuthorById } from "@/services";
 import { IBaseBlog } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 
-const page = async ({ params }: { params: Promise<{ id: string }> }) => {
+const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/authors/${id}`,
-  );
-  const author = await res.json();
+  const author = await getAuthorById(id);
+
+  if (!author) {
+    notFound();
+  }
 
   return (
     <SectionWrapper>
@@ -82,20 +84,19 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         {/* Author's Articles */}
         <div className="mb-8 border-t pt-8 dark:border-gray-800">
-          {author?.blogs.length > 0 ? (
+          {author.blogs.length > 0 ? (
             <>
               <h2 className="mb-8 text-2xl font-bold dark:text-white">
                 Articles by {author.name}
               </h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {author?.blogs.map((post: IBaseBlog) => (
+                {author.blogs.map((post: IBaseBlog) => (
                   <Link href={`/blog/${post.slug}`} key={post.id}>
                     <ExploreCard
                       title={post.title}
                       image={post.image}
                       category={post.category}
                       meta={post.meta}
-                      // author from author Table not from Blogs
                       author={author}
                     />
                   </Link>
@@ -113,4 +114,4 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   );
 };
 
-export default page;
+export default AuthorPage;

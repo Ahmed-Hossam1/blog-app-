@@ -14,7 +14,6 @@ const SearchPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   useEffect(() => {
     if (!query) return setBlogs([]);
-    // Fetch Data from API Based on query Every 300ms
     const fetchData = async () => {
       try {
         const res = await fetch(
@@ -28,9 +27,9 @@ const SearchPage = () => {
       }
     };
 
-    const interval = setTimeout(() => fetchData(), 300);
+    const timeout = setTimeout(() => fetchData(), 300);
 
-    return () => clearTimeout(interval);
+    return () => clearTimeout(timeout);
   }, [query]);
 
   const sortedBlogs = [...blogs];
@@ -38,7 +37,6 @@ const SearchPage = () => {
     case "Most Views":
       sortedBlogs.sort((a, b) => b.meta.views - a.meta.views);
       break;
-
     case "Least Views":
       sortedBlogs.sort((a, b) => a.meta.views - b.meta.views);
       break;
@@ -97,7 +95,7 @@ const SearchPage = () => {
             </p>
           </div>
 
-          {/* Sort Dropdown Placeholder */}
+          {/* Sort Dropdown */}
           <div className="hidden md:block">
             <select
               value={sortBy}
@@ -108,9 +106,9 @@ const SearchPage = () => {
                 Sort By{" "}
               </option>
               <option value="Most Views">Most Views</option>
-              <option value="Least views">Least views</option>
+              <option value="Least Views">Least Views</option>
               <option value="Newest">Newest</option>
-              <option value="oldest">oldest</option>
+              <option value="Oldest">Oldest</option>
             </select>
           </div>
         </div>
@@ -118,7 +116,13 @@ const SearchPage = () => {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           {sortedBlogs.map((blog) => (
             <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-              <ExploreCard key={blog.id} {...blog} />
+              <ExploreCard
+                title={blog.title}
+                image={blog.image}
+                category={blog.category}
+                meta={blog.meta}
+                author={blog.author}
+              />
             </Link>
           ))}
         </div>

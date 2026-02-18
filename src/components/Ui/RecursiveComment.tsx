@@ -6,7 +6,7 @@ import Button from "./Button";
 import { formatDate } from "@/utils";
 
 interface ICommentProps {
-  handleCommentReply: (parentCommentId: string, authorName: string) => void;
+  handleCommentReply: (parentCommentId: string, ReplyToAuthorName: string) => void;
   comment: IComment;
   level?: number;
 }
