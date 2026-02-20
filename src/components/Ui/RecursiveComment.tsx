@@ -6,13 +6,27 @@ import Button from "./Button";
 import { formatDate } from "@/utils";
 
 interface ICommentProps {
-  handleCommentReply: (parentCommentId: string, ReplyToAuthorName: string) => void;
+  handleCommentReply: (
+    parentCommentId: string,
+    ReplyToAuthorName: string,
+  ) => void;
   comment: IComment;
   level?: number;
 }
 
-const RecursiveComment = ({ comment, level = 0, handleCommentReply }: ICommentProps) => {
-  const { id, authorName, image, comment: commentText, createdAt, replies } = comment;
+const RecursiveComment = ({
+  comment,
+  level = 0,
+  handleCommentReply,
+}: ICommentProps) => {
+  const {
+    id,
+    authorName,
+    image,
+    comment: commentText,
+    createdAt,
+    replies,
+  } = comment;
 
   return (
     <div
@@ -20,7 +34,7 @@ const RecursiveComment = ({ comment, level = 0, handleCommentReply }: ICommentPr
     >
       {/* Enhanced Vertical Thread Line */}
       {level > 0 && (
-        <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-[1.5px] bg-zinc-200 dark:bg-zinc-600 transition-colors duration-300" />
+        <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-[2px] rounded-full bg-gradient-to-b from-indigo-300 to-indigo-100 dark:from-indigo-700 dark:to-indigo-900" />
       )}
 
       <div className="relative z-10">
@@ -28,14 +42,13 @@ const RecursiveComment = ({ comment, level = 0, handleCommentReply }: ICommentPr
           {/* Header */}
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 overflow-hidden rounded-full ring-2 ring-zinc-50 dark:ring-zinc-800 shadow-sm">
-                <Image
-                  src={image}
-                  alt={authorName}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              <Image
+                src={image}
+                alt={authorName}
+                width={40}
+                height={40}
+                className="rounded-full object-cover h-10 w-10 flex-shrink-0 border-2 border-white dark:border-zinc-700 shadow-sm"
+              />
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-white leading-tight">
                   {authorName}

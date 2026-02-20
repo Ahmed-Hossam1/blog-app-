@@ -13,7 +13,7 @@ import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { status, data } = useSession();
-  const src = data?.user?.image ?? "https://i.pravatar.cc/150?img=3";
+  const src = data?.user?.image ?? "/default-user.png";
 
   /*===== STATE ===== */
   const { theme, setTheme } = useTheme();
@@ -30,7 +30,12 @@ const Navbar = () => {
   /*===== RENDER ===== */
   const renderThemeIcon = () => {
     const Icon = theme === "light" ? MdOutlineDarkMode : IoSunnyOutline;
-    return <Icon onClick={changeTheme} className="cursor-pointer transition-transform hover:scale-110" />;
+    return (
+      <Icon
+        onClick={changeTheme}
+        className="cursor-pointer transition-transform hover:scale-110"
+      />
+    );
   };
 
   const renderDesktopLinks = navLinksData.map((link) => (
@@ -143,10 +148,10 @@ const Navbar = () => {
               tabIndex={0}
               onBlur={(e) => {
                 /*
-When the element loses focus, check where focus moved:
-If it moved outside the menu → close it
-If it moved to an element inside (like Logout button) → keep it open
-*/
+            When the element loses focus, check where focus moved:
+            If it moved outside the menu → close it
+            If it moved to an element inside (like Logout button) → keep it open
+            */
                 const nextElementFocus = e.relatedTarget as Node | null;
 
                 if (!e.currentTarget.contains(nextElementFocus)) {
@@ -171,9 +176,10 @@ If it moved to an element inside (like Logout button) → keep it open
               {/* User Dropdown */}
               <div
                 className={`absolute right-0 mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
-                  ${openUserMenu
-                    ? "opacity-100 translate-y-0"
-                    : "pointer-events-none opacity-0 -translate-y-2"
+                  ${
+                    openUserMenu
+                      ? "opacity-100 translate-y-0"
+                      : "pointer-events-none opacity-0 -translate-y-2"
                   }`}
               >
                 <div className="p-2">

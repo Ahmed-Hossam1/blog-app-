@@ -35,6 +35,7 @@ const CommentSection = ({ blog }: IProps) => {
   });
   const [replyToAuthorName, setReplyToAuthorName] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const session = useSession();
 
   /* ================== MODAL ================== */
   const openModal = () => setIsModalOpen(true);
@@ -56,6 +57,10 @@ const CommentSection = ({ blog }: IProps) => {
   /* ================== CREATE COMMENT ================== */
   const postNewComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // check if user is authenticated to create a comment
+    if (session.status !== "authenticated")
+      return toast.error("Please sign in first");
 
     const payload = {
       ...comment,
@@ -90,6 +95,10 @@ const CommentSection = ({ blog }: IProps) => {
 
   /* ================== CREATE REPLY ================== */
   const postReply = async () => {
+    // check if user is authenticated to create a reply
+    if (session.status !== "authenticated")
+      return toast.error("Please sign in first");
+
     try {
       setIsLoading(true);
       const res = await fetch(
