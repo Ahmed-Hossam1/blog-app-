@@ -25,13 +25,12 @@ const Navbar = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
   /*===== RENDER ===== */
   const renderThemeIcon = () => {
-    return theme === "light" ? (
-      <MdOutlineDarkMode onClick={changeTheme} className="cursor-pointer" />
-    ) : (
-      <IoSunnyOutline onClick={changeTheme} className="cursor-pointer" />
-    );
+    const Icon = theme === "light" ? MdOutlineDarkMode : IoSunnyOutline;
+    return <Icon onClick={changeTheme} className="cursor-pointer transition-transform hover:scale-110" />;
   };
 
   const renderDesktopLinks = navLinksData.map((link) => (
@@ -49,6 +48,7 @@ const Navbar = () => {
       key={link.id}
       className="px-3 py-2 block text-base capitalize cursor-pointer rounded-md transition hover:bg-blue-100 hover:text-blue-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-blue-400"
       href={link.to}
+      onClick={closeMenu}
     >
       {link.name}
     </Link>
@@ -56,26 +56,23 @@ const Navbar = () => {
 
   return (
     <nav className="fixed w-full z-50 bg-white shadow-lg dark:bg-surfaceDark dark:border-b dark:border-gray-800 transition-colors duration-300">
+      {/* Overlay to prevent interaction when menu is open */}
+      <div
+        className={`fixed inset-0 bg-black/50 transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        onClick={closeMenu}
+      />
+
       <div className="container mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          {theme === "light" ? (
-            <Image
-              src="/logo-black.svg"
-              width={100}
-              height={100}
-              alt="logo"
-              className="h-8 w-auto"
-            />
-          ) : (
-            <Image
-              src="/logo-white.svg"
-              width={100}
-              height={100}
-              alt="logo"
-              className="h-8 w-auto"
-            />
-          )}
+          <Image
+            src={theme === "light" ? "/logo-black.svg" : "/logo-white.svg"}
+            width={100}
+            height={100}
+            alt="logo"
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Links */}
@@ -83,50 +80,44 @@ const Navbar = () => {
           {renderDesktopLinks}
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-40 bg-black/40 lg:hidden">
-            <aside
-              className={`absolute right-0 top-0 h-full w-72 bg-white p-5 shadow-lg dark:bg-surfaceDark dark:text-white transition-colors duration-300`}
-            >
-              <div className="flex items-center justify-between border-b pb-3">
-                <h2 className="text-lg font-semibold capitalize">menu</h2>
-                <MdOutlineCancel
-                  className="cursor-pointer text-xl hover:text-red-700 hover:transition hover:duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                />
-              </div>
-
-              <div className="mt-6 space-y-2">{renderMobileLinks}</div>
-
-              {status !== "authenticated" && (
-                <div className="mt-6 flex flex-col gap-2">
-                  <Link href={"/sign-in"}>
-                    <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
-                      sign in
-                    </Button>
-                  </Link>
-                  <Link href={"/sign-up"}>
-                    <Button
-                      bgColor="bg-black"
-                      className="w-full capitalize py-2 font-medium text-white"
-                    >
-                      sign up
-                    </Button>
-                  </Link>
-                </div>
-              )}
-            </aside>
+        {/* Mobile Menu Sidebar */}
+        <aside
+          className={`fixed right-0 top-0 h-full w-72 z-50 bg-white p-5 shadow-lg dark:bg-surfaceDark dark:text-white transform transition-transform duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+          <div className="flex items-center justify-between border-b pb-3">
+            <h2 className="text-lg font-semibold capitalize">menu</h2>
+            <MdOutlineCancel
+              className="cursor-pointer text-2xl hover:text-red-500 transition-colors"
+              onClick={closeMenu}
+            />
           </div>
-        )}
+
+          <div className="mt-6 space-y-2">{renderMobileLinks}</div>
+
+          {status !== "authenticated" && (
+            <div className="mt-6 flex flex-col gap-2">
+              <Link href={"/sign-in"} onClick={closeMenu}>
+                <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
+                  sign in
+                </Button>
+              </Link>
+              <Link href={"/sign-up"} onClick={closeMenu}>
+                <Button
+                  bgColor="bg-black"
+                  className="w-full capitalize py-2 font-medium text-white"
+                >
+                  sign up
+                </Button>
+              </Link>
+            </div>
+          )}
+        </aside>
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4 text-xl">
-            {/* Theme Icon */}
             {renderThemeIcon()}
-            {/* search Link with search Query Icon */}
             <Link href={`/search?query=`}>
               <CiSearch className="cursor-pointer dark:text-white" />
             </Link>
@@ -180,10 +171,9 @@ If it moved to an element inside (like Logout button) → keep it open
               {/* User Dropdown */}
               <div
                 className={`absolute right-0 mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
-                  ${
-                    openUserMenu
-                      ? "opacity-100 translate-y-0"
-                      : "pointer-events-none opacity-0 -translate-y-2"
+                  ${openUserMenu
+                    ? "opacity-100 translate-y-0"
+                    : "pointer-events-none opacity-0 -translate-y-2"
                   }`}
               >
                 <div className="p-2">

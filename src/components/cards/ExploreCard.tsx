@@ -35,25 +35,26 @@ const ExploreCard = ({ title, image, category, meta, author }: ExploreCardProps)
       </div>
 
       {/* Content */}
-      <div className="p-5 text-left">
-        <span className="my-2 inline-block rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-sm text-navyGray dark:text-gray-300">
-          {category}
-        </span>
+      <div className="p-5 flex flex-col flex-1">
+        <div>
+          <span className="inline-block rounded-full bg-blue-50 dark:bg-blue-900/30 px-3 py-1 text-xs font-medium text-blue-600 dark:text-blue-400">
+            {category}
+          </span>
+          <h3 className="mt-3 line-clamp-2 text-lg font-bold leading-snug dark:text-white group-hover:text-blue-600 transition-colors">
+            {truncateText(title)}
+          </h3>
+        </div>
 
-        <h3 className="mt-2 line-clamp-2 text-base font-semibold dark:text-white">
-          {truncateText(title)}
-        </h3>
-
-        <div className="mt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-auto pt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              <FaRegEye /> {meta?.views}
+            <span className="flex items-center gap-1.5">
+              <FaRegEye className="text-gray-400" /> {meta?.views}
             </span>
-            <span className="flex items-center gap-1">
-              <FaRegComment /> {meta?.commentsCount}
+            <span className="flex items-center gap-1.5">
+              <FaRegComment className="text-gray-400" /> {meta?.commentsCount}
             </span>
           </div>
-          <span>{meta?.publishDate}</span>
+          <span className="font-medium text-gray-400 uppercase tracking-tighter">{meta?.publishDate}</span>
         </div>
       </div>
     </div>

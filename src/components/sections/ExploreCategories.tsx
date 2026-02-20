@@ -48,8 +48,8 @@ const ExploreCategories = ({
               onClick={() => setActiveTab(tab.name)}
               key={tab.id}
               className={`${tab.name === activeTab
-                  ? "bg-black text-white dark:bg-white dark:text-black"
-                  : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
                 }`}
             >
               {tab.name}
@@ -73,21 +73,19 @@ const ExploreCategories = ({
         </div>
 
         {/* Button */}
-        {slicedBlogs.length === 0 ? (
-          <div className="flex items-center justify-center mt-12">
-            <p className="text-sm text-gray-500 capitalize font-semibold dark:text-gray-400">
-              No blogs found for this category
+        <div className="mt-12 flex flex-col items-center">
+          {slicedBlogs.length === 0 ? (
+            <p className="text-sm text-gray-400 font-medium bg-gray-50 dark:bg-gray-800/50 px-6 py-3 rounded-full">
+              No articles found in this category yet.
             </p>
-          </div>
-        ) : (
-          <div className="mt-12 flex justify-center ">
-            <Link href={"/blog"}>
+          ) : (
+            <Link href="/blog">
               <Button className="border px-6 py-3 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 dark:text-white dark:hover:bg-white dark:hover:text-black">
-                View All Blogs
+                Explore All Blogs
               </Button>
             </Link>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </SectionWrapper>
   );

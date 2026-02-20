@@ -1,22 +1,18 @@
-import Image from "next/image";
-import { BsCalendar2Date } from "react-icons/bs";
-import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import CommentSection from "@/components/CommentSection";
 import SectionWrapper from "@/components/SectionWrapper";
-
-/* ================== TYPES ================== */
-import { IBlog } from "@/types";
+import { getBlogById } from "@/services";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { BsCalendar2Date } from "react-icons/bs";
+import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
 
   /* ================== FETCH BLOG ================== */
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${slug}`,
-    { cache: "no-store" },
-  );
-  const blog: IBlog = await res.json();
+  const blog = await getBlogById(slug);
 
+  if (!blog) return notFound();
   return (
     <SectionWrapper>
       <div className="container mx-auto max-w-5xl">

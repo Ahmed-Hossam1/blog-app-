@@ -1,3 +1,4 @@
+import { buildCommentsTree } from "@/utils";
 import { prisma } from "../../prisma/prisma";
 
 export const getBlogs = async () => {
@@ -13,6 +14,26 @@ export const getBlogs = async () => {
     },
   });
   return blogs;
+};
+
+export const getBlogById = async (slug: string) => {
+  const blog = await prisma.blog.findUnique({
+    where: { slug },
+    include: {
+      comments: true,
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+
+  if (!blog) return;
+
+  const replies = buildCommentsTree(blog.comments);
+  return { ...blog, replies };
 };
 
 export const getAuthors = async () => {

@@ -12,7 +12,7 @@ const OverView = () => {
     <SectionWrapper>
       <div className="mb-10">
         <DashboardHeadingTitle
-          title="Dashboard Overview"
+          title="Welcome Back Admin"
           description="Monitor your blog is performance and manage your latest posts."
         />
       </div>
