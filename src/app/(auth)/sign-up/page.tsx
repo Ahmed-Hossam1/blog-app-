@@ -4,28 +4,27 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
+import { signUpSchema } from "@/schema/schema";
 import { ISignUpForm } from "@/types";
-import { signUpErrors } from "@/utils";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
-import { useTheme } from "next-themes";
 
 const Page = () => {
   /*======= STATE ======*/
-  const [signUp, setSignUp] = useState<ISignUpForm>({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState<ISignUpForm>({
-    name: "",
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ISignUpForm>({
+    resolver: yupResolver(signUpSchema),
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme } = useTheme();
@@ -35,38 +34,21 @@ const Page = () => {
   const signUpInputs = formConfig?.signUp ?? [];
 
   /*======= HANDLERS ======*/
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
 
-    setSignUp((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const validationErrors = signUpErrors(signUp);
-    // set errors in state to render it in UI only but validate on the variable
-    setErrors(validationErrors);
-
-    const isFormValid = Object.values(validationErrors).every(
-      (value) => value === "",
-    );
-
-    if (!isFormValid) return;
-
+  const onSubmit: SubmitHandler<ISignUpForm> = async (data) => {
+    if (!data) return;
     try {
       setIsLoading(true);
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       const res = await fetch(`${baseUrl}/api/auth/sign-up`, {
         method: "POST",
-        body: JSON.stringify(signUp),
+        body: JSON.stringify(data),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message);
       const result = await signIn("credentials", {
-        email: signUp.email,
-        password: signUp.password,
+        email: data.email,
+        password: data.password,
         redirect: false,
       });
       if (result?.error) throw new Error("failed to create user");
@@ -83,14 +65,14 @@ const Page = () => {
   const renderInputs = signUpInputs.map((input) => (
     <div key={input.id}>
       <MyInput
-        {...input}
-        id={input.name}
-        name={input.name}
-        value={signUp[input.name as keyof ISignUpForm]}
-        onChange={handleInputChange}
+        {...register(input.name)}
+        type={input.type}
+        placeholder={input.placeholder}
         className="rounded-md"
       />
-      <ErrorMessage msg={`${errors[input.name as keyof ISignUpForm]}`} />
+      {errors[input.name] && (
+        <ErrorMessage msg={`${errors[input.name as keyof ISignUpForm]?.message}`} />
+      )}
     </div>
   ));
 
@@ -143,7 +125,10 @@ const Page = () => {
         </div>
 
         {/* Form */}
-        <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {renderInputs}
 
           <Button

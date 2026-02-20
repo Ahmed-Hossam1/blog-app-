@@ -31,13 +31,13 @@ const MeetOurAuthors = ({
         <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  gap-8">
           {slicedAuthors.map((author) => (
             <div
-              key={author.name}
+              key={author.id}
               className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm  hover:shadow-md hover:scale-105 hover:transition duration-500 dark:bg-surfaceDark"
             >
               {/* Avatar */}
               <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                 <Image
-                  src={`${author.image}`}
+                  src={`${author.image ?? "/default-image.png"}`}
                   alt={author.name}
                   width={80}
                   height={80}
