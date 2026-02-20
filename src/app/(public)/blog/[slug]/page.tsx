@@ -5,6 +5,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
@@ -63,29 +65,9 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               {blog.subtitle}
             </h2>
 
-            {blog.content?.map((content, index) => (
-              <div key={index} className="mb-5">
-                {content.type === "heading" && (
-                  <h3 className="mb-3 text-xl font-semibold text-navyGray dark:text-gray-200">
-                    {content.text}
-                  </h3>
-                )}
-                {content.type === "paragraph" && (
-                  <p className="mb-4 leading-8 text-gray-700 dark:text-gray-300">
-                    {content.text}
-                  </p>
-                )}
-                {content.type === "list" && (
-                  <ul className="mb-4 list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-                    {content.listItems?.map((item, i) => (
-                      <li key={i} className="leading-7">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+            <article className=" prose  dark:prose-invert max-w-none  ">
+              <Markdown remarkPlugins={[remarkGfm]}>{blog.content}</Markdown>
+            </article>
 
             {/* Comments Section */}
             <CommentSection blog={blog} />

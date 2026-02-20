@@ -33,7 +33,7 @@ model Blog {
   image     String
 
   meta      Meta
-  content   Content[]
+  content   String
 
   published Boolean  @default(false)
   createdAt  DateTime @default(now())

@@ -46,15 +46,9 @@ export interface IComment {
   replies?: IComment[];
 }
 
-export interface IContent {
-  type: string;
-  text: string;
-  listItems: string[];
-}
-
 export interface IBlog extends IBaseBlog {
   replies?: IComment[];
-  content: IContent[];
+  content: string;
   comments: IComment[];
 }
 
@@ -98,5 +92,3 @@ export interface ISessionResponse {
   };
   status: "authenticated" | "unauthenticated" | "loading";
 }
-
- 
