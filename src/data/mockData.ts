@@ -10,34 +10,31 @@ import {
 
 export const STATS_DATA = [
   {
+    key: "posts",
     title: "Total Posts",
-    value: "128",
     icon: HiOutlineDocumentText,
-    trend: { value: 12, isUp: true },
-    color: "#3b82f6", // Blue
+    color: "#3b82f6",
   },
   {
+    key: "views",
     title: "Total Views",
-    value: "45.2k",
     icon: HiOutlineEye,
-    trend: { value: 8, isUp: true },
-    color: "#8b5cf6", // Purple
+    color: "#8b5cf6",
   },
   {
+    key: "likes",
     title: "Total Likes",
-    value: "2,845",
     icon: HiOutlineHeart,
-    trend: { value: 5, isUp: false },
-    color: "#ec4899", // Pink
+    color: "#ec4899",
   },
   {
+    key: "comments",
     title: "New Comments",
-    value: "54",
     icon: HiOutlineChatBubbleLeft,
-    trend: { value: 15, isUp: true },
-    color: "#f59e0b", // Amber
+    color: "#f59e0b",
   },
 ];
+
 export const PERFORMANCE_DATA = [
   { name: "Jan", users: 400 },
   { name: "Feb", users: 700 },

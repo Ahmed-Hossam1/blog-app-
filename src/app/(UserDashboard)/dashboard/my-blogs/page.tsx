@@ -12,7 +12,6 @@ import { DashboardTabsData } from "@/data";
 import { MY_BLOGS_STATS, RECENT_POSTS, tableHeaders } from "@/data/mockData";
 import { ITab } from "@/types";
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa6";
 
 const MyBlogs = () => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -60,11 +59,6 @@ const MyBlogs = () => {
             description="Manage your blog posts and categories."
           />
         </div>
-
-        <Button className="flex items-center gap-2 capitalize bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition-all shadow-lg hover:shadow-indigo-500/20">
-          <FaPlus />
-          <span>New blog</span>
-        </Button>
       </div>
 
       {/* Row 1: Metrics */}
@@ -75,7 +69,6 @@ const MyBlogs = () => {
             title={stat.title}
             value={stat.value}
             icon={stat.icon}
-            trend={stat.trend}
             color={stat.color}
           />
         ))}

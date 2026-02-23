@@ -5,10 +5,6 @@ interface StatusCardProps {
   title: string;
   value: string | number;
   icon: IconType;
-  trend?: {
-    value: number;
-    isUp: boolean;
-  };
   color: string;
 }
 
@@ -16,7 +12,6 @@ const StatusCard: React.FC<StatusCardProps> = ({
   title,
   value,
   icon: Icon,
-  trend,
   color,
 }) => {
   return (
@@ -36,16 +31,6 @@ const StatusCard: React.FC<StatusCardProps> = ({
             <h3 className="text-3xl font-bold text-zinc-900 dark:text-white">
               {value}
             </h3>
-            {trend && (
-              <span
-                className={`text-xs font-semibold px-2 py-1 rounded-full ${trend.isUp
-                  ? "text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/30"
-                  : "text-rose-600 bg-rose-50 dark:text-rose-400 dark:bg-rose-950/30"
-                  }`}
-              >
-                {trend.isUp ? "+" : "-"}{trend.value}%
-              </span>
-            )}
           </div>
         </div>
 

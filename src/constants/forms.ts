@@ -1,15 +1,21 @@
-import { ContactFields, IField, SignInFields, SignUpFields } from "@/types";
+import {
+  ContactFields,
+  IField,
+  NewBlogFields,
+  SignInFields,
+  SignUpFields,
+} from "@/types";
 
 export const formConfig = {
   signIn: [
     {
-      id: 1,
+      id: "email",
       name: "email",
       type: "email",
       placeholder: "Email",
     },
     {
-      id: 2,
+      id: "password",
       name: "password",
       type: "password",
       placeholder: "Password",
@@ -18,19 +24,19 @@ export const formConfig = {
 
   signUp: [
     {
-      id: 1,
+      id: "name",
       name: "name",
       placeholder: "Name",
       type: "text",
     },
     {
-      id: 2,
+      id: "email",
       name: "email",
       type: "email",
       placeholder: "Email",
     },
     {
-      id: 3,
+      id: "password",
       name: "password",
       type: "password",
       placeholder: "Password",
@@ -39,21 +45,21 @@ export const formConfig = {
 
   contactForm: [
     {
-      id: 1,
+      id: "name",
       name: "name",
       placeholder: "John Doe",
       type: "text",
       label: "Your Name",
     },
     {
-      id: 2,
+      id: "email",
       name: "email",
       type: "email",
       placeholder: "John@example.com",
       label: "Email Address",
     },
     {
-      id: 3,
+      id: "message",
       name: "message",
       type: "textarea",
       placeholder: "Write Your Message Here...",
@@ -62,26 +68,73 @@ export const formConfig = {
   ] as IField<ContactFields>[],
 };
 
-export const commentForm = {
-  comment: [
+export const newBlogForm: Record<string, IField<NewBlogFields>[]> = {
+  content: [
     {
-      id: 1,
-      name: "parentCommentId",
-      hidden: true,
+      id: "title",
+      name: "title",
+      placeholder: "Title",
       type: "text",
+      label: "Title",
     },
     {
-      id: 2,
-      name: "blogId",
-      hidden: true,
-      type: "text",
+      id: "image",
+      name: "image",
+      type: "file",
+      placeholder: "Upload Your Image Here...",
+      label: "cover image",
     },
     {
-      id: 3,
-      name: "comment",
+      id: "content",
+      name: "content",
       type: "textarea",
-      placeholder: "Write Your Comment Here...",
-      label: "Comment",
+      placeholder: "Write Your article Here...",
+      label: "Content",
+    },
+  ],
+
+  settings: [
+    {
+      id: "status",
+      name: "status",
+      placeholder: "Status",
+      type: "select",
+      label: "Status",
+      options: [
+        {
+          name: "Published",
+          value: "published",
+        },
+        {
+          name: "Draft",
+          value: "draft",
+        },
+      ],
+    },
+
+    {
+      id: "publishDate",
+      name: "publishDate",
+      placeholder: "Publish Date",
+      type: "date",
+      label: "Publish Date",
+    },
+    {
+      id: "category",
+      name: "category",
+      placeholder: "Category",
+      type: "select",
+      label: "Category",
+      options: [
+        {
+          name: "Category 1",
+          value: "category-1",
+        },
+        {
+          name: "Category 2",
+          value: "category-2",
+        },
+      ],
     },
   ],
 };

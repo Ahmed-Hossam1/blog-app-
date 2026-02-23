@@ -72,3 +72,32 @@ export const getAuthorById = async (id: string) => {
   });
   return author;
 };
+
+export const getAuthorBlogs = async (email: string) => {
+  const authorBlogs = await prisma.user.findUnique({
+    where: { email: email },
+
+    select: {
+      blogs: {
+        include: {
+          comments: true,
+          author: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!authorBlogs) return;
+  const blogsWithReplies = authorBlogs.blogs.map((blog) => ({
+    ...blog,
+    replies: buildCommentsTree(blog.comments),
+  }));
+
+  return blogsWithReplies;
+};

@@ -34,7 +34,7 @@ const RecursiveComment = ({
     >
       {/* Enhanced Vertical Thread Line */}
       {level > 0 && (
-        <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-[2px] rounded-full bg-gradient-to-b from-indigo-300 to-indigo-100 dark:from-indigo-700 dark:to-indigo-900" />
+        <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-0.5 rounded-full bg-linear-to-b from-indigo-300 to-indigo-100 dark:from-indigo-700 dark:to-indigo-900" />
       )}
 
       <div className="relative z-10">
@@ -47,7 +47,7 @@ const RecursiveComment = ({
                 alt={authorName}
                 width={40}
                 height={40}
-                className="rounded-full object-cover h-10 w-10 flex-shrink-0 border-2 border-white dark:border-zinc-700 shadow-sm"
+                className="rounded-full object-cover h-10 w-10 shrink-0 border-2 border-white dark:border-zinc-700 shadow-sm"
               />
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-white leading-tight">

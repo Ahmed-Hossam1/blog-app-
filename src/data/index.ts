@@ -1,4 +1,4 @@
-import { INavLinks, ITab, IAuthor } from "@/types";
+import { INavLinks, ITab, IAuthor, INewBlogForm } from "@/types";
 import { HiOutlineSquares2X2, HiOutlineUsers } from "react-icons/hi2";
 import { MdOutlineAnalytics, MdOutlineMailOutline } from "react-icons/md";
 
@@ -28,7 +28,7 @@ export const navLinksData: INavLinks[] = [
 export const asideLinksData = [
   { name: "Overview", icon: HiOutlineSquares2X2, href: "/dashboard" },
   { name: "my blogs", icon: MdOutlineMailOutline, href: "/dashboard/my-blogs" },
-  { name: "Create Blog", icon: HiOutlineUsers, href: "/dashboard/Create-Blog" },
+  { name: "Create Blog", icon: HiOutlineUsers, href: "/dashboard/create-blog" },
 
   { name: "Analytics", icon: MdOutlineAnalytics, href: "/dashboard/analytics" },
 ];

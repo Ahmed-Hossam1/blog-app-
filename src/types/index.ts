@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export interface INavLinks {
   id: number;
   name: string;
@@ -35,6 +37,7 @@ export interface IAuthor {
   image: string | null;
   title?: string | null;
   bio?: string | null;
+  blogs?: IBlog[];
 }
 export interface IComment {
   id: string;
@@ -52,17 +55,28 @@ export interface IBlog extends IBaseBlog {
   comments: IComment[];
 }
 
-export interface IField<T> {
-  id: number;
+export interface ITest extends IBaseBlog {
+  comments: IComment[];
+}
+export type SignInFields = "email" | "password";
+export type SignUpFields = "name" | "email" | "password";
+export type ContactFields = "name" | "email" | "message";
+export type NewBlogFields =
+  | "title"
+  | "image"
+  | "content"
+  | "status"
+  | "category"
+  | "publishDate";
+
+export interface IField<T extends string = string> {
+  id: string;
   name: T;
   type: string;
   placeholder: string;
   label?: string;
+  options?: { name: string; value: string }[];
 }
-
-export type ContactFields = "name" | "email" | "message";
-export type SignInFields = "email" | "password";
-export type SignUpFields = "name" | "email" | "password";
 
 export interface ISignInForm {
   email: string;
@@ -81,6 +95,14 @@ export interface IContactForm {
   message: string;
 }
 
+export interface INewBlogForm {
+  title: string;
+  image: File;
+  content: string;
+  status: string;
+  publishDate: Date | null;
+  category: string;
+}
 export interface ISessionResponse {
   data: {
     user: {
@@ -90,5 +112,13 @@ export interface ISessionResponse {
     };
     expires: string;
   };
-  status: "authenticated" | "unauthenticated" | "loading";
+  status: "authenticated" | "unauthenticated";
+}
+
+// State Card Type
+export interface StatItem {
+  key: "posts" | "views" | "comments" | "likes";
+  title: string;
+  icon: IconType;
+  color: string;
 }

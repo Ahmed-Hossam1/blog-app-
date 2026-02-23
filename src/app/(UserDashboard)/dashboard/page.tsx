@@ -1,4 +1,3 @@
-"use client";
 import StatusCard from "@/components/cards/StatusCard";
 import Charts from "@/components/dashboard/Charts";
 import RecentPostsTable from "@/components/dashboard/RecentPostsTable";
@@ -6,8 +5,17 @@ import TopPosts from "@/components/dashboard/TopPosts";
 import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
+import { getAuthorBlogs } from "@/services";
+import { generateStatus } from "@/utils";
+import { getServerSession } from "next-auth";
+const OverView = async () => {
+  const session = await getServerSession();
+  const user = session?.user;
 
-const OverView = () => {
+  const authorBlogs = await getAuthorBlogs(user?.email as string);
+
+  const stats = generateStatus(authorBlogs, STATS_DATA);
+
   return (
     <SectionWrapper>
       <div className="mb-10">
@@ -19,13 +27,12 @@ const OverView = () => {
 
       {/* Row 1: Status Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {STATS_DATA.map((stat, index) => (
+        {stats.map((stat, index) => (
           <StatusCard
             key={index}
             title={stat.title}
             value={stat.value}
             icon={stat.icon}
-            trend={stat.trend}
             color={stat.color}
           />
         ))}
@@ -43,13 +50,13 @@ const OverView = () => {
 
         {/* Row 2 - Right: Top Posts */}
         <div className="lg:col-span-1">
-          <TopPosts />
+          <TopPosts data={authorBlogs} />
         </div>
       </div>
 
       {/* Row 3: Recent Posts Table */}
       <div className="mb-8">
-        <RecentPostsTable />
+        <RecentPostsTable data={authorBlogs}/>
       </div>
     </SectionWrapper>
   );

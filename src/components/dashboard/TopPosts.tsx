@@ -1,13 +1,16 @@
-import { MOCK_TOP_POSTS } from "@/data/mockData";
+import { IBlog } from "@/types";
 import Image from "next/image";
 import {
-  HiOutlineEye,
-  HiOutlineChatBubbleLeft,
   HiOutlineArrowRight,
+  HiOutlineChatBubbleLeft,
+  HiOutlineEye,
 } from "react-icons/hi2";
 
+interface ITopPostProps {
+  data: IBlog[];
+}
 
-const TopPosts = () => {
+const TopPosts = ({ data }: ITopPostProps) => {
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800 h-full">
       <div className="flex items-center justify-between mb-6">
@@ -20,7 +23,7 @@ const TopPosts = () => {
       </div>
 
       <div className="space-y-4">
-        {MOCK_TOP_POSTS.map((post) => (
+        {data.map((post) => (
           <div
             key={post.id}
             className="group flex items-center gap-4 p-2 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200 cursor-pointer"
@@ -39,10 +42,10 @@ const TopPosts = () => {
               </h4>
               <div className="flex items-center gap-4 mt-1 text-xs text-zinc-500 dark:text-zinc-400">
                 <span className="flex items-center gap-1">
-                  <HiOutlineEye size={14} /> {post.views}
+                  <HiOutlineEye size={14} /> {post.meta.views}
                 </span>
                 <span className="flex items-center gap-1">
-                  <HiOutlineChatBubbleLeft size={14} /> {post.comments}
+                  <HiOutlineChatBubbleLeft size={14} /> {post.comments.length}
                 </span>
               </div>
             </div>

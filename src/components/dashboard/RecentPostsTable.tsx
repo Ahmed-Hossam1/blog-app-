@@ -1,14 +1,18 @@
-import { RECENT_POSTS, tableHeaders } from "@/data/mockData";
+import { tableHeaders } from "@/data/mockData";
+import { IBlog } from "@/types";
 import Table from "../Table";
 
-const RecentPostsTable = () => {
+interface RecentPostsTableProps {
+  data: IBlog[];
+}
+const RecentPostsTable = ({ data }: RecentPostsTableProps) => {
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
       <div className="overflow-x-auto">
         <Table
-          tableTitle="Recent Posts"
+          tableTitle="Recent Blogs"
           tableHeader={tableHeaders}
-          tableBody={RECENT_POSTS}
+          tableBody={data}
         />
       </div>
 

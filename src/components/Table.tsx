@@ -1,19 +1,11 @@
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2";
 import Button from "./ui/Button";
-
-type Post = {
-  id: number;
-  title: string;
-  category: string;
-  status: string;
-  date: string;
-  views: number;
-};
+import { IBlog } from "@/types";
 
 interface TableProps {
   tableTitle?: string;
   tableHeader: string[];
-  tableBody: Post[];
+  tableBody: IBlog[];
   needCheckbox?: boolean;
   selectedIds?: number[];
   onSelectAll?: () => void;
@@ -62,11 +54,11 @@ const Table = ({
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-          {tableBody.map((post) => (
+          {tableBody.map((blog) => (
             <tr
-              key={post.id}
+              key={blog.id}
               className={`hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors group ${
-                selectedIds.includes(post.id)
+                selectedIds.includes(Number(blog.id))
                   ? "bg-indigo-50/50 dark:bg-indigo-900/10"
                   : ""
               }`}
@@ -75,8 +67,8 @@ const Table = ({
                 <td className="px-6 py-4 w-10">
                   <input
                     type="checkbox"
-                    checked={selectedIds.includes(post.id)}
-                    onChange={() => onSelectRow?.(post.id)}
+                    checked={selectedIds.includes(Number(blog.id))}
+                    onChange={() => onSelectRow?.(Number(blog.id))}
                     className="w-4 h-4 rounded border-zinc-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                   />
                 </td>
@@ -84,32 +76,33 @@ const Table = ({
 
               <td className="px-6 py-4">
                 <span className="text-sm font-medium text-zinc-900 dark:text-white line-clamp-1">
-                  {post.title}
+                  {blog.title}
                 </span>
               </td>
               <td className="px-6 py-4">
                 <span className="text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-md">
-                  {post.category}
+                  {blog.category}
                 </span>
               </td>
               <td className="px-6 py-4">
-                <span
+                {/* will be added soon  */}
+                {/* <span
                   className={`text-[10px] uppercase font-bold px-2 py-1 rounded-full ${
-                    post.status === "Published"
+                    blog.status === "Published"
                       ? "text-emerald-700 bg-emerald-100 dark:text-emerald-400 dark:bg-emerald-950/30"
-                      : post.status === "Draft"
+                      : blog.status === "Draft"
                         ? "text-zinc-700 bg-zinc-100 dark:text-zinc-400 dark:bg-zinc-800/50"
                         : "text-amber-700 bg-amber-100 dark:text-amber-400 dark:bg-amber-950/30"
                   }`}
                 >
-                  {post.status}
-                </span>
+                  {blog.status}
+                </span> */}
               </td>
               <td className="px-6 py-4 text-sm text-zinc-500 dark:text-zinc-400">
-                {post.date}
+                {blog.meta.publishDate}
               </td>
               <td className="px-6 py-4 text-sm text-zinc-500 dark:text-zinc-400 font-medium">
-                {post.views.toLocaleString()}
+                {blog.meta.views}
               </td>
               <td className="px-6 py-4 text-right">
                 <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

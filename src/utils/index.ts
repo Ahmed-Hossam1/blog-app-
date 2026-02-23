@@ -1,4 +1,4 @@
-import { IComment } from "@/types";
+import { IBlog, IComment, StatItem } from "@/types";
 
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
@@ -50,4 +50,26 @@ export function buildCommentsTree(comments: IComment[]) {
   });
 
   return root;
+}
+
+/**
+ * This function generates a status array from blogs and statsData.
+ * It will return an array of objects where each object has the key, title, icon, color, value, and trend.
+ * The value is calculated based on the key of the statistics object.
+ * @param blogs - An array of blogs
+ * @param statsData - An array of objects containing key, title, icon, and color
+ * @returns An array of objects containing key, title, icon, color, value, and trend
+ */
+export function generateStatus(blogs: IBlog[], statsData: StatItem[]) {
+  const statistics = {
+    posts: blogs.length,
+    views: blogs.reduce((acc, blog) => acc + (blog.meta?.views || 0), 0),
+    comments: blogs.reduce((acc, blog) => acc + blog.comments.length, 0),
+    likes: 0,
+  };
+
+  return statsData.map((item) => ({
+    ...item,
+    value: statistics[item.key],
+  }));
 }
