@@ -75,7 +75,7 @@ export const getAuthorById = async (id: string) => {
 
 export const getAuthorBlogs = async (email: string) => {
   const authorBlogs = await prisma.user.findUnique({
-    where: { email: email },
+    where: { email },
 
     select: {
       blogs: {

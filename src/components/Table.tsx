@@ -7,9 +7,9 @@ interface TableProps {
   tableHeader: string[];
   tableBody: IBlog[];
   needCheckbox?: boolean;
-  selectedIds?: number[];
+  selectedIds?: string[];
   onSelectAll?: () => void;
-  onSelectRow?: (id: number) => void;
+  onSelectRow?: (id: string) => void;
 }
 
 const Table = ({
@@ -58,7 +58,7 @@ const Table = ({
             <tr
               key={blog.id}
               className={`hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors group ${
-                selectedIds.includes(Number(blog.id))
+                selectedIds.includes(blog.id)
                   ? "bg-indigo-50/50 dark:bg-indigo-900/10"
                   : ""
               }`}
@@ -67,8 +67,8 @@ const Table = ({
                 <td className="px-6 py-4 w-10">
                   <input
                     type="checkbox"
-                    checked={selectedIds.includes(Number(blog.id))}
-                    onChange={() => onSelectRow?.(Number(blog.id))}
+                    checked={selectedIds.includes(blog.id)}
+                    onChange={() => onSelectRow?.(blog.id)}
                     className="w-4 h-4 rounded border-zinc-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                   />
                 </td>
