@@ -4,6 +4,7 @@ import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { newBlogForm } from "@/constants/forms";
+import { INewBlogForm } from "@/types";
 import { useForm } from "react-hook-form";
 
 /* ═══════════════════════════════════════════ */
@@ -13,12 +14,8 @@ export default function CreateBlog() {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm();
-
-
-
+  } = useForm<INewBlogForm>();
 
   return (
     <SectionWrapper>

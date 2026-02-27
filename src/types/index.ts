@@ -16,9 +16,7 @@ export interface IBaseBlog {
   id: string;
   authorId: string;
   title: string;
-  subtitle: string;
   slug: string;
-  seoTitle: string;
   category: string;
   image: string;
   meta: {
@@ -55,8 +53,6 @@ export interface IBlog extends IBaseBlog {
   content: string;
   comments: IComment[];
 }
-
-
 
 export type SignInFields = "email" | "password";
 export type SignUpFields = "name" | "email" | "password";

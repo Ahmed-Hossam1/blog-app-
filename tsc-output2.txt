@@ -1,0 +1,2 @@
+﻿src/components/Table.tsx(121,38): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/components/Table.tsx(127,38): error TS2722: Cannot invoke an object which is possibly 'undefined'.

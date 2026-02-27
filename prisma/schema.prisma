@@ -20,9 +20,7 @@ model Blog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
 
   slug      String   @unique
-  seoTitle  String
   title     String
-  subtitle  String
   category  String
   image     String
 

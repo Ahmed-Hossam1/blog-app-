@@ -11,7 +11,7 @@ interface TableProps {
   selectedIds?: string[];
   onSelectAll?: () => void;
   onSelectRow?: (id: string) => void;
-  onEdit?: (id: string) => void;
+  onEdit?: (blog: IBlog) => void;
   onDelete?: (id: string) => void;
 }
 
@@ -118,7 +118,7 @@ const Table = ({
                       <HiOutlineEye size={18} />
                     </Button>
                     <Button
-                      onClick={() => onEdit(blog?.id)}
+                      onClick={() => onEdit(blog)}
                       className="p-2 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                     >
                       <HiOutlinePencil size={18} />

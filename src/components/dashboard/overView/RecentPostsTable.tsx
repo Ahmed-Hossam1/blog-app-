@@ -1,10 +1,12 @@
 "use client";
 import MyModal from "@/components/ui/MyModal";
-import { newBlogForm } from "@/constants/forms";
 import { tableHeaders } from "@/data/mockData";
-import { IBlog } from "@/types";
+import { IBlog, INewBlogForm } from "@/types";
 import { useState } from "react";
 import Table from "../../Table";
+import FormField from "@/components/FormField";
+import { newBlogForm } from "@/constants/forms";
+import { useForm } from "react-hook-form";
 
 interface IProps {
   data: IBlog[];
@@ -20,18 +22,26 @@ const RecentBlogsTable = ({ data }: IProps) => {
   const [selectedBlogToDelete, setSelectedBlogToDelete] = useState<
     IBlog | undefined
   >({} as IBlog);
+  const {
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<INewBlogForm>();
 
-  // const content = newBlogForm?.content;
-  // const settings = newBlogForm?.settings;
+  const content = newBlogForm?.content;
+  const settings = newBlogForm?.settings;
 
   const handleOpenEditModal = () => setIsEditModalOpen(true);
   const handleCloseEditModal = () => setIsEditModalOpen(false);
   const handleOpenDeleteModal = () => setIsDeleteModalOpen(true);
   const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
 
-  const handleEdit = (id: string) => {
+  const handleEdit = (blog: IBlog) => {
     handleOpenEditModal();
-    setSelectedBlogToEdit(data.find((blog) => blog.id === id));
+    reset({
+      title: blog.title,
+      content: blog.content,
+    });
   };
   const handleDelete = (id: string) => {
     handleOpenDeleteModal();
@@ -47,7 +57,8 @@ const RecentBlogsTable = ({ data }: IProps) => {
         close={handleCloseEditModal}
         title="Edit Modal"
       >
-        {selectedBlogToEdit?.id}
+        <FormField Fields={content} register={register} errors={errors} />
+        <FormField Fields={settings} register={register} errors={errors} />
       </MyModal>
       {/* Delete Modal */}
       <MyModal
