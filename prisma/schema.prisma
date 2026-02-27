@@ -8,11 +8,10 @@ datasource db {
   url      = env("DATABASE_URL") 
 }
 
-type Meta  {
-  readTime String
-  publishDate String
-  views Int
-  commentsCount Int
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 
@@ -24,10 +23,11 @@ model Blog {
   category  String
   image     String
 
-  meta      Meta
+  readTime String
+  status  BlogStatus
+  views   Int @default(0)
   content   String
 
-  published Boolean  @default(false)
   createdAt  DateTime @default(now())
   // Relations
   authorId String @db.ObjectId

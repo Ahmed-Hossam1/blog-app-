@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const TopBlogs = ({ data }: IProps) => {
-  const TopBlogs = data.sort((a, b) => b.meta.views - a.meta.views);
+  const TopBlogs = data.sort((a, b) => b.views - a.views);
   const slicedData = TopBlogs.slice(0, 4);
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800 h-full">
@@ -46,7 +46,7 @@ const TopBlogs = ({ data }: IProps) => {
               </h4>
               <div className="flex items-center gap-4 mt-1 text-xs text-zinc-500 dark:text-zinc-400">
                 <span className="flex items-center gap-1">
-                  <HiOutlineEye size={14} /> {blog.meta.views}
+                  <HiOutlineEye size={14} /> {blog.views}
                 </span>
                 <span className="flex items-center gap-1">
                   <HiOutlineChatBubbleLeft size={14} /> {blog.comments.length}

@@ -47,11 +47,10 @@ const ExploreCategories = ({
             <Tabs
               onActive={() => setActiveTab(tab.name)}
               key={tab.id}
-              className={`${
-                tab.name === activeTab
+              className={`${tab.name === activeTab
                   ? "bg-black text-white dark:bg-white dark:text-black"
                   : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
-              }`}
+                }`}
             >
               {tab.name}
             </Tabs>
@@ -66,7 +65,9 @@ const ExploreCategories = ({
                 title={blog.title}
                 image={blog.image}
                 category={blog.category}
-                meta={blog.meta}
+                views={blog.views}
+                readTime={blog.readTime}
+                createdAt={blog.createdAt}
                 author={blog.author}
               />
             </Link>

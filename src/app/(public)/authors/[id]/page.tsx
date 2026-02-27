@@ -95,7 +95,9 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                       title={post.title}
                       image={post.image}
                       category={post.category}
-                      meta={post.meta}
+                      views={post.views}
+                      readTime={post.readTime}
+                      createdAt={post.createdAt}
                       author={author}
                     />
                   </Link>

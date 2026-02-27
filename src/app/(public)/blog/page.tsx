@@ -28,7 +28,9 @@ const BlogPage = async () => {
                 title={blog.title}
                 image={blog.image}
                 category={blog.category}
-                meta={blog.meta}
+                views={blog.views}
+                readTime={blog.readTime}
+                createdAt={blog.createdAt}
                 author={blog.author}
               />
             </Link>

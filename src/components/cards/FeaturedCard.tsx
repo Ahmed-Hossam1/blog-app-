@@ -1,16 +1,21 @@
 import { IBaseBlog } from "@/types";
+import { formatDate } from "@/utils";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 interface FeaturedCardProps extends IBaseBlog {
   className?: string;
+  comments?: { id: string }[];
 }
 const FeaturedCard = ({
   title,
   image,
   category,
-  meta,
+  views,
+  readTime,
+  createdAt,
+  comments,
   author,
   className,
 }: FeaturedCardProps) => {
@@ -54,16 +59,16 @@ const FeaturedCard = ({
           <div className="flex items-center justify-between  text-sm text-gray-300">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <FaRegEye /> {meta.views}
+                <FaRegEye /> {views}
               </span>
               <span className="flex items-center gap-1">
-                <FaRegComment /> {meta.commentsCount}
+                <FaRegComment /> {comments?.length ?? 0}
               </span>
             </div>
             <div>
               <span className="flex items-center gap-1">
                 {" "}
-                <BsCalendar2Date /> {meta.publishDate}
+                <BsCalendar2Date /> {formatDate(createdAt)}
               </span>
             </div>
           </div>

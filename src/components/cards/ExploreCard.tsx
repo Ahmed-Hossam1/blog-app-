@@ -1,14 +1,14 @@
 import { IBaseBlog } from "@/types";
-import { truncateText } from "@/utils";
+import { formatDate, truncateText } from "@/utils";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 type ExploreCardProps = Pick<
   IBaseBlog,
-  "title" | "image" | "category" | "meta" | "author"
->;
+  "title" | "image" | "category" | "views" | "readTime" | "createdAt" | "author"
+> & { comments?: { id: string }[] };
 
-const ExploreCard = ({ title, image, category, meta, author }: ExploreCardProps) => {
+const ExploreCard = ({ title, image, category, views, readTime, createdAt, comments, author }: ExploreCardProps) => {
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
@@ -21,7 +21,7 @@ const ExploreCard = ({ title, image, category, meta, author }: ExploreCardProps)
           className="object-cover"
         />
         <span className="absolute bottom-3 right-3 rounded-full backdrop-blur-3xl text-white px-4 py-2 text-xs font-semibold capitalize">
-          {meta?.readTime}
+          {readTime}
         </span>
         <div className="absolute left-4 -bottom-4">
           <Image
@@ -48,13 +48,13 @@ const ExploreCard = ({ title, image, category, meta, author }: ExploreCardProps)
         <div className="mt-auto pt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
-              <FaRegEye className="text-gray-400" /> {meta?.views}
+              <FaRegEye className="text-gray-400" /> {views}
             </span>
             <span className="flex items-center gap-1.5">
-              <FaRegComment className="text-gray-400" /> {meta?.commentsCount}
+              <FaRegComment className="text-gray-400" /> {comments?.length ?? 0}
             </span>
           </div>
-          <span className="font-medium text-gray-400 uppercase tracking-tighter">{meta?.publishDate}</span>
+          <span className="font-medium text-gray-400 uppercase tracking-tighter">{formatDate(createdAt)}</span>
         </div>
       </div>
     </div>

@@ -35,10 +35,10 @@ const SearchPage = () => {
   const sortedBlogs = [...blogs];
   switch (sortBy) {
     case "Most Views":
-      sortedBlogs.sort((a, b) => b.meta.views - a.meta.views);
+      sortedBlogs.sort((a, b) => b.views - a.views);
       break;
     case "Least Views":
-      sortedBlogs.sort((a, b) => a.meta.views - b.meta.views);
+      sortedBlogs.sort((a, b) => a.views - b.views);
       break;
     case "Newest":
       sortedBlogs.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
@@ -120,7 +120,9 @@ const SearchPage = () => {
                 title={blog.title}
                 image={blog.image}
                 category={blog.category}
-                meta={blog.meta}
+                views={blog.views}
+                readTime={blog.readTime}
+                createdAt={blog.createdAt}
                 author={blog.author}
               />
             </Link>

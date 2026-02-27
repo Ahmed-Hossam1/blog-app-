@@ -63,7 +63,7 @@ export function buildCommentsTree(comments: IComment[]) {
 export function generateStatus(blogs: IBlog[], statsData: StatItem[]) {
   const statistics = {
     posts: blogs.length,
-    views: blogs.reduce((acc, blog) => acc + (blog.meta?.views || 0), 0),
+    views: blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
     comments: blogs.reduce((acc, blog) => acc + blog.comments.length, 0),
     likes: 0,
   };

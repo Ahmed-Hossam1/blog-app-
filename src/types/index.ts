@@ -1,6 +1,8 @@
 import { FieldValues, Path } from "react-hook-form";
 import { IconType } from "react-icons";
 
+export type BlogStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
+
 export interface INavLinks {
   id: number;
   name: string;
@@ -19,13 +21,9 @@ export interface IBaseBlog {
   slug: string;
   category: string;
   image: string;
-  meta: {
-    readTime: string;
-    publishDate: string;
-    views: number;
-    commentsCount: number;
-  };
-  published: boolean;
+  readTime: string;
+  status: BlogStatus;
+  views: number;
   createdAt: Date;
   author: IAuthor;
 }
@@ -62,8 +60,7 @@ export type NewBlogFields =
   | "image"
   | "content"
   | "status"
-  | "category"
-  | "publishDate";
+  | "category";
 
 export interface IField<T extends FieldValues> {
   id: string;
@@ -95,8 +92,7 @@ export interface INewBlogForm {
   title: string;
   image: File;
   content: string;
-  status: string;
-  publishDate: Date | null;
+  status: BlogStatus;
   category: string;
 }
 export interface ISessionResponse {

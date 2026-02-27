@@ -131,21 +131,17 @@ Happy writing 🚀`,
       options: [
         {
           name: "Published",
-          value: "published",
+          value: "PUBLISHED",
         },
         {
           name: "Draft",
-          value: "draft",
+          value: "DRAFT",
+        },
+        {
+          name: "Archived",
+          value: "ARCHIVED",
         },
       ],
-    },
-
-    {
-      id: "publishDate",
-      name: "publishDate",
-      placeholder: "Publish Date",
-      type: "date",
-      label: "Publish Date",
     },
     {
       id: "category",

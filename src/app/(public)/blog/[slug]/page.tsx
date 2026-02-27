@@ -1,6 +1,7 @@
 import CommentSection from "@/components/CommentSection";
 import SectionWrapper from "@/components/SectionWrapper";
 import { getBlogById } from "@/services";
+import { formatDate } from "@/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BsCalendar2Date } from "react-icons/bs";
@@ -30,7 +31,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               className="h-105 w-full object-cover"
             />
             <span className="absolute bottom-5 right-4 rounded-md bg-white px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-gray-200">
-              {blog.meta?.readTime}
+              {blog.readTime}
             </span>
           </div>
 
@@ -47,14 +48,14 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <div className="mt-4 flex flex-wrap items-center justify-between text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1">
-                  <FaRegEye /> <span>{blog.meta?.views}</span>
+                  <FaRegEye /> <span>{blog.views}</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <FaRegComment /> <span>{blog.meta?.commentsCount}</span>
+                  <FaRegComment /> <span>{blog.comments?.length ?? 0}</span>
                 </span>
               </div>
               <span className="flex items-center gap-2">
-                <BsCalendar2Date /> <span>{blog.meta?.publishDate}</span>
+                <BsCalendar2Date /> <span>{formatDate(blog.createdAt)}</span>
               </span>
             </div>
           </div>
@@ -62,7 +63,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           {/* Content */}
           <article className="prose px-8 max-w-none prose-h2:mt-10 prose-p:text-gray-600 dark:prose-invert">
             <h2 className="mb-5 text-2xl font-semibold text-baseInk dark:text-white">
-              {blog.subtitle}
+              Introduction
             </h2>
 
             <article className=" prose  dark:prose-invert max-w-none  ">

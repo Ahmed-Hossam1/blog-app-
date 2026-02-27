@@ -15,13 +15,7 @@ interface IProps {
 const RecentBlogsTable = ({ data }: IProps) => {
   const slicedData = data.slice(0, 7);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [selectedBlogToEdit, setSelectedBlogToEdit] = useState<
-    IBlog | undefined
-  >({} as IBlog);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const [selectedBlogToDelete, setSelectedBlogToDelete] = useState<
-    IBlog | undefined
-  >({} as IBlog);
   const {
     register,
     reset,
@@ -45,7 +39,6 @@ const RecentBlogsTable = ({ data }: IProps) => {
   };
   const handleDelete = (id: string) => {
     handleOpenDeleteModal();
-    setSelectedBlogToDelete(data.find((blog) => blog.id === id));
   };
 
   return (
@@ -67,7 +60,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
         close={handleCloseDeleteModal}
         title="Delete Modal"
       >
-        {selectedBlogToDelete?.id}
+        Delete
       </MyModal>
 
       <div className="overflow-x-auto">
