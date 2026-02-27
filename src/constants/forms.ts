@@ -66,9 +66,6 @@ export const formConfig = {
       label: "Message",
     },
   ] as IField<IContactForm>[],
-};
-
-export const newBlogForm: Record<string, IField<INewBlogForm>[]> = {
   content: [
     {
       id: "title",
@@ -119,7 +116,7 @@ console.log("Hello world")
 Happy writing 🚀`,
       label: "Content",
     },
-  ],
+  ] as IField<INewBlogForm>[],
 
   settings: [
     {
@@ -160,5 +157,5 @@ Happy writing 🚀`,
         },
       ],
     },
-  ],
+  ] as IField<INewBlogForm>[],
 };

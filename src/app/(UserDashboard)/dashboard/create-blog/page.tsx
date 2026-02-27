@@ -3,14 +3,14 @@ import FormField from "@/components/FormField";
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
-import { newBlogForm } from "@/constants/forms";
+import { formConfig } from "@/constants/forms";
 import { INewBlogForm } from "@/types";
 import { useForm } from "react-hook-form";
 
 /* ═══════════════════════════════════════════ */
 export default function CreateBlog() {
-  const content = newBlogForm?.content;
-  const settings = newBlogForm?.settings;
+  const content = formConfig?.content;
+  const settings = formConfig?.settings;
 
   const {
     register,

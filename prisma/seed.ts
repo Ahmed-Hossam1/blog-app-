@@ -1,10 +1,9 @@
 import { prisma } from "./prisma";
 
 async function main() {
-await prisma.comment.deleteMany({
-  where: { parentId: { not: null } },
-});
+  console.log("🌱 Seeding database...");
 
+  console.log("✅ Database seeded successfully!");
 }
 
 main()

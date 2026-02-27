@@ -5,8 +5,8 @@ import { IBlog, INewBlogForm } from "@/types";
 import { useState } from "react";
 import Table from "../../Table";
 import FormField from "@/components/FormField";
-import { newBlogForm } from "@/constants/forms";
 import { useForm } from "react-hook-form";
+import { formConfig } from "@/constants/forms";
 
 interface IProps {
   data: IBlog[];
@@ -22,8 +22,8 @@ const RecentBlogsTable = ({ data }: IProps) => {
     formState: { errors },
   } = useForm<INewBlogForm>();
 
-  const content = newBlogForm?.content;
-  const settings = newBlogForm?.settings;
+  const content = formConfig?.content;
+  const settings = formConfig?.settings;
 
   const handleOpenEditModal = () => setIsEditModalOpen(true);
   const handleCloseEditModal = () => setIsEditModalOpen(false);

@@ -51,17 +51,6 @@ export interface IBlog extends IBaseBlog {
   content: string;
   comments: IComment[];
 }
-
-export type SignInFields = "email" | "password";
-export type SignUpFields = "name" | "email" | "password";
-export type ContactFields = "name" | "email" | "message";
-export type NewBlogFields =
-  | "title"
-  | "image"
-  | "content"
-  | "status"
-  | "category";
-
 export interface IField<T extends FieldValues> {
   id: string;
   name: Path<T>;
