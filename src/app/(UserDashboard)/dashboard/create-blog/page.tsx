@@ -1,157 +1,24 @@
+"use client";
+import FormField from "@/components/FormField";
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
-import MyInput from "@/components/ui/Input";
 import { newBlogForm } from "@/constants/forms";
-import {
-  FiBold,
-  FiCode,
-  FiImage,
-  FiItalic,
-  FiLink,
-  FiList,
-  FiUploadCloud,
-} from "react-icons/fi";
-import {
-  LuHeading1,
-  LuHeading2,
-  LuHeading3,
-  LuListOrdered,
-  LuQuote,
-} from "react-icons/lu";
-
-/* ───────── constants ───────── */
-const TOOLBAR_BUTTONS = [
-  { icon: LuHeading1, label: "Heading 1" },
-  { icon: LuHeading2, label: "Heading 2" },
-  { icon: LuHeading3, label: "Heading 3" },
-  { divider: true },
-  { icon: FiBold, label: "Bold" },
-  { icon: FiItalic, label: "Italic" },
-  { icon: FiCode, label: "Code" },
-  { divider: true },
-  { icon: FiList, label: "Bullet list" },
-  { icon: LuListOrdered, label: "Ordered list" },
-  { icon: LuQuote, label: "Blockquote" },
-  { divider: true },
-  { icon: FiLink, label: "Link" },
-  { icon: FiImage, label: "Image" },
-];
+import { useForm } from "react-hook-form";
 
 /* ═══════════════════════════════════════════ */
 export default function CreateBlog() {
-  const selectCls =
-    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 transition focus:border-primary focus:outline-none dark:border-gray-700 dark:bg-surfaceDark dark:text-gray-200";
-  const inputCls =
-    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 transition focus:border-primary focus:outline-none dark:border-gray-700 dark:bg-surfaceDark dark:text-gray-200";
   const content = newBlogForm?.content;
   const settings = newBlogForm?.settings;
 
-  const renderContentInputs = content.map(
-    ({ id, name, type, placeholder, label }) => (
-      <div
-        key={id}
-        className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-surfaceDark"
-      >
-        <label
-          htmlFor={id}
-          className="mb-2 block text-sm font-semibold text-gray-800 dark:text-gray-200"
-        >
-          {label}
-        </label>
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-        {/* ── Content editor ── */}
-        {type === "textarea" ? (
-          <div className="rounded-xl border border-gray-200  bg-white shadow-sm dark:border-gray-800 dark:bg-surfaceDark ">
-            <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 px-4 py-2 dark:border-gray-700">
-              {/* Toolbar */}
-              {TOOLBAR_BUTTONS.map((btn, i) =>
-                "divider" in btn ? (
-                  <span
-                    key={`d-${i}`}
-                    className="mx-1.5 h-5 w-px bg-gray-200 dark:bg-gray-700"
-                  />
-                ) : (
-                  <button
-                    key={btn.label}
-                    title={btn.label}
-                    type="button"
-                    className="rounded p-1.5 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                  >
-                    <btn.icon size={20} />
-                  </button>
-                ),
-              )}
-            </div>
 
-            <textarea
-              id={id}
-              rows={14}
-              placeholder="# Write your article here..."
-              className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500 "
-            />
 
-            <div className="border-t border-gray-200 px-6 py-3 dark:border-gray-700">
-              <p className="text-xs text-gray-400 dark:text-gray-500">
-                <span className="italic">*italic*</span>,{" "}
-                <span className="font-bold">**bold**</span>,{" "}
-                <code className="rounded bg-gray-100 px-1 text-primary dark:bg-gray-800">
-                  {"`code`"}
-                </code>
-                , <span className="text-primary">[links](#)</span>, and much
-                more.
-              </p>
-            </div>
-          </div>
-        ) : type === "file" ? (
-          /* ── Cover Image upload ── */
-          <label
-            htmlFor={id}
-            className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 py-12 transition hover:border-primary dark dark:hover/50"
-          >
-            <FiUploadCloud className="text-3xl text-gray-400 dark:text-gray-500" />
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              Upload Image
-            </span>
-
-            <MyInput
-              id={id}
-              type={type}
-              placeholder={placeholder}
-              name={name}
-              className="hidden"
-            />
-          </label>
-        ) : (
-          <MyInput
-            id={id}
-            type={type}
-            placeholder={placeholder}
-            name={name}
-            className={inputCls}
-          />
-        )}
-      </div>
-    ),
-  );
-
-  const renderSettingsInputs = settings.map(
-    ({ id, label, placeholder, options }) => (
-      <div key={id}>
-        <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-gray-300">
-          {label}
-        </label>
-        <select id={id} className={selectCls}>
-          <option disabled>choose {placeholder}</option>
-          {options?.map((option, i) => (
-            <option key={i} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </select>
-      </div>
-    ),
-  );
 
   return (
     <SectionWrapper>
@@ -166,7 +33,13 @@ export default function CreateBlog() {
         {/* ══════ LEFT COLUMN ══════ */}
         <div className="space-y-6">
           {/* ══════ CONTENT ══════ */}
-          {renderContentInputs}
+          <FormField
+            ToolBar={true}
+            textAreaRows={15}
+            Fields={content}
+            register={register}
+            errors={errors}
+          />
         </div>
 
         {/* ══════ RIGHT COLUMN — Publish Settings ══════ */}
@@ -177,7 +50,11 @@ export default function CreateBlog() {
             </h2>
             <div className="space-y-5">
               {/* ══════ SETTINGS ══════ */}
-              {renderSettingsInputs}
+              <FormField
+                Fields={settings}
+                register={register}
+                errors={errors}
+              />
             </div>
           </div>
         </div>

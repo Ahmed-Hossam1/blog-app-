@@ -1,16 +1,16 @@
 import StatusCard from "@/components/cards/StatusCard";
-import MyBlogsTable from "@/components/my-blogs/MyBlogsTable";
-import Pagination from "@/components/Pagination";
+import MyBlogsTable from "@/components/dashboard/my-blogs/MyBlogsTable";
+import TabsCat from "@/components/dashboard/my-blogs/TabsCat";
 import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import MyInput from "@/components/ui/Input";
+import { DashboardTabsData } from "@/data";
 import { MY_BLOGS_STATS } from "@/data/mockData";
 import { getAuthorBlogs } from "@/services";
 
 const MyBlogs = async () => {
+  const authorBlogs = (await getAuthorBlogs("ahmed@example.com")) || [];
   // const [activeCategory, setActiveCategory] = useState<string>("All");
-
-  const authorBlogs = await getAuthorBlogs("ahmed@example.com");
 
   return (
     <SectionWrapper>
@@ -40,21 +40,7 @@ const MyBlogs = async () => {
       {/* Filter & Search Bar */}
       <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 mb-8 space-y-6">
         <div className="flex flex-wrap items-center gap-3">
-          {/* {DashboardTabsData.map((item: ITab) => (
-            <Tab
-              key={item.id}
-              className={`
-               ${
-                 item.name === activeCategory
-                   ? "bg-black text-white dark:bg-white dark:text-black shadow-lg"
-                   : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
-               }
-              `}
-              onClick={() => setActiveCategory(item.name)}
-            >
-              {item.name}
-            </Tab>
-          ))} */}
+          <TabsCat data={DashboardTabsData} />
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -94,10 +80,10 @@ const MyBlogs = async () => {
           </div>
 
           <div className="p-4 border-t border-zinc-100 dark:border-zinc-800 flex justify-center">
-            <Pagination
+            {/* <Pagination
               currentPage={1}
               totalPages={4}
-            />
+            /> */}
           </div>
         </div>
       </div>

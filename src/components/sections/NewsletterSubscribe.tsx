@@ -8,7 +8,6 @@ const NewsletterSubscribe = () => {
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-5xl rounded-md bg-white px-8 py-12 shadow-sm dark:bg-surfaceDark">
           <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-
             {/* Text */}
             <div className="max-w-xl">
               <h3 className="text-2xl font-semibold dark:text-white">
@@ -20,12 +19,10 @@ const NewsletterSubscribe = () => {
                 arrivals, exclusive offers, special promotions, and the latest
                 news.
               </p>
-
             </div>
 
             {/* Input + Button */}
             <div className="flex h-12 w-full max-w-md items-center overflow-hidden rounded-sm bg-white shadow-md dark:bg-gray-800 dark:border dark:border-gray-700">
-
               <MyInput
                 id="email"
                 name="email"

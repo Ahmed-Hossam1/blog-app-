@@ -1,5 +1,5 @@
 interface IProps {
-  msg: string;
+  msg: string | undefined;
 }
 const ErrorMessage = ({ msg }: IProps) => {
   return msg ? (

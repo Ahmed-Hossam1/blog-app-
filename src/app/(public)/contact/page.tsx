@@ -1,8 +1,7 @@
 "use client";
-import ErrorMessage from "@/components/ErrorMessage";
+import FormField from "@/components/FormField";
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
 import { contactSchema } from "@/schema/schema";
 import { IContactForm } from "@/types";
@@ -85,38 +84,8 @@ We only use it to access e.target (the <form> element).
       setIsLoading(false);
     }
   };
-  /*===== UI ===== */
-  const renderContactForm = contactForm.map((filed) => (
-    <div key={filed.id}>
-      <label
-        htmlFor={filed.name}
-        className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
-      >
-        {filed.label}
-      </label>
 
-      {filed.type === "textarea" ? (
-        <textarea
-          id={filed.name}
-          {...register(filed.name)}
-          rows={5}
-          className="w-full rounded-lg border border-gray px-3 py-2 capitalize transition focus:border-primary focus:outline-none dark:border-gray-600 dark:bg-transparent dark:text-white"
-          placeholder={filed.placeholder}
-        />
-      ) : (
-        <Input
-          id={filed.name}
-          {...register(filed.name)}
-          type={filed.type}
-          placeholder={filed.placeholder}
-          className="w-full rounded-lg"
-        />
-      )}
-      {errors[filed.name] && (
-        <ErrorMessage msg={`${errors[filed.name]?.message}`} />
-      )}
-    </div>
-  ));
+  /*===== UI ===== */
   return (
     <SectionWrapper>
       <div className="container mx-auto px-4 py-8">
@@ -198,7 +167,11 @@ We only use it to access e.target (the <form> element).
               Send Message
             </h2>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              {renderContactForm}
+              <FormField
+                Fields={contactForm}
+                register={register}
+                errors={errors}
+              />
               <Button
                 disabled={isLoading}
                 isLoading={isLoading}

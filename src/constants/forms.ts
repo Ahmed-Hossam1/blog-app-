@@ -1,9 +1,9 @@
 import {
-  ContactFields,
+  IContactForm,
   IField,
-  NewBlogFields,
-  SignInFields,
-  SignUpFields,
+  INewBlogForm,
+  ISignInForm,
+  ISignUpForm,
 } from "@/types";
 
 export const formConfig = {
@@ -20,7 +20,7 @@ export const formConfig = {
       type: "password",
       placeholder: "Password",
     },
-  ] as IField<SignInFields>[],
+  ] as IField<ISignInForm>[],
 
   signUp: [
     {
@@ -41,7 +41,7 @@ export const formConfig = {
       type: "password",
       placeholder: "Password",
     },
-  ] as IField<SignUpFields>[],
+  ] as IField<ISignUpForm>[],
 
   contactForm: [
     {
@@ -65,10 +65,10 @@ export const formConfig = {
       placeholder: "Write Your Message Here...",
       label: "Message",
     },
-  ] as IField<ContactFields>[],
+  ] as IField<IContactForm>[],
 };
 
-export const newBlogForm: Record<string, IField<NewBlogFields>[]> = {
+export const newBlogForm: Record<string, IField<INewBlogForm>[]> = {
   content: [
     {
       id: "title",
@@ -88,7 +88,35 @@ export const newBlogForm: Record<string, IField<NewBlogFields>[]> = {
       id: "content",
       name: "content",
       type: "textarea",
-      placeholder: "Write Your article Here...",
+      placeholder: `# Start writing your article...
+
+## Headings
+# H1
+## H2
+### H3
+
+## Text Formatting
+**bold**
+*italic*
+~~strikethrough~~
+
+## Lists
+- Item 1
+- Item 2
+1. First
+2. Second
+
+## Code
+\`\`\`ts
+console.log("Hello world")
+\`\`\`
+
+## Links
+[Google](https://google.com)
+
+> Blockquote
+
+Happy writing 🚀`,
       label: "Content",
     },
   ],

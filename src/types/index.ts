@@ -1,3 +1,4 @@
+import { FieldValues, Path } from "react-hook-form";
 import { IconType } from "react-icons";
 
 export interface INavLinks {
@@ -55,9 +56,8 @@ export interface IBlog extends IBaseBlog {
   comments: IComment[];
 }
 
-export interface ITest extends IBaseBlog {
-  comments: IComment[];
-}
+
+
 export type SignInFields = "email" | "password";
 export type SignUpFields = "name" | "email" | "password";
 export type ContactFields = "name" | "email" | "message";
@@ -69,9 +69,9 @@ export type NewBlogFields =
   | "category"
   | "publishDate";
 
-export interface IField<T extends string = string> {
+export interface IField<T extends FieldValues> {
   id: string;
-  name: T;
+  name: Path<T>;
   type: string;
   placeholder: string;
   label?: string;

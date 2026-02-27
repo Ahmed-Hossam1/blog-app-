@@ -14,9 +14,9 @@ const Pagination = ({
   totalPages,
   onPageChange,
 }: IPaginationProps) => {
-  // const [currentPage, setCurrentPage] = useState<number>(1);
 
-  
+
+
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
@@ -44,14 +44,15 @@ const Pagination = ({
           disabled:text-gray-300 disabled:cursor-not-allowed
           dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
         "
-
       >
         ← Prev
       </Button>
 
       {/* Page Info */}
       <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-        <span className="font-semibold text-black dark:text-white">{currentPage}</span>
+        <span className="font-semibold text-black dark:text-white">
+          {currentPage}
+        </span>
 
         <span>/</span>
         <span>{totalPages}</span>

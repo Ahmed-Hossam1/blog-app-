@@ -13,7 +13,7 @@ import {
 type Props = {
   title?: string;
   description?: string;
-  data: { name: string; users: number }[];
+  data: { name: string; blogs: number }[];
 };
 
 const Charts = ({ title, description, data }: Props) => {
@@ -33,7 +33,7 @@ const Charts = ({ title, description, data }: Props) => {
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
-              <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="blogs" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#6366f1" stopOpacity={0.1} />
                 <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
               </linearGradient>
@@ -59,11 +59,11 @@ const Charts = ({ title, description, data }: Props) => {
             />
             <Area
               type="monotone"
-              dataKey="users"
+              dataKey="blogs"
               stroke="#6366f1"
               strokeWidth={3}
               fillOpacity={1}
-              fill="url(#colorUsers)"
+              fill="url(#blogs)"
             />
           </AreaChart>
         </ResponsiveContainer>

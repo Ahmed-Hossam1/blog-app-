@@ -73,3 +73,4 @@ export function generateStatus(blogs: IBlog[], statsData: StatItem[]) {
     value: statistics[item.key],
   }));
 }
+

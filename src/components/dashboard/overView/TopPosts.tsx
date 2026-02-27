@@ -1,21 +1,24 @@
 import { IBlog } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 import {
   HiOutlineArrowRight,
   HiOutlineChatBubbleLeft,
   HiOutlineEye,
 } from "react-icons/hi2";
 
-interface ITopPostProps {
+interface IProps {
   data: IBlog[];
 }
 
-const TopPosts = ({ data }: ITopPostProps) => {
+const TopBlogs = ({ data }: IProps) => {
+  const TopBlogs = data.sort((a, b) => b.meta.views - a.meta.views);
+  const slicedData = TopBlogs.slice(0, 4);
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800 h-full">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
-          Top Posts
+          Top Blogs
         </h3>
         <button className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
           View All <HiOutlineArrowRight />
@@ -23,37 +26,38 @@ const TopPosts = ({ data }: ITopPostProps) => {
       </div>
 
       <div className="space-y-4">
-        {data.map((post) => (
-          <div
-            key={post.id}
+        {slicedData.map((blog) => (
+          <Link
+            href={`/blog/${blog.slug}`}
+            key={blog.id}
             className="group flex items-center gap-4 p-2 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200 cursor-pointer"
           >
             <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0">
               <Image
-                src={post.image}
-                alt={post.title}
+                src={blog.image}
+                alt={blog.title}
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="text-sm font-semibold text-zinc-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase">
-                {post.title}
+                {blog.title}
               </h4>
               <div className="flex items-center gap-4 mt-1 text-xs text-zinc-500 dark:text-zinc-400">
                 <span className="flex items-center gap-1">
-                  <HiOutlineEye size={14} /> {post.meta.views}
+                  <HiOutlineEye size={14} /> {blog.meta.views}
                 </span>
                 <span className="flex items-center gap-1">
-                  <HiOutlineChatBubbleLeft size={14} /> {post.comments.length}
+                  <HiOutlineChatBubbleLeft size={14} /> {blog.comments.length}
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
   );
 };
 
-export default TopPosts;
+export default TopBlogs;

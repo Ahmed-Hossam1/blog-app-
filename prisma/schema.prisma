@@ -15,12 +15,6 @@ type Meta  {
   commentsCount Int
 }
 
-type Content  {
-    type  String
-    text  String
-    listItems String[]
-}
-
 
 model Blog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId

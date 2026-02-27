@@ -1,8 +1,7 @@
 "use client";
 
-import ErrorMessage from "@/components/ErrorMessage";
+import FormField from "@/components/FormField";
 import Button from "@/components/ui/Button";
-import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
 import { signUpSchema } from "@/schema/schema";
 import { ISignUpForm } from "@/types";
@@ -31,7 +30,7 @@ const Page = () => {
 
   /*======= CONSTANTS ======*/
   // inputs config used to render sign up form dynamically
-  const signUpInputs = formConfig?.signUp ?? [];
+  const singUpForm = formConfig?.signUp ?? [];
 
   /*======= HANDLERS ======*/
 
@@ -61,20 +60,6 @@ const Page = () => {
       toast.error(`${error as Error}`);
     }
   };
-  /*======= RENDER ======*/
-  const renderInputs = signUpInputs.map((input) => (
-    <div key={input.id}>
-      <MyInput
-        {...register(input.name)}
-        type={input.type}
-        placeholder={input.placeholder}
-        className="rounded-md"
-      />
-      {errors[input.name] && (
-        <ErrorMessage msg={`${errors[input.name as keyof ISignUpForm]?.message}`} />
-      )}
-    </div>
-  ));
 
   /*======= JSX ======*/
 
@@ -129,7 +114,7 @@ const Page = () => {
           className="flex flex-col space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {renderInputs}
+          <FormField Fields={singUpForm} register={register} errors={errors} />
 
           <Button
             disabled={isLoading}

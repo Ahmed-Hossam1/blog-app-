@@ -1,8 +1,7 @@
 "use client";
 
-import ErrorMessage from "@/components/ErrorMessage";
+import FormField from "@/components/FormField";
 import Button from "@/components/ui/Button";
-import MyInput from "@/components/ui/Input";
 import { formConfig } from "@/constants/forms";
 import { loginSchema } from "@/schema/schema";
 import { ISignInForm } from "@/types";
@@ -33,7 +32,7 @@ const Page = () => {
   });
 
   /*===== CONSTANTS ===== */
-  const signInInputs = formConfig?.signIn ?? [];
+  const signInIForm = formConfig?.signIn ?? [];
   /*===== HANDLERS ===== */
 
   const onsubmit: SubmitHandler<ISignInForm> = async (data) => {
@@ -75,21 +74,6 @@ const Page = () => {
       toast.error(`${error as Error}`);
     }
   };
-
-  /*===== RENDER ===== */
-  const renderInputs = signInInputs.map((input) => (
-    <div key={input.id}>
-      <MyInput
-        {...register(input.name)}
-        type={input.type}
-        placeholder={input.placeholder}
-        className="rounded-md"
-      />
-      {errors[input.name] && (
-        <ErrorMessage msg={`${errors[input.name]?.message}`} />
-      )}
-    </div>
-  ));
 
   /*===== JSX ===== */
   return (
@@ -144,7 +128,7 @@ const Page = () => {
           onSubmit={handleSubmit(onsubmit)}
           className="flex flex-col space-y-4"
         >
-          {renderInputs}
+          <FormField Fields={signInIForm} register={register} errors={errors} />
 
           <Button
             disabled={isLoading}

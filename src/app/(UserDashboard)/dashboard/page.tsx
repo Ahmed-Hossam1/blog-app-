@@ -1,7 +1,7 @@
 import StatusCard from "@/components/cards/StatusCard";
-import Charts from "@/components/dashboard/Charts";
-import RecentPostsTable from "@/components/dashboard/RecentPostsTable";
-import TopPosts from "@/components/dashboard/TopPosts";
+import Charts from "@/components/dashboard/overView/Charts";
+import RecentBlogsTable from "@/components/dashboard/overView/RecentPostsTable";
+import TopBlogs from "@/components/dashboard/overView/TopPosts";
 import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
@@ -12,7 +12,7 @@ const OverView = async () => {
   const session = await getServerSession();
   const user = session?.user;
 
-  const authorBlogs = await getAuthorBlogs(user?.email as string);
+  const authorBlogs = (await getAuthorBlogs(user?.email as string)) || [];
 
   const stats = generateStatus(authorBlogs, STATS_DATA);
 
@@ -44,19 +44,19 @@ const OverView = async () => {
           <Charts
             data={PERFORMANCE_DATA}
             title=" Performance Overview"
-            description="User growth over the last few months"
+            description="blogs growth over the last few months"
           />
         </div>
 
         {/* Row 2 - Right: Top Posts */}
         <div className="lg:col-span-1">
-          <TopPosts data={authorBlogs} />
+          <TopBlogs data={authorBlogs} />
         </div>
       </div>
 
       {/* Row 3: Recent Posts Table */}
       <div className="mb-8">
-        <RecentPostsTable data={authorBlogs}/>
+        <RecentBlogsTable data={authorBlogs} />
       </div>
     </SectionWrapper>
   );

@@ -1,12 +1,12 @@
 "use client";
+import Table from "@/components/Table";
 import { tableHeaders } from "@/data/mockData";
-import Table from "../Table";
 import { IBlog } from "@/types";
 import { useState } from "react";
 
 interface IProps {
   data: IBlog[];
-  SelectedIds: number[];
+  selectedIds?: string[];
 }
 const MyBlogsTable = ({ data }: IProps) => {
   // blogs ids state that are selected in table

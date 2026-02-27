@@ -45,12 +45,13 @@ const ExploreCategories = ({
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {tabsData.map((tab) => (
             <Tabs
-              onClick={() => setActiveTab(tab.name)}
+              onActive={() => setActiveTab(tab.name)}
               key={tab.id}
-              className={`${tab.name === activeTab
-                ? "bg-black text-white dark:bg-white dark:text-black"
-                : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
-                }`}
+              className={`${
+                tab.name === activeTab
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
+              }`}
             >
               {tab.name}
             </Tabs>

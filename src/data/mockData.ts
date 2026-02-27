@@ -8,7 +8,9 @@ import {
   HiOutlineHeart,
 } from "react-icons/hi2";
 
-export const STATS_DATA = [
+import { StatItem } from "@/types";
+
+export const STATS_DATA: StatItem[] = [
   {
     key: "posts",
     title: "Total Posts",
@@ -36,12 +38,12 @@ export const STATS_DATA = [
 ];
 
 export const PERFORMANCE_DATA = [
-  { name: "Jan", users: 400 },
-  { name: "Feb", users: 700 },
-  { name: "Mar", users: 1200 },
-  { name: "Apr", users: 900 },
-  { name: "May", users: 1500 },
-  { name: "Jun", users: 1800 },
+  { name: "Jan", blogs: 10 },
+  { name: "Feb", blogs: 5 },
+  { name: "Mar", blogs: 30 },
+  { name: "Apr", blogs: 60 },
+  { name: "May", blogs: 20 },
+  { name: "Jun", blogs: 0 },
 ];
 
 export const MOCK_TOP_POSTS = [
