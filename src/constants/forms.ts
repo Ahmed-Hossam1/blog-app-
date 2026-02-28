@@ -66,6 +66,7 @@ export const formConfig = {
       label: "Message",
     },
   ] as IField<IContactForm>[],
+  
   content: [
     {
       id: "title",
@@ -148,12 +149,16 @@ Happy writing 🚀`,
       label: "Category",
       options: [
         {
-          name: "Category 1",
-          value: "category-1",
+          name: "Mobile Development",
+          value: "Mobile Development",
         },
         {
-          name: "Category 2",
-          value: "category-2",
+          name: "Web Development",
+          value: "Web Development",
+        },
+        {
+          name: "UI/UX",
+          value: "UI/UX",
         },
       ],
     },

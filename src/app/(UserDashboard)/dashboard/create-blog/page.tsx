@@ -5,17 +5,64 @@ import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { formConfig } from "@/constants/forms";
 import { INewBlogForm } from "@/types";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 /* ═══════════════════════════════════════════ */
 export default function CreateBlog() {
+  const [previewImage, setPreviewImage] = useState<string | null>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const content = formConfig?.content;
   const settings = formConfig?.settings;
 
+  useEffect(() => {
+    setPreviewImage(previewImage);
+  }, [previewImage]);
+
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<INewBlogForm>();
+
+  const handleCreate = async (data: INewBlogForm) => {
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", data.image[0]);
+      // Upload image to cloudinary
+      const uploadImageReq = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      const uploadImageRes = await uploadImageReq.json();
+      if (!uploadImageReq.ok) throw new Error(uploadImageRes.message);
+      const imageUrl = uploadImageRes.url;
+      const {url} = imageUrl;
+
+      // Create blog
+      const createBlogReq = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/create`,
+        {
+          method: "POST",
+          body: JSON.stringify({ ...data, image: url }),
+        },
+      );
+      const createBlogRes = await createBlogReq.json();
+      if (!createBlogReq.ok) throw new Error(createBlogRes.message);
+      toast.success(createBlogRes.message);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error(`${error as Error}`);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SectionWrapper>
@@ -36,6 +83,8 @@ export default function CreateBlog() {
             Fields={content}
             register={register}
             errors={errors}
+            previewImage={previewImage}
+            setPreviewImage={setPreviewImage}
           />
         </div>
 
@@ -72,7 +121,10 @@ export default function CreateBlog() {
           Preview
         </Button>
         <Button
+          onClick={handleSubmit(handleCreate)}
           bgColor="bg-primary hover:bg-primary/90"
+          isLoading={isLoading}
+          disabled={isLoading}
           className="px-5 py-2.5 text-sm text-white"
         >
           Publish

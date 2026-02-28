@@ -1,13 +1,12 @@
+"use client";
 import { IField } from "@/types";
-import MyInput from "./ui/Input";
-import ErrorMessage from "./ErrorMessage";
+import Image from "next/image";
 import {
-  LuHeading1,
-  LuHeading2,
-  LuHeading3,
-  LuListOrdered,
-  LuQuote,
-} from "react-icons/lu";
+  FieldErrors,
+  FieldValues,
+  SetFieldValue,
+  UseFormRegister,
+} from "react-hook-form";
 import {
   FiBold,
   FiCode,
@@ -17,8 +16,16 @@ import {
   FiList,
   FiUploadCloud,
 } from "react-icons/fi";
+import {
+  LuHeading1,
+  LuHeading2,
+  LuHeading3,
+  LuListOrdered,
+  LuQuote,
+} from "react-icons/lu";
+import ErrorMessage from "./ErrorMessage";
 import Button from "./ui/Button";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import MyInput from "./ui/Input";
 
 const TOOLBAR_BUTTONS = [
   { icon: LuHeading1, label: "Heading 1" },
@@ -40,9 +47,12 @@ const TOOLBAR_BUTTONS = [
 interface FormFieldProps<T extends FieldValues> {
   Fields: IField<T>[];
   register: UseFormRegister<T>;
+  setValue?: SetFieldValue<T>;
   errors: FieldErrors;
   ToolBar?: boolean;
   textAreaRows?: number;
+  previewImage?: string | null;
+  setPreviewImage?: (image: string | null) => void;
 }
 
 const FormField = <T extends FieldValues>({
@@ -51,6 +61,8 @@ const FormField = <T extends FieldValues>({
   errors,
   ToolBar,
   textAreaRows,
+  previewImage,
+  setPreviewImage,
 }: FormFieldProps<T>) => {
   return (
     <>
@@ -100,6 +112,16 @@ const FormField = <T extends FieldValues>({
               htmlFor={input.id}
               className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 py-12 transition hover:border-primary dark dark:hover/50"
             >
+              {previewImage && (
+                <div className="relative w-48 h-48">
+                  <Image
+                    src={previewImage}
+                    alt="Preview"
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+              )}
               <FiUploadCloud className="text-3xl text-gray-400 dark:text-gray-500" />
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 Upload Image
@@ -107,8 +129,18 @@ const FormField = <T extends FieldValues>({
               <MyInput
                 id={input.id}
                 type="file"
-                {...register(input.name)}
                 className="hidden"
+                accept="image/*"
+                {...register(input.name)}
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  //  preview image
+                  const imageUrl = URL.createObjectURL(file); // create preview link for image ** blob:http://localhost:3000/abc-123-xyz** instead of File
+                  setPreviewImage?.(imageUrl);
+                  // trigger onChange event when file is changed
+                  register(input.name).onChange(e);
+                }}
               />
             </label>
           ) : input.type === "select" ? (
@@ -117,9 +149,11 @@ const FormField = <T extends FieldValues>({
               id={input.id}
               {...register(input.name)}
               className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 dark:bg-transparent dark:text-white dark:border-gray-600"
+              defaultValue=""
             >
-              <option value="" selected hidden />
-
+              <option value="" disabled>
+                -- Please choose an option --
+              </option>
               {input.options?.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.name}

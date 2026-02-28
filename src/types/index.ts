@@ -79,7 +79,7 @@ export interface IContactForm {
 
 export interface INewBlogForm {
   title: string;
-  image: File;
+  image: string;
   content: string;
   status: BlogStatus;
   category: string;

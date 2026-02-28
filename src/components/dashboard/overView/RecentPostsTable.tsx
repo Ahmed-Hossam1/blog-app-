@@ -5,11 +5,11 @@ import MyModal from "@/components/ui/MyModal";
 import { formConfig } from "@/constants/forms";
 import { tableHeaders } from "@/data/mockData";
 import { IBlog, INewBlogForm } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Table from "../../Table";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 interface IProps {
   data: IBlog[];
@@ -22,9 +22,15 @@ const RecentBlogsTable = ({ data }: IProps) => {
   const {
     register,
     reset,
+    handleSubmit,
     formState: { errors },
   } = useForm<INewBlogForm>();
-  const [selectedBlog, setSelectedBlog] = useState<IBlog | null>(null);
+  const [selectedBlogToEdit, setSelectedBlogToEdit] = useState<IBlog | null>(
+    null,
+  );
+  const [selectedBlogToDelete, setSelectedBlogToDelete] =
+    useState<IBlog | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -37,28 +43,57 @@ const RecentBlogsTable = ({ data }: IProps) => {
   const handleOpenDeleteModal = () => setIsDeleteModalOpen(true);
   const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
 
+  useEffect(() => {
+    setPreviewImage(previewImage);
+  }, [previewImage]);
+  
   const handleEdit = (blog: IBlog) => {
     handleOpenEditModal();
+    setSelectedBlogToEdit(blog);
     reset({
       title: blog.title,
       content: blog.content,
       status: blog.status,
       category: blog.category,
+      image: blog.image,
     });
   };
-  const handleDelete = (blog: IBlog) => {
+  const handleOpenAlertDelete = (blog: IBlog) => {
     handleOpenDeleteModal();
-    setSelectedBlog(blog);
+    setSelectedBlogToDelete(blog);
   };
 
+  const updateBlog = async (data: INewBlogForm) => {
+    console.log(data)
+    setIsLoading(true);
+    try {
+      const req = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/update`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ ...data, id: selectedBlogToEdit?.id }),
+        },
+      );
+      const res = await req.json();
+      if (!req.ok) throw new Error(res.message);
+      toast.success(res.message);
+      setIsLoading(false);
+      handleCloseEditModal();
+      router.refresh();
+    } catch (error) {
+      toast.error(`${error as Error}`);
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
   const deleteBlog = async () => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/deleteBlog`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/delete`,
         {
           method: "DELETE",
-          body: JSON.stringify({ id: selectedBlog?.id }),
+          body: JSON.stringify({ id: selectedBlogToDelete?.id }),
         },
       );
       const data = await res.json();
@@ -66,13 +101,14 @@ const RecentBlogsTable = ({ data }: IProps) => {
       toast.success(data.message);
       setIsLoading(false);
       handleCloseDeleteModal();
-      router.refresh()
+      router.refresh();
     } catch (error) {
       toast.error(`${error as Error}`);
       console.log(error);
       setIsLoading(false);
     }
   };
+
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
       {/* Edit Modal */}
@@ -82,9 +118,32 @@ const RecentBlogsTable = ({ data }: IProps) => {
         close={handleCloseEditModal}
         title="Edit Modal"
       >
-        <FormField Fields={content} register={register} errors={errors} />
+        <FormField
+          previewImage={previewImage}
+          setPreviewImage={setPreviewImage}
+          Fields={content}
+          register={register}
+          errors={errors}
+        />
         <FormField Fields={settings} register={register} errors={errors} />
+        <div className="flex justify-end gap-3 pt-4">
+          <Button
+            onClick={handleCloseEditModal}
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit(updateBlog)}
+            isLoading={isLoading}
+            disabled={isLoading}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+          >
+            Update
+          </Button>
+        </div>
       </MyModal>
+
       {/* Delete Modal */}
       <MyModal
         isOpen={isDeleteModalOpen}
@@ -114,7 +173,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
             <div>
               <p className="text-sm text-gray-700">
                 Are you sure you want to delete this{" "}
-                <strong> `{selectedBlog?.title}` </strong>?
+                <strong> `{selectedBlogToDelete?.title}` </strong>?
               </p>
               <p className="text-sm font-medium text-red-600 mt-1">
                 This action cannot be undone.
@@ -149,7 +208,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
           tableHeader={tableHeaders}
           tableBody={slicedData}
           onEdit={handleEdit}
-          onDelete={handleDelete}
+          onDelete={handleOpenAlertDelete}
         />
       </div>
 
