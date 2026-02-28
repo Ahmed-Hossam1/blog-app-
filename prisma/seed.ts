@@ -3,7 +3,6 @@ import { prisma } from "./prisma";
 async function main() {
   console.log("🌱 Seeding database...");
 
-  console.log("✅ Database seeded successfully!");
 }
 
 main()

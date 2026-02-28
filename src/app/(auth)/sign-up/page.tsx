@@ -10,6 +10,7 @@ import { signIn } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
@@ -28,6 +29,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme } = useTheme();
 
+  const router = useRouter();
   /*======= CONSTANTS ======*/
   // inputs config used to render sign up form dynamically
   const singUpForm = formConfig?.signUp ?? [];
@@ -53,7 +55,7 @@ const Page = () => {
       if (result?.error) throw new Error("failed to create user");
       toast.success("user created successfully");
       setTimeout(() => {
-        window.location.href = "/";
+        router.push("/");
       }, 1500);
     } catch (error) {
       setIsLoading(false);

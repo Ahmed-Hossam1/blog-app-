@@ -118,9 +118,7 @@ const FormField = <T extends FieldValues>({
               {...register(input.name)}
               className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 dark:bg-transparent dark:text-white dark:border-gray-600"
             >
-              <option value="" selected hidden>
-                {input.placeholder}
-              </option>
+              <option value="" selected hidden />
 
               {input.options?.map((opt) => (
                 <option key={opt.value} value={opt.value}>
