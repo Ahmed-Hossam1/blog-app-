@@ -46,7 +46,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
   useEffect(() => {
     setPreviewImage(previewImage);
   }, [previewImage]);
-  
+
   const handleEdit = (blog: IBlog) => {
     handleOpenEditModal();
     setSelectedBlogToEdit(blog);
@@ -64,7 +64,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
   };
 
   const updateBlog = async (data: INewBlogForm) => {
-    console.log(data)
+    console.log(data);
     setIsLoading(true);
     try {
       const req = await fetch(
@@ -210,12 +210,6 @@ const RecentBlogsTable = ({ data }: IProps) => {
           onEdit={handleEdit}
           onDelete={handleOpenAlertDelete}
         />
-      </div>
-
-      <div className="p-4 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/30 text-center">
-        <button className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
-          View all posts
-        </button>
       </div>
     </div>
   );

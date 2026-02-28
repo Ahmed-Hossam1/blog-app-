@@ -2,6 +2,7 @@ import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2";
 import Button from "./ui/Button";
 import { IBlog } from "@/types";
 import { formatDate } from "@/utils";
+import Link from "next/link";
 
 interface TableProps {
   tableTitle?: string;
@@ -114,9 +115,12 @@ const Table = ({
               {needsAction && (
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button className="p-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    <Link
+                      href={`/blog/${blog.slug}`}
+                      className="p-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                    >
                       <HiOutlineEye size={18} />
-                    </Button>
+                    </Link>
                     <Button
                       onClick={() => onEdit?.(blog)}
                       className="p-2 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"

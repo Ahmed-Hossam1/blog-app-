@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 export default function CreateBlog() {
   const [previewImage, setPreviewImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const content = formConfig?.content;
   const settings = formConfig?.settings;
 
@@ -43,7 +42,7 @@ export default function CreateBlog() {
       const uploadImageRes = await uploadImageReq.json();
       if (!uploadImageReq.ok) throw new Error(uploadImageRes.message);
       const imageUrl = uploadImageRes.url;
-      const {url} = imageUrl;
+      const { url } = imageUrl;
 
       // Create blog
       const createBlogReq = await fetch(
@@ -108,9 +107,6 @@ export default function CreateBlog() {
 
       {/* ══════ Bottom Action Bar ══════ */}
       <div className="mt-8 flex flex-wrap items-center justify-end gap-3">
-        <Button className="border border-gray-300 px-5 py-2.5 text-sm text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">
-          Cancel
-        </Button>
         <Button className="border border-gray-300 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
           Save Draft
         </Button>
