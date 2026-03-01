@@ -2,9 +2,8 @@ import { IBlog } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  HiOutlineArrowRight,
   HiOutlineChatBubbleLeft,
-  HiOutlineEye,
+  HiOutlineEye
 } from "react-icons/hi2";
 
 interface IProps {
@@ -20,9 +19,6 @@ const TopBlogs = ({ data }: IProps) => {
         <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
           Top Blogs
         </h3>
-        <button className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
-          View All <HiOutlineArrowRight />
-        </button>
       </div>
 
       <div className="space-y-4">

@@ -64,7 +64,6 @@ const RecentBlogsTable = ({ data }: IProps) => {
   };
 
   const updateBlog = async (data: INewBlogForm) => {
-    console.log(data);
     setIsLoading(true);
     try {
       const req = await fetch(

@@ -41,16 +41,13 @@ const ExploreCategories = ({
           Choose a category to explore related content - Find what interests you
         </p>
 
-        {/* Tabs (UI only) */}
+        {/* Tabs Categories */}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {tabsData.map((tab) => (
             <Tabs
-              onActive={() => setActiveTab(tab.name)}
               key={tab.id}
-              className={`${tab.name === activeTab
-                  ? "bg-black text-white dark:bg-white dark:text-black"
-                  : "bg-white text-gray-700 hover:bg-baseInk hover:text-white dark:bg-surfaceDark dark:text-gray-300 dark:hover:bg-gray-700"
-                }`}
+              isActive={tab.name === activeTab}
+              onActive={() => setActiveTab(tab.name)}
             >
               {tab.name}
             </Tabs>
