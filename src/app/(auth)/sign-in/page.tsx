@@ -35,7 +35,6 @@ const Page = () => {
   /*===== CONSTANTS ===== */
   const signInIForm = formConfig?.signIn ?? [];
   /*===== HANDLERS ===== */
-
   const onsubmit: SubmitHandler<ISignInForm> = async (data) => {
     if (!data) return;
     try {
@@ -46,6 +45,7 @@ const Page = () => {
         redirect: false,
       });
       if (result?.error) throw new Error("invalid credentials");
+
       toast.success("logged in successfully");
       setTimeout(() => {
         router.push("/");
@@ -132,7 +132,7 @@ const Page = () => {
           <FormField Fields={signInIForm} register={register} errors={errors} />
 
           <Button
-            disabled={isLoading}
+            disabled={isLoading || authLoading}
             isLoading={isLoading}
             className={`w-full bg-baseInk  hover:bg-black transition  text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200`}
           >

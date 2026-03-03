@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Table from "../../Table";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface IProps {
   data: IBlog[];
@@ -202,13 +203,37 @@ const RecentBlogsTable = ({ data }: IProps) => {
       </MyModal>
 
       <div className="overflow-x-auto">
-        <Table
-          tableTitle="Recent Blogs"
-          tableHeader={tableHeaders}
-          tableBody={slicedData}
-          onEdit={handleEdit}
-          onDelete={handleOpenAlertDelete}
-        />
+        {/* Table Wrapper */}
+        <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-800">
+          {slicedData.length > 0 ? (
+            <Table
+              tableTitle="Recent Blogs"
+              tableHeader={tableHeaders}
+              tableBody={slicedData}
+              onEdit={handleEdit}
+              onDelete={handleOpenAlertDelete}
+            />
+          ) : (
+            /* Empty State */
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="mb-4 rounded-full bg-gray-100 p-4 dark:bg-gray-800">
+                📭
+              </div>
+              <h3 className="text-base font-semibold dark:text-white">
+                No Blogs Yet
+              </h3>
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                Start by creating your first blog post.
+              </p>
+              <Link
+                href={"/dashboard/create-blog"}
+                className="mt-4 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                Create Blog
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

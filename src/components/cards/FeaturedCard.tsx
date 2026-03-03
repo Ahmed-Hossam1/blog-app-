@@ -13,7 +13,6 @@ const FeaturedCard = ({
   image,
   category,
   views,
-  readTime,
   createdAt,
   comments,
   author,
@@ -31,19 +30,16 @@ const FeaturedCard = ({
           className="h-105 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-
         {/* Category Badge */}
-        <span className="absolute right-4 top-4 rounded-full backdrop-blur-3xl px-6 py-2 text-sm font-medium text-white">
+        <span className="absolute right-4 top-4 rounded-full backdrop-blur-xl px-6 py-2 text-sm font-medium text-white">
           {category}
         </span>
 
         {/* Author Avatar */}
         <div className="absolute left-4 top-4">
           <Image
-            src={`${author.image}`}
-            alt={author.name}
+            src={author?.image || "/default-image.png"}
+            alt={author?.name || "Author"}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"

@@ -1,10 +1,7 @@
 import { IBlog } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  HiOutlineChatBubbleLeft,
-  HiOutlineEye
-} from "react-icons/hi2";
+import { HiOutlineChatBubbleLeft, HiOutlineEye } from "react-icons/hi2";
 
 interface IProps {
   data: IBlog[];
@@ -22,35 +19,41 @@ const TopBlogs = ({ data }: IProps) => {
       </div>
 
       <div className="space-y-4">
-        {slicedData.map((blog) => (
-          <Link
-            href={`/blog/${blog.slug}`}
-            key={blog.id}
-            className="group flex items-center gap-4 p-2 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200 cursor-pointer"
-          >
-            <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0">
-              <Image
-                src={blog.image}
-                alt={blog.title}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-300"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-zinc-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase">
-                {blog.title}
-              </h4>
-              <div className="flex items-center gap-4 mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-                <span className="flex items-center gap-1">
-                  <HiOutlineEye size={14} /> {blog.views}
-                </span>
-                <span className="flex items-center gap-1">
-                  <HiOutlineChatBubbleLeft size={14} /> {blog.comments.length}
-                </span>
+        {slicedData.length > 0 ? (
+          slicedData.map((blog) => (
+            <Link
+              href={`/blog/${blog.slug}`}
+              key={blog.id}
+              className="group flex items-center gap-4 p-2 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200 cursor-pointer"
+            >
+              <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0">
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
               </div>
-            </div>
-          </Link>
-        ))}
+              <div className="flex-1 min-w-0">
+                <h4 className="text-sm font-semibold text-zinc-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase">
+                  {blog.title}
+                </h4>
+                <div className="flex items-center gap-4 mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                  <span className="flex items-center gap-1">
+                    <HiOutlineEye size={14} /> {blog.views}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <HiOutlineChatBubbleLeft size={14} /> {blog.comments.length}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            No Top Blogs Found
+          </p>
+        )}
       </div>
     </div>
   );

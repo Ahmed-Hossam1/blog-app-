@@ -27,6 +27,8 @@ const Page = () => {
     resolver: yupResolver(signUpSchema),
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
+
   const { theme } = useTheme();
 
   const router = useRouter();
@@ -47,6 +49,8 @@ const Page = () => {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
+
+      // sign in user after successful sign up to create the session
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
@@ -59,6 +63,26 @@ const Page = () => {
       }, 1500);
     } catch (error) {
       setIsLoading(false);
+      toast.error(`${error as Error}`);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setAuthLoading(true);
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      setAuthLoading(false);
+      toast.error(`${error as Error}`);
+    }
+  };
+
+  const handleGithubSignIn = async () => {
+    try {
+      setAuthLoading(true);
+      await signIn("github", { callbackUrl: "/" });
+    } catch (error) {
+      setAuthLoading(false);
       toast.error(`${error as Error}`);
     }
   };
@@ -89,7 +113,8 @@ const Page = () => {
         {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
           <Button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={handleGoogleSignIn}
+            disabled={authLoading}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
             <span>Sign Up</span>
@@ -97,7 +122,8 @@ const Page = () => {
           </Button>
 
           <Button
-            onClick={() => signIn("github", { callbackUrl: "/" })}
+            onClick={handleGithubSignIn}
+            disabled={authLoading}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
             <span>Sign Up</span>
@@ -119,7 +145,7 @@ const Page = () => {
           <FormField Fields={singUpForm} register={register} errors={errors} />
 
           <Button
-            disabled={isLoading}
+            disabled={isLoading || authLoading}
             isLoading={isLoading}
             className="w-full bg-baseInk hover:bg-black transition text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >

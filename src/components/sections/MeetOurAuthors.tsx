@@ -54,7 +54,7 @@ const MeetOurAuthors = ({
 
               {/* title */}
               <div className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
-                {author.title}
+                {author.title || "Author"}
               </div>
 
               {/* Bio */}

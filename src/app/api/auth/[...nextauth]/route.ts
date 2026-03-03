@@ -3,11 +3,13 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "../../../../../prisma/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 const handler = NextAuth({
   session: {
     strategy: "jwt",
   },
 
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -17,7 +19,7 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
-    // 🔹Custom Auth With  Email / Password
+    // Custom Auth With  Email / Password
     Credentials({
       name: "credentials",
       credentials: {

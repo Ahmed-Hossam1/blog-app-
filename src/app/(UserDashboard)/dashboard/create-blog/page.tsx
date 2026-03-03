@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 export default function CreateBlog() {
   const [previewImage, setPreviewImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  
   const content = formConfig?.content;
   const settings = formConfig?.settings;
 

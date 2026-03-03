@@ -43,7 +43,6 @@ model Comment {
   image      String
   comment    String
 
-  //  blog relation
   blogId String @db.ObjectId
   blog   Blog   @relation(fields: [blogId], references: [id], onDelete:Cascade)
 
@@ -54,14 +53,41 @@ model Comment {
 
 
 model User {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String @unique
-  password  String
-  image     String?
-  title     String?
-  bio       String?
-  blogs    Blog[]
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+
+  password      String?
+  title         String?
+  bio           String?
+
+  blogs         Blog[]
+  accounts      Account[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+// 0Auth user can have more than 1 Account like google & github but the user data is one but have 2 accounts
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}

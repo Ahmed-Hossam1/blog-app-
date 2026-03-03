@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
         status: body.status,
         slug: body.title.split(" ").join("-"),
         readTime: "5",
-        authorId: "69a201eda1e5202e4c311235",
+        authorId: "69a486502a0393d424056060",
       },
     });
     return NextResponse.json(

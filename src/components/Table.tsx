@@ -40,7 +40,7 @@ const Table = ({
           </h3>
         </div>
       )}
-      <table className="w-full text-left">
+      <table className="w-full text-center">
         <thead className="bg-zinc-50 dark:bg-zinc-800/50 text-zinc-500 dark:text-zinc-400 text-xs uppercase font-semibold">
           <tr>
             {needCheckbox && (

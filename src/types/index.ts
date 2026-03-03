@@ -25,7 +25,7 @@ export interface IBaseBlog {
   status: BlogStatus;
   views: number;
   createdAt: Date;
-  author: IAuthor;
+  author?: IAuthor;
 }
 
 export interface IAuthor {
@@ -78,6 +78,7 @@ export interface IContactForm {
 }
 
 export interface INewBlogForm {
+  authorId: string;
   title: string;
   image: string;
   content: string;

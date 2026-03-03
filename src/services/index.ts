@@ -2,17 +2,7 @@ import { buildCommentsTree } from "@/utils";
 import { prisma } from "../../prisma/prisma";
 
 export const getBlogs = async () => {
-  const blogs = await prisma.blog.findMany({
-    include: {
-      author: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-        },
-      },
-    },
-  });
+  const blogs = await prisma.blog.findMany();
   return blogs;
 };
 
