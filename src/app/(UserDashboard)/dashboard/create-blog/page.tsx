@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 export default function CreateBlog() {
   const [previewImage, setPreviewImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
   const content = formConfig?.content;
   const settings = formConfig?.settings;
 
@@ -24,6 +24,7 @@ export default function CreateBlog() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<INewBlogForm>();
 
@@ -56,6 +57,14 @@ export default function CreateBlog() {
       const createBlogRes = await createBlogReq.json();
       if (!createBlogReq.ok) throw new Error(createBlogRes.message);
       toast.success(createBlogRes.message);
+      reset({
+        title: "",
+        content: "",
+        category: "",
+        image: "",
+      });
+      // Reset preview image to null to hide preview after successful upload
+      setPreviewImage(null);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
