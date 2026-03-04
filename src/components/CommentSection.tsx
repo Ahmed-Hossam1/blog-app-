@@ -57,7 +57,7 @@ const CommentSection = ({ blog }: IProps) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/createComment`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -99,7 +99,7 @@ const CommentSection = ({ blog }: IProps) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/replyComment`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/reply`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -156,9 +156,8 @@ const CommentSection = ({ blog }: IProps) => {
         isOpen={isModalOpen}
         open={openModal}
         close={closeModal}
-        title="leave a comment"
       >
-        <div>@ {replyToAuthorName}</div>
+        <div>Reply: @{replyToAuthorName}</div>
         <textarea
           rows={5}
           value={reply.comment}
