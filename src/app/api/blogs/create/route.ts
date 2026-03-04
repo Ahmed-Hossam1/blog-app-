@@ -8,14 +8,14 @@ export async function POST(req: NextRequest) {
   try {
     await prisma.blog.create({
       data: {
-        title: body.title,
+        title: body.title, 
         image: body.image,
         content: body.content,
         category: body.category,
         status: body.status,
         slug: body.title.split(" ").join("-"),
         readTime: "5",
-        authorId: "69a486502a0393d424056060",
+        authorId: "69a73e2d25691bfab560ff4e",
       },
     });
     return NextResponse.json(

@@ -36,31 +36,16 @@ const CommentSection = ({ blog }: IProps) => {
   const [replyToAuthorName, setReplyToAuthorName] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
-
   /* ================== MODAL ================== */
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const handleReplyClick = (parentId: string, ReplyToAuthorName: string) => {
-    openModal();
-    setReply({
-      ...reply,
-      authorName: user?.name || "",
-      image: user?.image || "",
-      blogId: blog.id,
-      parentCommentId: parentId,
-    });
-
-    setReplyToAuthorName(ReplyToAuthorName);
-  };
 
   /* ================== CREATE COMMENT ================== */
   const postNewComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // check if user is authenticated to create a comment
-    if (status !== "authenticated")
-      return toast.error("Please sign in first");
+    if (status !== "authenticated") return toast.error("Please sign in first");
 
     const payload = {
       ...comment,
@@ -94,10 +79,22 @@ const CommentSection = ({ blog }: IProps) => {
   };
 
   /* ================== CREATE REPLY ================== */
+  const handleReplyClick = (parentId: string, ReplyToAuthorName: string) => {
+    openModal();
+    setReply({
+      ...reply,
+      authorName: user?.name || "",
+      image: user?.image || "",
+      blogId: blog.id,
+      parentCommentId: parentId,
+    });
+
+    setReplyToAuthorName(ReplyToAuthorName);
+  };
+
   const postReply = async () => {
     // check if user is authenticated to create a reply
-    if (status !== "authenticated")
-      return toast.error("Please sign in first");
+    if (status !== "authenticated") return toast.error("Please sign in first");
 
     try {
       setIsLoading(true);
@@ -126,6 +123,29 @@ const CommentSection = ({ blog }: IProps) => {
       router.refresh();
     } catch (err) {
       toast.error((err as Error).message);
+      setIsLoading(false);
+    }
+  };
+
+  /* ================== DELETE COMMENT ================== */
+  const handleDeleteComment = async (id: string) => {
+    try {
+      setIsLoading(true);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/delete`,
+        {
+          method: "DELETE",
+          body: JSON.stringify({ id }),
+        },
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      toast.success(data.message);
+      router.refresh();
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(`${error as Error}`);
+      console.log(error);
       setIsLoading(false);
     }
   };
@@ -173,6 +193,7 @@ const CommentSection = ({ blog }: IProps) => {
               comment={comment}
               level={0}
               handleCommentReply={handleReplyClick}
+              handleDeleteComment={handleDeleteComment}
             />
           ))}
         </div>
