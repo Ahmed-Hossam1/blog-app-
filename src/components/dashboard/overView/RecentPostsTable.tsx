@@ -1,11 +1,12 @@
 "use client";
+
 import FormField from "@/components/FormField";
 import Button from "@/components/ui/Button";
 import MyModal from "@/components/ui/MyModal";
 import { formConfig } from "@/constants/forms";
 import { tableHeaders } from "@/data/mockData";
 import { IBlog, INewBlogForm } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Table from "../../Table";
@@ -17,15 +18,9 @@ interface IProps {
 }
 
 const RecentBlogsTable = ({ data }: IProps) => {
-  const slicedData = data.slice(0, 7);
+  /* ==== State ==== */
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<INewBlogForm>();
   const [selectedBlogToEdit, setSelectedBlogToEdit] = useState<IBlog | null>(
     null,
   );
@@ -33,20 +28,24 @@ const RecentBlogsTable = ({ data }: IProps) => {
     useState<IBlog | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<INewBlogForm>();
   const router = useRouter();
-  /* Form Config */
+
+  /* ==== Config ==== */
+  const slicedData = data.slice(0, 7);
   const content = formConfig?.content;
   const settings = formConfig?.settings;
 
+  /* ==== Handlers ==== */
   const handleOpenEditModal = () => setIsEditModalOpen(true);
   const handleCloseEditModal = () => setIsEditModalOpen(false);
   const handleOpenDeleteModal = () => setIsDeleteModalOpen(true);
   const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
-
-  useEffect(() => {
-    setPreviewImage(previewImage);
-  }, [previewImage]);
 
   const handleEdit = (blog: IBlog) => {
     handleOpenEditModal();
@@ -59,6 +58,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
       image: blog.image,
     });
   };
+
   const handleOpenAlertDelete = (blog: IBlog) => {
     handleOpenDeleteModal();
     setSelectedBlogToDelete(blog);
@@ -85,11 +85,12 @@ const RecentBlogsTable = ({ data }: IProps) => {
       handleCloseEditModal();
       router.refresh();
     } catch (error) {
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
       console.log(error);
       setIsLoading(false);
     }
   };
+
   const deleteBlog = async () => {
     try {
       setIsLoading(true);
@@ -107,18 +108,17 @@ const RecentBlogsTable = ({ data }: IProps) => {
       handleCloseDeleteModal();
       router.refresh();
     } catch (error) {
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
       console.log(error);
       setIsLoading(false);
     }
   };
 
+  /* ==== JSX ==== */
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-      {/* Edit Modal */}
       <MyModal
         isOpen={isEditModalOpen}
-        open={handleOpenEditModal}
         close={handleCloseEditModal}
         title="Edit Modal"
       >
@@ -148,15 +148,12 @@ const RecentBlogsTable = ({ data }: IProps) => {
         </div>
       </MyModal>
 
-      {/* Delete Modal */}
       <MyModal
         isOpen={isDeleteModalOpen}
-        open={handleOpenDeleteModal}
         close={handleCloseDeleteModal}
         title="Delete Item"
       >
         <div className="space-y-6">
-          {/* Warning Text */}
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
               <svg
@@ -185,7 +182,6 @@ const RecentBlogsTable = ({ data }: IProps) => {
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-end gap-3 pt-4">
             <Button
               onClick={handleCloseDeleteModal}
@@ -207,7 +203,6 @@ const RecentBlogsTable = ({ data }: IProps) => {
       </MyModal>
 
       <div className="overflow-x-auto">
-        {/* Table Wrapper */}
         <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-800">
           {slicedData.length > 0 ? (
             <Table
@@ -219,7 +214,6 @@ const RecentBlogsTable = ({ data }: IProps) => {
               onDelete={handleOpenAlertDelete}
             />
           ) : (
-            /* Empty State */
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="mb-4 rounded-full bg-gray-100 p-4 dark:bg-gray-800">
                 📭

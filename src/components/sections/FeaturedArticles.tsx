@@ -7,13 +7,11 @@ interface FeaturedArticlesProps {
   numberOfShownArticles: number;
 }
 
-const FeaturedArticles =  ({
+const FeaturedArticles = ({
   blogs,
   numberOfShownArticles,
 }: FeaturedArticlesProps) => {
-  /*===== CONSTANTS ===== */
-
-  // limit card number for display
+  /* ==== Config ==== */
   const slicedData = blogs?.slice(0, numberOfShownArticles);
 
   return (

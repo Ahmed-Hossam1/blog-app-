@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../../../prisma/prisma";
+import { prisma } from "../../../../prisma/prisma";
 
 export async function PUT(req: NextRequest) {
   const body = await req.json();
-  const { id, title ,  category, image, status, content } = body;
+  const { id, title, category, image, status, content } = body;
 
   try {
     await prisma.blog.update({
       where: { id },
       data: {
         title,
-        slug : title.split(" ").join("-"),
+        slug: title.split(" ").join("-"),
         image,
         content,
         category,

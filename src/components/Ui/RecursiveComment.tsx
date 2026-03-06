@@ -1,6 +1,6 @@
 "use client";
 import { IComment } from "@/types";
-import { formatDate } from "@/utils";
+import { formatDate } from "@/lib";
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import { FaReply } from "react-icons/fa6";

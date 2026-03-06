@@ -16,8 +16,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
+
 const Page = () => {
-  /*======= STATE ======*/
+  /* ==== State ==== */
   const {
     register,
     handleSubmit,
@@ -27,14 +28,12 @@ const Page = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [authLoading, setAuthLoading] = useState<boolean>(false);
-
   const { theme } = useTheme();
-  /*======= CONSTANTS ======*/
-  // inputs config used to render sign up form dynamically
+
+  /* ==== Config ==== */
   const singUpForm = formConfig?.signUp ?? [];
 
-  /*======= HANDLERS ======*/
-
+  /* ==== Handlers ==== */
   const onSubmit: SubmitHandler<ISignUpForm> = async (data) => {
     if (!data) return;
     try {
@@ -47,7 +46,6 @@ const Page = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
 
-      // sign in user after successful sign up to create the session
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
@@ -60,7 +58,7 @@ const Page = () => {
       }, 1500);
     } catch (error) {
       setIsLoading(false);
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
     }
   };
 
@@ -70,7 +68,7 @@ const Page = () => {
       await signIn("google", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
     }
   };
 
@@ -80,12 +78,11 @@ const Page = () => {
       await signIn("github", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
     }
   };
 
-  /*======= JSX ======*/
-
+  /* ==== JSX ==== */
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black transition-colors duration-300">
       <div className="bg-white shadow-md rounded-xl py-12 px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">
@@ -107,7 +104,6 @@ const Page = () => {
           />
         )}
 
-        {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
           <Button
             onClick={handleGoogleSignIn}
@@ -134,7 +130,6 @@ const Page = () => {
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
         </div>
 
-        {/* Form */}
         <form
           className="flex flex-col space-y-4"
           onSubmit={handleSubmit(onSubmit)}

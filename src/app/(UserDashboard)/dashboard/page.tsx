@@ -6,7 +6,7 @@ import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
 import { getAuthorBlogs } from "@/services";
-import { generateStatus } from "@/utils";
+import { generateStatus } from "@/lib";
 import { getServerSession } from "next-auth";
 const OverView = async () => {
   const session = await getServerSession();

@@ -1,7 +1,7 @@
 import CommentSection from "@/components/CommentSection";
 import SectionWrapper from "@/components/SectionWrapper";
 import { getBlogById } from "@/services";
-import { formatDate } from "@/utils";
+import { formatDate } from "@/lib";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";

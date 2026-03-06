@@ -1,5 +1,5 @@
-import { buildCommentsTree } from "@/utils";
-import { prisma } from "../../prisma/prisma";
+import { buildCommentsTree } from "@/lib";
+import { prisma } from "../prisma/prisma";
 
 export const getBlogs = async () => {
   const blogs = await prisma.blog.findMany();

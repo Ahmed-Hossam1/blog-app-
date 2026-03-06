@@ -1,5 +1,5 @@
 import { IBaseBlog } from "@/types";
-import { formatDate, truncateText } from "@/utils";
+import { formatDate, truncateText } from "@/lib";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 

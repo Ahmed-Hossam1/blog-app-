@@ -17,16 +17,16 @@ const ExploreCategories = ({
   blogs,
   numberOfShownArticles,
 }: ExploreCategoriesProps) => {
-  /*===== STATE ===== */
+  /* ==== State ==== */
   const [activeTab, setActiveTab] = useState<string>("All");
 
-  /*===== FILTER ===== */
+  /* ==== Filter ==== */
   const filteredCards =
     activeTab === "All"
       ? blogs
       : blogs.filter((blog: IBaseBlog) => blog.category === activeTab);
 
-  /*===== SLICE ===== */
+  /* ==== Config ==== */
   const slicedBlogs = filteredCards.slice(0, numberOfShownArticles);
 
   return (

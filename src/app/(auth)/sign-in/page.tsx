@@ -18,10 +18,8 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 
 const Page = () => {
-  /*===== STATES ===== */
-
+  /* ==== State ==== */
   const { theme } = useTheme();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [authLoading, setAuthLoading] = useState<boolean>(false);
   const {
@@ -31,9 +29,11 @@ const Page = () => {
   } = useForm<ISignInForm>({
     resolver: yupResolver(loginSchema),
   });
-  /*===== CONSTANTS ===== */
+
+  /* ==== Config ==== */
   const signInIForm = formConfig?.signIn ?? [];
-  /*===== HANDLERS ===== */
+
+  /* ==== Handlers ==== */
   const onsubmit: SubmitHandler<ISignInForm> = async (data) => {
     if (!data) return;
     try {
@@ -51,7 +51,7 @@ const Page = () => {
       }, 1500);
     } catch (error) {
       setIsLoading(false);
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
     }
   };
 
@@ -61,7 +61,7 @@ const Page = () => {
       await signIn("google", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
     }
   };
 
@@ -71,11 +71,11 @@ const Page = () => {
       await signIn("github", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error(`${error as Error}`);
+      toast.error((error as Error).message);
     }
   };
 
-  /*===== JSX ===== */
+  /* ==== JSX ==== */
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black transition-colors duration-300">
       <div className="bg-white shadow-md rounded-xl py-12 px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">
@@ -97,7 +97,6 @@ const Page = () => {
           />
         )}
 
-        {/* OAuth buttons */}
         <div className="flex gap-4 mb-6">
           <Button
             onClick={handleGoogleSignIn}
@@ -123,7 +122,6 @@ const Page = () => {
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
         </div>
 
-        {/* Form */}
         <form
           onSubmit={handleSubmit(onsubmit)}
           className="flex flex-col space-y-4"

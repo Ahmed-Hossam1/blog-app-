@@ -1,4 +1,5 @@
 "use client";
+
 import { navLinksData } from "@/data";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,19 +16,19 @@ const Navbar = () => {
   const { status, data } = useSession();
   const src = data?.user?.image ?? "/default-user.png";
 
-  /*===== STATE ===== */
+  /* ==== State ==== */
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
 
-  /*===== HANDLERS ===== */
+  /* ==== Handlers ==== */
   const changeTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
-  /*===== RENDER ===== */
+  /* ==== Render Helpers ==== */
   const renderThemeIcon = () => {
     const Icon = theme === "light" ? MdOutlineDarkMode : IoSunnyOutline;
     return (
@@ -59,16 +60,15 @@ const Navbar = () => {
     </Link>
   ));
 
+  /* ==== JSX ==== */
   return (
     <nav className="fixed w-full z-50 bg-white shadow-lg dark:bg-surfaceDark dark:border-b dark:border-gray-800 transition-colors duration-300">
-      {/* Overlay to prevent interaction when menu is open */}
       <div
         className={`fixed inset-0 bg-black/50 transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={closeMenu}
       />
 
       <div className="container mx-auto flex items-center justify-between py-4">
-        {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
             src={theme === "light" ? "/logo-black.svg" : "/logo-white.svg"}
@@ -80,12 +80,10 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Desktop Links */}
         <div className="hidden lg:flex items-center gap-8">
           {renderDesktopLinks}
         </div>
 
-        {/* Mobile Menu Sidebar */}
         <aside
           className={`fixed right-0 top-0 h-full w-72 z-50 bg-white p-5 shadow-lg dark:bg-surfaceDark dark:text-white transform transition-transform duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
@@ -118,9 +116,7 @@ const Navbar = () => {
           )}
         </aside>
 
-        {/* Right Actions */}
         <div className="flex items-center gap-4">
-          {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4 text-xl">
             {renderThemeIcon()}
             <Link href={`/search?query=`}>
@@ -128,7 +124,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Actions */}
           <div className="flex items-center gap-4 text-xl lg:hidden">
             {renderThemeIcon()}
             <Link href={`/search?query=`}>
@@ -141,25 +136,17 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Auth Buttons */}
           {status === "authenticated" ? (
             <div
               className="relative "
               tabIndex={0}
               onBlur={(e) => {
-                /*
-            When the element loses focus, check where focus moved:
-            If it moved outside the menu → close it
-            If it moved to an element inside (like Logout button) → keep it open
-            */
                 const nextElementFocus = e.relatedTarget as Node | null;
-
                 if (!e.currentTarget.contains(nextElementFocus)) {
                   setOpenUserMenu(false);
                 }
               }}
             >
-              {/* Avatar */}
               <Button
                 onClick={() => setOpenUserMenu((prev) => !prev)}
                 className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
@@ -173,17 +160,14 @@ const Navbar = () => {
                 />
               </Button>
 
-              {/* User Dropdown */}
               <div
                 className={`absolute right-0 mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
-                  ${
-                    openUserMenu
-                      ? "opacity-100 translate-y-0"
-                      : "pointer-events-none opacity-0 -translate-y-2"
+                  ${openUserMenu
+                    ? "opacity-100 translate-y-0"
+                    : "pointer-events-none opacity-0 -translate-y-2"
                   }`}
               >
                 <div className="p-2">
-                  {/* User info */}
                   <div className="px-3 py-2">
                     <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                       {data?.user?.name}
@@ -195,7 +179,6 @@ const Navbar = () => {
 
                   <div className="my-2 h-px bg-gray-200 dark:bg-gray-700" />
 
-                  {/* Dashboard */}
                   <Link
                     href="/dashboard"
                     className="block rounded-lg px-3 py-2 text-sm transition hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -203,7 +186,6 @@ const Navbar = () => {
                     Dashboard
                   </Link>
 
-                  {/* Logout */}
                   <Button
                     onClick={() => signOut({ callbackUrl: "/" })}
                     className="mt-1 w-full text-left rounded-lg px-3 py-2 text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20"

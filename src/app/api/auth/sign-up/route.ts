@@ -1,6 +1,6 @@
 import { ISignUpForm } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../../../prisma/prisma";
+import { prisma } from "../../../../prisma/prisma";
 import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
   try {

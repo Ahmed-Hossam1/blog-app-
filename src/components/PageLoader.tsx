@@ -2,31 +2,10 @@
 
 const PageLoader = () => {
   return (
-    <div className="fixed inset-0 z-999 flex items-center justify-center bg-white dark:bg-surfaceDark">
-      <span className="text-5xl font-bold animate-fade-scale dark:text-white">Blogy</span>
-
-
-      {/* animation */}
-      <style jsx>{`
-        @keyframes fadeScale {
-          0% {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.05);
-          }
-          100% {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-        }
-
-        .animate-fade-scale {
-          animation: fadeScale 2s ease-in-out infinite;
-        }
-      `}</style>
+    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-white dark:bg-surfaceDark">
+      <span className="text-5xl font-bold animate-[fadeScale_2s_ease-in-out_infinite] dark:text-white">
+        Blogy
+      </span>
     </div>
   );
 };

@@ -18,8 +18,10 @@ const CommentSection = ({ blog }: IProps) => {
   const user = data?.user;
   const router = useRouter();
 
-  /* ==================  STATE ================== */
+  /* ==== State ==== */
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [replyToAuthorName, setReplyToAuthorName] = useState<string>("");
   const [comment, setComment] = useState({
     authorName: "",
     image: "",
@@ -33,18 +35,13 @@ const CommentSection = ({ blog }: IProps) => {
     parentCommentId: "",
     blogId: "",
   });
-  const [replyToAuthorName, setReplyToAuthorName] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  /* ================== MODAL ================== */
+  /* ==== Handlers ==== */
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  /* ================== CREATE COMMENT ================== */
   const postNewComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // check if user is authenticated to create a comment
     if (status !== "authenticated") return toast.error("Please sign in first");
 
     const payload = {
@@ -78,7 +75,6 @@ const CommentSection = ({ blog }: IProps) => {
     }
   };
 
-  /* ================== CREATE REPLY ================== */
   const handleReplyClick = (parentId: string, ReplyToAuthorName: string) => {
     openModal();
     setReply({
@@ -88,12 +84,10 @@ const CommentSection = ({ blog }: IProps) => {
       blogId: blog.id,
       parentCommentId: parentId,
     });
-
     setReplyToAuthorName(ReplyToAuthorName);
   };
 
   const postReply = async () => {
-    // check if user is authenticated to create a reply
     if (status !== "authenticated") return toast.error("Please sign in first");
 
     try {
@@ -127,7 +121,6 @@ const CommentSection = ({ blog }: IProps) => {
     }
   };
 
-  /* ================== DELETE COMMENT ================== */
   const handleDeleteComment = async (id: string) => {
     try {
       setIsLoading(true);
@@ -144,17 +137,16 @@ const CommentSection = ({ blog }: IProps) => {
       router.refresh();
       setIsLoading(false);
     } catch (error) {
-      toast.error(`${error as Error}`);
-      console.log(error);
+      toast.error((error as Error).message);
       setIsLoading(false);
     }
   };
 
+  /* ==== JSX ==== */
   return (
     <>
       <MyModal
         isOpen={isModalOpen}
-        open={openModal}
         close={closeModal}
       >
         <div>Reply: @{replyToAuthorName}</div>
@@ -176,7 +168,6 @@ const CommentSection = ({ blog }: IProps) => {
         </Button>
       </MyModal>
 
-      {/* Comments */}
       <div className="mt-12 pt-8 border-t border-zinc-100 dark:border-zinc-800">
         <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
           Comments
@@ -198,7 +189,6 @@ const CommentSection = ({ blog }: IProps) => {
         </div>
       </div>
 
-      {/* New Comment */}
       <div className="mt-12">
         <h3 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-white">
           Leave a Comment

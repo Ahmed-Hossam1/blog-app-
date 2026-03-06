@@ -1,4 +1,5 @@
 "use client";
+
 import FormField from "@/components/FormField";
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
@@ -12,14 +13,14 @@ import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLocationDot, FaPhone } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
-/*===== CONSTANTS ===== */
+/* ==== Config ==== */
 const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID!;
 const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID!;
 const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 const contactForm = formConfig.contactForm;
 
 const Page = () => {
-  /*===== HOOKS ===== */
+  /* ==== State ==== */
   const {
     register,
     handleSubmit,
@@ -27,41 +28,40 @@ const Page = () => {
   } = useForm<IContactForm>({
     resolver: yupResolver(contactSchema),
   });
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   /*===== FUNCTIONS ===== */
 
   /*
-react-hook-form provides the form values as a plain object (data).
-
-However, emailjs.sendForm does NOT accept an object.
-It requires the real HTML <form> element because it reads values directly
-from the DOM inputs and textarea.
-
-So we get the form from the event:
-
-e.target === HTMLFormElement
-
-Instead of using:
-❌ data  -> { name, email, message }
-
-We use:
-✅ form element -> <form>...</form>
+        react-hook-form provides the form values as a plain object (data).
+        
+        However, emailjs.sendForm does NOT accept an object.
+        It requires the real HTML <form> element because it reads values directly
+        from the DOM inputs and textarea.
+        
+        So we get the form from the event:
+        
+        e.target === HTMLFormElement
+        
+        Instead of using:
+        ❌ data  -> { name, email, message }
+        
+        We use:
+        ✅ form element -> <form>...</form>
 
 */
 
   const onSubmit = async (data: IContactForm, e?: BaseSyntheticEvent) => {
     /*
-BaseSyntheticEvent is React’s generic event type.
-
-react-hook-form does not guarantee a specific event type
-like FormEvent<HTMLFormElement>, so it passes a more general one.
-
-The event is optional because handleSubmit may call onSubmit
-without an event in some cases (e.g. programmatic submission).
-
-We only use it to access e.target (the <form> element).
+        BaseSyntheticEvent is React’s generic event type.
+          
+        react-hook-form does not guarantee a specific event type
+        like FormEvent<HTMLFormElement>, so it passes a more general one.
+          
+        The event is optional because handleSubmit may call onSubmit
+        without an event in some cases (e.g. programmatic submission).
+          
+        We only use it to access e.target (the <form> element).
 */
 
     const form = e?.target as HTMLFormElement;
@@ -85,7 +85,7 @@ We only use it to access e.target (the <form> element).
     }
   };
 
-  /*===== UI ===== */
+  /* ==== JSX ==== */
   return (
     <SectionWrapper>
       <div className="container mx-auto px-4 py-8">
@@ -98,7 +98,6 @@ We only use it to access e.target (the <form> element).
         </p>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {/* Contact Information */}
           <div className="flex flex-col gap-8">
             <div>
               <h2 className="mb-6 text-2xl font-semibold dark:text-white">
@@ -161,7 +160,6 @@ We only use it to access e.target (the <form> element).
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="rounded-2xl bg-white p-8 shadow-sm dark:bg-surfaceDark">
             <h2 className="mb-6 text-2xl font-semibold dark:text-white">
               Send Message
