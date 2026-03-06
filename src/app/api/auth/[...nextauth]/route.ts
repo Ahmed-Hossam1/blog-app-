@@ -4,6 +4,7 @@ import GitHubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "../../../../../prisma/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import bcrypt from "bcryptjs";
 const handler = NextAuth({
   session: {
     strategy: "jwt",
@@ -33,7 +34,12 @@ const handler = NextAuth({
           },
         });
         if (!user) return null;
-        if (user.password !== credentials?.password) return null;
+        const hashedPassword = await bcrypt.compare(
+          credentials?.password as string,
+          user.password as string,
+        );
+
+        if (!hashedPassword) return null;
         return {
           id: user.id,
           name: user.name,

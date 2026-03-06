@@ -1,7 +1,7 @@
 import { ISignUpForm } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
-
+import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
   try {
     // Parse the request body
@@ -18,11 +18,14 @@ export async function POST(req: NextRequest) {
         { status: 409 },
       );
 
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await prisma.user.create({
       data: {
         name,
         email,
-        password,
+        password: hashedPassword,
       },
     });
 

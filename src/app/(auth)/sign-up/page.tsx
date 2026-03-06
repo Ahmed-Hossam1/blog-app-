@@ -16,7 +16,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
-
 const Page = () => {
   /*======= STATE ======*/
   const {
