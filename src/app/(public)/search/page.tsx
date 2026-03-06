@@ -80,7 +80,7 @@ const SearchPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Gradient */}
-      <div className="relative overflow-hidden bg-gradient-to-b from-primary/10 to-transparent pt-32 pb-16 dark:from-primary/5">
+      <div className="relative overflow-hidden bg-linear-to-b from-primary/10 to-transparent pt-32 pb-16 dark:from-primary/5">
         <div className="absolute inset-0 z-0">
           <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/20 blur-3xl filter" />
           <div className="absolute top-1/2 right-0 h-64 w-64 rounded-full bg-shineYellow/20 blur-3xl filter" />
@@ -153,13 +153,7 @@ const SearchPage = () => {
             {sortedBlogs.map((blog) => (
               <Link href={`/blog/${blog.slug}`} key={blog.slug}>
                 <ExploreCard
-                  title={blog.title}
-                  image={blog.image}
-                  category={blog.category}
-                  views={blog.views}
-                  readTime={blog.readTime}
-                  createdAt={blog.createdAt}
-                  author={blog.author}
+                  {...blog}
                 />
               </Link>
             ))}
