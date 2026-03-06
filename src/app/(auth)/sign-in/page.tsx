@@ -10,7 +10,7 @@ import { signIn } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
@@ -31,7 +31,6 @@ const Page = () => {
   } = useForm<ISignInForm>({
     resolver: yupResolver(loginSchema),
   });
-  const router = useRouter();
   /*===== CONSTANTS ===== */
   const signInIForm = formConfig?.signIn ?? [];
   /*===== HANDLERS ===== */
@@ -48,7 +47,7 @@ const Page = () => {
 
       toast.success("logged in successfully");
       setTimeout(() => {
-        router.push("/");
+        redirect("/");
       }, 1500);
     } catch (error) {
       setIsLoading(false);
