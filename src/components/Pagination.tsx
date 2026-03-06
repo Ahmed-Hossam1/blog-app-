@@ -7,16 +7,15 @@ interface IPaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  scrollToTop?: boolean;
 }
 
 const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
+  scrollToTop,
 }: IPaginationProps) => {
-
-
-
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
@@ -25,8 +24,8 @@ const Pagination = ({
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
+    if (scrollToTop) window.scrollTo(0, 0);
+  }, [currentPage, scrollToTop]);
 
   const handlePrevious = () => {
     if (!isFirstPage) onPageChange(currentPage - 1);

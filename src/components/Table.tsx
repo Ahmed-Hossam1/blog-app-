@@ -22,7 +22,7 @@ const Table = ({
   tableHeader,
   tableBody,
   needCheckbox = false,
-  needsAction = true,
+  needsAction = false,
   selectedIds = [],
   onSelectAll,
   onSelectRow,

@@ -80,6 +80,7 @@ export interface IContactForm {
 export interface INewBlogForm {
   authorId: string;
   title: string;
+  slug: string;
   image: string;
   content: string;
   status: BlogStatus;

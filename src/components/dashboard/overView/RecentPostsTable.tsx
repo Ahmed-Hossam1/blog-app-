@@ -71,7 +71,11 @@ const RecentBlogsTable = ({ data }: IProps) => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/update`,
         {
           method: "PUT",
-          body: JSON.stringify({ ...data, id: selectedBlogToEdit?.id }),
+          body: JSON.stringify({
+            ...data,
+            id: selectedBlogToEdit?.id,
+            slug: data.title.split(" ").join("-"),
+          }),
         },
       );
       const res = await req.json();
@@ -210,6 +214,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
               tableTitle="Recent Blogs"
               tableHeader={tableHeaders}
               tableBody={slicedData}
+              needsAction
               onEdit={handleEdit}
               onDelete={handleOpenAlertDelete}
             />

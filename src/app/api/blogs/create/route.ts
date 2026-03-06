@@ -3,17 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
 export async function POST(req: NextRequest) {
-  const body : IBlog = await req.json();
-
+  const body: IBlog = await req.json();
+  const { title, image, content, category, status } = body;
   try {
     await prisma.blog.create({
       data: {
-        title: body.title, 
-        image: body.image,
-        content: body.content,
-        category: body.category,
-        status: body.status,
-        slug: body.title.split(" ").join("-"),
+        title,
+        image,
+        content,
+        category,
+        status,
+        slug: title.split(" ").join("-"),
         readTime: "5",
         authorId: "69a73dde25691bfab560ff4b",
       },

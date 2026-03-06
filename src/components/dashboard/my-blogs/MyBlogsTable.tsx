@@ -6,7 +6,6 @@ import { useState } from "react";
 
 interface IProps {
   data: IBlog[];
-  selectedIds?: string[];
 }
 const MyBlogsTable = ({ data }: IProps) => {
   // blogs ids state that are selected in table
