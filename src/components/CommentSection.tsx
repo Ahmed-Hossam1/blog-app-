@@ -54,7 +54,7 @@ const CommentSection = ({ blog }: IProps) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/create`,
+        `/api/comments/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ const CommentSection = ({ blog }: IProps) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/reply`,
+        `/api/comments/reply`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -125,7 +125,7 @@ const CommentSection = ({ blog }: IProps) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments/delete`,
+        `/api/comments/delete`,
         {
           method: "DELETE",
           body: JSON.stringify({ id }),

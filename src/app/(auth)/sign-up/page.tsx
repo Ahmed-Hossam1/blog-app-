@@ -38,8 +38,7 @@ const Page = () => {
     if (!data) return;
     try {
       setIsLoading(true);
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-      const res = await fetch(`${baseUrl}/api/auth/sign-up`, {
+      const res = await fetch(`/api/auth/sign-up`, {
         method: "POST",
         body: JSON.stringify(data),
       });

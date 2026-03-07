@@ -31,9 +31,9 @@ export default function CreateBlog() {
     try {
       const formData = new FormData();
       formData.append("file", data.image[0]);
-
+      // Upload image to cloudinary
       const uploadImageReq = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`,
+        `/api/upload`,
         {
           method: "POST",
           body: formData,
@@ -45,7 +45,7 @@ export default function CreateBlog() {
       const { url } = imageUrl;
 
       const createBlogReq = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/create`,
+        `/api/blogs/create`,
         {
           method: "POST",
           body: JSON.stringify({ ...data, image: url }),
@@ -60,6 +60,7 @@ export default function CreateBlog() {
         category: "",
         image: "",
       });
+      // Reset preview image to null to hide preview after successful upload
       setPreviewImage(null);
       setIsLoading(false);
     } catch (error) {
@@ -78,6 +79,7 @@ export default function CreateBlog() {
       />
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[1fr_280px]">
+        {/* ==== LEFT COLUMN ==== */}
         <div className="space-y-6">
           <FormField
             ToolBar={true}
@@ -90,12 +92,14 @@ export default function CreateBlog() {
           />
         </div>
 
+        {/* ==== RIGHT COLUMN — Publish Settings ==== */}
         <div className="lg:sticky lg:top-24">
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-surfaceDark">
             <h2 className="mb-5 text-lg font-bold text-gray-800 dark:text-gray-100">
               Publish Settings
             </h2>
             <div className="space-y-5">
+              {/* ==== SETTINGS ==== */}
               <FormField
                 Fields={settings}
                 register={register}

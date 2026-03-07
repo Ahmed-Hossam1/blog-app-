@@ -68,7 +68,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
     setIsLoading(true);
     try {
       const req = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/update`,
+        `/api/blogs/update`,
         {
           method: "PUT",
           body: JSON.stringify({
@@ -95,7 +95,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/delete`,
+        `/api/blogs/delete`,
         {
           method: "DELETE",
           body: JSON.stringify({ id: selectedBlogToDelete?.id }),
