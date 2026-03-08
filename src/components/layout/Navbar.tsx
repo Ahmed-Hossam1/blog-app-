@@ -71,11 +71,11 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4">
         <Link href="/" className="flex items-center">
           <Image
-            src={theme === "light" ? "/logo-black.svg" : "/logo-white.svg"}
+            src={theme === "light" ? "/Light-Logo.png" : "/Dark-Logo.png"}
             width={100}
             height={100}
             alt="logo"
-            className="h-8 w-auto"
+            className={` h-12 w-auto ${theme === "light" ? "" : "mix-blend-screen"} `}
             priority
           />
         </Link>

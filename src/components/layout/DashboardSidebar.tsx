@@ -8,11 +8,15 @@ import { FiLogOut, FiSettings, FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const { isSidebarOpen } = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
+  const { theme,  } = useTheme();
+
   return (
     <>
       {/* Mobile Overlay */}
@@ -43,13 +47,16 @@ export default function DashboardSidebar() {
 
         {/* Logo */}
         <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-200 dark:border-gray-800">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-white font-bold text-lg">A</span>
-          </div>
-          <span className="text-gray-900 dark:text-white font-semibold text-lg">
-            DMIN
-          </span>
-          {/* <Image src="/logo-black.svg" alt="Logo" width={130} height={60} /> */}
+         <Link href="/">
+          <Image
+            src={theme === "light" ? "/Light-Logo.png" : "/Dark-Logo.png"}
+            width={100}
+            height={100}
+            alt="logo"
+            className={`w-auto ${theme === "light" ? "" : "mix-blend-screen"} `}
+            priority
+          />
+        </Link>
         </div>
 
         {/* Links */}
