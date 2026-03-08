@@ -2,7 +2,16 @@ import { buildCommentsTree } from "@/lib";
 import { prisma } from "../prisma/prisma";
 
 export const getBlogs = async () => {
-  const blogs = await prisma.blog.findMany();
+  const blogs = await prisma.blog.findMany({
+    include: {
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
   return blogs;
 };
 
@@ -64,10 +73,10 @@ export const getAuthorById = async (id: string) => {
   return author;
 };
 
-export const getAuthorBlogs = async (email: string) => {
-  if (!email) return;
+export const getAuthorBlogs = async (userId: string) => {
+  if (!userId) return;
   const authorBlogs = await prisma.user.findUnique({
-    where: { email },
+    where: { id: userId },
 
     select: {
       blogs: {

@@ -8,11 +8,12 @@ import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
 import { getAuthorBlogs } from "@/services";
 import { generateStatus } from "@/lib";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 const OverView = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const user = session?.user;
-  
-  const authorBlogs = (await getAuthorBlogs(user?.email as string)) || [];
+
+  const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
   const stats = generateStatus(authorBlogs, STATS_DATA);
 

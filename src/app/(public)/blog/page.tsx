@@ -1,7 +1,6 @@
+import PaginatedBlogs from "@/components/PaginatedBlogs";
 import SectionWrapper from "@/components/SectionWrapper";
-import ExploreCard from "@/components/cards/ExploreCard";
 import { getBlogs } from "@/services";
-import Link from "next/link";
 
 const BlogPage = async () => {
   const blogs = await getBlogs();
@@ -19,23 +18,7 @@ const BlogPage = async () => {
             designed for curious minds.
           </p>
         </div>
-
-        {/* Grid */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {blogs.map((blog) => (
-            <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-              <ExploreCard
-                title={blog.title}
-                image={blog.image}
-                category={blog.category}
-                views={blog.views}
-                readTime={blog.readTime}
-                createdAt={blog.createdAt}
-                author={blog.author}
-              />
-            </Link>
-          ))}
-        </div>
+        <PaginatedBlogs data={blogs} />
       </div>
     </SectionWrapper>
   );

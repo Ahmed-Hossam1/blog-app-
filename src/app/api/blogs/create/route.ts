@@ -1,8 +1,15 @@
 import { IBlog } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user || !session.user.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const body: IBlog = await req.json();
   const { title, image, content, category, status } = body;
   try {
@@ -15,7 +22,7 @@ export async function POST(req: NextRequest) {
         status,
         slug: title.split(" ").join("-"),
         readTime: "5",
-        authorId: "69a73dde25691bfab560ff4b",
+        authorId: session.user.id,
       },
     });
     return NextResponse.json(

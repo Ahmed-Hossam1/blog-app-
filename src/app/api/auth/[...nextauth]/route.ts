@@ -1,11 +1,21 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "../../../../prisma/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
-const handler = NextAuth({
+
+/* 
+Why this configuration?
+
+Instead of using the basic default `export const authOptions`,
+we explicitly type the configuration with `NextAuthOptions`.
+
+This allows us to extend the session type and safely include
+additional properties (like the user's Prisma `id`) in `session.user`.
+*/
+export const authOptions: NextAuthOptions = ({
   session: {
     strategy: "jwt",
   },
@@ -34,6 +44,8 @@ const handler = NextAuth({
           },
         });
         if (!user) return null;
+
+        // compare hashed password
         const hashedPassword = await bcrypt.compare(
           credentials?.password as string,
           user.password as string,
@@ -47,11 +59,45 @@ const handler = NextAuth({
           image: user.image,
         };
       },
+     
     }),
+    
   ],
+  callbacks: {
+  async jwt({ token, user }) {
+    if (user) {
+      token.id = user.id; // attach the Prisma user id  to the token
+    }
+
+    /* If the token has no id and the user has an email 
+     * attach the Prisma user id to the token
+     */
+     if (!token.id && token.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email },
+        });
+
+        if (dbUser) {
+          token.id = dbUser.id;
+        }
+      }
+
+    return token;
+  },
+
+  // Attach the Prisma user id to the session
+  async session({ session, token }) {
+    if (session.user) {
+      session.user.id = token.id as string;
+    }
+    return session;
+  },
+},
+
   pages: {
     signIn: "/sign-in",
   },
 });
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

@@ -89,6 +89,7 @@ export interface INewBlogForm {
 export interface ISessionResponse {
   data: {
     user: {
+      id : string;
       name: string;
       email: string;
       image: string | null;
