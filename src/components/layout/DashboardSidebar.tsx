@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { FiLogOut, FiSettings, FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
+import { signOut } from "next-auth/react";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -98,7 +99,7 @@ export default function DashboardSidebar() {
             Settings
           </Link>
 
-          <Button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 dark:text-red-400 transition-all duration-200 hover:bg-red-50 dark:hover:bg-red-500/10">
+          <Button onClick={()=> signOut() } className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 dark:text-red-400 transition-all duration-200 hover:bg-red-50 dark:hover:bg-red-500/10">
             <FiLogOut size={20} />
             Logout
           </Button>
