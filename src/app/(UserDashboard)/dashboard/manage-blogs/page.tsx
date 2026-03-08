@@ -8,9 +8,12 @@ import MyInput from "@/components/ui/Input";
 import { DashboardTabsData } from "@/data";
 import { MY_BLOGS_STATS } from "@/data/mockData";
 import { getAuthorBlogs } from "@/services";
+import { getServerSession } from "next-auth";
 
 const MyBlogs = async () => {
-  const authorBlogs = (await getAuthorBlogs("medosamsam919@gmail.com")) || [];
+  const session = await getServerSession();
+  const user = session?.user;
+  const authorBlogs = (await getAuthorBlogs(user?.email as string)) || [];
 
   return (
     <SectionWrapper>

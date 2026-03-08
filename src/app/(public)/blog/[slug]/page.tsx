@@ -1,8 +1,7 @@
 import CommentSection from "@/components/CommentSection";
 import SectionWrapper from "@/components/SectionWrapper";
-import { getBlogById } from "@/services";
 import { formatDate } from "@/lib";
-import { getServerSession } from "next-auth";
+import { getBlogById } from "@/services";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BsCalendar2Date } from "react-icons/bs";
@@ -12,10 +11,8 @@ import remarkGfm from "remark-gfm";
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const session = await getServerSession();
-  const user = session?.user;
-
   const blog = await getBlogById(slug);
+
   if (!blog) return notFound();
 
   return (
@@ -52,20 +49,20 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             </div>
           </div>
 
-          {/* ======= USER INFO ======= */}
+          {/* ======= Author INFO ======= */}
           <div className="flex flex-wrap items-center justify-between gap-6 border-b border-gray-200 px-8 py-6 dark:border-gray-700">
             {/* Author */}
             <div className="flex items-center gap-4">
               <Image
-                src={user?.image || "/default-image.png"}
-                alt={user?.name || "Author"}
+                src={blog?.author?.image || "/default-image.png"}
+                alt={blog?.author?.name || "Author"}
                 width={45}
                 height={45}
                 className="rounded-full ring-2 ring-primary/30"
               />
               <div>
                 <p className="text-sm font-medium dark:text-white">
-                  {user?.name || "Anonymous"}
+                  {blog.author?.name || "Anonymous"}
                 </p>
                 <p className="flex items-center gap-2 text-xs text-gray-500">
                   <BsCalendar2Date />

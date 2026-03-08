@@ -24,7 +24,6 @@ export default function CreateBlog() {
   /* ==== Config ==== */
   const content = formConfig?.content;
   const settings = formConfig?.settings;
-
   /* ==== Handlers ==== */
   const handleCreate = async (data: INewBlogForm) => {
     setIsLoading(true);

@@ -141,6 +141,11 @@ const Navbar = () => {
               className="relative "
               tabIndex={0}
               onBlur={(e) => {
+                /*
+                 When the element loses focus, check where focus moved:
+                 If it moved outside the menu → close it
+                 If it moved to an element inside (like Logout button) → keep it open
+                 */
                 const nextElementFocus = e.relatedTarget as Node | null;
                 if (!e.currentTarget.contains(nextElementFocus)) {
                   setOpenUserMenu(false);
@@ -160,14 +165,17 @@ const Navbar = () => {
                 />
               </Button>
 
+              {/* User Dropdown */}
               <div
                 className={`absolute right-0 mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
-                  ${openUserMenu
-                    ? "opacity-100 translate-y-0"
-                    : "pointer-events-none opacity-0 -translate-y-2"
+                  ${
+                    openUserMenu
+                      ? "opacity-100 translate-y-0"
+                      : "pointer-events-none opacity-0 -translate-y-2"
                   }`}
               >
                 <div className="p-2">
+                  {/* User info */}
                   <div className="px-3 py-2">
                     <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                       {data?.user?.name}
