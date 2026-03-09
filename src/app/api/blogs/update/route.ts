@@ -9,12 +9,12 @@ export async function PUT(req: NextRequest) {
     await prisma.blog.update({
       where: { id },
       data: {
-        title,
-        slug: title.split(" ").join("-"),
-        image,
-        content,
-        category,
-        status,
+        title: title && title,
+        slug: title && title.split(" ").join("-"),
+        category: category && category,
+        image: image && image,
+        status: status && status,
+        content: content && content,
       },
     });
     return NextResponse.json(
