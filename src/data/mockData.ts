@@ -8,12 +8,12 @@ import {
   HiOutlineHeart,
 } from "react-icons/hi2";
 
-import { StatItem } from "@/types";
+import { blogsState, performanceItems, StatItem } from "@/types";
 
-export const STATS_DATA: StatItem[] = [
+export const STATS_DATA: StatItem<performanceItems>[] = [
   {
-    key: "posts",
-    title: "Total Posts",
+    key: "blogs",
+    title: "Total blogs",
     icon: HiOutlineDocumentText,
     color: "#3b82f6",
   },
@@ -36,6 +36,35 @@ export const STATS_DATA: StatItem[] = [
     color: "#f59e0b",
   },
 ];
+
+
+export const MY_BLOGS_STATS : StatItem<blogsState>[] = [
+  {
+    title: "Total My Blogs",
+    icon: HiOutlineDocumentText,
+    key : "blogs",
+    color: "#3b82f6",
+  },
+  {
+    title: "Published",
+    icon: HiOutlineCheckCircle,
+    key : "PUBLISHED",
+    color: "#10b981",
+  },
+  {
+    title: "Archived",
+    icon: FaArchive,
+    key : "ARCHIVED",
+    color: "#f59e0b",
+  },
+  {
+    title: "Drafts",
+    icon: HiOutlineClock,
+    key : "DRAFT",
+    color: "#6366f1",
+  },
+];
+
 
 export const PERFORMANCE_DATA = [
   { name: "Jan", blogs: 10 },
@@ -116,33 +145,3 @@ export const RECENT_POSTS = [
   },
 ];
 
-export const MY_BLOGS_STATS = [
-  {
-    title: "Total My Blogs",
-    value: "24",
-    icon: HiOutlineDocumentText,
-    trend: { value: 2, isUp: true },
-    color: "#3b82f6",
-  },
-  {
-    title: "Published",
-    value: "18",
-    icon: HiOutlineCheckCircle,
-    trend: { value: 1, isUp: true },
-    color: "#10b981",
-  },
-  {
-    title: "Archived",
-    value: "6",
-    icon: FaArchive,
-    trend: { value: 0, isUp: true },
-    color: "#f59e0b",
-  },
-  {
-    title: "Drafts",
-    value: "6",
-    icon: HiOutlineClock,
-    trend: { value: 0, isUp: true },
-    color: "#6366f1",
-  },
-];

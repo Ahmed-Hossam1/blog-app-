@@ -1,3 +1,4 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import StatusCard from "@/components/cards/StatusCard";
 import MyBlogsTable from "@/components/dashboard/my-blogs/MyBlogsTable";
 import TabsCat from "@/components/dashboard/my-blogs/TabsCat";
@@ -7,13 +8,16 @@ import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import MyInput from "@/components/ui/Input";
 import { DashboardTabsData } from "@/data";
 import { MY_BLOGS_STATS } from "@/data/mockData";
+import { calculators, generateStatus } from "@/lib";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
 
 const MyBlogs = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const user = session?.user;
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
+
+  const stats = generateStatus(authorBlogs, MY_BLOGS_STATS , calculators);
 
   return (
     <SectionWrapper>
@@ -29,9 +33,9 @@ const MyBlogs = async () => {
 
       {/* Row 1: Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        {MY_BLOGS_STATS.map((stat, index) => (
+        {stats.map((stat) => (
           <StatusCard
-            key={index}
+            key={stat.key}
             title={stat.title}
             value={stat.value}
             icon={stat.icon}

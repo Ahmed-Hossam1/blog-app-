@@ -57,7 +57,7 @@ export default function DashboardSidebar() {
             priority
           />
         </Link>
-        </div>
+       </div>
 
         {/* Links */}
         <nav className="px-3 py-4 space-y-1">

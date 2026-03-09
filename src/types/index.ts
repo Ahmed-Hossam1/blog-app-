@@ -89,7 +89,7 @@ export interface INewBlogForm {
 export interface ISessionResponse {
   data: {
     user: {
-      id : string;
+      id: string;
       name: string;
       email: string;
       image: string | null;
@@ -100,8 +100,11 @@ export interface ISessionResponse {
 }
 
 // State Card Type
-export interface StatItem {
-  key: "posts" | "views" | "comments" | "likes";
+export type performanceItems = "blogs" | "views" | "comments" | "likes";
+export type blogsState = "blogs" | BlogStatus;
+
+export interface StatItem<T> {
+  key: T;
   title: string;
   icon: IconType;
   color: string;

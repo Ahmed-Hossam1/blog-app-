@@ -1,4 +1,5 @@
 import { IBlog, IComment, StatItem } from "@/types";
+import { BlogStatus } from "../../generated/prisma/enums";
 
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
@@ -52,25 +53,46 @@ export function buildCommentsTree(comments: IComment[]) {
   return root;
 }
 
-/**
- * This function generates a status array from blogs and statsData.
- * It will return an array of objects where each object has the key, title, icon, color, value, and trend.
- * The value is calculated based on the key of the statistics object.
- * @param blogs - An array of blogs
- * @param statsData - An array of objects containing key, title, icon, and color
- * @returns An array of objects containing key, title, icon, color, value, and trend
- */
-export function generateStatus(blogs: IBlog[], statsData: StatItem[]) {
-  const statistics = {
-    posts: blogs.length,
-    views: blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
-    comments: blogs.reduce((acc, blog) => acc + blog.comments.length, 0),
-    likes: 0,
-  };
+// This object stores functions used to calculate blog statistics.
+// Each key represents the name of a statistic (like blogs, views, comments).
+// The value of each key is a function.
+// That function receives the blogs array and returns a number
+// which represents the calculated value for that statistic.
 
+export const calculators: Record<string, (blogs: IBlog[]) => number> = {
+  blogs: (blogs: IBlog[]) => blogs.length,
+  views: (blogs: IBlog[]) =>
+    blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
+  comments: (blogs: IBlog[]) =>
+    blogs.reduce((acc, blog) => acc + blog.comments.length, 0),
+  likes: (blogs: IBlog[]) => 0,
+  PUBLISHED: (blogs: IBlog[]) =>
+    blogs.filter((blog) => blog.status === BlogStatus.PUBLISHED).length,
+  ARCHIVED: (blogs: IBlog[]) =>
+    blogs.filter((blog) => blog.status === BlogStatus.ARCHIVED).length,
+  DRAFT: (blogs: IBlog[]) =>
+    blogs.filter((blog) => blog.status === BlogStatus.DRAFT).length,
+};
+
+/**
+ * Generate statistics values based on the blogs data.
+ *
+ * The function loops through `statsData` and for each item it finds the
+ * corresponding calculator function using `item.key`. Then it executes
+ * that function to compute the value.
+* @param blogs - Array of blog objects
+ * @param statsData - Array describing which stats should be generated
+ * @param calculators - Object that maps stat keys to calculation functions
+ *
+ * @returns The same statsData array but with the `value` field calculated
+ */
+export function generateStatus<K extends string>(
+  blogs: IBlog[],
+  statsData: StatItem<K>[],
+  calculators: Record<string, (blogs: IBlog[]) => number>,
+) {
   return statsData.map((item) => ({
     ...item,
-    value: statistics[item.key],
+    value: calculators[item.key](blogs),
   }));
 }
-
