@@ -2,7 +2,7 @@ import { prisma } from "./prisma";
 
 async function main() {
   console.log("🌱 Seeding database...");
-
+  console.log("Blogs seeded successfully 🚀");
 }
 
 main()
