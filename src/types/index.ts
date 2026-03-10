@@ -24,6 +24,7 @@ export interface IBaseBlog {
   readTime: string;
   status: BlogStatus;
   views: number;
+  likes: number;
   createdAt: Date;
   author?: IAuthor;
 }

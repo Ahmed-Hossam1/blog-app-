@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../../generated/prisma"
 }
 
 datasource db {
@@ -26,6 +26,7 @@ model Blog {
   readTime String
   status  BlogStatus
   views   Int @default(0)
+  likes   Int @default(0)
   content   String
 
   createdAt  DateTime @default(now())

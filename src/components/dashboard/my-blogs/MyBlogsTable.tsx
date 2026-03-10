@@ -81,7 +81,6 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
   /* ================================
      Row Selection
   =================================*/
-
   /*
     Toggle blog selection
 
@@ -121,7 +120,6 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
   /* ================================
      Blog Status Actions
   =================================*/
-
   const updateBlogStatus = async (ids: string[], state: BlogStatus) => {
     if (ids.length === 0) return;
 

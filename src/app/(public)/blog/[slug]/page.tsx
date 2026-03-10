@@ -4,7 +4,7 @@ import { formatDate } from "@/lib";
 import { getBlogById } from "@/services";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BsCalendar2Date } from "react-icons/bs";
+import { BsCalendar2Date, BsHeart } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -81,6 +81,11 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               <span className="flex items-center gap-2">
                 <FaRegComment className="text-base" />
                 {blog.comments?.length ?? 0}
+              </span>
+
+              <span className="flex items-center gap-2">
+                <BsHeart />
+                {blog.likes}
               </span>
             </div>
           </div>
