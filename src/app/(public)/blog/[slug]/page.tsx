@@ -1,11 +1,13 @@
 import CommentSection from "@/components/CommentSection";
 import SectionWrapper from "@/components/SectionWrapper";
+import Button from "@/components/ui/Button";
 import { formatDate } from "@/lib";
 import { getBlogById } from "@/services";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BsCalendar2Date, BsHeart } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
+import { RiUserAddLine } from "react-icons/ri";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -69,6 +71,10 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                   {formatDate(blog.createdAt)}
                 </p>
               </div>
+              <Button className="flex items-center gap-2 rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-lg active:scale-95">
+                <RiUserAddLine className="text-lg" />
+                Follow
+              </Button>
             </div>
 
             {/* Stats */}
