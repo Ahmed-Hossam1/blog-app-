@@ -15,6 +15,7 @@ import { DashboardTabsData } from "@/data";
 import { tableHeaders } from "@/data/mockData";
 
 import { IBlog } from "@/types";
+import { BlogStatus } from "../../../../generated/prisma/enums";
 
 /* ================================
    Types
@@ -121,7 +122,7 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
      Blog Status Actions
   =================================*/
 
-  const handlePublish = async (ids: string[]) => {
+  const updateBlogStatus = async (ids: string[], state: BlogStatus) => {
     if (ids.length === 0) return;
 
     try {
@@ -130,70 +131,14 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
           method: "PUT",
           body: JSON.stringify({
             id: ids[i],
-            status: "PUBLISHED",
+            status: state,
           }),
         });
 
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
       }
-
-      toast.success(`blogs PUBLISHED successfully`);
-
-      setSelectedIds([]);
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-      toast.error((error as Error).message);
-    }
-  };
-
-  const handleArchive = async (ids: string[]) => {
-    if (ids.length === 0) return;
-
-    try {
-      for (let i = 0; i <= ids.length - 1; i++) {
-        const res = await fetch(`/api/blogs/update`, {
-          method: "PUT",
-          body: JSON.stringify({
-            id: ids[i],
-            status: "ARCHIVED",
-          }),
-        });
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-      }
-
-      toast.success(`blogs archived successfully`);
-
-      setSelectedIds([]);
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-      toast.error((error as Error).message);
-    }
-  };
-
-  const handleDraft = async (ids: string[]) => {
-    if (ids.length === 0) return;
-
-    try {
-      for (let i = 0; i <= ids.length - 1; i++) {
-        const res = await fetch(`/api/blogs/update`, {
-          method: "PUT",
-          body: JSON.stringify({
-            id: ids[i],
-            status: "DRAFT",
-          }),
-        });
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-      }
-
-      toast.success(`blogs DRAFT successfully`);
-
+      toast.success(`blog ${state} successfully`);
       setSelectedIds([]);
       router.refresh();
     } catch (error) {
@@ -245,21 +190,21 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
             }`}
           >
             <Button
-              onClick={() => handlePublish(selectedIds)}
+              onClick={() => updateBlogStatus(selectedIds, "PUBLISHED")}
               className="bg-emerald-500 cursor-pointer hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
             >
               Publish
             </Button>
 
             <Button
-              onClick={() => handleArchive(selectedIds)}
+              onClick={() => updateBlogStatus(selectedIds, "ARCHIVED")}
               className="bg-amber-500 cursor-pointer hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
             >
               Archive
             </Button>
 
             <Button
-              onClick={() => handleDraft(selectedIds)}
+              onClick={() => updateBlogStatus(selectedIds, "DRAFT")}
               className="bg-zinc-500 cursor-pointer hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
             >
               Draft
