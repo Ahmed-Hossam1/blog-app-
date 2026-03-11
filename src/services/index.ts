@@ -20,6 +20,7 @@ export const getBlogById = async (slug: string) => {
     where: { slug },
     include: {
       comments: true,
+      likes: true,
       author: {
         select: {
           name: true,

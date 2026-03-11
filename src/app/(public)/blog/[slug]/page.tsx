@@ -91,7 +91,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
               <span className="flex items-center gap-2">
                 <BsHeart />
-                {blog.likes}
+                {blog.likes?.length}
               </span>
             </div>
           </div>

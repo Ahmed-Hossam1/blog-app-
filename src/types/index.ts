@@ -24,7 +24,6 @@ export interface IBaseBlog {
   readTime: string;
   status: BlogStatus;
   views: number;
-  likes: number;
   createdAt: Date;
   author?: IAuthor;
 }
@@ -52,6 +51,14 @@ export interface IBlog extends IBaseBlog {
   content: string;
   comments: IComment[];
 }
+
+export interface ILike {
+  id: string;
+  userId: string;
+  blogId: string;
+  createdAt: Date;
+}
+
 export interface IField<T extends FieldValues> {
   id: string;
   name: Path<T>;
