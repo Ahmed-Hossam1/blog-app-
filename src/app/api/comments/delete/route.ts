@@ -3,11 +3,18 @@ import { prisma } from "../../../../prisma/prisma";
 
 export async function DELETE(request: Request) {
   const body = await request.json();
-  const { id , blogId} = body;
+  const { id, blogId } = body;
 
   try {
+    await prisma.comment.update({
+      where: { id },
+      data: {
+        comment: "Deleted Comment",
+      },
+    });
+    
     await prisma.blog.update({
-      where: { id : blogId },
+      where: { id: blogId },
       data: {
         commentsCount: {
           decrement: 1,
@@ -15,12 +22,6 @@ export async function DELETE(request: Request) {
       },
     });
 
-    await prisma.comment.update({
-      where: { id },
-      data: {
-        comment: "Deleted Comment",
-      },
-    });
     return NextResponse.json(
       { message: "Comment deleted successfully" },
       { status: 200 },

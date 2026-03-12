@@ -24,6 +24,15 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await prisma.blog.update({
+      where: { id: blogId },
+      data: {
+        commentsCount: {
+          increment: 1,
+        },
+      },
+    });
+
     return NextResponse.json("Comment created successfully", { status: 201 });
   } catch (error) {
     console.error("Error creating comment:", error);
