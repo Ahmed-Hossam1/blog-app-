@@ -44,6 +44,7 @@ export default function FollowButton({ followingId , isFollowing }: FollowButton
     <Button
       onClick={handleFollowToggle}
       isLoading={isLoading}
+      loadingText={isFollowing ? "Unfollowing..." : "Following..."}
       className={`
         flex items-center gap-2 rounded-full px-5 py-2 font-medium transition-all duration-300 active:scale-95
         ${

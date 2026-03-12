@@ -150,6 +150,7 @@ const CommentSection = ({ blog }: IProps) => {
           onClick={postReply}
           disabled={isLoading}
           isLoading={isLoading}
+          loadingText="Posting Reply..."
           className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
         >
           Post Reply
@@ -195,6 +196,7 @@ const CommentSection = ({ blog }: IProps) => {
           <Button
             disabled={isLoading}
             isLoading={isLoading}
+            loadingText="Posting Comment..."
             className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
           >
             Post Comment

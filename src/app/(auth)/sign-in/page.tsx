@@ -131,6 +131,7 @@ const Page = () => {
           <Button
             disabled={isLoading || authLoading}
             isLoading={isLoading}
+            loadingText="Signing In..."
             className={`w-full bg-baseInk  hover:bg-black transition  text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200`}
           >
             Sign In

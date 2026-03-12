@@ -1,9 +1,11 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/SectionWrapper";
 import FollowButton from "@/components/ui/FollowButton";
 import FollowersAvatarGroup from "@/components/ui/FollowersAvatarGroup";
-import { getAuthorById, getAuthorFollowers } from "@/services";
+import { getAuthorById, getAuthorFollowers, isUserFollowing } from "@/services";
 import { IBaseBlog } from "@/types";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,6 +14,9 @@ import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const author = await getAuthorById(id);
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
   if (!author) {
     notFound();
   }
@@ -19,6 +24,10 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const followersIds = author.followers.map((follower) => follower.followerId);
 
   const followers = await getAuthorFollowers(followersIds);
+
+  const isFollowing  = await isUserFollowing(id, `${userId}`)
+
+
 
   return (
     <SectionWrapper>
@@ -58,7 +67,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   total={followers.length}
                 />
                 <div className="mt-4">
-                  <FollowButton followingId={id} />
+                  <FollowButton followingId={id} isFollowing={isFollowing} />
                 </div>
               </div>
               {/* Social Links */}

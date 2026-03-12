@@ -116,25 +116,14 @@ export const getAuthorBlogs = async (userId: string) => {
   return blogsWithReplies;
 };
 
-export const isUserFollowing = async (
-  followerId: string,
-  followingId: string,
-) => {
-  if (!followerId || !followingId) {
-    return;
-  }
+export const isUserFollowing = async (followingId: string, followerId: string) => {
+  if (!followerId) return false;
 
-  const existingFollow = await prisma.follow.findUnique({
+  const count = await prisma.follow.count({
     where: {
-      followerId_followingId: {
-        followerId,
-        followingId,
-      },
+      followerId,
+      followingId,
     },
   });
-  if (!existingFollow) {
-    return false;
-  } else {
-    return true;
-  }
+  return count > 0;
 };

@@ -126,6 +126,7 @@ export default function CreateBlog() {
           bgColor="bg-primary hover:bg-primary/90"
           isLoading={isLoading}
           disabled={isLoading}
+          loadingText="Publishing..."
           className="px-5 py-2.5 text-sm text-white"
         >
           Publish

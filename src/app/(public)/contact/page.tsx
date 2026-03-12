@@ -173,6 +173,7 @@ const Page = () => {
               <Button
                 disabled={isLoading}
                 isLoading={isLoading}
+                loadingText="Sending..."
                 bgColor="bg-primary hover:bg-blue-800 text-white"
                 className="w-full py-3 font-semibold"
               >

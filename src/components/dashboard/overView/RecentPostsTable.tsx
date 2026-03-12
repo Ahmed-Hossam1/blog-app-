@@ -141,6 +141,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
             onClick={handleSubmit(updateBlog)}
             isLoading={isLoading}
             disabled={isLoading}
+            loadingText="Saving..."
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
           >
             Update
@@ -194,6 +195,7 @@ const RecentBlogsTable = ({ data }: IProps) => {
               onClick={deleteBlog}
               isLoading={isLoading}
               disabled={isLoading}
+              loadingText="Deleting..."
               className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md"
             >
               Delete
