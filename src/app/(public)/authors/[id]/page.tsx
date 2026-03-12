@@ -1,7 +1,7 @@
-import FollowButton from "@/components/ui/FollowButton";
-import FollowersAvatarGroup from "@/components/ui/FollowersAvatarGroup";
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/SectionWrapper";
+import FollowButton from "@/components/ui/FollowButton";
+import FollowersAvatarGroup from "@/components/ui/FollowersAvatarGroup";
 import { getAuthorById, getAuthorFollowers } from "@/services";
 import { IBaseBlog } from "@/types";
 import Image from "next/image";
@@ -16,9 +16,9 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     notFound();
   }
 
-const followersIds = author.followers.map((follower) => follower.followerId);
+  const followersIds = author.followers.map((follower) => follower.followerId);
 
-const followers = await getAuthorFollowers(followersIds);
+  const followers = await getAuthorFollowers(followersIds);
 
   return (
     <SectionWrapper>
@@ -53,9 +53,12 @@ const followers = await getAuthorFollowers(followersIds);
               </p>
 
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                <FollowersAvatarGroup followers={followers} total={followers.length} />
+                <FollowersAvatarGroup
+                  followers={followers}
+                  total={followers.length}
+                />
                 <div className="mt-4">
-                  <FollowButton authorId={id} />
+                  <FollowButton followingId={id} />
                 </div>
               </div>
               {/* Social Links */}

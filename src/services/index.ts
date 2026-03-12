@@ -77,7 +77,7 @@ export const getAuthorById = async (id: string) => {
 
 export const getAuthorFollowers = async (ids: string[]) => {
   const author = await prisma.user.findMany({
-    where: { id : { in: ids} },
+    where: { id: { in: ids } },
     select: {
       name: true,
       image: true,
@@ -114,4 +114,27 @@ export const getAuthorBlogs = async (userId: string) => {
   }));
 
   return blogsWithReplies;
+};
+
+export const isUserFollowing = async (
+  followerId: string,
+  followingId: string,
+) => {
+  if (!followerId || !followingId) {
+    return;
+  }
+
+  const existingFollow = await prisma.follow.findUnique({
+    where: {
+      followerId_followingId: {
+        followerId,
+        followingId,
+      },
+    },
+  });
+  if (!existingFollow) {
+    return false;
+  } else {
+    return true;
+  }
 };

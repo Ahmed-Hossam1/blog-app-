@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
 
   try {
     if (!userId) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "please signin first" }, { status: 401 });
     }
 
     const existLike = await prisma.like.findUnique({
