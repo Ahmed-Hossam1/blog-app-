@@ -57,6 +57,7 @@ export const getAuthorById = async (id: string) => {
       image: true,
       bio: true,
       title: true,
+      followers: { select: { followerId: true } },
       blogs: {
         include: {
           comments: true,
@@ -69,6 +70,17 @@ export const getAuthorById = async (id: string) => {
           },
         },
       },
+    },
+  });
+  return author;
+};
+
+export const getAuthorFollowers = async (ids: string[]) => {
+  const author = await prisma.user.findMany({
+    where: { id : { in: ids} },
+    select: {
+      name: true,
+      image: true,
     },
   });
   return author;

@@ -1,6 +1,8 @@
+import FollowButton from "@/components/ui/FollowButton";
+import FollowersAvatarGroup from "@/components/ui/FollowersAvatarGroup";
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/SectionWrapper";
-import { getAuthorById } from "@/services";
+import { getAuthorById, getAuthorFollowers } from "@/services";
 import { IBaseBlog } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +12,13 @@ import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const author = await getAuthorById(id);
-
   if (!author) {
     notFound();
   }
+
+const followersIds = author.followers.map((follower) => follower.followerId);
+
+const followers = await getAuthorFollowers(followersIds);
 
   return (
     <SectionWrapper>
@@ -47,6 +52,12 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique inventore quos consequuntur sint ut, sed repellendus hic odit eum repudiandae!"}
               </p>
 
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                <FollowersAvatarGroup followers={followers} total={followers.length} />
+                <div className="mt-4">
+                  <FollowButton authorId={id} />
+                </div>
+              </div>
               {/* Social Links */}
               <div className="mt-6 flex justify-center gap-5 md:justify-start">
                 <Link
