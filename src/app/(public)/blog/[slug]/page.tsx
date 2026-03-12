@@ -1,11 +1,12 @@
 import CommentSection from "@/components/CommentSection";
+import LikeButton from "@/components/LikeButton";
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { formatDate } from "@/lib";
 import { getBlogById } from "@/services";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BsCalendar2Date, BsHeart } from "react-icons/bs";
+import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import { RiUserAddLine } from "react-icons/ri";
 import Markdown from "react-markdown";
@@ -89,10 +90,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 {blog.commentsCount}
               </span>
 
-              <span className="flex items-center gap-2">
-                <BsHeart />
-                {blog.likesCount}
-              </span>
+            <LikeButton likes={blog.likesCount} blogId={blog.id} /> 
             </div>
           </div>
 
