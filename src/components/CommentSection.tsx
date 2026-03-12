@@ -53,14 +53,11 @@ const CommentSection = ({ blog }: IProps) => {
 
     try {
       setIsLoading(true);
-      const res = await fetch(
-        `/api/comments/create`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        },
-      );
+      const res = await fetch(`/api/comments/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
@@ -92,14 +89,11 @@ const CommentSection = ({ blog }: IProps) => {
 
     try {
       setIsLoading(true);
-      const res = await fetch(
-        `/api/comments/reply`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(reply),
-        },
-      );
+      const res = await fetch(`/api/comments/reply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reply),
+      });
 
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
@@ -121,16 +115,13 @@ const CommentSection = ({ blog }: IProps) => {
     }
   };
 
-  const handleDeleteComment = async (id: string) => {
+  const handleDeleteComment = async (id: string, blogId: string) => {
     try {
       setIsLoading(true);
-      const res = await fetch(
-        `/api/comments/delete`,
-        {
-          method: "DELETE",
-          body: JSON.stringify({ id }),
-        },
-      );
+      const res = await fetch(`/api/comments/delete`, {
+        method: "DELETE",
+        body: JSON.stringify({ id, blogId }),
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       toast.success(data.message);
@@ -145,10 +136,7 @@ const CommentSection = ({ blog }: IProps) => {
   /* ==== JSX ==== */
   return (
     <>
-      <MyModal
-        isOpen={isModalOpen}
-        close={closeModal}
-      >
+      <MyModal isOpen={isModalOpen} close={closeModal}>
         <div>Reply: @{replyToAuthorName}</div>
         <textarea
           rows={5}
@@ -172,7 +160,7 @@ const CommentSection = ({ blog }: IProps) => {
         <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
           Comments
           <span className="ml-3 inline-flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-bold px-2.5 py-0.5 rounded-full">
-            {blog.comments?.length || 0}
+            {blog.commentsCount}
           </span>
         </h3>
 

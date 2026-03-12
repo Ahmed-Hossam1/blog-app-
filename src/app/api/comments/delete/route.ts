@@ -3,9 +3,18 @@ import { prisma } from "../../../../prisma/prisma";
 
 export async function DELETE(request: Request) {
   const body = await request.json();
-  const { id } = body;
+  const { id , blogId} = body;
 
   try {
+    await prisma.blog.update({
+      where: { id : blogId },
+      data: {
+        commentsCount: {
+          decrement: 1,
+        },
+      },
+    });
+
     await prisma.comment.update({
       where: { id },
       data: {

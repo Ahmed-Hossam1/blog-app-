@@ -87,7 +87,7 @@ const Page = () => {
       <div className="bg-white shadow-md rounded-xl py-12 px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">
         {theme === "light" ? (
           <Image
-            src="/logo-black.svg"
+            src="/Light-Logo.png"
             alt="logo"
             width={150}
             height={40}
@@ -95,11 +95,11 @@ const Page = () => {
           />
         ) : (
           <Image
-            src="/logo-white.svg"
+            src="/Dark-Logo.png"
             alt="logo"
             width={150}
             height={40}
-            className="mx-auto mb-10"
+            className="mx-auto mb-10 mix-blend-screen"
           />
         )}
 

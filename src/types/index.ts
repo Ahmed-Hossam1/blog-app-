@@ -24,6 +24,8 @@ export interface IBaseBlog {
   readTime: string;
   status: BlogStatus;
   views: number;
+  likesCount : number;
+  commentsCount : number;
   createdAt: Date;
   author?: IAuthor;
 }
@@ -43,6 +45,7 @@ export interface IComment {
   comment: string;
   createdAt: Date;
   parentId?: string | null;
+  blogId: string;
   replies?: IComment[];
 }
 

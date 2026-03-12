@@ -86,12 +86,12 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
               <span className="flex items-center gap-2">
                 <FaRegComment className="text-base" />
-                {blog.comments?.length ?? 0}
+                {blog.commentsCount}
               </span>
 
               <span className="flex items-center gap-2">
                 <BsHeart />
-                {blog.likes?.length}
+                {blog.likesCount}
               </span>
             </div>
           </div>
