@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { FaUserPlus, FaUserCheck } from "react-icons/fa6";
-import Button from "./Button";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Button from "./ui/Button";
 
 interface FollowButtonProps {
   followingId: string;

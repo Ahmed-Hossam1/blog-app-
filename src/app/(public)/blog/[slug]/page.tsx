@@ -1,17 +1,22 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import BookMarkButton from "@/components/BookMarkButton";
 import CommentSection from "@/components/CommentSection";
+import FollowButton from "@/components/FollowButton";
 import LikeButton from "@/components/LikeButton";
 import SectionWrapper from "@/components/SectionWrapper";
-import Button from "@/components/ui/Button";
 import { formatDate } from "@/lib";
-import { getBlogById, isBlogBookmarked, isBlogLiked } from "@/services";
+import {
+  getBlogById,
+  isBlogBookmarked,
+  isBlogLiked,
+  isUserFollowing,
+} from "@/services";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
-import { RiUserAddLine } from "react-icons/ri";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -23,6 +28,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (!blog) return notFound();
 
+  const isFollowing = await isUserFollowing(blog.authorId, userId as string);
   const isLiked = await isBlogLiked(`${userId}`, blog.id);
   const isBookmarked = await isBlogBookmarked(`${userId}`, blog.id);
 
@@ -72,18 +78,23 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 className="rounded-full ring-2 ring-primary/30"
               />
               <div>
-                <p className="text-sm font-medium dark:text-white">
+                <Link
+                  href={`/authors/${blog.authorId}`}
+                  className="text-sm font-medium dark:text-white hover:text-primary-hover"
+                >
                   {blog.author?.name || "Anonymous"}
-                </p>
+                </Link>
+
                 <p className="flex items-center gap-2 text-xs text-gray-500">
                   <BsCalendar2Date />
                   {formatDate(blog.createdAt)}
                 </p>
               </div>
-              <Button className="flex items-center gap-2 rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-lg active:scale-95">
-                <RiUserAddLine className="text-lg" />
-                Follow
-              </Button>
+
+              <FollowButton
+                followingId={blog.authorId}
+                isFollowing={isFollowing}
+              />
             </div>
 
             {/* Stats */}
@@ -103,7 +114,11 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 blogId={blog.id}
                 isLiked={isLiked}
               />
-              <BookMarkButton  bookmarkNumber={blog.bookmarksCount} blogId={blog.id} isBookmarked={isBookmarked}/> 
+              <BookMarkButton
+                bookmarkNumber={blog.bookmarksCount}
+                blogId={blog.id}
+                isBookmarked={isBookmarked}
+              />
             </div>
           </div>
 

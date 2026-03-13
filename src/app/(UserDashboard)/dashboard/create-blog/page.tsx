@@ -6,7 +6,6 @@ import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { formConfig } from "@/constants/forms";
 import { INewBlogForm } from "@/types";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -25,7 +24,6 @@ export default function CreateBlog() {
   /* ==== Config ==== */
   const content = formConfig?.content;
   const settings = formConfig?.settings;
-  const session = useSession()
   /* ==== Handlers ==== */
   const handleCreate = async (data: INewBlogForm) => {
     setIsLoading(true);

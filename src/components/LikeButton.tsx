@@ -1,11 +1,10 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { BsHeart } from "react-icons/bs";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Button from "./ui/Button";
-import { useRouter } from "next/navigation";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useState } from "react";
 
 interface LikeButtonProps {
   likes: number;
@@ -21,7 +20,7 @@ const LikeButton = ({ likes, blogId, isLiked }: LikeButtonProps) => {
   async function addLike() {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/likes/toggle`, {
+      const res = await fetch(`/api/like`, {
         method: "POST",
         body: JSON.stringify({
           blogId,

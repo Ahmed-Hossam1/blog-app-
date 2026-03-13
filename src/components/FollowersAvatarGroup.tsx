@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import MyModal from "./MyModal";
+import MyModal from "./ui/MyModal";
 
 interface Follower {
   name: string;
@@ -56,23 +56,27 @@ export default function FollowersAvatarGroup({
             </div>
           ))}
           {totalCount > displayCount && (
-            <div
-              className="relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gray-50 text-xs font-semibold text-gray-600 dark:border-[#0f1014] dark:bg-gray-800 dark:text-gray-300 z-0 transition-all duration-300 group-hover/btn:-translate-y-1 shadow-sm group-hover/btn:shadow-md"
-            >
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gray-50 text-xs font-semibold text-gray-600 dark:border-[#0f1014] dark:bg-gray-800 dark:text-gray-300 z-0 transition-all duration-300 group-hover/btn:-translate-y-1 shadow-sm group-hover/btn:shadow-md">
               +{totalCount - displayCount}
             </div>
           )}
         </div>
         <div>
           <span className="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover/btn:text-blue-600 dark:group-hover/btn:text-blue-400 transition-colors">
-            <strong className="text-black dark:text-white text-base group-hover/btn:text-blue-600 dark:group-hover/btn:text-blue-400 transition-colors">{totalCount}</strong>{" "}
+            <strong className="text-black dark:text-white text-base group-hover/btn:text-blue-600 dark:group-hover/btn:text-blue-400 transition-colors">
+              {totalCount}
+            </strong>{" "}
             {totalCount === 1 ? "Follower" : "Followers"}
           </span>
         </div>
       </button>
 
       {/* Followers Modal */}
-      <MyModal title="Followers" isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
+      <MyModal
+        title="Followers"
+        isOpen={isModalOpen}
+        close={() => setIsModalOpen(false)}
+      >
         <div className="mt-4 max-h-[60vh] overflow-y-auto space-y-2 pr-2 custom-scrollbar">
           {followers.map((follower, index) => (
             <div
