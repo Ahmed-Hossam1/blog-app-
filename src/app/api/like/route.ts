@@ -3,13 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { blogId, userId } = body;
+  const { blogId, userId , authorId } = body;
 
   try {
     if (!userId) {
       return NextResponse.json({ message: "please signin first" }, { status: 401 });
     }
 
+    if(userId === authorId) {
+      return NextResponse.json({ message: "You can't like your own blog" }, { status: 400 });
+    }
+    
+    // check if like already exists
     const existLike = await prisma.like.findUnique({
       where: {
         // findUnique() and delete() only work with unique fields.

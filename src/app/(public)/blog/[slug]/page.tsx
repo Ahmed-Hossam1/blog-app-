@@ -91,9 +91,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 </p>
               </div>
 
-              {userId === blog.author.id ? (
-                ""
-              ) : (
+              {userId !== blog.author.id && (
                 <FollowButton
                   isFollowing={isFollowing}
                   followingId={blog.authorId}
@@ -113,18 +111,18 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 {blog.commentsCount}
               </span>
 
-              {userId === blog.authorId ? (
-                ""
-              ) : (
+              {userId !== blog.authorId && (
                 <>
                   <LikeButton
                     likes={blog.likesCount}
                     blogId={blog.id}
+                    authorId={blog.authorId}
                     isLiked={isLiked}
                   />
                   <BookMarkButton
                     bookmarkNumber={blog.bookmarksCount}
                     blogId={blog.id}
+                    authorId={blog.authorId}
                     isBookmarked={isBookmarked}
                   />
                 </>

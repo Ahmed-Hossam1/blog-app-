@@ -12,6 +12,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  if (followerId === followingId) {
+    return NextResponse.json(
+      { message: "You can't follow yourself" },
+      { status: 400 },
+    );
+  }
+
   try {
     const existingFollow = await prisma.follow.findUnique({
       where: {
@@ -47,6 +54,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Followed Author" }, { status: 201 });
   } catch (error) {
     console.log(error);
-   return NextResponse.json({ message: "Failed to follow" }, { status: 500 });
+    return NextResponse.json({ message: "Failed to follow" }, { status: 500 });
   }
 }

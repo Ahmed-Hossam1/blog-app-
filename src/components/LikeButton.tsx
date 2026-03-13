@@ -9,12 +9,13 @@ import Button from "./ui/Button";
 interface LikeButtonProps {
   likes: number;
   blogId: string;
+  authorId: string;
   isLiked: boolean;
 }
-const LikeButton = ({ likes, blogId, isLiked }: LikeButtonProps) => {
+const LikeButton = ({ likes, blogId, isLiked , authorId }: LikeButtonProps) => {
   const session = useSession();
   const router = useRouter();
-  const id = session.data?.user?.id;
+  const userId = session.data?.user?.id;
   const [isLoading, setIsLoading] = useState(false);
 
   async function addLike() {
@@ -24,7 +25,10 @@ const LikeButton = ({ likes, blogId, isLiked }: LikeButtonProps) => {
         method: "POST",
         body: JSON.stringify({
           blogId,
-          userId: id,
+          userId, 
+          // authorId is the id of the user who created the blog
+          // and being sent for to backend for security reasons
+          authorId
         }),
       });
       const data = await res.json();
