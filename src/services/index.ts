@@ -149,3 +149,33 @@ export const isBlogBookmarked = async (userId: string, blogId: string) => {
   });
   return count > 0;
 };
+
+export const getUserBookmarks = async (userId: string) => {
+  if (!userId) return [];
+  
+  const bookmarks = await prisma.bookMark.findMany({
+    where: { userId },
+    include: {
+      blog: {
+        include: {
+          comments: true,
+          author: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return bookmarks.map((bookmark) => ({
+    ...bookmark.blog,
+    replies: buildCommentsTree(bookmark.blog.comments),
+  }));
+};

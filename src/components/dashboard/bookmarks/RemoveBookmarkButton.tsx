@@ -1,26 +1,22 @@
 "use client";
+import Button from "@/components/ui/Button";
 import { useSession } from "next-auth/react";
-import Button from "./ui/Button";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useState } from "react";
+import { FaBookmark } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-interface BookMarkButtonProps {
-  bookmarkNumber: number;
+interface RemoveBookmarkButtonProps {
   blogId: string;
-  isBookmarked: boolean;
 }
-const BookMarkButton = ({
-  bookmarkNumber,
-  blogId,
-  isBookmarked,
-}: BookMarkButtonProps) => {
+
+const RemoveBookmarkButton = ({ blogId }: RemoveBookmarkButtonProps) => {
   const session = useSession();
   const router = useRouter();
   const id = session.data?.user?.id;
   const [isLoading, setIsLoading] = useState(false);
-  async function addToBookmark() {
+
+  async function removeBookmark() {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/bookmark`, {
@@ -33,8 +29,8 @@ const BookMarkButton = ({
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       router.refresh();
-      setIsLoading(false);
       toast.success(data.message);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
@@ -44,14 +40,13 @@ const BookMarkButton = ({
 
   return (
     <Button
-      onClick={addToBookmark}
+      onClick={removeBookmark}
       disabled={isLoading}
-      className={` flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-black/60 backdrop-blur-md rounded-full text-indigo-600 dark:text-indigo-400 hover:bg-white dark:hover:bg-black hover:text-indigo-700 dark:hover:text-indigo-300 hover:scale-105 transition-all shadow-md border border-gray-200 dark:border-white/10 `}
+      className={`p-2 bg-white/80 dark:bg-black/60 backdrop-blur-md rounded-full text-indigo-600 dark:text-indigo-400 hover:bg-white dark:hover:bg-black hover:text-indigo-700 dark:hover:text-indigo-300 hover:scale-110 shadow-lg border border-white/20 dark:border-white/10 `}
     >
-      {isBookmarked ? <FaBookmark size={16} /> : <FaRegBookmark size={16} />}{" "}
-      {bookmarkNumber}
+      <FaBookmark size={16} />
     </Button>
   );
 };
 
-export default BookMarkButton;
+export default RemoveBookmarkButton;
