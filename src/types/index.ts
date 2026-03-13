@@ -26,6 +26,7 @@ export interface IBaseBlog {
   views: number;
   likesCount: number;
   commentsCount: number;
+  bookmarksCount: number;
   createdAt: Date;
   author?: IAuthor;
 }

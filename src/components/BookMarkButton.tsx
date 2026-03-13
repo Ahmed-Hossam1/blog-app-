@@ -1,24 +1,27 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { BsHeart } from "react-icons/bs";
-import { toast } from "react-toastify";
 import Button from "./ui/Button";
 import { useRouter } from "next/navigation";
-import { FaHeart } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
-interface LikeButtonProps {
-  likes: number;
+interface BookMarkButtonProps {
+  bookmarkNumber: number;
   blogId: string;
-  isLiked: boolean;
+  isBookmarked: boolean;
 }
-const LikeButton = ({ likes, blogId, isLiked }: LikeButtonProps) => {
+const BookMarkButton = ({
+  bookmarkNumber,
+  blogId,
+  isBookmarked,
+}: BookMarkButtonProps) => {
   const session = useSession();
   const router = useRouter();
   const id = session.data?.user?.id;
 
-  async function addLike() {
+  async function addToBookmark() {
     try {
-      const res = await fetch(`/api/likes/toggle`, {
+      const res = await fetch(`/api/bookmark`, {
         method: "POST",
         body: JSON.stringify({
           blogId,
@@ -36,11 +39,10 @@ const LikeButton = ({ likes, blogId, isLiked }: LikeButtonProps) => {
   }
 
   return (
-    <Button onClick={addLike} className="flex items-center gap-2">
-      {isLiked ? <FaHeart className="text-red-500" /> : <BsHeart />}
-      {likes}
+    <Button onClick={addToBookmark} className="flex items-center gap-2">
+      {isBookmarked ? <FaBookmark /> : <FaRegBookmark />} {bookmarkNumber}
     </Button>
   );
 };
 
-export default LikeButton;
+export default BookMarkButton;

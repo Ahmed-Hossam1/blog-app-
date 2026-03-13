@@ -25,9 +25,12 @@ model Blog {
 
   readTime String
   status  BlogStatus
+
   views   Int @default(0)
   likesCount   Int @default(0)
   commentsCount Int @default(0)
+  bookmarksCount Int @default(0)
+
   content   String
 
   createdAt  DateTime @default(now())
@@ -35,8 +38,8 @@ model Blog {
   authorId String @db.ObjectId
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   likes Like[]
-
   comments Comment[]
+  bookMarks      BookMark[]
 }
 
 model Comment {
@@ -68,9 +71,11 @@ model User {
 
   blogs         Blog[]
   likes         Like[]
+  bookMarks      BookMark[]
   accounts      Account[]
   followers     Follow[] @relation("UserFollowers")
-  Following     Follow[] @relation("UserFollowing")
+  following     Follow[] @relation("UserFollowing")
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -98,6 +103,22 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+
+model Follow {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  followerId   String   @db.ObjectId // the user who clicked follow
+  follower     User     @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+
+  followingId  String   @db.ObjectId // the user being followed
+  following    User     @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+
 model Like  {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -112,16 +133,16 @@ model Like  {
   @@unique([userId, blogId]) // unique to prevent user make 100 like to same blog
 }
 
-model Follow {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+model BookMark  {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
 
-  followerId   String   @db.ObjectId // the user who clicked follow
-  follower     User     @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
 
-  followingId  String   @db.ObjectId // the user being followed
-  following    User     @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+  blogId String @db.ObjectId
+  blog Blog @relation(fields: [blogId], references: [id],onDelete: Cascade)
 
-  createdAt    DateTime @default(now())
-
-  @@unique([followerId, followingId])
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, blogId]) // unique to prevent user make 100 Bookmark to same blog
 }

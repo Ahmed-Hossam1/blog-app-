@@ -1,9 +1,12 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import BookMarkButton from "@/components/BookMarkButton";
 import CommentSection from "@/components/CommentSection";
 import LikeButton from "@/components/LikeButton";
 import SectionWrapper from "@/components/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { formatDate } from "@/lib";
-import { getBlogById } from "@/services";
+import { getBlogById, isBlogBookmarked, isBlogLiked } from "@/services";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BsCalendar2Date } from "react-icons/bs";
@@ -15,8 +18,13 @@ import remarkGfm from "remark-gfm";
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const blog = await getBlogById(slug);
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
 
   if (!blog) return notFound();
+
+  const isLiked = await isBlogLiked(`${userId}`, blog.id);
+  const isBookmarked = await isBlogBookmarked(`${userId}`, blog.id);
 
   return (
     <SectionWrapper>
@@ -90,7 +98,12 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 {blog.commentsCount}
               </span>
 
-            <LikeButton likes={blog.likesCount} blogId={blog.id} /> 
+              <LikeButton
+                likes={blog.likesCount}
+                blogId={blog.id}
+                isLiked={isLiked}
+              />
+              <BookMarkButton  bookmarkNumber={blog.bookmarksCount} blogId={blog.id} isBookmarked={isBookmarked}/> 
             </div>
           </div>
 

@@ -127,3 +127,25 @@ export const isUserFollowing = async (followingId: string, followerId: string) =
   });
   return count > 0;
 };
+export const isBlogLiked = async (userId: string, blogId: string) => {
+  if (!userId) return false;
+
+  const count = await prisma.like.count({
+    where: {
+      userId,
+      blogId,
+    },
+  });
+  return count > 0;
+};
+export const isBlogBookmarked = async (userId: string, blogId: string) => {
+  if (!userId) return false;
+
+  const count = await prisma.bookMark.count({
+    where: {
+      userId,
+      blogId,
+    },
+  });
+  return count > 0;
+};
