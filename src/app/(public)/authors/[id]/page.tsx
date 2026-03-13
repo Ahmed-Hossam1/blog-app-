@@ -25,7 +25,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const followers = await getAuthorFollowers(followersIds);
 
-  const isFollowing = await isUserFollowing(id, `${userId}`);
+  const isFollowing = await isUserFollowing(id, userId as string);
 
   return (
     <SectionWrapper>
@@ -59,15 +59,25 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique inventore quos consequuntur sint ut, sed repellendus hic odit eum repudiandae!"}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                <FollowersAvatarGroup
-                  followers={followers}
-                  total={followers.length}
-                />
-                <div className="mt-4">
-                  <FollowButton followingId={id} isFollowing={isFollowing} />
+              <div className="mt-6 flex flex-wrap items-center gap-6">
+                {/* Followers */}
+                <div className="flex items-center gap-3">
+                  <FollowersAvatarGroup
+                    followers={followers}
+                    total={followers.length}
+                  />
                 </div>
+
+                {/* Follow Button */}
+                {userId !== author.id && (
+                  <FollowButton
+                    isFollowing={isFollowing}
+                    followingId={author.id}
+                  />
+                )}
               </div>
+
+              
               {/* Social Links */}
               <div className="mt-6 flex justify-center gap-5 md:justify-start">
                 <Link

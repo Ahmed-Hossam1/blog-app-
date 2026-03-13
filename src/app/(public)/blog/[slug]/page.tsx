@@ -29,8 +29,8 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   if (!blog) return notFound();
 
   const isFollowing = await isUserFollowing(blog.authorId, userId as string);
-  const isLiked = await isBlogLiked(`${userId}`, blog.id);
-  const isBookmarked = await isBlogBookmarked(`${userId}`, blog.id);
+  const isLiked = await isBlogLiked(userId as string, blog.id);
+  const isBookmarked = await isBlogBookmarked(userId as string, blog.id);
 
   return (
     <SectionWrapper>
@@ -91,10 +91,14 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 </p>
               </div>
 
-              <FollowButton
-                followingId={blog.authorId}
-                isFollowing={isFollowing}
-              />
+              {userId === blog.author.id ? (
+                ""
+              ) : (
+                <FollowButton
+                  isFollowing={isFollowing}
+                  followingId={blog.authorId}
+                />
+              )}
             </div>
 
             {/* Stats */}
@@ -109,16 +113,22 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 {blog.commentsCount}
               </span>
 
-              <LikeButton
-                likes={blog.likesCount}
-                blogId={blog.id}
-                isLiked={isLiked}
-              />
-              <BookMarkButton
-                bookmarkNumber={blog.bookmarksCount}
-                blogId={blog.id}
-                isBookmarked={isBookmarked}
-              />
+              {userId === blog.authorId ? (
+                ""
+              ) : (
+                <>
+                  <LikeButton
+                    likes={blog.likesCount}
+                    blogId={blog.id}
+                    isLiked={isLiked}
+                  />
+                  <BookMarkButton
+                    bookmarkNumber={blog.bookmarksCount}
+                    blogId={blog.id}
+                    isBookmarked={isBookmarked}
+                  />
+                </>
+              )}
             </div>
           </div>
 

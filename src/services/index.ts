@@ -23,6 +23,7 @@ export const getBlogById = async (slug: string) => {
       likes: true,
       author: {
         select: {
+          id : true,
           name: true,
           image: true,
         },
@@ -53,6 +54,7 @@ export const getAuthorById = async (id: string) => {
   const author = await prisma.user.findUnique({
     where: { id },
     select: {
+      id: true,
       name: true,
       image: true,
       bio: true,
