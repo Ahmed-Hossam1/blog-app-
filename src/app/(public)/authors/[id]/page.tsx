@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/SectionWrapper";
 import FollowersAvatarGroup from "@/components/FollowersAvatarGroup";
-import { getAuthorById, getAuthorFollowers, isUserFollowing } from "@/services";
+import { getAuthorProfile, getFollowersBasicInfo, isUserFollowing } from "@/services";
 import { IBaseBlog } from "@/types";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import FollowButton from "@/components/FollowButton";
 
 const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const author = await getAuthorById(id);
+  const author = await getAuthorProfile(id);
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
@@ -23,7 +23,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const followersIds = author.followers.map((follower) => follower.followerId);
 
-  const followers = await getAuthorFollowers(followersIds);
+  const followers = await getFollowersBasicInfo(followersIds);
 
   const isFollowing = await isUserFollowing(id, userId as string);
 

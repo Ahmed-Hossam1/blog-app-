@@ -1,3 +1,4 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import StatusCard from "@/components/cards/StatusCard";
 import Charts from "@/components/dashboard/overView/Charts";
 import RecentBlogsTable from "@/components/dashboard/overView/RecentPostsTable";
@@ -5,17 +6,16 @@ import TopBlogs from "@/components/dashboard/overView/TopPosts";
 import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
-import { getAuthorBlogs } from "@/services";
 import { calculators, generateStatus } from "@/lib";
+import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 const OverView = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
-  const stats = generateStatus(authorBlogs, STATS_DATA , calculators);
+  const stats = generateStatus(authorBlogs, STATS_DATA, calculators);
 
   return (
     <SectionWrapper>

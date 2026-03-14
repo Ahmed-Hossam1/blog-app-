@@ -65,7 +65,7 @@ export const calculators: Record<string, (blogs: IBlog[]) => number> = {
     blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
   comments: (blogs: IBlog[]) =>
     blogs.reduce((acc, blog) => acc + blog.comments.length, 0),
-  likes: (blogs: IBlog[]) => blogs.reduce((acc, blog) => acc + blog.likes, 0), 
+  likes: (blogs: IBlog[]) => blogs.reduce((acc, blog) => acc + blog.likes, 0),
   PUBLISHED: (blogs: IBlog[]) =>
     blogs.filter((blog) => blog.status === BlogStatus.PUBLISHED).length,
   ARCHIVED: (blogs: IBlog[]) =>

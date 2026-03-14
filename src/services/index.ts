@@ -23,7 +23,7 @@ export const getBlogById = async (slug: string) => {
       likes: true,
       author: {
         select: {
-          id : true,
+          id: true,
           name: true,
           image: true,
         },
@@ -50,13 +50,15 @@ export const getAuthors = async () => {
   return authors;
 };
 
-export const getAuthorById = async (id: string) => {
+export const getAuthorProfile = async (id: string) => {
   const author = await prisma.user.findUnique({
     where: { id },
     select: {
       id: true,
       name: true,
+      email: true,
       image: true,
+
       bio: true,
       title: true,
       followers: { select: { followerId: true } },
@@ -77,7 +79,22 @@ export const getAuthorById = async (id: string) => {
   return author;
 };
 
-export const getAuthorFollowers = async (ids: string[]) => {
+export const getAuthorBasicInfo = async (id: string) => {
+  const author = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      image: true,
+      bio: true,
+      title: true,
+    },
+  });
+  return author;
+};
+
+export const getFollowersBasicInfo = async (ids: string[]) => {
   const author = await prisma.user.findMany({
     where: { id: { in: ids } },
     select: {
@@ -118,7 +135,10 @@ export const getAuthorBlogs = async (userId: string) => {
   return blogsWithReplies;
 };
 
-export const isUserFollowing = async (followingId: string, followerId: string) => {
+export const isUserFollowing = async (
+  followingId: string,
+  followerId: string,
+) => {
   if (!followerId) return false;
 
   const count = await prisma.follow.count({
@@ -154,7 +174,7 @@ export const isBlogBookmarked = async (userId: string, blogId: string) => {
 
 export const getUserBookmarks = async (userId: string) => {
   if (!userId) return [];
-  
+
   const bookmarks = await prisma.bookMark.findMany({
     where: { userId },
     include: {

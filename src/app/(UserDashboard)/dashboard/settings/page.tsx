@@ -1,11 +1,19 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import SectionWrapper from "@/components/SectionWrapper";
+import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import MyInput from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
+import { getAuthorBasicInfo } from "@/services";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { FiCamera, FiMail, FiLock, FiBell, FiTrash2, FiUser } from "react-icons/fi";
-import SectionWrapper from "@/components/SectionWrapper";
+import { FiBell, FiCamera, FiLock, FiMail, FiTrash2, FiUser } from "react-icons/fi";
 
-const SettingsPage = () => {
+const SettingsPage = async () => {
+    const session = await getServerSession(authOptions)
+    const userId = session?.user?.id
+    const author = await getAuthorBasicInfo(userId as string)
+
+
     return (
         <SectionWrapper>
             <DashboardHeadingTitle
@@ -42,17 +50,19 @@ const SettingsPage = () => {
                     <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Display Name</label>
-                            <MyInput placeholder="John Doe" />
+                            <MyInput placeholder="John Doe" value={author?.name} disabled />
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Job Title</label>
-                            <MyInput placeholder="Software Engineer" />
+                            <MyInput placeholder="Software Engineer" value={author?.title as string} disabled />
                         </div>
                         <div className="md:col-span-2 space-y-2">
                             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Bio</label>
                             <textarea
                                 className="w-full h-32 border border-gray dark:border-gray-600 rounded-md p-3 focus:outline-none focus:border-primary dark:bg-transparent dark:text-white transition"
                                 placeholder="Tell us a bit about yourself..."
+                                value={author?.bio as string}
+                                disabled
                             />
                         </div>
                     </div>
@@ -69,7 +79,7 @@ const SettingsPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 text-primary">
                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
-                        <MyInput type="email" placeholder="john@example.com" />
+                        <MyInput type="email" placeholder="john@example.com" value={author?.email as string} disabled />
                     </div>
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">Password</label>
