@@ -12,10 +12,10 @@ interface IProps {
 const PaginatedBlogs = ({ data: blogs }: IProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const limit = 4;
+  const limit = 9;
   const totalPages = Math.ceil(blogs.length / limit);
   const firstIndex = (currentPage - 1) * limit;
-  const lastIndex = firstIndex + currentPage * limit;
+  const lastIndex = firstIndex + limit;
   const slicedData = blogs.slice(firstIndex, lastIndex);
   return (
     <>
