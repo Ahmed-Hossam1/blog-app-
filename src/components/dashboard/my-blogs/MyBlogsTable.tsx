@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Button } from "@headlessui/react";
 import { toast } from "react-toastify";
@@ -40,7 +40,7 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   /* ================================
      Filtering
   =================================*/
@@ -123,6 +123,7 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
   const updateBlogStatus = async (ids: string[], state: BlogStatus) => {
     if (ids.length === 0) return;
 
+    setIsLoading(true);
     try {
       for (let i = 0; i <= ids.length - 1; i++) {
         const res = await fetch(`/api/blogs/update`, {
@@ -136,23 +137,50 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
       }
-      toast.success(`blog ${state} successfully`);
-      setSelectedIds([]);
       router.refresh();
+      toast.success(`blog ${state} successfully`);
+      setIsLoading(false);
+      setSelectedIds([]);
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
+      setIsLoading(false);
     }
   };
 
-  /* ================================
-     Render
-  =================================*/
+  if (isLoading) {
+    return (
+      <div className="w-full space-y-8 animate-pulse">
+        {/* Table Skeleton */}
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="h-14 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50"></div>
+          <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className="px-6 py-5 flex items-center justify-between"
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-6 w-1/3">
+                    <div className="h-4 w-4 bg-zinc-200 dark:bg-zinc-800 rounded shrink-0"></div>
+                    <div className="h-5 w-full bg-zinc-200 dark:bg-zinc-800 rounded"></div>
+                  </div>
+                  <div className="h-6 w-20 bg-zinc-200 dark:bg-zinc-800 rounded-md"></div>
+                  <div className="h-5 w-24 bg-zinc-200 dark:bg-zinc-800 rounded-full"></div>
+                  <div className="hidden md:block h-5 w-24 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
+                  <div className="hidden md:block h-5 w-12 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  /* ========= Render ============*/
   return (
     <>
-      {/* ================================
-          Filters + Actions
-      ================================= */}
+      {/* ====== Filters + Actions ====== */}
       <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 mb-8 space-y-6">
         {/* Tabs */}
         <div className="flex flex-wrap items-center gap-3">
