@@ -109,11 +109,11 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
       [1,2] -> [1,2,3]
   */
   const handleSelectAll = () => {
-    const allIds = authorBlogs.map((blog) => blog.id);
+    const allIds = slicedData.map((blog) => blog.id);
     if (selectedIds.length === allIds.length) {
       setSelectedIds([]);
     } else {
-      setSelectedIds(authorBlogs.map((blog) => blog.id));
+      setSelectedIds(slicedData.map((blog) => blog.id));
     }
   };
 
