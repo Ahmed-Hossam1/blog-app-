@@ -15,7 +15,7 @@ const Footer = () => {
               href={"https://my-portfolio-mu-three-82.vercel.app/"}
               className="font-medium mx-1 text-baseInk dark:text-white hover:text-blue-800 dark:hover:text-blue-400"
             >
-              AhmedHossam.com
+              AhmedHossam
             </Link>
 
           </p>

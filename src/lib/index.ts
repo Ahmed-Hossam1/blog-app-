@@ -64,8 +64,9 @@ export const calculators: Record<string, (blogs: IBlog[]) => number> = {
   views: (blogs: IBlog[]) =>
     blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
   comments: (blogs: IBlog[]) =>
-    blogs.reduce((acc, blog) => acc + blog.comments.length, 0),
-  likes: (blogs: IBlog[]) => blogs.reduce((acc, blog) => acc + blog.likes, 0),
+    blogs.reduce((acc, blog) => acc + ( blog.comments?.length || 0), 0),
+  likes: (blogs: IBlog[]) =>
+    blogs.reduce((acc, blog) => acc + (blog.likes?.length || 0), 0),
   PUBLISHED: (blogs: IBlog[]) =>
     blogs.filter((blog) => blog.status === BlogStatus.PUBLISHED).length,
   ARCHIVED: (blogs: IBlog[]) =>
@@ -80,7 +81,7 @@ export const calculators: Record<string, (blogs: IBlog[]) => number> = {
  * The function loops through `statsData` and for each item it finds the
  * corresponding calculator function using `item.key`. Then it executes
  * that function to compute the value.
-* @param blogs - Array of blog objects
+ * @param blogs - Array of blog objects
  * @param statsData - Array describing which stats should be generated
  * @param calculators - Object that maps stat keys to calculation functions
  *

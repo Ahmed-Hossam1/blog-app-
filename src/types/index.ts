@@ -59,6 +59,7 @@ export interface IComment {
 
 export interface IBlog extends IBaseBlog {
   replies?: IComment[];
+  likes: ILike[];
   content: string;
   comments: IComment[];
 }

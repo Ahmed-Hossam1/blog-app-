@@ -31,7 +31,7 @@ export const STATS_DATA: StatItem<performanceItems>[] = [
   },
   {
     key: "comments",
-    title: "New Comments",
+    title: "Total Comments",
     icon: HiOutlineChatBubbleLeft,
     color: "#f59e0b",
   },

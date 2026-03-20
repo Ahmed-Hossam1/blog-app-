@@ -114,6 +114,7 @@ export const getAuthorBlogs = async (userId: string) => {
       blogs: {
         include: {
           comments: true,
+          likes: true,
           author: {
             select: {
               id: true,
