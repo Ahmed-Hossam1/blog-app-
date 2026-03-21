@@ -5,8 +5,11 @@ import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 type ExploreCardProps = Pick<
   IBaseBlog,
-  "title" | "image" | "category" | "views" | "readTime" | "createdAt" | "author"
-> & { comments?: { id: string }[] };
+  "title" | "image" | "category" | "views" | "readTime" | "createdAt"
+> & { 
+  comments?: { id: string }[];
+  author?: { name: string; image: string | null };
+};
 
 const ExploreCard = ({ title, image, category, views, readTime, createdAt, comments, author }: ExploreCardProps) => {
   return (

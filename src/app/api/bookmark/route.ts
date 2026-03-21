@@ -1,17 +1,23 @@
 import { prisma } from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
+  // ===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json(
+      { message: "Please sign in first" },
+      { status: 401 },
+    );
+  }
+  const userId = session.user.id;
+
   const body = await req.json();
-  const { blogId, authorId, userId } = body;
+  const { blogId, authorId } = body;
 
   try {
-    if (!userId) {
-      return NextResponse.json(
-        { message: "please signin first" },
-        { status: 401 },
-      );
-    }
 
     if (userId === authorId) {
       return NextResponse.json(

@@ -1,16 +1,21 @@
 import { prisma } from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { followerId, followingId } = body;
-
-  if (!followerId) {
+  // ===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
     return NextResponse.json(
       { message: "Please sign in first" },
       { status: 401 },
     );
   }
+  const followerId = session.user.id;
+
+  const body = await req.json();
+  const { followingId } = body;
 
   // ===== Prevent Self-Follow =====
 
