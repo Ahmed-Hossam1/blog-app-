@@ -63,7 +63,7 @@ const Page = () => {
       const token = await tokenRes.json();
       if (!tokenRes.ok) throw new Error(token.message);
       console.log(token);
-
+      
       const verifyRes = await fetch(`/api/email/verify-email`, {
         method: "POST",
         body: JSON.stringify({ name : data.name, email: data.email, verificationLink: `http://localhost:3000/verify-token?token=${token.token}` }),
