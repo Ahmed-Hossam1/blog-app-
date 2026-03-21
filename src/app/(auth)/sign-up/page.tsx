@@ -3,7 +3,6 @@
 import FormField from "@/components/FormField";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
-import { generateToken } from "@/lib/token";
 import { signUpSchema } from "@/schema/schema";
 import { ISignUpForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,7 +10,6 @@ import { signIn } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
@@ -31,29 +29,21 @@ const Page = () => {
   const [authLoading, setAuthLoading] = useState<boolean>(false);
   const { theme } = useTheme();
 
-  /* ==== Config ==== */
-  const singUpForm = formConfig?.signUp ?? [];
+  // ===== Config =====
+  const signUpFormFields = formConfig?.signUp ?? [];
 
-  /* ==== Handlers ==== */
+  // ===== Handlers =====
   const onSubmit: SubmitHandler<ISignUpForm> = async (data) => {
     if (!data) return;
     try {
       setIsLoading(true);
+      // create user
       const res = await fetch(`/api/auth/sign-up`, {
         method: "POST",
         body: JSON.stringify(data),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
-
-      // call signIn function to make JWT
-      const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
-      if (result?.error) throw new Error("failed to create user");
-      toast.success("user created successfully");
 
       // Generate token
       const tokenRes = await fetch(`/api/auth/token`, {
@@ -62,22 +52,17 @@ const Page = () => {
       });
       const token = await tokenRes.json();
       if (!tokenRes.ok) throw new Error(token.message);
-      console.log(token);
       
-      const verifyRes = await fetch(`/api/email/verify-email`, {
+      // ===== Send verification email =====
+      const verifyRes = await fetch(`/api/auth/verify-email`, {
         method: "POST",
         body: JSON.stringify({ name : data.name, email: data.email, verificationLink: `http://localhost:3000/verify-token?token=${token.token}` }),
       });
       const verify = await verifyRes.json();
       if (!verifyRes.ok) throw new Error(verify.message);
-      console.log(verify);
-
-
-
-
-      // setTimeout(() => {
-      //   redirect("/");
-      // }, 1500);
+      toast.success("email sent successfully check your email inbox or spam to verify your account",{
+        autoClose : false
+      });
     } catch (error) {
       setIsLoading(false);
       toast.error((error as Error).message);
@@ -156,7 +141,7 @@ const Page = () => {
           className="flex flex-col space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <FormField Fields={singUpForm} register={register} errors={errors} />
+          <FormField Fields={signUpFormFields} register={register} errors={errors} />
 
           <Button
             disabled={isLoading || authLoading}

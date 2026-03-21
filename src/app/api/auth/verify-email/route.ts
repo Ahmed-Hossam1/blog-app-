@@ -7,19 +7,25 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, email, verificationLink } = body;
+
   try {
-    const response = await resend.emails.send({
+    // ===== Send Verification Email =====
+    await resend.emails.send({
       from: "Blogy <onboarding@resend.dev>",
       to: email,
-      subject: "verify your email",
+      subject: "Verify your email",
       react: EmailTemplate({ name, verificationLink }),
     });
 
-    console.log("RESEND RESPONSE:", response);
-
-    return NextResponse.json(response);
+    return NextResponse.json(
+      { message: "Verification email sent successfully" },
+      { status: 200 },
+    );
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ error }, { status: 500 });
+    console.error(error);
+    return NextResponse.json(
+      { message: "Failed to send verification email" },
+      { status: 500 },
+    );
   }
 }

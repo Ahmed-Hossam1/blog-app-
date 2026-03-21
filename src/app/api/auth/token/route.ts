@@ -5,14 +5,22 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { email } = body;
 
+  // ===== Validate Email Presence =====
   if (!email)
-    return NextResponse.json("bad request email not provided", { status: 400 });
+    return NextResponse.json(
+      { message: "Email is required" },
+      { status: 400 },
+    );
 
   try {
+    // ===== Generate Verification Token =====
     const verificationToken = await generateToken(email);
     return NextResponse.json(verificationToken, { status: 200 });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json("Something went wrong", { status: 500 });
+    console.error(error);
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 },
+    );
   }
 }

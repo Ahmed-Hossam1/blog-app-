@@ -2,23 +2,24 @@ import { ISignUpForm } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
 import bcrypt from "bcryptjs";
+
 export async function POST(req: NextRequest) {
   try {
-    // Parse the request body
+    // ===== Parse Request Body =====
     const body: ISignUpForm = await req.json();
     const { name, email, password } = body;
-    const existEmail = await prisma.user.findUnique({
+    const existingUser = await prisma.user.findUnique({
       where: { email },
     });
 
-    // check if email already exists
-    if (existEmail)
+    // ===== Check If Email Already Exists =====
+    if (existingUser)
       return NextResponse.json(
         { message: "Email already exists" },
         { status: 409 },
       );
 
-    // hash password
+    // ===== Hash Password & Create User =====
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
@@ -29,9 +30,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(newUser, { status: 201 });
+    return NextResponse.json(
+      { message: "Account created successfully", userId: newUser.id },
+      { status: 201 },
+    );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },

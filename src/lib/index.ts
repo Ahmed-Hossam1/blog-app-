@@ -1,10 +1,14 @@
 import { IBlog, IComment, StatItem } from "@/types";
 import { BlogStatus } from "../../generated/prisma/enums";
 
+// ===== Text Utilities =====
+
+/** Truncates text to 40 characters with ellipsis */
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
 }
 
+/** Formats a Date or ISO string into a human-readable date (e.g. "Mar 12, 2026") */
 export function formatDate(date: Date | string) {
   const d = new Date(date);
   return d.toLocaleDateString("en-US", {
@@ -14,29 +18,16 @@ export function formatDate(date: Date | string) {
   });
 }
 
+// ===== Comment Tree Builder =====
+
 /**
- * This function takes the flat array that back from prisma
- * and convert it to a tree structure because prisma return flat array like
- * [
- *   { id: 1, parentId: null },
- *   { id: 2, parentId: 1 },
- * ]
+ * Converts Prisma's flat comments array into a nested tree structure.
  *
- * and we need to convert it to a tree structure like
- * [
- *   { id: 1, parentId: null, replies: [
- *     { id: 2, parentId: 1, replies: [] },
- *   ] },
- *   { id: 2, parentId: 1, replies: [] },
- * ]
- * ]
- *
- * @param comments - The flat array that back from prisma
- * @return The tree structure of comments
+ * Prisma returns:  [{ id: 1, parentId: null }, { id: 2, parentId: 1 }]
+ * This returns:    [{ id: 1, replies: [{ id: 2, replies: [] }] }]
  */
 export function buildCommentsTree(comments: IComment[]) {
   const root: IComment[] = [];
-  // add empty replies array in beginning to each comment
   comments.forEach((c) => (c.replies = []));
 
   comments.forEach((comment) => {
@@ -53,18 +44,18 @@ export function buildCommentsTree(comments: IComment[]) {
   return root;
 }
 
-// This object stores functions used to calculate blog statistics.
-// Each key represents the name of a statistic (like blogs, views, comments).
-// The value of each key is a function.
-// That function receives the blogs array and returns a number
-// which represents the calculated value for that statistic.
+// ===== Blog Statistics Calculators =====
 
+/**
+ * Maps stat keys (e.g. "blogs", "views", "likes") to functions
+ * that compute the corresponding value from a blogs array.
+ */
 export const calculators: Record<string, (blogs: IBlog[]) => number> = {
   blogs: (blogs: IBlog[]) => blogs.length,
   views: (blogs: IBlog[]) =>
     blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
   comments: (blogs: IBlog[]) =>
-    blogs.reduce((acc, blog) => acc + ( blog.comments?.length || 0), 0),
+    blogs.reduce((acc, blog) => acc + (blog.comments?.length || 0), 0),
   likes: (blogs: IBlog[]) =>
     blogs.reduce((acc, blog) => acc + (blog.likes?.length || 0), 0),
   PUBLISHED: (blogs: IBlog[]) =>
@@ -75,25 +66,21 @@ export const calculators: Record<string, (blogs: IBlog[]) => number> = {
     blogs.filter((blog) => blog.status === BlogStatus.DRAFT).length,
 };
 
+// ===== Stat Value Computation =====
+
 /**
- * Generate statistics values based on the blogs data.
+ * Computes stat values by matching each statsData item's `key`
+ * to the corresponding calculator function.
  *
- * The function loops through `statsData` and for each item it finds the
- * corresponding calculator function using `item.key`. Then it executes
- * that function to compute the value.
- * @param blogs - Array of blog objects
- * @param statsData - Array describing which stats should be generated
- * @param calculators - Object that maps stat keys to calculation functions
- *
- * @returns The same statsData array but with the `value` field calculated
+ * @returns The same statsData array with the `value` field populated.
  */
-export function generateStatus<K extends string>(
+export function computeStatValues<K extends string>(
   blogs: IBlog[],
   statsData: StatItem<K>[],
   calculators: Record<string, (blogs: IBlog[]) => number>,
 ) {
   return statsData.map((item) => ({
     ...item,
-    value: calculators[item.key](blogs),
+    value: calculators[item.key]?.(blogs) ?? 0,
   }));
 }

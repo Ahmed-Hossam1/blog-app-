@@ -10,7 +10,7 @@ import { signIn } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
@@ -18,8 +18,9 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 
 const Page = () => {
-  /* ==== State ==== */
+  // ===== State =====
   const { theme } = useTheme();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [authLoading, setAuthLoading] = useState<boolean>(false);
   const {
@@ -30,11 +31,11 @@ const Page = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  /* ==== Config ==== */
-  const signInIForm = formConfig?.signIn ?? [];
+  // ===== Config =====
+  const signInFormFields = formConfig?.signIn ?? [];
 
-  /* ==== Handlers ==== */
-  const onsubmit: SubmitHandler<ISignInForm> = async (data) => {
+  // ===== Handlers =====
+  const onSubmit: SubmitHandler<ISignInForm> = async (data) => {
     if (!data) return;
     try {
       setIsLoading(true);
@@ -45,9 +46,9 @@ const Page = () => {
       });
       if (result?.error) throw new Error("invalid credentials");
 
-      toast.success("logged in successfully");
+      toast.success("Logged in successfully");
       setTimeout(() => {
-        redirect("/");
+        router.push("/");
       }, 1500);
     } catch (error) {
       setIsLoading(false);
@@ -123,10 +124,10 @@ const Page = () => {
         </div>
 
         <form
-          onSubmit={handleSubmit(onsubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col space-y-4"
         >
-          <FormField Fields={signInIForm} register={register} errors={errors} />
+          <FormField Fields={signInFormFields} register={register} errors={errors} />
 
           <Button
             disabled={isLoading || authLoading}

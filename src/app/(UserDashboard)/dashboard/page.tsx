@@ -6,7 +6,7 @@ import TopBlogs from "@/components/dashboard/overView/TopPosts";
 import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
-import { calculators, generateStatus } from "@/lib";
+import { calculators, computeStatValues } from "@/lib";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
 const OverView = async () => {
@@ -16,7 +16,7 @@ const OverView = async () => {
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
 
-  const stats = generateStatus(authorBlogs, STATS_DATA, calculators);
+  const stats = computeStatValues(authorBlogs, STATS_DATA, calculators);
 
   return (
     <SectionWrapper>

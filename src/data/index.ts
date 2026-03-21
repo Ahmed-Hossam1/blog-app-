@@ -27,10 +27,10 @@ export const navLinksData: INavLinks[] = [
 
 export const asideLinksData = [
   { name: "Overview", icon: HiOutlineSquares2X2, href: "/dashboard" },
-  { name: "manage blogs", icon: MdOutlineArticle , href: "/dashboard/manage-blogs" },
-  { name: "Create Blog", icon: HiOutlinePencilSquare , href: "/dashboard/create-blog" },
-  { name: "bookmarks", icon: HiOutlineBookmark , href: "/dashboard/bookmarks" },
-  { name: "Analytics", icon: HiOutlineChartBar , href: "/dashboard/analytics" },
+  { name: "Manage Blogs", icon: MdOutlineArticle, href: "/dashboard/manage-blogs" },
+  { name: "Create Blog", icon: HiOutlinePencilSquare, href: "/dashboard/create-blog" },
+  { name: "Bookmarks", icon: HiOutlineBookmark, href: "/dashboard/bookmarks" },
+  { name: "Analytics", icon: HiOutlineChartBar, href: "/dashboard/analytics" },
 ];
 
 export const tabsData: ITab[] = [

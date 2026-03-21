@@ -6,6 +6,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { authorName, image, comment, parentCommentId, blogId } = body;
 
+    // ===== Validate Comment Content =====
     if (!comment) {
       return NextResponse.json(
         { message: "Comment is required" },
@@ -13,17 +14,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ===== Create Reply Comment =====
     await prisma.comment.create({
       data: {
         comment,
         blogId,
         parentId: parentCommentId || null,
-        // TODO: Get from authenticated user session
         authorName: authorName,
         image: image || "/default-avatar.png",
       },
     });
 
+    // ===== Update Blog Comment Count =====
     await prisma.blog.update({
       where: { id: blogId },
       data: {
@@ -33,7 +35,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json("Comment created successfully", { status: 201 });
+    return NextResponse.json(
+      { message: "Reply added successfully" },
+      { status: 201 },
+    );
   } catch (error) {
     console.error("Error creating comment:", error);
     return NextResponse.json(

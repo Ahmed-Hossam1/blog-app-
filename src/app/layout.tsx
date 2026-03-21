@@ -43,8 +43,8 @@ export default function RootLayout({
             </ThemeProvider>
           </ReduxProvider>
           <ToastContainer
-            position="bottom-center"
-            autoClose={2000}
+            position="top-center"
+            autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -52,7 +52,7 @@ export default function RootLayout({
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme="light"
+            theme="colored"
           />
         </Session>
       </body>

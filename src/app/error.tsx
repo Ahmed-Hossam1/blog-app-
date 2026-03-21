@@ -16,7 +16,7 @@ const ErrorPage = ({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-gray-50 dark:bg-baseInk transition-colors duration-300">
       <h1 className="text-5xl font-bold mb-4">Something went wrong</h1>
 
       <p className="text-gray-500 max-w-md mb-8">

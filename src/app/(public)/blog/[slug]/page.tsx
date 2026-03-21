@@ -6,7 +6,7 @@ import LikeButton from "@/components/LikeButton";
 import SectionWrapper from "@/components/SectionWrapper";
 import { formatDate } from "@/lib";
 import {
-  getBlogById,
+  getBlogBySlug,
   isBlogBookmarked,
   isBlogLiked,
   isUserFollowing,
@@ -22,7 +22,7 @@ import remarkGfm from "remark-gfm";
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const blog = await getBlogById(slug);
+  const blog = await getBlogBySlug(slug);
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 

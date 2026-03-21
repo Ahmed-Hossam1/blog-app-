@@ -4,7 +4,7 @@ import MyBlogsTable from "@/components/dashboard/my-blogs/MyBlogsTable";
 import SectionWrapper from "@/components/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { MY_BLOGS_STATS } from "@/data/mockData";
-import { calculators, generateStatus } from "@/lib";
+import { calculators, computeStatValues } from "@/lib";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
 
@@ -14,7 +14,7 @@ const MyBlogs = async () => {
   
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
-  const stats = generateStatus(authorBlogs, MY_BLOGS_STATS, calculators);
+  const stats = computeStatValues(authorBlogs, MY_BLOGS_STATS, calculators);
 
   return (
     <SectionWrapper>

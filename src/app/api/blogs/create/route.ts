@@ -12,6 +12,18 @@ export async function POST(req: NextRequest) {
 
   const body: IBlog = await req.json();
   const { title, image, content, category, status } = body;
+
+  // ===== Calculate Read Time =====
+  const WORDS_PER_MINUTE = 200;
+  const wordCount = content.split(/\s+/).length;
+  const readTime = `${Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE))} min read`;
+
+  // ===== Generate URL-Safe Slug =====
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
   try {
     await prisma.blog.create({
       data: {
@@ -20,8 +32,8 @@ export async function POST(req: NextRequest) {
         content,
         category,
         status,
-        slug: title.split(" ").join("-"),
-        readTime: "5",
+        slug,
+        readTime,
         authorId: session.user.id,
       },
     });

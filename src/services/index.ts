@@ -1,6 +1,8 @@
 import { buildCommentsTree } from "@/lib";
 import { prisma } from "../prisma/prisma";
 
+// ===== Blog Services =====
+
 export const getBlogs = async () => {
   const blogs = await prisma.blog.findMany({
     include: {
@@ -15,7 +17,8 @@ export const getBlogs = async () => {
   return blogs;
 };
 
-export const getBlogById = async (slug: string) => {
+/** Fetches a single blog by its slug, including comments tree and likes */
+export const getBlogBySlug = async (slug: string) => {
   const blog = await prisma.blog.findUnique({
     where: { slug },
     include: {
@@ -37,6 +40,9 @@ export const getBlogById = async (slug: string) => {
   return { ...blog, replies };
 };
 
+// ===== User / Author Services =====
+
+/** Fetches all authors with basic profile info */
 export const getAuthors = async () => {
   const authors = await prisma.user.findMany({
     select: {
@@ -50,6 +56,7 @@ export const getAuthors = async () => {
   return authors;
 };
 
+/** Fetches a full author profile including blogs and followers */
 export const getAuthorProfile = async (id: string) => {
   const author = await prisma.user.findUnique({
     where: { id },
@@ -79,6 +86,7 @@ export const getAuthorProfile = async (id: string) => {
   return author;
 };
 
+/** Fetches basic author info without blogs or followers */
 export const getAuthorBasicInfo = async (id: string) => {
   const author = await prisma.user.findUnique({
     where: { id },
@@ -94,6 +102,7 @@ export const getAuthorBasicInfo = async (id: string) => {
   return author;
 };
 
+/** Fetches name and image for a list of follower IDs */
 export const getFollowersBasicInfo = async (ids: string[]) => {
   const author = await prisma.user.findMany({
     where: { id: { in: ids } },
@@ -105,6 +114,7 @@ export const getFollowersBasicInfo = async (ids: string[]) => {
   return author;
 };
 
+/** Fetches all blogs by a specific author with comments tree */
 export const getAuthorBlogs = async (userId: string) => {
   if (!userId) return;
   const authorBlogs = await prisma.user.findUnique({
@@ -136,6 +146,9 @@ export const getAuthorBlogs = async (userId: string) => {
   return blogsWithReplies;
 };
 
+// ===== Relationship Check Services =====
+
+/** Checks whether followerId is following followingId */
 export const isUserFollowing = async (
   followingId: string,
   followerId: string,
@@ -150,6 +163,7 @@ export const isUserFollowing = async (
   });
   return count > 0;
 };
+/** Checks whether a user has liked a specific blog */
 export const isBlogLiked = async (userId: string, blogId: string) => {
   if (!userId) return false;
 
@@ -161,6 +175,7 @@ export const isBlogLiked = async (userId: string, blogId: string) => {
   });
   return count > 0;
 };
+/** Checks whether a user has bookmarked a specific blog */
 export const isBlogBookmarked = async (userId: string, blogId: string) => {
   if (!userId) return false;
 
@@ -173,6 +188,9 @@ export const isBlogBookmarked = async (userId: string, blogId: string) => {
   return count > 0;
 };
 
+// ===== Bookmark Services =====
+
+/** Fetches all bookmarked blogs for a user, ordered by most recent */
 export const getUserBookmarks = async (userId: string) => {
   if (!userId) return [];
 

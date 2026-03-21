@@ -20,7 +20,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existLike = await prisma.bookMark.findUnique({
+    // ===== Check If Bookmark Exists =====
+    const existingBookmark = await prisma.bookMark.findUnique({
       where: {
         // findUnique() and delete() only work with unique fields.
         //
@@ -47,7 +48,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (existLike) {
+    if (existingBookmark) {
+      // ===== Remove Bookmark =====
       await prisma.bookMark.delete({
         where: {
           userId_blogId: {
@@ -67,11 +69,12 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json(
-        { message: "bookmark removed successfully" },
+        { message: "Bookmark removed successfully" },
         { status: 200 },
       );
     }
 
+    // ===== Add Bookmark =====
     await prisma.bookMark.create({
       data: {
         blogId,
@@ -89,7 +92,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "bookmark added successfully" },
+      { message: "Bookmark added successfully" },
       { status: 201 },
     );
   } catch (error) {

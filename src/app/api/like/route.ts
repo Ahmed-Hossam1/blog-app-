@@ -7,14 +7,16 @@ export async function POST(req: NextRequest) {
 
   try {
     if (!userId) {
-      return NextResponse.json({ message: "please signin first" }, { status: 401 });
+      return NextResponse.json({ message: "Please sign in first" }, { status: 401 });
     }
+
+    // ===== Prevent Self-Like =====
 
     if(userId === authorId) {
       return NextResponse.json({ message: "You can't like your own blog" }, { status: 400 });
     }
     
-    // check if like already exists
+    // ===== Check If Like Exists =====
     const existLike = await prisma.like.findUnique({
       where: {
         // findUnique() and delete() only work with unique fields.
@@ -43,6 +45,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (existLike) {
+      // ===== Remove Like =====
       await prisma.like.delete({
         where: {
           userId_blogId: {
@@ -67,6 +70,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ===== Add Like =====
     await prisma.like.create({
       data: {
         blogId,

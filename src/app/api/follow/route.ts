@@ -7,10 +7,12 @@ export async function POST(req: NextRequest) {
 
   if (!followerId) {
     return NextResponse.json(
-      { message: "please signin first" },
+      { message: "Please sign in first" },
       { status: 401 },
     );
   }
+
+  // ===== Prevent Self-Follow =====
 
   if (followerId === followingId) {
     return NextResponse.json(
@@ -20,6 +22,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // ===== Check If Follow Exists =====
     const existingFollow = await prisma.follow.findUnique({
       where: {
         followerId_followingId: {
@@ -30,6 +33,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (existingFollow) {
+      // ===== Remove Follow =====
       await prisma.follow.delete({
         where: {
           followerId_followingId: {
@@ -44,6 +48,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ===== Add Follow =====
     await prisma.follow.create({
       data: {
         followerId,

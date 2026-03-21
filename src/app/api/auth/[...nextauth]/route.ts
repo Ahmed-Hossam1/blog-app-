@@ -6,15 +6,12 @@ import { prisma } from "../../../../prisma/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 
-/* 
-Why this configuration?
+// ===== NextAuth Configuration =====
 
-Instead of using the basic default `export const authOptions`,
-we explicitly type the configuration with `NextAuthOptions`.
-
-This allows us to extend the session type and safely include
-additional properties (like the user's Prisma `id`) in `session.user`.
-*/
+/**
+ * Explicitly typed with NextAuthOptions to support
+ * extending the session type with the user's Prisma `id`.
+ */
 export const authOptions: NextAuthOptions = ({
   session: {
     strategy: "jwt",
@@ -30,7 +27,7 @@ export const authOptions: NextAuthOptions = ({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
-    // Custom Auth With  Email / Password
+    // ===== Credentials Provider =====
     Credentials({
       name: "credentials",
       credentials: {
@@ -45,13 +42,13 @@ export const authOptions: NextAuthOptions = ({
         });
         if (!user) return null;
 
-        // compare hashed password
-        const hashedPassword = await bcrypt.compare(
+        // ===== Compare Hashed Password =====
+        const isPasswordValid = await bcrypt.compare(
           credentials?.password as string,
           user.password as string,
         );
 
-        if (!hashedPassword) return null;
+        if (!isPasswordValid) return null;
         return {
           id: user.id,
           name: user.name,
@@ -63,16 +60,15 @@ export const authOptions: NextAuthOptions = ({
     }),
     
   ],
+  // ===== JWT & Session Callbacks =====
   callbacks: {
-  async jwt({ token, user }) {
-    if (user) {
-      token.id = user.id; // attach the Prisma user id  to the token
-    }
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
 
-    /* If the token has no id and the user has an email 
-     * attach the Prisma user id to the token
-     */
-     if (!token.id && token.email) {
+      // If the token has no id (e.g. OAuth first sign-in), fetch from DB
+      if (!token.id && token.email) {
         const dbUser = await prisma.user.findUnique({
           where: { email: token.email },
         });
@@ -85,8 +81,8 @@ export const authOptions: NextAuthOptions = ({
     return token;
   },
 
-  // Attach the Prisma user id to the session
-  async session({ session, token }) {
+    // ===== Attach Prisma user id to the session =====
+    async session({ session, token }) {
     if (session.user) {
       session.user.id = token.id as string;
     }
