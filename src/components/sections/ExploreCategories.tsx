@@ -1,12 +1,12 @@
 "use client";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { tabsData } from "@/data";
 import { IBaseBlog } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
 import ExploreCard from "../cards/ExploreCard";
-import Tabs from "../Tab";
+import Tabs from "../shared/Tab";
 
 interface ExploreCategoriesProps {
   blogs: IBaseBlog[];

@@ -1,6 +1,6 @@
 "use client";
 
-import FormField from "@/components/FormField";
+import FormField from "@/components/shared/FormField";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
 import { signUpSchema } from "@/schema/schema";

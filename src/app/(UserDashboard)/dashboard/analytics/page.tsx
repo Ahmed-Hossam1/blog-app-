@@ -4,7 +4,7 @@ import TopCategoriesChart from "@/components/dashboard/analytics/TopCategoriesCh
 import TrafficPieChart from "@/components/dashboard/analytics/TrafficPieChart";
 import TrafficSourcesChart from "@/components/dashboard/analytics/TrafficSourcesChart";
 import ViewsOverTimeChart from "@/components/dashboard/analytics/ViewsOverTimeChart";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 
 import {

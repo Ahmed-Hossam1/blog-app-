@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { getUserBookmarks } from "@/services";
 import { getServerSession } from "next-auth";

@@ -1,4 +1,4 @@
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import { getAuthors } from "@/services";
 import Image from "next/image";
 import Link from "next/link";

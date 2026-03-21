@@ -3,7 +3,7 @@ import { IBaseBlog } from "@/types";
 import React, { useState } from "react";
 import Pagination from "./Pagination";
 import Link from "next/link";
-import ExploreCard from "./cards/ExploreCard";
+import ExploreCard from "../cards/ExploreCard";
 
 interface IProps {
   data: IBaseBlog[];

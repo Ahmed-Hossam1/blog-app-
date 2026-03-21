@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ExploreCard from "@/components/cards/ExploreCard";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import FollowersAvatarGroup from "@/components/FollowersAvatarGroup";
 import { getAuthorProfile, getFollowersBasicInfo, isUserFollowing } from "@/services";
 import { IBaseBlog } from "@/types";
@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
-import FollowButton from "@/components/FollowButton";
+import FollowButton from "@/components/blog/FollowButton";
 
 const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

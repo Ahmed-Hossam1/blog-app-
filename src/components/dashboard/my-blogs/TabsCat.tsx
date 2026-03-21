@@ -1,5 +1,5 @@
 "use client";
-import Tab from "@/components/Tab";
+import Tab from "@/components/shared/Tab";
 import { ITab } from "@/types";
 import { useState } from "react";
 

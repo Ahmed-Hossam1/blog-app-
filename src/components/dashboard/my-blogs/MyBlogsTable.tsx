@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { Button } from "@headlessui/react";
 import { toast } from "react-toastify";
 
-import Pagination from "@/components/Pagination";
-import Tab from "@/components/Tab";
-import Table from "@/components/Table";
+import Pagination from "@/components/shared/Pagination";
+import Tab from "@/components/shared/Tab";
+import Table from "@/components/shared/Table";
 import MyInput from "@/components/ui/Input";
 
 import { DashboardTabsData } from "@/data";

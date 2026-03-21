@@ -24,8 +24,8 @@ import {
   LuQuote,
 } from "react-icons/lu";
 import ErrorMessage from "./ErrorMessage";
-import Button from "./ui/Button";
-import MyInput from "./ui/Input";
+import Button from "../ui/Button";
+import MyInput from "../ui/Input";
 
 const TOOLBAR_BUTTONS = [
   { icon: LuHeading1, label: "Heading 1" },

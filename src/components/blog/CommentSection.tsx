@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import RecursiveComment from "./ui/RecursiveComment";
+import RecursiveComment from "./RecursiveComment";
 import { useSession } from "next-auth/react";
 import { IBlog, IComment } from "@/types";
-import Button from "./ui/Button";
+import Button from "../ui/Button";
 import { toast } from "react-toastify";
-import MyModal from "./ui/MyModal";
+import MyModal from "../ui/MyModal";
 import { useRouter } from "next/navigation";
 
 interface IProps {

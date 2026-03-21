@@ -1,7 +1,7 @@
 "use client";
 
-import FormField from "@/components/FormField";
-import SectionWrapper from "@/components/SectionWrapper";
+import FormField from "@/components/shared/FormField";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { formConfig } from "@/constants/forms";

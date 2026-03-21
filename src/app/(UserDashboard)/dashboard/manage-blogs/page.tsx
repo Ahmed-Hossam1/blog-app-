@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import StatusCard from "@/components/cards/StatusCard";
 import MyBlogsTable from "@/components/dashboard/my-blogs/MyBlogsTable";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { MY_BLOGS_STATS } from "@/data/mockData";
 import { calculators, computeStatValues } from "@/lib";

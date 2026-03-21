@@ -3,7 +3,7 @@ import StatusCard from "@/components/cards/StatusCard";
 import Charts from "@/components/dashboard/overView/Charts";
 import RecentBlogsTable from "@/components/dashboard/overView/RecentPostsTable";
 import TopBlogs from "@/components/dashboard/overView/TopPosts";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
 import { calculators, computeStatValues } from "@/lib";

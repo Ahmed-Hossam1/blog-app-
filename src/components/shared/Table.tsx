@@ -1,5 +1,5 @@
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2";
-import Button from "./ui/Button";
+import Button from "../ui/Button";
 import { IBlog } from "@/types";
 import { formatDate } from "@/lib";
 import Link from "next/link";

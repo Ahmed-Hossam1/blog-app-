@@ -18,10 +18,10 @@ export async function POST(req: NextRequest) {
 
     // ===== Prevent Self-Like =====
 
-    if(userId === authorId) {
+    if (userId === authorId) {
       return NextResponse.json({ message: "You can't like your own blog" }, { status: 400 });
     }
-    
+
     // ===== Check If Like Exists =====
     const existLike = await prisma.like.findUnique({
       where: {

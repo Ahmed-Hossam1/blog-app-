@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import { FaReply } from "react-icons/fa6";
 import { MdOutlineDoNotDisturbAlt } from "react-icons/md";
-import Button from "./Button";
+import Button from "../ui/Button";
 
 interface ICommentProps {
   handleCommentReply: (

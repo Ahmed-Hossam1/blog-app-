@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import ExploreCategories from "@/components/sections/ExploreCategories";
 import FeaturedArticles from "@/components/sections/FeaturedArticles";
 import NewsletterSubscribe from "@/components/sections/NewsletterSubscribe";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import MeetOurAuthors from "@/components/sections/MeetOurAuthors";
 import { getBlogs, getAuthors } from "@/services";
 export default async function Home() {

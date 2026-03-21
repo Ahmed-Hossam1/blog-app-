@@ -1,5 +1,5 @@
-import PaginatedBlogs from "@/components/PaginatedBlogs";
-import SectionWrapper from "@/components/SectionWrapper";
+import PaginatedBlogs from "@/components/shared/PaginatedBlogs";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import { getBlogs } from "@/services";
 
 const BlogPage = async () => {

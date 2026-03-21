@@ -1,6 +1,6 @@
 "use client";
 
-import FormField from "@/components/FormField";
+import FormField from "@/components/shared/FormField";
 import Button from "@/components/ui/Button";
 import MyModal from "@/components/ui/MyModal";
 import { formConfig } from "@/constants/forms";
@@ -9,7 +9,7 @@ import { IBlog, INewBlogForm } from "@/types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import Table from "../../Table";
+import Table from "../../shared/Table";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

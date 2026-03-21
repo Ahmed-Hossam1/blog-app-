@@ -1,7 +1,7 @@
 "use client";
 
 import ExploreCard from "@/components/cards/ExploreCard";
-import SectionWrapper from "@/components/SectionWrapper";
+import SectionWrapper from "@/components/shared/SectionWrapper";
 import Input from "@/components/ui/Input";
 import { IBaseBlog } from "@/types";
 import Link from "next/link";
