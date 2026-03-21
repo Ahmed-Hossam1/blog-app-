@@ -3,6 +3,7 @@
 import FormField from "@/components/FormField";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
+import { generateToken } from "@/lib/token";
 import { signUpSchema } from "@/schema/schema";
 import { ISignUpForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -45,6 +46,7 @@ const Page = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
 
+      // call signIn function to make JWT
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
@@ -52,9 +54,30 @@ const Page = () => {
       });
       if (result?.error) throw new Error("failed to create user");
       toast.success("user created successfully");
-      setTimeout(() => {
-        redirect("/");
-      }, 1500);
+
+      // Generate token
+      const tokenRes = await fetch(`/api/auth/token`, {
+        method: "POST",
+        body: JSON.stringify({ email: data.email }),
+      });
+      const token = await tokenRes.json();
+      if (!tokenRes.ok) throw new Error(token.message);
+      console.log(token);
+
+      const verifyRes = await fetch(`/api/email/verify-email`, {
+        method: "POST",
+        body: JSON.stringify({ name : data.name, email: data.email, verificationLink: `http://localhost:3000/verify-token?token=${token.token}` }),
+      });
+      const verify = await verifyRes.json();
+      if (!verifyRes.ok) throw new Error(verify.message);
+      console.log(verify);
+
+
+
+
+      // setTimeout(() => {
+      //   redirect("/");
+      // }, 1500);
     } catch (error) {
       setIsLoading(false);
       toast.error((error as Error).message);

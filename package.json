@@ -18,7 +18,10 @@
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "6.19",
     "@prisma/extension-accelerate": "^3.0.1",
+    "@react-email/components": "^1.0.10",
+    "@react-email/render": "^2.0.4",
     "@reduxjs/toolkit": "^2.11.2",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.9.0",
     "dotenv": "^17.2.4",
     "next": "16.1.1",
@@ -35,9 +38,9 @@
     "react-toastify": "^11.0.5",
     "recharts": "^3.7.0",
     "remark-gfm": "^4.0.1",
+    "resend": "^6.9.4",
     "tailwindcss": "^4.1.18",
-    "yup": "^1.7.1",
-    "bcryptjs": "^3.0.3"
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
