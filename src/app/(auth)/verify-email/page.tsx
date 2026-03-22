@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const VerifyToken = () => {
+const VerifyEmail = () => {
   const token = useSearchParams().get("token");
   const router = useRouter();
 
@@ -92,4 +92,4 @@ const VerifyToken = () => {
   );
 };
 
-export default VerifyToken;
+export default VerifyEmail;

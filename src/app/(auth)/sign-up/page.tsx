@@ -38,34 +38,20 @@ const Page = () => {
     try {
       setIsLoading(true);
       // create user
-      const res = await fetch(`/api/auth/sign-up`, {
+      const req = await fetch(`/api/auth/sign-up`, {
         method: "POST",
         body: JSON.stringify(data),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message);
-
-      // Generate token
-      const tokenRes = await fetch(`/api/auth/token`, {
-        method: "POST",
-        body: JSON.stringify({ email: data.email }),
-      });
-      const token = await tokenRes.json();
-      if (!tokenRes.ok) throw new Error(token.message);
-      
-      // ===== Send verification email =====
-      const verifyRes = await fetch(`/api/auth/verify-email`, {
-        method: "POST",
-        body: JSON.stringify({ name : data.name, email: data.email, verificationLink: `http://localhost:3000/verify-token?token=${token.token}` }),
-      });
-      const verify = await verifyRes.json();
-      if (!verifyRes.ok) throw new Error(verify.message);
-      toast.success("email sent successfully check your email inbox or spam to verify your account",{
-        autoClose : false
+      const res = await req.json();
+      if (!req.ok) throw new Error(res.message);
+      toast.success(res.message,{
+        autoClose: false
       });
     } catch (error) {
-      setIsLoading(false);
+      console.log(error);
       toast.error((error as Error).message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -141,7 +127,11 @@ const Page = () => {
           className="flex flex-col space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <FormField Fields={signUpFormFields} register={register} errors={errors} />
+          <FormField
+            Fields={signUpFormFields}
+            register={register}
+            errors={errors}
+          />
 
           <Button
             disabled={isLoading || authLoading}
