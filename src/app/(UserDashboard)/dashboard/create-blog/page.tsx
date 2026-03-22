@@ -5,7 +5,9 @@ import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { formConfig } from "@/constants/forms";
+import { createBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -19,13 +21,19 @@ export default function CreateBlog() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<INewBlogForm>();
+  } = useForm<INewBlogForm>(
+      {
+        resolver : yupResolver(createBlogSchema)
+      }
+  );
 
+  console.log(errors)
   /* ==== Config ==== */
   const content = formConfig?.content;
   const settings = formConfig?.settings;
   /* ==== Handlers ==== */
   const handleCreate = async (data: INewBlogForm) => {
+    console.log(data)
     setIsLoading(true);
     try {
       const formData = new FormData();

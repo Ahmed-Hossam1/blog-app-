@@ -1,16 +1,16 @@
-import { IBlog } from "@/types";
+import { IBlog, INewBlogForm } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.id) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const body: IBlog = await req.json();
+  const body: INewBlogForm = await req.json();
   const { title, image, content, category, status } = body;
 
   // ===== Calculate Read Time =====
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     await prisma.blog.create({
       data: {
         title,
-        image,
+        image: image as string,
         content,
         category,
         status,

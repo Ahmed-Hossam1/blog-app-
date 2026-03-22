@@ -98,10 +98,10 @@ export interface IContactForm {
 }
 
 export interface INewBlogForm {
-  authorId: string;
+  authorId?: string;
   title: string;
-  slug: string;
-  image: string;
+  slug?: string;
+  image: string | FileList | File[];
   content: string;
   status: BlogStatus;
   category: string;

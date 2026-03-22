@@ -1,4 +1,4 @@
-import { IBlog, IComment, StatItem } from "@/types";
+import { IBlog, IComment, StatItem, performanceItems } from "@/types";
 import { BlogStatus } from "../../generated/prisma/enums";
 
 // ===== Comment Tree Builder =====
@@ -19,7 +19,8 @@ export function buildCommentsTree(comments: IComment[]) {
     } else {
       const parent = comments.find((c) => c.id === comment.parentId);
       if (parent) {
-        parent.replies!.push(comment);
+        parent.replies = parent.replies || [];
+        parent.replies.push(comment);
       }
     }
   });
@@ -33,7 +34,9 @@ export function buildCommentsTree(comments: IComment[]) {
  * Maps stat keys (e.g. "blogs", "views", "likes") to functions
  * that compute the corresponding value from a blogs array.
  */
-export const calculators: Record<string, (blogs: IBlog[]) => number> = {
+type StatKeys = performanceItems | BlogStatus;
+
+export const calculators: Record<StatKeys, (blogs: IBlog[]) => number> = {
   blogs: (blogs: IBlog[]) => blogs.length,
   views: (blogs: IBlog[]) =>
     blogs.reduce((acc, blog) => acc + (blog.views || 0), 0),
@@ -57,10 +60,10 @@ export const calculators: Record<string, (blogs: IBlog[]) => number> = {
  *
  * @returns The same statsData array with the `value` field populated.
  */
-export function computeStatValues<K extends string>(
+export function computeStatValues<K extends StatKeys>(
   blogs: IBlog[],
   statsData: StatItem<K>[],
-  calculators: Record<string, (blogs: IBlog[]) => number>,
+  calculators: Record<StatKeys, (blogs: IBlog[]) => number>,
 ) {
   return statsData.map((item) => ({
     ...item,
