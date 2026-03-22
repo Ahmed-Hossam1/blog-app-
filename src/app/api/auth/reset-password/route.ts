@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { token, newPassword } = body;
+  const { token, password: newPassword } = body;
 
   try {
     // check if token is valid
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
 
-      // bring user info from DB to check if password is the same
+    // bring user info from DB to check if password is the same
     const user = await prisma.user.findUnique({
       where: {
         email: resetToken.email,
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
 
-      // create hash for new password
+    // create hash for new password
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
     // update password
@@ -49,6 +49,16 @@ export async function POST(req: NextRequest) {
       where: { email: resetToken.email },
       data: {
         password: hashedNewPassword,
+      },
+    });
+
+    // delete token
+    await prisma.verificationToken.delete({
+      where: {
+        email_token: {
+          token,
+          email: resetToken.email,
+        },
       },
     });
 

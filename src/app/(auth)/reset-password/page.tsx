@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -16,8 +17,9 @@ import * as yup from "yup";
 type ResetPasswordForm = yup.InferType<typeof resetPasswordSchema>;
 
 const ResetPasswordPage = () => {
+  const token  = useSearchParams().get("token");
   const { theme } = useTheme();
-  // We keep isLoading state just for UI demonstration, but won't do API calls
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -35,11 +37,17 @@ const ResetPasswordPage = () => {
       setIsLoading(true);
       const req = await fetch("/api/auth/reset-password", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ 
+          token,
+          password : data.password
+        }),
       });
       const res = await req.json();
       if (!req.ok) throw new Error(res.message);
       toast.success(res.message);
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 1200);
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
@@ -47,7 +55,7 @@ const ResetPasswordPage = () => {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black transition-colors duration-300">
       <div className="bg-white shadow-md rounded-xl py-12 px-10 sm:px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">

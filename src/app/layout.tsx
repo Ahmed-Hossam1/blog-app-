@@ -52,7 +52,6 @@ export default function RootLayout({
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme="colored"
           />
         </Session>
       </body>
