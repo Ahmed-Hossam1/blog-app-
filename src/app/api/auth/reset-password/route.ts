@@ -1,42 +1,59 @@
-import ResetPasswordTemplate from "@/components/ResetPasswordTemplate";
-import { generateToken } from "@/lib/token";
 import { prisma } from "@/prisma/prisma";
-import resend from "@/resend/resend";
+import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { email } = body;
-
-  if (!email) {
-    return NextResponse.json({ message: "Email is required" }, { status: 400 });
-  }
+  const { token, newPassword } = body;
 
   try {
-    // Check if user exist
-    const user = await prisma.user.findUnique({
-      where: { email },
+    // check if token is valid
+    const resetToken = await prisma.verificationToken.findFirst({
+      where: {
+        token,
+      },
     });
 
-    //  IMPORTANT: always return same response for security reasons
-    if (user) {
-      // Generate & save reset token in DB
-      const token = await generateToken(email);
+    if (!resetToken)
+      return NextResponse.json({ message: "Invalid token" }, { status: 400 });
 
-      // Send reset email
-      await resend.emails.send({
-        from: "Blogy <onboarding@resend.dev>",
-        to: email,
-        subject: "reset your password",
-        react: ResetPasswordTemplate({
-          name: user.name,
-          resetLink: `http://localhost:3000/reset-password?token=${token.token}`,
-        }),
-      });
-    }
+    const hasExpired = new Date() > resetToken.expires;
+
+    if (hasExpired)
+      return NextResponse.json(
+        { message: "Token has expired" },
+        { status: 400 },
+      );
+
+      // bring user info from DB to check if password is the same
+    const user = await prisma.user.findUnique({
+      where: {
+        email: resetToken.email,
+      },
+    });
+
+    // check old password is not the same
+    const isMatch = await bcrypt.compare(newPassword, user?.password as string);
+
+    if (isMatch)
+      return NextResponse.json(
+        { message: "new Password cannot be the same as old password" },
+        { status: 400 },
+      );
+
+      // create hash for new password
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    // update password
+    await prisma.user.update({
+      where: { email: resetToken.email },
+      data: {
+        password: hashedNewPassword,
+      },
+    });
 
     return NextResponse.json(
-      { message: "If this email exists, a reset link has been sent" },
+      { message: "Password reset successfully" },
       { status: 200 },
     );
   } catch (error) {

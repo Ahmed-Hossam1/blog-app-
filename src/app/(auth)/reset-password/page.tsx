@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 type ResetPasswordForm = yup.InferType<typeof resetPasswordSchema>;
@@ -18,7 +19,7 @@ const ResetPasswordPage = () => {
   const { theme } = useTheme();
   // We keep isLoading state just for UI demonstration, but won't do API calls
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -27,15 +28,26 @@ const ResetPasswordPage = () => {
     resolver: yupResolver(resetPasswordSchema),
   });
 
-  const handleResetPassword: SubmitHandler<ResetPasswordForm> = async (data) => {
-    setIsLoading(true);
-    // Simulate API call for UI demonstration
-    setTimeout(() => {
-      console.log("Validated Data:", data);
+  const handleResetPassword: SubmitHandler<ResetPasswordForm> = async (
+    data,
+  ) => {
+    try {
+      setIsLoading(true);
+      const req = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      const res = await req.json();
+      if (!req.ok) throw new Error(res.message);
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+      toast.error((error as Error).message);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black transition-colors duration-300">
       <div className="bg-white shadow-md rounded-xl py-12 px-10 sm:px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">
@@ -56,7 +68,6 @@ const ResetPasswordPage = () => {
             className="mx-auto mb-8 mix-blend-screen"
           />
         )}
-
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Reset Password
@@ -105,7 +116,9 @@ const ResetPasswordPage = () => {
                 className="w-full pl-3 rounded-md border p-3 text-sm"
               />
             </div>
-            {errors?.confirmPassword && <ErrorMessage msg={errors.confirmPassword.message} />}
+            {errors?.confirmPassword && (
+              <ErrorMessage msg={errors.confirmPassword.message} />
+            )}
           </div>
 
           <Button

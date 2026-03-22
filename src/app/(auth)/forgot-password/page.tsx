@@ -28,7 +28,7 @@ const ForgotPasswordPage = () => {
   const handleForgotPassword: SubmitHandler<resetForm> = async (data) => {
     setIsLoading(true);
     try {
-      const req = await fetch("/api/auth/reset-password", {
+      const req = await fetch("/api/auth/forgot-password", {
         method: "POST",
         body: JSON.stringify(data),
       });
