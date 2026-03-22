@@ -1,4 +1,4 @@
-import { buildCommentsTree } from "@/lib";
+import { buildCommentsTree } from "@/lib/helpers";
 import { prisma } from "../prisma/prisma";
 
 export const getBlogs = async () => {

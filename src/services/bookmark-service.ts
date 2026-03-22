@@ -1,6 +1,5 @@
-import { buildCommentsTree } from "@/lib";
+import { buildCommentsTree } from "@/lib/helpers";
 import { prisma } from "../prisma/prisma";
-
 
 /** Checks whether a user has bookmarked a specific blog */
 export const isBlogBookmarked = async (userId: string, blogId: string) => {

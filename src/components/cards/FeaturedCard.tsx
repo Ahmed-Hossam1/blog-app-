@@ -1,5 +1,5 @@
+import { formatDate } from "@/lib/utils";
 import { IBaseBlog } from "@/types";
-import { formatDate } from "@/lib";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";

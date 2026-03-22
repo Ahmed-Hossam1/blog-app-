@@ -4,7 +4,7 @@ import CommentSection from "@/components/blog/CommentSection";
 import FollowButton from "@/components/blog/FollowButton";
 import LikeButton from "@/components/blog/LikeButton";
 import SectionWrapper from "@/components/shared/SectionWrapper";
-import { formatDate } from "@/lib";
+import { formatDate } from "@/lib/utils";
 import {
   getBlogBySlug,
   isBlogBookmarked,

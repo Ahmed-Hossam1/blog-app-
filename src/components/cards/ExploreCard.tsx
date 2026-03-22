@@ -1,17 +1,26 @@
+import { formatDate, truncateText } from "@/lib/utils";
 import { IBaseBlog } from "@/types";
-import { formatDate, truncateText } from "@/lib";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 type ExploreCardProps = Pick<
   IBaseBlog,
   "title" | "image" | "category" | "views" | "readTime" | "createdAt"
-> & { 
+> & {
   comments?: { id: string }[];
   author?: { name: string; image: string | null };
 };
 
-const ExploreCard = ({ title, image, category, views, readTime, createdAt, comments, author }: ExploreCardProps) => {
+const ExploreCard = ({
+  title,
+  image,
+  category,
+  views,
+  readTime,
+  createdAt,
+  comments,
+  author,
+}: ExploreCardProps) => {
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
@@ -57,7 +66,9 @@ const ExploreCard = ({ title, image, category, views, readTime, createdAt, comme
               <FaRegComment className="text-gray-400" /> {comments?.length ?? 0}
             </span>
           </div>
-          <span className="font-medium text-gray-400 uppercase tracking-tighter">{formatDate(createdAt)}</span>
+          <span className="font-medium text-gray-400 uppercase tracking-tighter">
+            {formatDate(createdAt)}
+          </span>
         </div>
       </div>
     </div>

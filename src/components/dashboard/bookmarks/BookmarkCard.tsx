@@ -1,9 +1,9 @@
 import { IBaseBlog } from "@/types";
-import { formatDate, truncateText } from "@/lib";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import Link from "next/link";
 import RemoveBookmarkButton from "./RemoveBookmarkButton";
+import { formatDate, truncateText } from "@/lib/utils";
 
 type BookmarkCardProps = Pick<
   IBaseBlog,
