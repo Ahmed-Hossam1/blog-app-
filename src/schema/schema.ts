@@ -14,3 +14,7 @@ export const contactSchema = yup.object({
   email: yup.string().required("Email is required").email("Invalid email"),
   message: yup.string().required("Message is required"),
 });
+
+export const forgotPasswordSchema = yup.object({
+  email: yup.string().required("Email is required").email("Invalid email").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format"),
+});
