@@ -140,7 +140,7 @@ const Page = () => {
 
           <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
             <Link
-              href={"/forget-password"}
+              href={"/forgot-password"}
               className="mb-2 block cursor-pointer hover:underline"
             >
               Forgot Password?

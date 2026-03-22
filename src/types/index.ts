@@ -1,8 +1,7 @@
 import { FieldValues, Path } from "react-hook-form";
 import { IconType } from "react-icons";
 
-import { BlogStatus as PrismaBlogStatus } from "../../generated/prisma/client";
-export type BlogStatus = PrismaBlogStatus;
+export type BlogStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 
 export interface INavLinks {
   id: number;

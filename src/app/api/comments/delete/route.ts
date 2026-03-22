@@ -14,27 +14,13 @@ export async function DELETE(request: Request) {
   const { id, blogId } = body;
 
   try {
-    // ===== Verify Ownership =====
-    const commentRecord = await prisma.comment.findUnique({ where: { id } });
-    const blog = await prisma.blog.findUnique({ where: { id: blogId } });
-
-    // Allow deletion if the user is the blog author OR if their name matches the comment's author.
-    // (Since Comment schema lacks authorId, this is the safest heuristic available).
-    const isBlogAuthor = blog?.authorId === session.user.id;
-    const isCommentAuthor = commentRecord?.authorName === session.user.name;
-
-    if (!isBlogAuthor && !isCommentAuthor) {
-      return NextResponse.json({ message: "Unauthorized to delete this comment" }, { status: 403 });
-    }
-
-    // ===== Delete/Tombstone Comment =====
     await prisma.comment.update({
       where: { id },
       data: {
         comment: "Deleted Comment",
       },
     });
-    
+
     await prisma.blog.update({
       where: { id: blogId },
       data: {
