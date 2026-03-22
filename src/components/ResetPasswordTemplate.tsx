@@ -1,9 +1,9 @@
-type ResetPasswordEmailProps = {
+type ResetPasswordTemplateProps = {
   name: string;
   resetLink: string;
 };
 
-const ResetPasswordEmail = ({ name, resetLink }: ResetPasswordEmailProps) => {
+const ResetPasswordTemplate = ({ name, resetLink }: ResetPasswordTemplateProps) => {
   return (
     <div
       style={{
@@ -24,7 +24,7 @@ const ResetPasswordEmail = ({ name, resetLink }: ResetPasswordEmailProps) => {
         {/* Header */}
         <div
           style={{
-            background: "#ef4444", // 🔥 لون مختلف (red for security action)
+            background: "#ef4444", 
             padding: "20px",
             textAlign: "center",
             color: "white",
@@ -77,7 +77,7 @@ const ResetPasswordEmail = ({ name, resetLink }: ResetPasswordEmailProps) => {
               color: "#999",
             }}
           >
-            ⏳ This link will expire in 15 minutes.
+            ⏳ This link will expire in 60 minutes.
           </p>
 
           <p
@@ -87,7 +87,7 @@ const ResetPasswordEmail = ({ name, resetLink }: ResetPasswordEmailProps) => {
               color: "#bbb",
             }}
           >
-            If the button doesn’t work, copy and paste this link into your browser:
+            If the button does not work, copy and paste this link into your browser:
           </p>
 
           <p
@@ -117,4 +117,4 @@ const ResetPasswordEmail = ({ name, resetLink }: ResetPasswordEmailProps) => {
   );
 };
 
-export default ResetPasswordEmail;
+export default ResetPasswordTemplate;

@@ -1,5 +1,7 @@
+import ResetPasswordTemplate from "@/components/ResetPasswordTemplate";
 import { generateToken } from "@/lib/token";
 import { prisma } from "@/prisma/prisma";
+import resend from "@/resend/resend";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -12,14 +14,25 @@ export async function POST(req: NextRequest) {
 
   try {
     // Check if user exist
-    const isUser = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { email },
     });
 
     //  IMPORTANT: always return same response for security reasons
-    if (isUser) {
+    if (user) {
       // Generate & save reset token in DB
-      await generateToken(email);
+      const token = await generateToken(email);
+
+      // Send reset email
+      await resend.emails.send({
+        from: "Blogy <onboarding@resend.dev>",
+        to: email,
+        subject: "reset your password",
+        react: ResetPasswordTemplate({
+          name: user.name,
+          resetLink: `http://localhost:3000/reset-password?token=${token.token}`,
+        }),
+      });
     }
 
     return NextResponse.json(
