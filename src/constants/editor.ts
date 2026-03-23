@@ -8,7 +8,7 @@ export const TOOLBAR_BUTTONS = [
   { divider: true },
   { icon: FiBold, label: "Bold", markdownSyntax: "**bold text**" },
   { icon: FiItalic, label: "Italic", markdownSyntax: "*italic text*" },
-  { icon: FiCode, label: "Code", markdownSyntax: "`code snippet`" },
+  { icon: FiCode, label: "Code", markdownSyntax: "```js\ncode here\n```" },
   { divider: true },
   { icon: FiList, label: "Bullet list", markdownSyntax: "\n- " },
   { icon: LuListOrdered, label: "Ordered list", markdownSyntax: "\n1. " },

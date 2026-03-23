@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 export default function CreateBlog() {
   /* ==== State ==== */
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewContent, setPreviewContent] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
@@ -23,43 +24,34 @@ export default function CreateBlog() {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<INewBlogForm>(
-      {
-        resolver : yupResolver(createBlogSchema)
-      }
-  );
+  } = useForm<INewBlogForm>({
+    resolver: yupResolver(createBlogSchema),
+  });
 
-  console.log(errors)
   /* ==== Config ==== */
   const content = formConfig?.content;
   const settings = formConfig?.settings;
   /* ==== Handlers ==== */
   const handleCreate = async (data: INewBlogForm) => {
-    console.log(data)
+    console.log(data);
     setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("file", data.image[0]);
       // Upload image to cloudinary
-      const uploadImageReq = await fetch(
-        `/api/upload`,
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
+      const uploadImageReq = await fetch(`/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
       const uploadImageRes = await uploadImageReq.json();
       if (!uploadImageReq.ok) throw new Error(uploadImageRes.message);
       const imageUrl = uploadImageRes.url;
       const { url } = imageUrl;
 
-      const createBlogReq = await fetch(
-        `/api/blogs/create`,
-        {
-          method: "POST",
-          body: JSON.stringify({ ...data, image: url }),
-        },
-      );
+      const createBlogReq = await fetch(`/api/blogs/create`, {
+        method: "POST",
+        body: JSON.stringify({ ...data, image: url }),
+      });
       const createBlogRes = await createBlogReq.json();
       if (!createBlogReq.ok) throw new Error(createBlogRes.message);
       toast.success(createBlogRes.message);
@@ -100,6 +92,7 @@ export default function CreateBlog() {
             watch={watch}
             previewImage={previewImage}
             setPreviewImage={setPreviewImage}
+            previewContent={previewContent}
           />
         </div>
 
@@ -128,8 +121,9 @@ export default function CreateBlog() {
         <Button
           bgColor="bg-primary hover:bg-primary/90"
           className="px-5 py-2.5 text-sm text-white"
+          onClick={() => setPreviewContent(!previewContent)}
         >
-          Preview
+         {previewContent ? "back to Editor" : "Preview"}
         </Button>
         <Button
           onClick={handleSubmit(handleCreate)}

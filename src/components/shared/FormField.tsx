@@ -6,16 +6,16 @@ import {
   FieldValues,
   SetFieldValue,
   UseFormRegister,
-  UseFormWatch,
+  UseFormWatch
 } from "react-hook-form";
-import {
-  FiUploadCloud,
-} from "react-icons/fi";
+import { FiUploadCloud } from "react-icons/fi";
 import Button from "../ui/Button";
 import MyInput from "../ui/Input";
 import ErrorMessage from "./ErrorMessage";
 
 import { TOOLBAR_BUTTONS } from "@/constants";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface FormFieldProps<T extends FieldValues> {
   Fields: IField<T>[];
@@ -26,6 +26,7 @@ interface FormFieldProps<T extends FieldValues> {
   ToolBar?: boolean;
   textAreaRows?: number;
   previewImage?: string | null;
+  previewContent?: boolean;
   setPreviewImage?: (image: string | null) => void;
 }
 
@@ -38,6 +39,7 @@ const FormField = <T extends FieldValues>({
   ToolBar,
   textAreaRows,
   previewImage,
+  previewContent,
   setPreviewImage,
 }: FormFieldProps<T>) => {
   return (
@@ -51,10 +53,9 @@ const FormField = <T extends FieldValues>({
           )}
 
           {input.type === "textarea" ? (
-
             <div className="rounded-xl border border-gray-200  bg-white shadow-sm dark:border-gray-800 dark:bg-surfaceDark ">
               {/* Toolbar */}
-              {ToolBar && (
+              {ToolBar && previewContent === false && (
                 <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 px-4 py-2 dark:border-gray-700">
                   {TOOLBAR_BUTTONS.map((btn, i) =>
                     "divider" in btn ? (
@@ -70,7 +71,10 @@ const FormField = <T extends FieldValues>({
                         onClick={() => {
                           const currentValue = watch?.(input.name) || "";
                           if ("markdownSyntax" in btn) {
-                            setValue?.(input.name, currentValue + btn.markdownSyntax);
+                            setValue?.(
+                              input.name,
+                              currentValue + btn.markdownSyntax,
+                            );
                           }
                         }}
                         className="rounded p-1.5 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
@@ -82,12 +86,28 @@ const FormField = <T extends FieldValues>({
                 </div>
               )}
 
-              <textarea
-                rows={textAreaRows || 5}
-                placeholder={input.placeholder}
-                className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500 "
-                {...register(input.name)}
-              />
+              {previewContent === true ? (
+                // preview content in markdown format
+                <div className="prose prose-sm dark:prose-invert max-w-none px-6 py-4">
+                  {watch?.(input.name) ? (
+                    <Markdown remarkPlugins={[remarkGfm]}>
+                      {watch(input.name) as string}
+                    </Markdown>
+                  ) : (
+                    <p className="text-gray-400 dark:text-gray-500 italic">
+                      Nothing to preview yet…
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <textarea
+                  id={input.id}
+                  rows={textAreaRows || 5}
+                  placeholder={input.placeholder}
+                  className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500"
+                  {...register(input.name)}
+                />
+              )}
             </div>
           ) : input.type === "file" ? (
             /* ───────── FILE ───────── */
