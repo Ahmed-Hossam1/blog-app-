@@ -11,10 +11,6 @@ import {
 import {
   FiUploadCloud,
 } from "react-icons/fi";
-import {
-  LuListOrdered,
-  LuQuote,
-} from "react-icons/lu";
 import Button from "../ui/Button";
 import MyInput from "../ui/Input";
 import ErrorMessage from "./ErrorMessage";
