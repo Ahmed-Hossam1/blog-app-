@@ -3,6 +3,7 @@ import { prisma } from "../prisma/prisma";
 
 export const getBlogs = async () => {
   const blogs = await prisma.blog.findMany({
+    where: { status: "PUBLISHED" },
     include: {
       author: {
         select: {
@@ -17,8 +18,8 @@ export const getBlogs = async () => {
 
 /** Fetches a single blog by its slug, including comments tree and likes */
 export const getBlogBySlug = async (slug: string) => {
-  const blog = await prisma.blog.findUnique({
-    where: { slug },
+  const blog = await prisma.blog.findFirst({
+    where: { slug, status: "PUBLISHED" },
     include: {
       comments: true,
       likes: true,

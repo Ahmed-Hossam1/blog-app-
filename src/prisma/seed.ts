@@ -1,13 +1,11 @@
 import { prisma } from "./prisma";
-
 async function main() {
-  console.log("Seed data inserted successfully 🚀");
+  console.log("✅ Blogs seeded successfully");
 }
 
 main()
   .catch((e) => {
     console.error(e);
-    process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();

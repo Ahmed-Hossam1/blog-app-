@@ -29,6 +29,7 @@ export const getAuthorProfile = async (id: string) => {
       title: true,
       followers: { select: { followerId: true } },
       blogs: {
+        where: { status: "PUBLISHED" },
         include: {
           comments: true,
           author: {

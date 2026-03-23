@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
 
   const blogs = await prisma.blog.findMany({
     where: {
+      status: "PUBLISHED",
       title: {
         contains: query,
         mode: "insensitive",
