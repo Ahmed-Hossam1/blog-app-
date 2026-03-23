@@ -20,6 +20,8 @@ export default function CreateBlog() {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<INewBlogForm>(
       {
@@ -94,6 +96,8 @@ export default function CreateBlog() {
             Fields={content}
             register={register}
             errors={errors}
+            setValue={setValue}
+            watch={watch}
             previewImage={previewImage}
             setPreviewImage={setPreviewImage}
           />

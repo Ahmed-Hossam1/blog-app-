@@ -6,6 +6,7 @@ import {
   FieldValues,
   SetFieldValue,
   UseFormRegister,
+  UseFormWatch,
 } from "react-hook-form";
 import {
   FiBold,
@@ -23,31 +24,32 @@ import {
   LuListOrdered,
   LuQuote,
 } from "react-icons/lu";
-import ErrorMessage from "./ErrorMessage";
 import Button from "../ui/Button";
 import MyInput from "../ui/Input";
+import ErrorMessage from "./ErrorMessage";
 
 const TOOLBAR_BUTTONS = [
-  { icon: LuHeading1, label: "Heading 1" },
-  { icon: LuHeading2, label: "Heading 2" },
-  { icon: LuHeading3, label: "Heading 3" },
+  { icon: LuHeading1, label: "Heading 1", markdownSyntax: "# " },
+  { icon: LuHeading2, label: "Heading 2", markdownSyntax: "## " },
+  { icon: LuHeading3, label: "Heading 3", markdownSyntax: "### " },
   { divider: true },
-  { icon: FiBold, label: "Bold" },
-  { icon: FiItalic, label: "Italic" },
-  { icon: FiCode, label: "Code" },
+  { icon: FiBold, label: "Bold", markdownSyntax: "**bold text**" },
+  { icon: FiItalic, label: "Italic", markdownSyntax: "*italic text*" },
+  { icon: FiCode, label: "Code", markdownSyntax: "`code snippet`" },
   { divider: true },
-  { icon: FiList, label: "Bullet list" },
-  { icon: LuListOrdered, label: "Ordered list" },
-  { icon: LuQuote, label: "Blockquote" },
+  { icon: FiList, label: "Bullet list", markdownSyntax: "\n- " },
+  { icon: LuListOrdered, label: "Ordered list", markdownSyntax: "\n1. " },
+  { icon: LuQuote, label: "Blockquote", markdownSyntax: "\n> " },
   { divider: true },
-  { icon: FiLink, label: "Link" },
-  { icon: FiImage, label: "Image" },
+  { icon: FiLink, label: "Link", markdownSyntax: "[title](url)" },
+  { icon: FiImage, label: "Image", markdownSyntax: "![alt text](image-url)" },
 ];
 
 interface FormFieldProps<T extends FieldValues> {
   Fields: IField<T>[];
   register: UseFormRegister<T>;
   setValue?: SetFieldValue<T>;
+  watch?: UseFormWatch<T>;
   errors: FieldErrors;
   ToolBar?: boolean;
   textAreaRows?: number;
@@ -59,6 +61,8 @@ const FormField = <T extends FieldValues>({
   Fields,
   register,
   errors,
+  setValue,
+  watch,
   ToolBar,
   textAreaRows,
   previewImage,
@@ -75,6 +79,7 @@ const FormField = <T extends FieldValues>({
           )}
 
           {input.type === "textarea" ? (
+
             <div className="rounded-xl border border-gray-200  bg-white shadow-sm dark:border-gray-800 dark:bg-surfaceDark ">
               {/* Toolbar */}
               {ToolBar && (
@@ -90,6 +95,12 @@ const FormField = <T extends FieldValues>({
                         key={btn.label}
                         title={btn.label}
                         type="button"
+                        onClick={() => {
+                          const currentValue = watch?.(input.name) || "";
+                          if ("markdownSyntax" in btn) {
+                            setValue?.(input.name, currentValue + btn.markdownSyntax);
+                          }
+                        }}
                         className="rounded p-1.5 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                       >
                         <btn.icon size={20} />
