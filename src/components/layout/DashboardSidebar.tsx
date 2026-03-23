@@ -1,5 +1,5 @@
 "use client";
-import { asideLinksData } from "@/data";
+import { asideLinksData } from "@/constants";
 import { closeSidebar } from "@/redux/features/uiSlice";
 import { RootState } from "@/redux/store";
 import Link from "next/link";

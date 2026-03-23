@@ -4,7 +4,7 @@ import FormField from "@/components/shared/FormField";
 import Button from "@/components/ui/Button";
 import MyModal from "@/components/ui/MyModal";
 import { formConfig } from "@/constants/forms";
-import { tableHeaders } from "@/data/mockData";
+import { tableHeaders } from "@/constants";
 import { IBlog, INewBlogForm } from "@/types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

@@ -3,7 +3,7 @@ import StatusCard from "@/components/cards/StatusCard";
 import MyBlogsTable from "@/components/dashboard/my-blogs/MyBlogsTable";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
-import { MY_BLOGS_STATS } from "@/data/mockData";
+import { MOCK_MY_BLOGS_STATS_CONFIG } from "@/data/mock/dashboard";
 import { calculators, computeStatValues } from "@/lib/helpers";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
@@ -14,7 +14,7 @@ const MyBlogs = async () => {
 
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
-  const stats = computeStatValues(authorBlogs, MY_BLOGS_STATS, calculators);
+  const stats = computeStatValues(authorBlogs, MOCK_MY_BLOGS_STATS_CONFIG, calculators);
 
   return (
     <SectionWrapper>

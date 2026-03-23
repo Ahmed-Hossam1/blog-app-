@@ -6,42 +6,15 @@ import {
   HiOutlineArrowTrendingUp,
 } from "react-icons/hi2";
 
-/* ── Stat Cards ── */
-export const ANALYTICS_STATS = [
-  {
-    title: "Total Views",
-    value: "38.5K",
-    icon: HiOutlineEye,
-    color: "#6366f1",
-  },
-  {
-    title: "Unique Visitors",
-    value: "24.7K",
-    icon: HiOutlineUserGroup,
-    color: "#8b5cf6",
-  },
-  {
-    title: "Avg Time",
-    value: "3m 12s",
-    icon: HiOutlineClock,
-    color: "#06b6d4",
-  },
-  {
-    title: "Engagement",
-    value: "43.6%",
-    icon: HiOutlineChartBar,
-    color: "#f59e0b",
-  },
-  {
-    title: "Last 30 Days",
-    value: "43.6%",
-    icon: HiOutlineArrowTrendingUp,
-    color: "#10b981",
-  },
+export const MOCK_ANALYTICS_STATS = [
+  { title: "Total Views", value: "38.5K", icon: HiOutlineEye, color: "#6366f1" },
+  { title: "Unique Visitors", value: "24.7K", icon: HiOutlineUserGroup, color: "#8b5cf6" },
+  { title: "Avg Time", value: "3m 12s", icon: HiOutlineClock, color: "#06b6d4" },
+  { title: "Engagement", value: "43.6%", icon: HiOutlineChartBar, color: "#f59e0b" },
+  { title: "Last 30 Days", value: "43.6%", icon: HiOutlineArrowTrendingUp, color: "#10b981" },
 ];
 
-/* ── Views Over Time (Area / Line chart – last 30 days) ── */
-export const VIEWS_OVER_TIME = [
+export const MOCK_VIEWS_OVER_TIME = [
   { day: "1", views: 8500 },
   { day: "3", views: 9200 },
   { day: "5", views: 10500 },
@@ -62,8 +35,7 @@ export const VIEWS_OVER_TIME = [
   { day: "30", views: 27500 },
 ];
 
-/* ── Engagement Trend (Area chart – last 30 days) ── */
-export const ENGAGEMENT_TREND = [
+export const MOCK_ENGAGEMENT_TREND = [
   { day: "1", engagement: 28 },
   { day: "5", engagement: 35 },
   { day: "10", engagement: 42 },
@@ -75,30 +47,26 @@ export const ENGAGEMENT_TREND = [
   { day: "30", engagement: 52 },
 ];
 
-/* ── Traffic Sources (Horizontal bar chart) ── */
-export const TRAFFIC_SOURCES = [
+export const MOCK_TRAFFIC_SOURCES = [
   { name: "Google", value: 40, color: "#6366f1" },
   { name: "Direct", value: 30, color: "#8b5cf6" },
   { name: "Reddit", value: 18, color: "#a78bfa" },
   { name: "Other", value: 12, color: "#c4b5fd" },
 ];
 
-/* ── Traffic Sources Pie / Donut ── */
-export const TRAFFIC_PIE = [
+export const MOCK_TRAFFIC_PIE = [
   { name: "Organic", value: 70, color: "#6366f1" },
   { name: "Paid", value: 30, color: "#e2e8f0" },
 ];
 
-/* ── Top Categories Views (Horizontal bar) ── */
-export const TOP_CATEGORIES = [
+export const MOCK_TOP_CATEGORIES = [
   { name: "React", value: 45, color: "#6366f1" },
   { name: "Next.js", value: 25, color: "#8b5cf6" },
   { name: "Prisma", value: 18, color: "#a78bfa" },
   { name: "Others", value: 12, color: "#c4b5fd" },
 ];
 
-/* ── Comments Activity (Bar chart – 30 days) ── */
-export const COMMENTS_ACTIVITY = Array.from({ length: 30 }, (_, i) => ({
+export const MOCK_COMMENTS_ACTIVITY = Array.from({ length: 30 }, (_, i) => ({
   day: `${i + 1}`,
   comments: Math.floor(Math.random() * 45) + 5,
 }));

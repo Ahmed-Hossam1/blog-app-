@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaFacebookF, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FOOTER_QUICK_LINKS, SOCIAL_LINKS } from "@/constants";
 
 const Footer = () => {
   return (
@@ -22,27 +22,16 @@ const Footer = () => {
 
           {/* Social Icons */}
           <div className="flex items-center gap-4">
-            <Link
-              href="#"
-              className="rounded-full bg-baseInk p-2 text-white transition hover:opacity-80 dark:bg-gray-700 dark:hover:bg-gray-600"
-            >
-              <FaFacebookF size={14} />
-
-            </Link>
-            <Link
-              href="#"
-              className="rounded-full bg-baseInk p-2 text-white transition hover:opacity-80 dark:bg-gray-700 dark:hover:bg-gray-600"
-            >
-              <FaLinkedinIn size={14} />
-
-            </Link>
-            <Link
-              href="#"
-              className="rounded-full bg-baseInk p-2 text-white transition hover:opacity-80 dark:bg-gray-700 dark:hover:bg-gray-600"
-            >
-              <FaXTwitter size={14} />
-
-            </Link>
+            {SOCIAL_LINKS.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                title={link.name}
+                className={`rounded-full bg-baseInk p-2 text-white transition duration-300 ${link.color} dark:bg-gray-700`}
+              >
+                <link.icon size={14} />
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -50,20 +39,19 @@ const Footer = () => {
         <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="#" className="hover:text-gray-800 dark:hover:text-gray-200">
-              Terms & Conditions
-            </Link>
-
-            <span className="text-gray-300">•</span>
-            <Link href="#" className="hover:text-gray-800 dark:hover:text-gray-200">
-              Privacy Policy
-            </Link>
-
-            <span className="text-gray-300">•</span>
-            <Link href="#" className="hover:text-gray-800 dark:hover:text-gray-200">
-              Contact
-            </Link>
-
+            {FOOTER_QUICK_LINKS.map((link, i) => (
+              <div key={link.name} className="flex items-center gap-4">
+                <Link
+                  href={link.href}
+                  className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                >
+                  {link.name}
+                </Link>
+                {i < FOOTER_QUICK_LINKS.length - 1 && (
+                  <span className="text-gray-300">•</span>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

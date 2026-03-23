@@ -1,0 +1,24 @@
+import { INavLinks } from "@/types";
+import { HiOutlineBookmark, HiOutlineChartBar, HiOutlinePencilSquare, HiOutlineSquares2X2 } from "react-icons/hi2";
+import { MdOutlineArticle } from "react-icons/md";
+
+export const navLinksData: INavLinks[] = [
+  { id: 1, name: "Home", to: "/" },
+  { id: 2, name: "Blogs", to: "/blog" },
+  { id: 3, name: "Authors", to: "/authors" },
+  { id: 4, name: "Contact", to: "/contact" },
+];
+
+export const asideLinksData = [
+  { name: "Overview", icon: HiOutlineSquares2X2, href: "/dashboard" },
+  { name: "Manage Blogs", icon: MdOutlineArticle, href: "/dashboard/manage-blogs" },
+  { name: "Create Blog", icon: HiOutlinePencilSquare, href: "/dashboard/create-blog" },
+  { name: "Bookmarks", icon: HiOutlineBookmark, href: "/dashboard/bookmarks" },
+  { name: "Analytics", icon: HiOutlineChartBar, href: "/dashboard/analytics" },
+];
+
+export const FOOTER_QUICK_LINKS = [
+  { name: "Terms & Conditions", href: "#" },
+  { name: "Privacy Policy", href: "#" },
+  { name: "Contact", href: "/contact" },
+];

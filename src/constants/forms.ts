@@ -5,6 +5,8 @@ import {
   ISignInForm,
   ISignUpForm,
 } from "@/types";
+import { CATEGORY_OPTIONS } from "./categories";
+import { BLOG_STATUS_OPTIONS } from "./status";
 
 export const formConfig = {
   signIn: [
@@ -126,20 +128,7 @@ Happy writing 🚀`,
       placeholder: "Status",
       type: "select",
       label: "Status",
-      options: [
-        {
-          name: "Published",
-          value: "PUBLISHED",
-        },
-        {
-          name: "Draft",
-          value: "DRAFT",
-        },
-        {
-          name: "Archived",
-          value: "ARCHIVED",
-        },
-      ],
+      options: [...BLOG_STATUS_OPTIONS],
     },
     {
       id: "category",
@@ -147,20 +136,7 @@ Happy writing 🚀`,
       placeholder: "Category",
       type: "select",
       label: "Category",
-      options: [
-        {
-          name: "Mobile Development",
-          value: "Mobile Development",
-        },
-        {
-          name: "Web Development",
-          value: "Web Development",
-        },
-        {
-          name: "UI/UX",
-          value: "UI/UX",
-        },
-      ],
+      options: [...CATEGORY_OPTIONS],
     },
   ] as IField<INewBlogForm>[],
 };

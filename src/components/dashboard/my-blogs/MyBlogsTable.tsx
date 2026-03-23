@@ -11,8 +11,8 @@ import Tab from "@/components/shared/Tab";
 import Table from "@/components/shared/Table";
 import MyInput from "@/components/ui/Input";
 
-import { DashboardTabsData } from "@/data";
-import { tableHeaders } from "@/data/mockData";
+import { DashboardTabsData } from "@/constants";
+import { tableHeaders } from "@/constants";
 
 import { IBlog } from "@/types";
 import { BlogStatus } from "../../../../generated/prisma/enums";

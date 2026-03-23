@@ -8,13 +8,13 @@ import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 
 import {
-  ANALYTICS_STATS,
-  COMMENTS_ACTIVITY,
-  TOP_CATEGORIES,
-  TRAFFIC_PIE,
-  TRAFFIC_SOURCES,
-  VIEWS_OVER_TIME
-} from "@/data/analyticsData";
+  MOCK_ANALYTICS_STATS,
+  MOCK_COMMENTS_ACTIVITY,
+  MOCK_TOP_CATEGORIES,
+  MOCK_TRAFFIC_PIE,
+  MOCK_TRAFFIC_SOURCES,
+  MOCK_VIEWS_OVER_TIME
+} from "@/data/mock/analytics";
 
 const AnalyticsPage = () => {
   return (
@@ -40,7 +40,7 @@ const AnalyticsPage = () => {
 
       {/* Row 1: Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-        {ANALYTICS_STATS.map((stat, index) => (
+        {MOCK_ANALYTICS_STATS.map((stat, index) => (
           <StatusCard
             key={index}
             title={stat.title}
@@ -54,22 +54,22 @@ const AnalyticsPage = () => {
       {/* Row 2: Views Over Time + Traffic Sources */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2">
-          <ViewsOverTimeChart data={VIEWS_OVER_TIME} />
+          <ViewsOverTimeChart data={MOCK_VIEWS_OVER_TIME} />
         </div>
         <div className="lg:col-span-1">
-          <TrafficSourcesChart data={TRAFFIC_SOURCES} />
+          <TrafficSourcesChart data={MOCK_TRAFFIC_SOURCES} />
         </div>
       </div>
 
       {/* Row 3: Engagement Trend + Traffic Pie + Top Categories */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <TrafficPieChart data={TRAFFIC_PIE} />
-        <TopCategoriesChart data={TOP_CATEGORIES} />
+        <TrafficPieChart data={MOCK_TRAFFIC_PIE} />
+        <TopCategoriesChart data={MOCK_TOP_CATEGORIES} />
       </div>
 
       {/* Row 4: Comments Activity */}
       <div className="mb-8">
-        <CommentsActivityChart data={COMMENTS_ACTIVITY} />
+        <CommentsActivityChart data={MOCK_COMMENTS_ACTIVITY} />
       </div>
     </SectionWrapper>
   );

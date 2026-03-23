@@ -5,7 +5,7 @@ import RecentBlogsTable from "@/components/dashboard/overView/RecentPostsTable";
 import TopBlogs from "@/components/dashboard/overView/TopPosts";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
-import { PERFORMANCE_DATA, STATS_DATA } from "@/data/mockData";
+import { MOCK_PERFORMANCE_DATA, MOCK_STATS_CONFIG } from "@/data/mock/dashboard";
 import { calculators, computeStatValues } from "@/lib/helpers";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
@@ -15,7 +15,7 @@ const OverView = async () => {
 
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
-  const stats = computeStatValues(authorBlogs, STATS_DATA, calculators);
+  const stats = computeStatValues(authorBlogs, MOCK_STATS_CONFIG, calculators);
 
   return (
     <SectionWrapper>
@@ -43,7 +43,7 @@ const OverView = async () => {
         {/* Row 2 - Left: Performance Chart */}
         <div className="lg:col-span-2">
           <Charts
-            data={PERFORMANCE_DATA}
+            data={MOCK_PERFORMANCE_DATA}
             title=" Performance Overview"
             description="blogs growth over the last few months"
           />
