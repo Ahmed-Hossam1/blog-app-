@@ -3,6 +3,7 @@ import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import MyInput from "@/components/ui/Input";
+import ProfileUpdateForm from "@/components/dashboard/settings/ProfileUpdateForm";
 import { getAuthorBasicInfo } from "@/services";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -47,25 +48,11 @@ const SettingsPage = async () => {
                         <p className="text-xs text-gray-500 text-center">JPG, GIF or PNG. <br /> Max size of 2MB</p>
                     </div>
 
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Display Name</label>
-                            <MyInput placeholder="John Doe" value={author?.name} disabled />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Job Title</label>
-                            <MyInput placeholder="Software Engineer" value={author?.title as string} disabled />
-                        </div>
-                        <div className="md:col-span-2 space-y-2">
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Bio</label>
-                            <textarea
-                                className="w-full h-32 border border-gray dark:border-gray-600 rounded-md p-3 focus:outline-none focus:border-primary dark:bg-transparent dark:text-white transition"
-                                placeholder="Tell us a bit about yourself..."
-                                value={author?.bio as string}
-                                disabled
-                            />
-                        </div>
-                    </div>
+                    <ProfileUpdateForm initialData={{
+                        name: author?.name as string,
+                        title: author?.title as string,
+                        bio: author?.bio as string
+                    }} />
                 </div>
             </section>
 
@@ -135,7 +122,7 @@ const SettingsPage = async () => {
                 <Button className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                     Cancel
                 </Button>
-                <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95">
+                <Button type="submit" form="profile-form" className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95">
                     Save Changes
                 </Button>
             </div>
