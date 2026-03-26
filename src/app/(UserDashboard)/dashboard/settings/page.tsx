@@ -1,19 +1,15 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ProfileUpdateForm from "@/components/dashboard/settings/ProfileUpdateForm";
+import EmailUpdateSection from "@/components/dashboard/settings/EmailUpdateSection";
+import PasswordUpdateSection from "@/components/dashboard/settings/PasswordUpdateSection";
+import DangerZoneSection from "@/components/dashboard/settings/DangerZoneSection";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
-import MyInput from "@/components/ui/Input";
 import { getAuthorBasicInfo } from "@/services";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import {
-    FiCamera,
-    FiLock,
-    FiMail,
-    FiTrash2,
-    FiUser
-} from "react-icons/fi";
+import { FiCamera, FiUser } from "react-icons/fi";
 
 const SettingsPage = async () => {
   const session = await getServerSession(authOptions);
@@ -41,7 +37,7 @@ const SettingsPage = async () => {
             <div className="relative group cursor-pointer">
               <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-primary/10">
                 <Image
-                  src="/default-image.png"
+                  src={author?.image || "/default-image.png"}
                   alt="Profile"
                   width={128}
                   height={128}
@@ -58,6 +54,7 @@ const SettingsPage = async () => {
           </div>
 
           <ProfileUpdateForm
+            userId={userId as string}
             initialData={{
               name: author?.name as string,
               title: author?.title as string,
@@ -66,63 +63,20 @@ const SettingsPage = async () => {
           />
         </div>
       </section>
+
       {/* Account Section */}
       <section className="bg-white dark:bg-surfaceDark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 transition-all">
-        <div className="flex items-center gap-2 mb-6 text-primary">
-          <FiMail size={20} />
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            Account Settings
-          </h2>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2 text-primary">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email Address
-            </label>
-            <MyInput
-              type="email"
-              placeholder="john@example.com"
-              value={author?.email as string}
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
-              Password
-            </label>
-            <Button className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 flex items-center gap-2 w-full justify-center">
-              <FiLock size={16} /> Update Password
-            </Button>
-          </div>
+          <EmailUpdateSection
+            initialEmail={author?.email as string}
+            userId={userId as string}
+          />
+          <PasswordUpdateSection userId={userId as string} />
         </div>
       </section>
+      
       {/* Danger Zone */}
-      <section className="bg-red-50 dark:bg-red-900/10 rounded-2xl p-6 border border-red-100 dark:border-red-900/30 transition-all">
-        <div className="flex items-center gap-2 mb-4 text-red-600">
-          <FiTrash2 size={20} />
-          <h2 className="text-xl font-bold">Danger Zone</h2>
-        </div>
-        <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
-          Permanently delete your account and all of your content. This action
-          is irreversible.
-        </p>
-        <Button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors duration-200">
-          Delete My Account
-        </Button>
-      </section>
-      {/* Save Button */}
-      <div className="flex justify-end gap-3 pt-4">
-        <Button className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          form="profile-form"
-          className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95"
-        >
-          Save Changes
-        </Button>
-      </div>
+      <DangerZoneSection userId={userId as string} />
     </SectionWrapper>
   );
 };

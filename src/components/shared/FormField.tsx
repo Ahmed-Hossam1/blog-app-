@@ -28,6 +28,7 @@ interface FormFieldProps<T extends FieldValues> {
   previewImage?: string | null;
   previewContent?: boolean;
   setPreviewImage?: (image: string | null) => void;
+  disabled?: boolean;
 }
 
 const FormField = <T extends FieldValues>({
@@ -41,6 +42,7 @@ const FormField = <T extends FieldValues>({
   previewImage,
   previewContent,
   setPreviewImage,
+  disabled,
 }: FormFieldProps<T>) => {
   return (
     <>
@@ -104,7 +106,8 @@ const FormField = <T extends FieldValues>({
                   id={input.id}
                   rows={textAreaRows || 5}
                   placeholder={input.placeholder}
-                  className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500"
+                  disabled={disabled}
+                  className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   {...register(input.name)}
                 />
               )}
@@ -150,8 +153,9 @@ const FormField = <T extends FieldValues>({
             /* ───────── SELECT ───────── */
             <select
               id={input.id}
+              disabled={disabled}
               {...register(input.name)}
-              className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 dark:bg-transparent dark:text-white dark:border-gray-600"
+              className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 dark:bg-transparent dark:text-white dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               defaultValue=""
             >
               <option value="" disabled>
@@ -168,9 +172,10 @@ const FormField = <T extends FieldValues>({
             <MyInput
               id={input.id}
               type={input.type}
+              disabled={disabled}
               {...register(input.name)}
               placeholder={input.placeholder}
-              className="w-full rounded-md border p-3 text-sm"
+              className="w-full rounded-md border p-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             />
           )}
 

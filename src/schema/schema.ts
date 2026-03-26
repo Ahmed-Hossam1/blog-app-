@@ -38,3 +38,13 @@ export const updateProfileSchema = yup.object({
   title: yup.string().required("Job Title is required").min(2, "Title must be at least 2 characters"),
   bio: yup.string().optional(),
 });
+
+export const updateEmailSchema = yup.object({
+  email: yup.string().required("Email is required").email("Invalid email"),
+});
+
+export const updatePasswordSchema = yup.object({
+  oldPassword: yup.string().required("Old password is required"),
+  newPassword: yup.string().required("New password is required").min(6, "Password must be at least 6 characters"),
+  confirmPassword: yup.string().required("Please confirm your password").oneOf([yup.ref("newPassword")], "Passwords must match"),
+});

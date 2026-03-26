@@ -1,11 +1,9 @@
 "use client";
 import { asideLinksData } from "@/constants";
-import { closeSidebar } from "@/redux/features/uiSlice";
-import { RootState } from "@/redux/store";
+import { useDashboard } from "@/providers/DashboardProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiLogOut, FiSettings, FiX } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -13,9 +11,8 @@ import { useTheme } from "next-themes";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
-  const { isSidebarOpen } = useSelector((state: RootState) => state.ui);
-  const dispatch = useDispatch();
-  const { theme,  } = useTheme();
+  const { isSidebarOpen, closeSidebar } = useDashboard();
+  const { theme } = useTheme();
 
   return (
     <>
@@ -23,7 +20,7 @@ export default function DashboardSidebar() {
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => dispatch(closeSidebar())}
+          onClick={closeSidebar}
         />
       )}
 
@@ -39,7 +36,7 @@ export default function DashboardSidebar() {
       >
         {/* Close button for mobile */}
         <Button
-          onClick={() => dispatch(closeSidebar())}
+          onClick={closeSidebar}
           className="absolute right-4 top-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden transition"
         >
           <FiX size={20} />
@@ -69,7 +66,7 @@ export default function DashboardSidebar() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => dispatch(closeSidebar())}
+                onClick={closeSidebar}
                 className={`
                   flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
                   transition-all duration-200 capitalize
@@ -91,7 +88,7 @@ export default function DashboardSidebar() {
         <div className="absolute bottom-0 w-full px-3 pb-6 space-y-1 border-t border-gray-200 dark:border-gray-800 pt-4">
           <Link
             href="/dashboard/settings"
-            onClick={() => dispatch(closeSidebar())}
+            onClick={closeSidebar}
             className={`
               flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
               transition-all duration-200

@@ -1,18 +1,18 @@
 "use client";
-import { openSidebar } from "@/redux/features/uiSlice";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
+import { useDashboard } from "@/providers/DashboardProvider";
 import Image from "next/image";
 import { FiBell, FiMenu } from "react-icons/fi";
 import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineDarkMode } from "react-icons/md";
-import { useDispatch } from "react-redux";
 import Button from "../ui/Button";
 
 export default function DashboardNavbar() {
   const { theme, setTheme } = useTheme();
   const { data } = useSession();
-  const dispatch = useDispatch();
+  const { openSidebar } = useDashboard();
+  const user = data?.user
 
   return (
     <header className="fixed top-0 right-0 left-0 lg:left-64 h-16 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-surfaceDark text-gray-900 dark:text-white z-30 transition-colors duration-300">
@@ -21,7 +21,7 @@ export default function DashboardNavbar() {
         <div className="flex items-center gap-4">
           {/* Mobile Menu Toggle */}
           <Button
-            onClick={() => dispatch(openSidebar())}
+            onClick={openSidebar}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
           >
             <FiMenu size={20} />
@@ -62,7 +62,7 @@ export default function DashboardNavbar() {
             </div>
 
             <Image
-              src={data?.user?.image || "https://i.pravatar.cc/100"}
+              src={user?.image || "/default-user.png"}
               alt="user"
               width={40}
               height={40}

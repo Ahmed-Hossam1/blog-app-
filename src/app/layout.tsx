@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
-import ReduxProvider from "@/providers/Redux";
+
 
 
 const geistSans = Geist({
@@ -37,11 +37,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Session>
-          <ReduxProvider>
-            <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-              {children}
-            </ThemeProvider>
-          </ReduxProvider>
+          <ThemeProvider attribute="class" enableSystem defaultTheme="system">
+            {children}
+          </ThemeProvider>
           <ToastContainer
             position="top-center"
             autoClose={5000}
