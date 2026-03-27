@@ -10,27 +10,34 @@ interface PasswordUpdateSectionProps {
   userId: string;
 }
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { updatePasswordSchema } from "@/schema/schema";
+
 export default function PasswordUpdateSection({
   userId,
 }: PasswordUpdateSectionProps) {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [passwords, setPasswords] = useState({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(updatePasswordSchema),
+    defaultValues: {
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
   });
 
-  const handleUpdate = async () => {
-    if (!passwords.oldPassword || !passwords.newPassword || !passwords.confirmPassword) {
-      toast.error("All fields are required");
-      return;
-    }
-    if (passwords.newPassword !== passwords.confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
+  const updatePassword = async (data: {
+    oldPassword: string;
+    newPassword: string;
+  }) => {
     setLoading(true);
     try {
       const response = await fetch("/api/user/update-password", {
@@ -38,22 +45,21 @@ export default function PasswordUpdateSection({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id: userId,
-          oldPassword: passwords.oldPassword,
-          newPassword: passwords.newPassword,
+          oldPassword: data.oldPassword,
+          newPassword: data.newPassword,
         }),
       });
 
       const result = await response.json();
 
-      if (response.ok) {
-        toast.success(result.message || "Password updated successfully");
-        setShowForm(false);
-        setPasswords({ oldPassword: "", newPassword: "", confirmPassword: "" });
-      } else {
-        toast.error(result.message || "Failed to update password");
-      }
+      if (!response.ok)
+        throw new Error(result.message || "Failed to update password");
+      toast.success(result.message);
+      setShowForm(false);
+      reset();
     } catch (error) {
-      toast.error("Something went wrong");
+      console.log(error);
+      toast.error((error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -76,46 +82,74 @@ export default function PasswordUpdateSection({
   }
 
   return (
-    <div className="space-y-3 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
+    <form
+      onSubmit={handleSubmit(updatePassword)}
+      className="space-y-3 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800"
+    >
       <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-500">Current Password</label>
+        <label className="text-xs font-medium text-gray-500">
+          Current Password
+        </label>
         <MyInput
           type="password"
-          value={passwords.oldPassword}
-          onChange={(e) => setPasswords({ ...passwords, oldPassword: e.target.value })}
+          {...register("oldPassword")}
+          className={errors.oldPassword ? "border-red-500" : ""}
         />
+        {errors.oldPassword && (
+          <p className="text-red-500 text-xs mt-0.5">
+            {errors.oldPassword.message}
+          </p>
+        )}
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-500">New Password</label>
+        <label className="text-xs font-medium text-gray-500">
+          New Password
+        </label>
         <MyInput
           type="password"
-          value={passwords.newPassword}
-          onChange={(e) => setPasswords({ ...passwords, newPassword: e.target.value })}
+          {...register("newPassword")}
+          className={errors.newPassword ? "border-red-500" : ""}
         />
+        {errors.newPassword && (
+          <p className="text-red-500 text-xs mt-0.5">
+            {errors.newPassword.message}
+          </p>
+        )}
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-500">Confirm Password</label>
+        <label className="text-xs font-medium text-gray-500">
+          Confirm Password
+        </label>
         <MyInput
           type="password"
-          value={passwords.confirmPassword}
-          onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
+          {...register("confirmPassword")}
+          className={errors.confirmPassword ? "border-red-500" : ""}
         />
+        {errors.confirmPassword && (
+          <p className="text-red-500 text-xs mt-0.5">
+            {errors.confirmPassword.message}
+          </p>
+        )}
       </div>
       <div className="flex gap-2 pt-2">
         <Button
-          onClick={() => setShowForm(false)}
+          type="button"
+          onClick={() => {
+            setShowForm(false);
+            reset();
+          }}
           className="flex-1 bg-white dark:bg-surfaceDark border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm"
         >
           Cancel
         </Button>
         <Button
-          onClick={handleUpdate}
+          type="submit"
           isLoading={loading}
           className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm shadow-md"
         >
           Save
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

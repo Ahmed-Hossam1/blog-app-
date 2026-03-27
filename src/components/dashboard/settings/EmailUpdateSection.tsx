@@ -4,45 +4,55 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import MyInput from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { updateEmailSchema } from "@/schema/schema";
+import { FiEdit2 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 interface EmailUpdateSectionProps {
   initialEmail: string;
   userId: string;
 }
 
-import { FiEdit2 } from "react-icons/fi";
-
 export default function EmailUpdateSection({
   initialEmail,
   userId,
 }: EmailUpdateSectionProps) {
-  const [email, setEmail] = useState(initialEmail);
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(updateEmailSchema),
+    defaultValues: {
+      email: initialEmail,
+    },
+  });
 
-  const handleUpdate = async () => {
-    if (!email) {
-      toast.error("Email is required");
-      return;
-    }
+  const updateEmail = async (data: { email: string }) => {
     setLoading(true);
     try {
       const response = await fetch("/api/user/update-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: userId, email }),
+        body: JSON.stringify({ id: userId, email: data.email }),
       });
 
       const result = await response.json();
 
-      if (response.ok) {
-        toast.success(result.message || "Email updated successfully");
-        setIsEditing(false);
-      } else {
-        toast.error(result.message || "Failed to update email");
-      }
+      if (!response.ok)
+        throw new Error(result.message || "Failed to update email");
+      toast.success(result.message);
+      setIsEditing(false)
+      router.refresh()
     } catch (error) {
-      toast.error("Something went wrong");
+      console.log(error);
+      toast.error((error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -65,21 +75,26 @@ export default function EmailUpdateSection({
           </button>
         )}
       </div>
-      
-      <div className="space-y-2">
+
+      <form onSubmit={handleSubmit(updateEmail)} className="space-y-2">
         <MyInput
           type="email"
           placeholder="john@example.com"
-          value={email}
           disabled={!isEditing}
-          onChange={(e) => setEmail(e.target.value)}
-          className="disabled:opacity-50 disabled:cursor-not-allowed"
+          {...register("email")}
+          className={`disabled:opacity-50 disabled:cursor-not-allowed ${
+            errors.email ? "border-red-500" : ""
+          }`}
         />
+        {errors.email && (
+          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+        )}
         {isEditing && (
           <div className="flex gap-2">
             <Button
+              type="button"
               onClick={() => {
-                setEmail(initialEmail);
+                reset();
                 setIsEditing(false);
               }}
               className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium"
@@ -87,7 +102,7 @@ export default function EmailUpdateSection({
               Cancel
             </Button>
             <Button
-              onClick={handleUpdate}
+              type="submit"
               isLoading={loading}
               className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md"
             >
@@ -95,7 +110,7 @@ export default function EmailUpdateSection({
             </Button>
           </div>
         )}
-      </div>
+      </form>
     </div>
   );
 }

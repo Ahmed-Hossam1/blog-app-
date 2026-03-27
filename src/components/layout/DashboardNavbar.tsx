@@ -72,7 +72,7 @@ export default function DashboardNavbar() {
 
           {/* User Avatar - Mobile */}
           <Image
-            src={data?.user?.image || "https://i.pravatar.cc/100"}
+            src={user?.image || "https://i.pravatar.cc/100"}
             alt="user"
             width={36}
             height={36}
