@@ -1,15 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { updateProfileSchema } from "@/schema/schema";
 import FormField from "@/components/shared/FormField";
-import { IField } from "@/types";
-import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
-import { useState } from "react";
 import Button from "@/components/ui/Button";
+import { formConfig } from "@/constants/forms";
+import { updateProfileSchema } from "@/schema/schema";
+import { IProfileForm } from "@/types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FiEdit2 } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 interface ProfileUpdateFormProps {
   userId: string;
@@ -20,30 +21,7 @@ interface ProfileUpdateFormProps {
   };
 }
 
-const fields: IField<any>[] = [
-  {
-    name: "name",
-    id: "name",
-    type: "text",
-    label: "Display Name",
-    placeholder: "John Doe",
-  },
-  {
-    name: "title",
-    id: "title",
-    type: "text",
-    label: "Job Title",
-    placeholder: "Software Engineer",
-  },
-  {
-    name: "bio",
-    id: "bio",
-    type: "textarea",
-    label: "Bio",
-    placeholder: "Tell us a bit about yourself...",
-  },
-]
-
+const formInputs = formConfig.profileForm;
 export default function ProfileUpdateForm({
   initialData,
   userId,
@@ -57,7 +35,7 @@ export default function ProfileUpdateForm({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<IProfileForm>({
     resolver: yupResolver(updateProfileSchema),
     defaultValues: {
       name: initialData?.name || "",
@@ -66,7 +44,7 @@ export default function ProfileUpdateForm({
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: IProfileForm) => {
     setLoading(true);
     try {
       const response = await fetch("/api/user/update-profile", {
@@ -115,20 +93,11 @@ export default function ProfileUpdateForm({
         className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
         <FormField
-          Fields={fields.slice(0, 2)}
+          Fields={formInputs}
           register={register}
           errors={errors}
           disabled={!isEditing}
         />
-        <div className="md:col-span-2">
-          <FormField
-            Fields={fields.slice(2)}
-            register={register}
-            errors={errors}
-            textAreaRows={4}
-            disabled={!isEditing}
-          />
-        </div>
 
         {isEditing && (
           <div className="md:col-span-2 flex justify-end gap-3 pt-4 border-t border-gray-100 dark:border-gray-800 mt-4">

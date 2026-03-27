@@ -9,6 +9,8 @@ A full-stack, feature-rich blog application built with **Next.js 16**, **MongoDB
 - **💬 Comments System**: Interactive commenting feature on blog posts.
 - **👤 Author Profiles**: Dedicated pages for blog authors.
 - **📱 Responsive UI**: Beautifully designed layouts using **Tailwind CSS 4** and **Headless UI**.
+- **⚙️ Modern Settings**: Refactored dashboard settings using **react-hook-form** and **Yup** for robust validation and improved UX.
+- **⚖️ Legal Pages**: Dedicated "Terms & Conditions" and "Privacy Policy" pages for transparency.
 - **🔍 Explore Activities**: Filtering and sorting functionalities for discovering content.
 - **📩 Contact Page**: Integrated contact form for user feedback.
 
@@ -19,6 +21,7 @@ A full-stack, feature-rich blog application built with **Next.js 16**, **MongoDB
 - **ORM**: [Prisma](https://www.prisma.io/)
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Form Management**: [react-hook-form](https://react-hook-form.com/) & [Yup](https://github.com/jquense/yup)
 - **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
 - **Components**: [Headless UI](https://headlessui.com/)
 

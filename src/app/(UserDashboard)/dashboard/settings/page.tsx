@@ -1,10 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import ProfileUpdateForm from "@/components/dashboard/settings/ProfileUpdateForm";
+import DangerZoneSection from "@/components/dashboard/settings/DangerZoneSection";
 import EmailUpdateSection from "@/components/dashboard/settings/EmailUpdateSection";
 import PasswordUpdateSection from "@/components/dashboard/settings/PasswordUpdateSection";
-import DangerZoneSection from "@/components/dashboard/settings/DangerZoneSection";
+import ProfileUpdateForm from "@/components/dashboard/settings/ProfileUpdateForm";
 import SectionWrapper from "@/components/shared/SectionWrapper";
-import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { getAuthorBasicInfo } from "@/services";
 import { getServerSession } from "next-auth";

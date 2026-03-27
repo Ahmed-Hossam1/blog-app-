@@ -82,9 +82,8 @@ export default function EmailUpdateSection({
           placeholder="john@example.com"
           disabled={!isEditing}
           {...register("email")}
-          className={`disabled:opacity-50 disabled:cursor-not-allowed ${
-            errors.email ? "border-red-500" : ""
-          }`}
+          className={`disabled:opacity-50 disabled:cursor-not-allowed ${errors.email ? "border-red-500" : ""
+            }`}
         />
         {errors.email && (
           <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>

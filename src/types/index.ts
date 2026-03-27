@@ -106,6 +106,11 @@ export interface INewBlogForm {
   status: BlogStatus;
   category: string;
 }
+export interface IProfileForm {
+  name: string;
+  title: string;
+  bio: string;
+}
 export interface ISessionResponse {
   data: {
     user: {
@@ -129,3 +134,4 @@ export interface StatItem<T> {
   icon: IconType;
   color: string;
 }
+

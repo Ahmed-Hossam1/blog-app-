@@ -2,6 +2,7 @@ import {
   IContactForm,
   IField,
   INewBlogForm,
+  IProfileForm,
   ISignInForm,
   ISignUpForm,
 } from "@/types";
@@ -163,4 +164,28 @@ Happy writing 🚀`,
       ],
     },
   ] as IField<INewBlogForm>[],
+
+  profileForm: [
+    {
+      id: "name",
+      name: "name",
+      placeholder: "John Doe",
+      type: "text",
+      label: "Display Name",
+    },
+    {
+      id: "title",
+      name: "title",
+      placeholder: "Software Engineer",
+      type: "text",
+      label: "Job Title",
+    },
+    {
+      id: "bio",
+      name: "bio",
+      placeholder: "Tell us a bit about yourself...",
+      type: "textarea",
+      label: "Bio",
+    },
+  ] as IField<IProfileForm>[],
 };
