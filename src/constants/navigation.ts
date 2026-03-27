@@ -18,7 +18,7 @@ export const asideLinksData = [
 ];
 
 export const FOOTER_QUICK_LINKS = [
-  { name: "Terms & Conditions", href: "#" },
-  { name: "Privacy Policy", href: "#" },
+  { name: "Terms & Conditions", href: "/terms" },
+  { name: "Privacy Policy", href: "/privacy" },
   { name: "Contact", href: "/contact" },
 ];
