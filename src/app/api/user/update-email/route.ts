@@ -1,9 +1,18 @@
 import { prisma } from "@/prisma/prisma";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user || !session.user.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const userId = session.user.id;
+
   const body = await req.json();
-  const { id, email } = body;
+  const { email } = body;
 
   try {
     if (!email) {
@@ -23,7 +32,7 @@ export async function POST(req: NextRequest) {
       );
 
     await prisma.user.update({
-      where: { id },
+      where: { id: userId },
       data: {
         email,
       },
