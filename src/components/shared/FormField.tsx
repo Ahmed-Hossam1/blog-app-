@@ -142,7 +142,7 @@ const FormField = <T extends FieldValues>({
                   const file = e.target.files?.[0];
                   if (!file) return;
                   //  preview image
-                  const imageUrl = URL.createObjectURL(file); // create preview link for image ** blob:http://localhost:3000/abc-123-xyz** instead of File
+                  const imageUrl = URL.createObjectURL(file); // create preview link for image ** blob:http://localhost/...** instead of File
                   setPreviewImage?.(imageUrl);
                   // trigger onChange event when file is changed
                   register(input.name).onChange(e);

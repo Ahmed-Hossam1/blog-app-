@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       const html = await render(
         ResetPasswordTemplate({
           name: user.name,
-          resetLink: `http://localhost:3000/reset-password?token=${token.token}`,
+          resetLink: `${process.env.NEXT_LOCAL_URL}/reset-password?token=${token.token}`,
         }),
       );
 

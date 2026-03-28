@@ -3,7 +3,7 @@ type EmailTemplateProps = {
   verificationLink: string;
 };
 
-const EmailTemplate = ({ name, verificationLink }: EmailTemplateProps) => {
+const ConfirmEmailTemplate = ({ name, verificationLink }: EmailTemplateProps) => {
   return (
     <div
       style={{
@@ -93,4 +93,4 @@ const EmailTemplate = ({ name, verificationLink }: EmailTemplateProps) => {
   );
 };
 
-export default EmailTemplate;
+export default ConfirmEmailTemplate;

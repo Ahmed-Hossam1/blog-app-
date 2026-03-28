@@ -6,11 +6,13 @@ import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
 import { contactSchema } from "@/schema/schema";
 import { IContactForm } from "@/types";
-import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { BaseSyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEnvelope, FaLocationDot, FaPhone } from "react-icons/fa6";
+import { FaEnvelope, FaLocationDot, FaPhone, FaShareNodes } from "react-icons/fa6";
+import { SOCIAL_LINKS } from "@/constants";
+import Link from "next/link";
+import { toast } from "react-toastify";
 
 /* ==== Config ==== */
 const contactForm = formConfig.contactForm;
@@ -76,7 +78,7 @@ const Page = () => {
               </h2>
               <p className="mb-8 text-gray-600 dark:text-gray-300">
                 Have a question, suggestion, or just want to say hello? We are
-                always here to help you.
+                always here to help you. Whether you are a reader, a fellow blogger, or a potential partner, feel free to reach out.
               </p>
             </div>
 
@@ -90,9 +92,9 @@ const Page = () => {
                     Our Location
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    123 Blog Street, Content City,
+                    Based in Egypt
                     <br />
-                    Web State, 12345
+                    Serving Readers Globally
                   </p>
                 </div>
               </div>
@@ -106,9 +108,9 @@ const Page = () => {
                     Email Address
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    info@firstnextapp.com
+                    info@blogy.com
                     <br />
-                    support@firstnextapp.com
+                    support@blogy.com
                   </p>
                 </div>
               </div>
@@ -119,13 +121,36 @@ const Page = () => {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-medium dark:text-white">
-                    Phone Number
+                    Support Line
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    +1 (555) 123-4567
+                    +1 (555) BLOG-HELP
                     <br />
-                    +1 (555) 987-6543
+                    Available Mon-Fri, 9am-6pm
                   </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 mt-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <FaShareNodes className="text-xl" />
+                </div>
+                <div>
+                  <h3 className="mb-1 text-lg font-medium dark:text-white">
+                    Follow Us
+                  </h3>
+                  <div className="flex items-center gap-4 mt-2">
+                    {SOCIAL_LINKS.map((link) => (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        title={link.name}
+                        className={`text-gray-500 hover:text-primary transition duration-300 dark:text-gray-400 dark:hover:text-primary`}
+                      >
+                        <link.icon size={20} />
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

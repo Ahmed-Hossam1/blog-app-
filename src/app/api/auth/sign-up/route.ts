@@ -1,6 +1,6 @@
-import EmailTemplate from "@/components/EmailTemplate";
-import { generateToken } from "@/lib/token";
+import { default as ConfirmEmailTemplate, default as EmailTemplate } from "@/components/ConfirmEmailTemplate";
 import transporter from "@/lib/nodemailer";
+import { generateToken } from "@/lib/token";
 import { render } from "@react-email/render";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
         // regenerate token + resend email
         const verificationToken = await generateToken(email);
 
-        const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken.token}`;
+        const verificationLink = `${process.env.NEXT_LOCAL_URL}/verify-email?token=${verificationToken.token}`;
 
         const html = await render(
-          EmailTemplate({ name: existingUser.name, verificationLink }),
+          ConfirmEmailTemplate({ name: existingUser.name, verificationLink }),
         );
 
         await transporter.sendMail({
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const verificationToken = await generateToken(email);
 
     // verification link that will be sent
-    const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken.token}`;
+    const verificationLink = `${process.env.NEXT_LOCAL_URL}/verify-email?token=${verificationToken.token}`;
 
     //   ===== Send Verification Email  =====
     const html = await render(EmailTemplate({ name, verificationLink }));
