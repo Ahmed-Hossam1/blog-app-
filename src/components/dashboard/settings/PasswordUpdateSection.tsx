@@ -41,7 +41,7 @@ export default function PasswordUpdateSection({
     setLoading(true);
     try {
       const response = await fetch("/api/user/update-password", {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id: userId,

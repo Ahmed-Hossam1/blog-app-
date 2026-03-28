@@ -25,7 +25,7 @@ const BookMarkButton = ({
   async function addToBookmark() {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/bookmark`, {
+      const res = await fetch(`/api/blogs/bookmark`, {
         method: "POST",
         body: JSON.stringify({
           blogId,

@@ -1,4 +1,7 @@
-import { default as ConfirmEmailTemplate, default as EmailTemplate } from "@/components/ConfirmEmailTemplate";
+import {
+  default as ConfirmEmailTemplate,
+  default as EmailTemplate,
+} from "@/components/ConfirmEmailTemplate";
 import transporter from "@/lib/nodemailer";
 import { generateToken } from "@/lib/token";
 import { render } from "@react-email/render";
@@ -10,6 +13,13 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { name, email, password } = body;
+
+    if (!name || !email || !password) {
+      return NextResponse.json(
+        { message: "missing required fields" },
+        { status: 400 },
+      );
+    }
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -77,7 +87,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Verification email sent  successfully check your email inbox" },
+      {
+        message: "Verification email sent  successfully check your email inbox",
+      },
       { status: 200 },
     );
   } catch (error) {

@@ -22,7 +22,7 @@ const SearchPage = () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `/api/search?query=${query}`,
+          `/api/blogs/search?query=${query}`,
         );
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);

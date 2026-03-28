@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import MyModal from "./ui/MyModal";
+import Link from "next/link";
 
 interface Follower {
+  id : string
   name: string;
   image: string | null;
 }
@@ -79,7 +81,8 @@ export default function FollowersAvatarGroup({
       >
         <div className="mt-4 max-h-[60vh] overflow-y-auto space-y-2 pr-2 custom-scrollbar">
           {followers.map((follower, index) => (
-            <div
+            <Link
+              href={`/authors/${follower.id}`}
               key={index}
               className="flex items-center gap-4 rounded-xl p-3 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer group"
             >
@@ -95,7 +98,7 @@ export default function FollowersAvatarGroup({
               <div className="font-semibold text-gray-900 dark:text-white truncate">
                 {follower.name}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </MyModal>

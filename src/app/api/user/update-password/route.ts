@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session || !session.user || !session.user.id) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

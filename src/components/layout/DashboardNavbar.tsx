@@ -1,9 +1,9 @@
 "use client";
+import { useDashboard } from "@/providers/DashboardProvider";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useDashboard } from "@/providers/DashboardProvider";
 import Image from "next/image";
-import { FiBell, FiMenu } from "react-icons/fi";
+import { FiMenu } from "react-icons/fi";
 import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineDarkMode } from "react-icons/md";
 import Button from "../ui/Button";
@@ -42,12 +42,6 @@ export default function DashboardNavbar() {
             ) : (
               <IoSunnyOutline size={20} />
             )}
-          </Button>
-
-          {/* Notification */}
-          <Button className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
-            <FiBell size={20} />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-surfaceDark" />
           </Button>
 
           {/* User Profile */}

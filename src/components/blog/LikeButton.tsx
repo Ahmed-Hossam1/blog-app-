@@ -21,7 +21,7 @@ const LikeButton = ({ likes, blogId, isLiked , authorId }: LikeButtonProps) => {
   async function addLike() {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/like`, {
+      const res = await fetch(`/api/blogs/like`, {
         method: "POST",
         body: JSON.stringify({
           blogId,

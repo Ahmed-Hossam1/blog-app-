@@ -19,7 +19,7 @@ const RemoveBookmarkButton = ({ blogId }: RemoveBookmarkButtonProps) => {
   async function removeBookmark() {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/bookmark`, {
+      const res = await fetch(`/api/blogs/bookmark`, {
         method: "POST",
         body: JSON.stringify({
           blogId,

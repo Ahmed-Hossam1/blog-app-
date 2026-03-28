@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return NextResponse.json(
-      { message: "Please sign in first" },
+      { message: "unauthorized" },
       { status: 401 },
     );
   }

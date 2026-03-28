@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       where: { email },
     });
 
-    //  IMPORTANT: always return same response for security reasons
+    //  IMPORTANT: return same response for security reasons
     if (user) {
       // Generate & save reset token in DB
       const token = await generateToken(email);

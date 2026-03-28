@@ -5,6 +5,7 @@ export const getFollowersBasicInfo = async (ids: string[]) => {
   const author = await prisma.user.findMany({
     where: { id: { in: ids } },
     select: {
+      id: true,
       name: true,
       image: true,
     },

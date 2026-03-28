@@ -21,7 +21,7 @@ export default function FollowButton({ followingId , isFollowing }: FollowButton
   const handleFollowToggle = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/follow`, {
+      const res = await fetch(`/api/user/follow`, {
         method: "POST",
         body: JSON.stringify({
           followerId,
