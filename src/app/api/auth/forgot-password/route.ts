@@ -1,7 +1,8 @@
 import ResetPasswordTemplate from "@/components/ResetPasswordTemplate";
+import transporter from "@/lib/nodemailer";
 import { generateToken } from "@/lib/token";
 import { prisma } from "@/prisma/prisma";
-import resend from "@/resend/resend";
+import { render } from "@react-email/render";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -23,22 +24,26 @@ export async function POST(req: NextRequest) {
       // Generate & save reset token in DB
       const token = await generateToken(email);
 
-      // Send reset email
-      await resend.emails.send({
-        from: "Blogy <onboarding@resend.dev>",
-        to: email,
-        subject: "reset your password",
-        react: ResetPasswordTemplate({
+      // change react component jsx to html because nodemailer can't handle jsx only html
+      const html = await render(
+        ResetPasswordTemplate({
           name: user.name,
           resetLink: `http://localhost:3000/reset-password?token=${token.token}`,
         }),
-      });
-    }
+      );
 
-    return NextResponse.json(
-      { message: "If this email exists, a reset link has been sent" },
-      { status: 200 },
-    );
+      await transporter.sendMail({
+        from: `"Blogy" <${process.env.EMAIL_USER}>`,
+        to: email,
+        subject: "Reset Password",
+        html,
+      });
+
+      return NextResponse.json(
+        { message: "If this email exists, a reset link has been sent" },
+        { status: 200 },
+      );
+    }
   } catch (error) {
     console.log(error);
     return NextResponse.json(

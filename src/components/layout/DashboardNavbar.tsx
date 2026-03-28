@@ -54,10 +54,10 @@ export default function DashboardNavbar() {
           <div className="hidden sm:flex items-center gap-3 pl-2 border-l border-gray-200 dark:border-gray-800">
             <div className="text-right text-sm">
               <p className="font-medium text-gray-900 dark:text-white">
-                {data?.user?.name || "User"}
+                {user?.name || "User"}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                {data?.user?.email || "user@example.com"}
+                {user?.email || "user@example.com"}
               </p>
             </div>
 

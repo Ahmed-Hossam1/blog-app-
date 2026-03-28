@@ -6,17 +6,13 @@ import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
 import { contactSchema } from "@/schema/schema";
 import { IContactForm } from "@/types";
-import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseSyntheticEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLocationDot, FaPhone } from "react-icons/fa6";
-import { toast } from "react-toastify";
 
 /* ==== Config ==== */
-const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID!;
-const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID!;
-const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 const contactForm = formConfig.contactForm;
 
 const Page = () => {
@@ -24,6 +20,7 @@ const Page = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IContactForm>({
     resolver: yupResolver(contactSchema),
@@ -32,54 +29,28 @@ const Page = () => {
 
   /*===== FUNCTIONS ===== */
 
-  /*
-        react-hook-form provides the form values as a plain object (data).
-        
-        However, emailjs.sendForm does NOT accept an object.
-        It requires the real HTML <form> element because it reads values directly
-        from the DOM inputs and textarea.
-        
-        So we get the form from the event:
-        
-        e.target === HTMLFormElement
-        
-        Instead of using:
-        ❌ data  -> { name, email, message }
-        
-        We use:
-        ✅ form element -> <form>...</form>
-
-*/
-
-  const onSubmit = async (data: IContactForm, e?: BaseSyntheticEvent) => {
-    /*
-        BaseSyntheticEvent is React’s generic event type.
-          
-        react-hook-form does not guarantee a specific event type
-        like FormEvent<HTMLFormElement>, so it passes a more general one.
-          
-        The event is optional because handleSubmit may call onSubmit
-        without an event in some cases (e.g. programmatic submission).
-          
-        We only use it to access e.target (the <form> element).
-*/
-
-    const form = e?.target as HTMLFormElement;
-    if (!form) return;
+  const onSubmit = async (data: IContactForm) => {
     try {
       setIsLoading(true);
-      const res = await emailjs.sendForm(
-        serviceId,
-        templateId,
-        form,
-        publicKey,
-      );
-      if (res.status !== 200) return;
-      toast.success("message sent successfully");
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to send message");
+      }
+      
+      toast.success(result.message || "Message sent successfully");
+      reset();
     } catch (error) {
-      toast.error("failed to send message");
-      console.log(error);
-      setIsLoading(false);
+      toast.error("Something went wrong");
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

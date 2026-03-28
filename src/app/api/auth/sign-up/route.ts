@@ -1,6 +1,7 @@
 import EmailTemplate from "@/components/EmailTemplate";
 import { generateToken } from "@/lib/token";
-import resend from "@/resend/resend";
+import transporter from "@/lib/nodemailer";
+import { render } from "@react-email/render";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
@@ -22,11 +23,15 @@ export async function POST(req: NextRequest) {
 
         const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken.token}`;
 
-        await resend.emails.send({
-          from: "Blogy <onboarding@resend.dev>",
+        const html = await render(
+          EmailTemplate({ name: existingUser.name, verificationLink }),
+        );
+
+        await transporter.sendMail({
+          from: `"Blogy" <${process.env.EMAIL_USER}>`,
           to: email,
           subject: "Verify your email",
-          react: EmailTemplate({ name: existingUser.name, verificationLink }),
+          html,
         });
 
         // update token
@@ -62,11 +67,13 @@ export async function POST(req: NextRequest) {
     const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken.token}`;
 
     //   ===== Send Verification Email  =====
-    await resend.emails.send({
-      from: "Blogy <onboarding@resend.dev>",
+    const html = await render(EmailTemplate({ name, verificationLink }));
+
+    await transporter.sendMail({
+      from: `"Blogy" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Verify your email",
-      react: EmailTemplate({ name, verificationLink }),
+      html,
     });
 
     return NextResponse.json(
