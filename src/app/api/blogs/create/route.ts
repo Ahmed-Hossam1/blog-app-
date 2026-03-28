@@ -1,5 +1,4 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { INewBlogForm } from "@/types";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
@@ -10,7 +9,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const body: INewBlogForm = await req.json();
+  const body = await req.json();
   const { title, image, content, category, status } = body;
 
   // ===== Calculate Read Time =====
@@ -18,6 +17,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const wordCount = content.split(/\s+/).length;
   const readTime = `${Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE))} min read`;
 
+  
   // ===== Generate URL-Safe Slug =====
   const slug = title
     .toLowerCase()
