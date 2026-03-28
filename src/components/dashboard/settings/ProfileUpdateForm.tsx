@@ -48,7 +48,7 @@ export default function ProfileUpdateForm({
     setLoading(true);
     try {
       const response = await fetch("/api/user/update-profile", {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: userId, ...data }),
       });
@@ -63,6 +63,7 @@ export default function ProfileUpdateForm({
         toast.error(result.message || "Failed to update profile");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

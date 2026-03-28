@@ -14,7 +14,11 @@ export default function DangerZoneSection({ userId }: DangerZoneSectionProps) {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete your account? This action is irreversible.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete your account? This action is irreversible.",
+      )
+    ) {
       return;
     }
 
@@ -34,6 +38,7 @@ export default function DangerZoneSection({ userId }: DangerZoneSectionProps) {
         toast.error(result.message || "Failed to delete account");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -47,8 +52,8 @@ export default function DangerZoneSection({ userId }: DangerZoneSectionProps) {
         <h2 className="text-xl font-bold">Danger Zone</h2>
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
-        Permanently delete your account and all of your content. This action
-        is irreversible.
+        Permanently delete your account and all of your content. This action is
+        irreversible.
       </p>
       <Button
         onClick={handleDelete}

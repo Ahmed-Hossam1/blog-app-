@@ -45,7 +45,7 @@ export const createBlogSchema = yup.object({
 export const updateProfileSchema = yup.object({
   name: yup.string().required("Name is required").min(3, "Name must be at least 3 characters").max(40, "Name can't be more than 40 characters").matches(/^[a-zA-Z\s]+$/, "Name must contain only letters and spaces"),
   title: yup.string().required("Job Title is required").min(2, "Title must be at least 2 characters"),
-  bio: yup.string().optional(),
+  bio: yup.string().default(""),
 });
 
 // updateEmail  schema
