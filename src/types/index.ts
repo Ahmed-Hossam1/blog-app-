@@ -35,6 +35,7 @@ export interface IAuthor {
   id?: string;
   name: string;
   image: string | null;
+  email?: string | null;
   title?: string | null;
   bio?: string | null;
   blogs?: IBlog[];
