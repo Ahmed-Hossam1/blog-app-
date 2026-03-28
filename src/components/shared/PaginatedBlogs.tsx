@@ -17,6 +17,15 @@ const PaginatedBlogs = ({ data: blogs }: IProps) => {
   const firstIndex = (currentPage - 1) * limit;
   const lastIndex = firstIndex + limit;
   const slicedData = blogs.slice(firstIndex, lastIndex);
+
+  if (slicedData.length === 0)
+    return (
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-zinc-900 dark:text-white">
+          No Blogs Found
+        </h2>
+      </div>
+    );
   return (
     <>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
