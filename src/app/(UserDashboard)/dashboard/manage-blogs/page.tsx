@@ -14,7 +14,11 @@ const MyBlogs = async () => {
 
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
-  const stats = computeStatValues(authorBlogs, MOCK_MY_BLOGS_STATS_CONFIG, calculators);
+  const stats = computeStatValues(
+    authorBlogs,
+    MOCK_MY_BLOGS_STATS_CONFIG,
+    calculators,
+  );
 
   return (
     <SectionWrapper>

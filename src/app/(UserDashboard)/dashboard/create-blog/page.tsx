@@ -8,7 +8,7 @@ import { formConfig } from "@/constants/forms";
 import { createBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -71,6 +71,34 @@ export default function CreateBlog() {
     }
   };
 
+  // useEffect to load content from local storage
+  useEffect(() => {
+    const content = localStorage.getItem("content");
+    if (content) {
+      setValue("content", content);
+    }
+  }, []);
+
+  // useEffect to save content to local storage
+  const test = watch("content");
+  useEffect(() => {
+    if (test) {
+      localStorage.setItem("content", test);
+    }
+  }, [test]);
+
+   useEffect(()=> {
+    const timer = setTimeout(()=> {
+      // api call 
+
+    },3000)
+
+     return ()=> {
+      clearTimeout(timer)
+     }
+
+  },[])
+  
   /* ==== JSX ==== */
   return (
     <SectionWrapper>
@@ -123,7 +151,7 @@ export default function CreateBlog() {
           className="px-5 py-2.5 text-sm text-white"
           onClick={() => setPreviewContent(!previewContent)}
         >
-         {previewContent ? "back to Editor" : "Preview"}
+          {previewContent ? "back to Editor" : "Preview"}
         </Button>
         <Button
           onClick={handleSubmit(handleCreate)}
