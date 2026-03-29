@@ -17,11 +17,11 @@ export interface ITab {
 export interface IBaseBlog {
   id: string;
   authorId: string;
-  title: string;
-  slug: string;
-  category: string;
-  image: string;
-  readTime: string;
+  title: string | null;
+  slug: string | null;
+  category: string | null;
+  image: string | null;
+  readTime: string | null;
   status: BlogStatus;
   views: number;
   likesCount: number;
@@ -61,7 +61,7 @@ export interface IComment {
 export interface IBlog extends IBaseBlog {
   replies?: IComment[];
   likes: ILike[];
-  content: string;
+  content: string | null;
   comments: IComment[];
 }
 

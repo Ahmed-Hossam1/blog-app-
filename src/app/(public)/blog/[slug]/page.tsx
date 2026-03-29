@@ -39,8 +39,8 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           {/* ======= Image ======= */}
           <div className="relative h-105 w-full overflow-hidden">
             <Image
-              src={blog.image}
-              alt={blog.slug}
+              src={blog.image || "/default-image.png"}
+              alt={blog.slug || "blog"}
               fill
               priority
               className="object-cover"

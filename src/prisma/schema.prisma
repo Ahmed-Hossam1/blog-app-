@@ -16,30 +16,30 @@ datasource db {
 
 
 model Blog {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug                  String ?   @unique
+  title                 String ? 
+  category              String ? 
+  image                 String ? 
+  
+  readTime              String ? 
+  content               String ? 
 
-  slug      String   @unique
-  title     String
-  category  String
-  image     String
+  status  BlogStatus    @default(DRAFT)
 
-  readTime String
-  status  BlogStatus
+  views                 Int @default(0)
+  likesCount            Int @default(0)
+  commentsCount         Int @default(0)
+  bookmarksCount        Int @default(0)
 
-  views   Int @default(0)
-  likesCount   Int @default(0)
-  commentsCount Int @default(0)
-  bookmarksCount Int @default(0)
+  createdAt             DateTime @default(now())
 
-  content   String
-
-  createdAt  DateTime @default(now())
   // Relations
-  authorId String @db.ObjectId
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  likes Like[]
-  comments Comment[]
-  bookMarks      BookMark[]
+  authorId              String @db.ObjectId
+  author   User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes                 Like[]
+  comments              Comment[]
+  bookMarks             BookMark[]
 }
 
 model Comment {

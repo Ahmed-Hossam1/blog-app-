@@ -65,11 +65,10 @@ const Table = ({
           {tableBody.map((blog) => (
             <tr
               key={blog.id}
-              className={`hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors group ${
-                selectedIds.includes(blog.id)
+              className={`hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors group ${selectedIds.includes(blog.id)
                   ? "bg-indigo-50/50 dark:bg-indigo-900/10"
                   : ""
-              }`}
+                }`}
             >
               {needCheckbox && (
                 <td className="px-6 py-4 w-10">
@@ -94,13 +93,12 @@ const Table = ({
               </td>
               <td className="px-6 py-4">
                 <span
-                  className={`text-[10px] uppercase font-bold px-2 py-1 rounded-full ${
-                    blog.status === "PUBLISHED"
+                  className={`text-[10px] uppercase font-bold px-2 py-1 rounded-full ${blog.status === "PUBLISHED"
                       ? "text-emerald-700 bg-emerald-100 dark:text-emerald-400 dark:bg-emerald-950/30"
                       : blog.status === "DRAFT"
                         ? "text-zinc-700 bg-zinc-100 dark:text-zinc-400 dark:bg-zinc-800/50"
                         : "text-amber-700 bg-amber-100 dark:text-amber-400 dark:bg-amber-950/30"
-                  }`}
+                    }`}
                 >
                   {blog.status}
                 </span>

@@ -12,12 +12,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const body = await req.json();
   const { title, image, content, category, status } = body;
 
+  if (!title || !image || !content || !category || !status) {
+    return NextResponse.json(
+      { message: "Missing required fields" },
+      { status: 400 },
+    );
+  }
   // ===== Calculate Read Time =====
   const WORDS_PER_MINUTE = 200;
   const wordCount = content.split(/\s+/).length;
   const readTime = `${Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE))} min read`;
 
-  
   // ===== Generate URL-Safe Slug =====
   const slug = title
     .toLowerCase()

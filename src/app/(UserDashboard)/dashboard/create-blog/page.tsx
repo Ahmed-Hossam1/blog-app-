@@ -17,6 +17,7 @@ export default function CreateBlog() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [previewContent, setPreviewContent] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSavingDraft, setIsSavingDraft] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -29,11 +30,11 @@ export default function CreateBlog() {
   });
 
   /* ==== Config ==== */
-  const content = formConfig?.content;
+  const left = formConfig?.content;
   const settings = formConfig?.settings;
+
   /* ==== Handlers ==== */
   const handleCreate = async (data: INewBlogForm) => {
-    console.log(data);
     setIsLoading(true);
     try {
       const formData = new FormData();
@@ -63,42 +64,98 @@ export default function CreateBlog() {
       });
       // Reset preview image to null to hide preview after successful upload
       setPreviewImage(null);
-      setIsLoading(false);
+      // Clear localStorage after successful publish
+      localStorage.removeItem("draft-content");
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
+    } finally {
       setIsLoading(false);
     }
   };
 
-  // useEffect to load content from local storage
+  /* ==== Save Draft Handler ==== */
+  const handleSaveDraft = async () => {
+    const title = watch("title");
+    const content = watch("content");
+    const category = watch("category");
+
+    // At least one field should have content
+    if (!title && !content && !category) {
+      toast.error("Please fill in at least one field to save a draft");
+      return;
+    }
+
+    setIsSavingDraft(true);
+    try {
+      // If there's an image file, upload it first
+      let imageUrl: string | null = null;
+      const imageField = watch("image");
+      if (imageField.length > 0) {
+        const formData = new FormData();
+        formData.append("file", imageField[0]);
+        const uploadRes = await fetch(`/api/upload`, {
+          method: "POST",
+          body: formData,
+        });
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) throw new Error(uploadData.message || "Failed to upload image");
+        imageUrl = uploadData.url?.url;
+      }
+
+      const res = await fetch(`/api/blogs/draft/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title || null,
+          content: content || null,
+          category: category || null,
+          image: imageUrl,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to save draft");
+
+      toast.success("Draft saved successfully");
+      localStorage.removeItem("draft-content");
+    } catch (error) {
+      console.error(error);
+      toast.error((error as Error).message);
+    } finally {
+      setIsSavingDraft(false);
+    }
+  };
+
+  const content = watch("content");
+
+  // Load content from localStorage on mount
   useEffect(() => {
-    const content = localStorage.getItem("content");
-    if (content) {
-      setValue("content", content);
+    const storedContent = localStorage.getItem("draft-content");
+    if (storedContent) {
+      setValue("content", storedContent);
     }
   }, []);
 
-  // useEffect to save content to local storage
-  const test = watch("content");
+  // Autosave content to localStorage as user types
   useEffect(() => {
-    if (test) {
-      localStorage.setItem("content", test);
+    if (content) {
+      localStorage.setItem("draft-content", content);
     }
-  }, [test]);
+  }, [content]);
 
-   useEffect(()=> {
-    const timer = setTimeout(()=> {
-      // api call 
+  // useEffect(() => {
+  //   // if (!content) return;
 
-    },3000)
+  //   const timer = setTimeout(() => {
+  //     handleSaveDraft()
+  //   }, 300);
 
-     return ()=> {
-      clearTimeout(timer)
-     }
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [content]);
 
-  },[])
-  
   /* ==== JSX ==== */
   return (
     <SectionWrapper>
@@ -113,7 +170,7 @@ export default function CreateBlog() {
           <FormField
             ToolBar={true}
             textAreaRows={15}
-            Fields={content}
+            Fields={left}
             register={register}
             errors={errors}
             setValue={setValue}
@@ -143,7 +200,13 @@ export default function CreateBlog() {
       </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-end gap-3">
-        <Button className="border border-gray-300 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
+        <Button
+          onClick={handleSaveDraft}
+          isLoading={isSavingDraft}
+          disabled={isSavingDraft || isLoading}
+          loadingText="Saving..."
+          className="border border-gray-300 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+        >
           Save Draft
         </Button>
         <Button
@@ -157,7 +220,7 @@ export default function CreateBlog() {
           onClick={handleSubmit(handleCreate)}
           bgColor="bg-primary hover:bg-primary/90"
           isLoading={isLoading}
-          disabled={isLoading}
+          disabled={isLoading || isSavingDraft}
           loadingText="Publishing..."
           className="px-5 py-2.5 text-sm text-white"
         >

@@ -286,8 +286,8 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
           {/* Bulk Actions */}
           <div
             className={`flex items-center gap-3 w-full md:w-auto transition-all duration-300 ${selectedIds.length > 0
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4 pointer-events-none"
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
               }`}
           >
             <Button
