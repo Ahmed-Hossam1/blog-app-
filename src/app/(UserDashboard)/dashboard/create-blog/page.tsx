@@ -8,7 +8,7 @@ import { formConfig } from "@/constants/forms";
 import { createBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -76,12 +76,13 @@ export default function CreateBlog() {
     }
   };
 
+  // get the form values
+  const title = watch("title");
+  const content = watch("content");
+  const category = watch("category");
+
   // Save draft
   const handleSaveDraft = async () => {
-    const title = watch("title");
-    const content = watch("content");
-    const category = watch("category");
-
     if (!title && !content && !category) return;
 
     setIsSavingDraft(true);
@@ -125,7 +126,7 @@ export default function CreateBlog() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
 
-        localStorage.setItem("draftId", data.blogId); 
+        localStorage.setItem("draftId", data.blogId);
       }
 
       //  UPDATE
@@ -146,8 +147,6 @@ export default function CreateBlog() {
     }
   };
 
-  const content = watch("content");
-
   // Load content from localStorage on mount
   useEffect(() => {
     const storedContent = localStorage.getItem("draft-content");
@@ -157,23 +156,22 @@ export default function CreateBlog() {
   }, []);
 
   // Autosave content to localStorage as user types
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
-    if (content) {
-      localStorage.setItem("draft-content", content);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
-  }, [content]);
 
-  // useEffect(() => {
-  //   // if (!content) return;
+    if (!title && !content && !category) return;
 
-  //   const timer = setTimeout(() => {
-  //     handleSaveDraft()
-  //   }, 300);
+    const timer = setTimeout(() => {
+      handleSaveDraft();
+    }, 3000);
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [content]);
+    return () => clearTimeout(timer);
+  }, [title, content, category]);
 
   /* ==== JSX ==== */
   return (
