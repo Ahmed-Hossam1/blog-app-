@@ -3,20 +3,33 @@ import { prisma } from "@/prisma/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  context: RouteContext<"/api/blogs/draft/read/[id]">,
+) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return NextResponse.json({ message: "unauthorized" }, { status: 401 });
   }
 
-  const authorId = session.user.id;
-  const body = await req.json();
-  const { id } = body;
+  const { id } = await context.params;
+
+  // get id from params
+  if (!id) {
+    return NextResponse.json(
+      { message: "Blog ID is required" },
+      { status: 400 },
+    );
+  }
 
   try {
     const blog = await prisma.blog.findUnique({
-      where: { id, authorId, status: "DRAFT" },
+      where: { id },
     });
+
+    if (!blog) {
+      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+    }
 
     return NextResponse.json({ blog }, { status: 200 });
   } catch (error) {

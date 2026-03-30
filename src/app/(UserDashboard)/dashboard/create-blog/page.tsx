@@ -67,7 +67,7 @@ export default function CreateBlog() {
       // Reset preview image to null to hide preview after successful upload
       setPreviewImage(null);
       // Clear localStorage after successful publish
-      localStorage.removeItem("draft-content");
+      localStorage.removeItem("draftId");
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
@@ -149,9 +149,19 @@ export default function CreateBlog() {
 
   // Load content from localStorage on mount
   useEffect(() => {
-    const storedContent = localStorage.getItem("draft-content");
+    const storedContent = localStorage.getItem("draftId");
     if (storedContent) {
-      setValue("content", storedContent);
+      const getDraftBlog = async () => {
+        try {
+          const res = await fetch(`/api/blogs/draft/read/${storedContent}`);
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message);
+          reset(data.blog);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getDraftBlog();
     }
   }, []);
 
