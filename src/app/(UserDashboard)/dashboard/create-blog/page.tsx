@@ -34,7 +34,9 @@ export default function CreateBlog() {
   const settings = formConfig?.settings;
 
   /* ==== Handlers ==== */
-  const handleCreate = async (data: INewBlogForm) => {
+
+  // publish Blogs
+  const handlePublish = async (data: INewBlogForm) => {
     setIsLoading(true);
     try {
       const formData = new FormData();
@@ -74,54 +76,71 @@ export default function CreateBlog() {
     }
   };
 
-  /* ==== Save Draft Handler ==== */
+  // Save draft
   const handleSaveDraft = async () => {
     const title = watch("title");
     const content = watch("content");
     const category = watch("category");
 
-    // At least one field should have content
-    if (!title && !content && !category) {
-      toast.error("Please fill in at least one field to save a draft");
-      return;
-    }
+    if (!title && !content && !category) return;
 
     setIsSavingDraft(true);
+
     try {
-      // If there's an image file, upload it first
-      let imageUrl: string | null = null;
+      let imageUrl: string | undefined;
       const imageField = watch("image");
-      if (imageField.length > 0) {
+
+      if (imageField?.length > 0) {
         const formData = new FormData();
         formData.append("file", imageField[0]);
+
         const uploadRes = await fetch(`/api/upload`, {
           method: "POST",
           body: formData,
         });
+
         const uploadData = await uploadRes.json();
-        if (!uploadRes.ok) throw new Error(uploadData.message || "Failed to upload image");
+        if (!uploadRes.ok) throw new Error(uploadData.message);
+
         imageUrl = uploadData.url?.url;
       }
 
-      const res = await fetch(`/api/blogs/draft/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: title || null,
-          content: content || null,
-          category: category || null,
-          image: imageUrl,
-        }),
-      });
+      const draftId = localStorage.getItem("draftId");
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to save draft");
+      const payload = {
+        title: title || undefined,
+        content: content || undefined,
+        category: category || undefined,
+        image: imageUrl,
+      };
 
-      toast.success("Draft saved successfully");
-      localStorage.removeItem("draft-content");
+      //  CREATE
+      if (!draftId) {
+        const res = await fetch(`/api/blogs/draft/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+
+        localStorage.setItem("draftId", data.blogId); 
+      }
+
+      //  UPDATE
+      else {
+        await fetch(`/api/blogs/draft/update`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: draftId,
+            ...payload,
+          }),
+        });
+      }
     } catch (error) {
       console.error(error);
-      toast.error((error as Error).message);
     } finally {
       setIsSavingDraft(false);
     }
@@ -217,7 +236,7 @@ export default function CreateBlog() {
           {previewContent ? "back to Editor" : "Preview"}
         </Button>
         <Button
-          onClick={handleSubmit(handleCreate)}
+          onClick={handleSubmit(handlePublish)}
           bgColor="bg-primary hover:bg-primary/90"
           isLoading={isLoading}
           disabled={isLoading || isSavingDraft}
