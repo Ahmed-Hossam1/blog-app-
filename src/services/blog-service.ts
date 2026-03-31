@@ -69,3 +69,19 @@ export const getAuthorBlogs = async (userId: string) => {
 
   return blogsWithReplies;
 };
+
+// get Draft blogs
+export const getDraftBlogs = async (authorId: string) => {
+  const blogs = await prisma.blog.findMany({
+    where: { status: "DRAFT", authorId },
+    include: {
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+  return blogs;
+};

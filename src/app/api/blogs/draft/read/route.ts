@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { prisma } from "@/prisma/prisma";
+import { getDraftBlogs } from "@/services";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -12,9 +12,7 @@ export async function GET() {
   const id = session.user.id;
 
   try {
-    const blogs = await prisma.blog.findMany({
-      where: { authorId: id, status: "DRAFT" },
-    });
+    const blogs = await getDraftBlogs(id);
 
     return NextResponse.json({ blogs }, { status: 200 });
   } catch (error) {
