@@ -8,16 +8,18 @@ import { formConfig } from "@/constants/forms";
 import { createBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-export default function CreateBlog() {
+export default function Editor() {
   /* ==== State ==== */
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [previewContent, setPreviewContent] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSavingDraft, setIsSavingDraft] = useState<boolean>(false);
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -29,7 +31,9 @@ export default function CreateBlog() {
     resolver: yupResolver(createBlogSchema),
   });
 
-  /* ==== Config ==== */
+  const blogId = searchParams.get("id");
+
+  /* ==== CONFIG ==== */
   const left = formConfig?.content;
   const settings = formConfig?.settings;
 
@@ -90,13 +94,14 @@ export default function CreateBlog() {
     try {
       let imageUrl: string | undefined;
       const imageField = watch("image");
-
-      if (imageField?.length > 0) {
+      console.log(imageField);
+      if (!imageField) {
         const formData = new FormData();
         formData.append("file", imageField[0]);
 
         const uploadRes = await fetch(`/api/upload`, {
           method: "POST",
+          headers: { "Content-Type": "multipart/form-data" },
           body: formData,
         });
 
@@ -106,8 +111,6 @@ export default function CreateBlog() {
         imageUrl = uploadData.url?.url;
       }
 
-      const draftId = localStorage.getItem("draftId");
-
       const payload = {
         title: title || undefined,
         content: content || undefined,
@@ -116,7 +119,7 @@ export default function CreateBlog() {
       };
 
       //  CREATE
-      if (!draftId) {
+      if (!blogId) {
         const res = await fetch(`/api/blogs/draft/create`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -125,8 +128,6 @@ export default function CreateBlog() {
 
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
-
-        localStorage.setItem("draftId", data.blogId);
       }
 
       //  UPDATE
@@ -135,7 +136,7 @@ export default function CreateBlog() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: draftId,
+            id: blogId,
             ...payload,
           }),
         });
@@ -147,13 +148,12 @@ export default function CreateBlog() {
     }
   };
 
-  // Load content from localStorage on mount
+  // Load content from DB on mount
   useEffect(() => {
-    const storedContent = localStorage.getItem("draftId");
-    if (storedContent) {
+    if (blogId) {
       const getDraftBlog = async () => {
         try {
-          const res = await fetch(`/api/blogs/draft/read/${storedContent}`);
+          const res = await fetch(`/api/blogs/draft/read/${blogId}`);
           const data = await res.json();
           if (!res.ok) throw new Error(data.message);
           reset(data.blog);
@@ -163,9 +163,9 @@ export default function CreateBlog() {
       };
       getDraftBlog();
     }
-  }, []);
+  }, [blogId]);
 
-  // Autosave content to localStorage as user types
+  // Autosave BLOG to DB as Draft
   const isFirstRender = useRef(true);
 
   useEffect(() => {

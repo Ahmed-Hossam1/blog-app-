@@ -3,10 +3,14 @@ import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import Link from "next/link";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import Button from "@/components/ui/Button";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import { getDraftBlogs } from "@/services";
 
-const DraftPage = () => {
-  // Mock empty drafts for UI purpose (No logic added as requested)
-  const draftBlogs: any[] = [];
+const DraftPage = async () => {
+  const session = await getServerSession(authOptions);
+  const id = session?.user.id;
+  const draftBlogs = await getDraftBlogs(id as string);
 
   return (
     <SectionWrapper>
@@ -41,7 +45,8 @@ const DraftPage = () => {
             No Drafts Yet
           </h3>
           <p className="text-gray-500 dark:text-gray-400 text-center max-w-md mb-8">
-            You haven't saved any draft blogs yet. Start writing your next great article and save it as a draft to finish later.
+            You haven not saved any draft blogs yet. Start writing your next
+            great article and save it as a draft to finish later.
           </p>
           <Link href="/dashboard/create-blog">
             <Button className="px-8 py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all">

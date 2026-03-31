@@ -12,7 +12,7 @@ export const navLinksData: INavLinks[] = [
 export const asideLinksData = [
   { name: "Overview", icon: HiOutlineSquares2X2, href: "/dashboard" },
   { name: "Manage Blogs", icon: MdOutlineArticle, href: "/dashboard/manage-blogs" },
-  { name: "Create Blog", icon: HiOutlinePencilSquare, href: "/dashboard/create-blog" },
+  { name: "editor", icon: HiOutlinePencilSquare, href: "/dashboard/editor" },
   { name: "Draft", icon: HiOutlineDocumentText, href: "/dashboard/draft" },
   { name: "Bookmarks", icon: HiOutlineBookmark, href: "/dashboard/bookmarks" },
   { name: "Analytics", icon: HiOutlineChartBar, href: "/dashboard/analytics" },

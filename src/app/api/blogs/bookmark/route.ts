@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
       { status: 401 },
     );
   }
+  
   const userId = session.user.id;
 
   const body = await req.json();

@@ -8,6 +8,7 @@ export async function GET(
   context: RouteContext<"/api/blogs/draft/read/[id]">,
 ) {
   const session = await getServerSession(authOptions);
+  
   if (!session?.user?.id) {
     return NextResponse.json({ message: "unauthorized" }, { status: 401 });
   }
