@@ -1,8 +1,9 @@
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import Link from "next/link";
-import { HiOutlineDocumentText } from "react-icons/hi2";
+import { HiOutlineDocumentText, HiOutlineClock, HiOutlinePencilSquare } from "react-icons/hi2";
 import Button from "@/components/ui/Button";
+import Image from "next/image";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { getDraftBlogs } from "@/services";
@@ -33,8 +34,64 @@ const DraftPage = async () => {
 
       {/* Drafts Grid */}
       {draftBlogs.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Draft cards would go here */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          {draftBlogs.map((draft) => (
+            <Link
+              href={`/dashboard/editor?id=${draft.id}`}
+              key={draft.id}
+              className="group block bg-white dark:bg-surfaceDark rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300 overflow-hidden relative"
+            >
+              {/* Image or Gradient */}
+              <div className="h-48 w-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-surfaceDark dark:to-gray-900 border-b border-gray-100 dark:border-gray-800 relative overflow-hidden">
+                {draft.image ? (
+                  <Image
+                    src={draft.image}
+                    alt={draft.title || "Draft Blog"}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-30">
+                    <HiOutlineDocumentText className="text-7xl text-gray-400 group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                )}
+                <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1 shadow-sm">
+                  <HiOutlinePencilSquare className="text-primary text-sm" />
+                  Draft
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex flex-col h-full">
+                  <div className="mb-3">
+                    <span className="text-[10px] font-bold px-2.5 py-1 bg-primary/10 text-primary rounded-md uppercase tracking-wider">
+                      {draft.category || "Uncategorized"}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                    {draft.title || "Untitled Draft"}
+                  </h3>
+
+                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100 dark:border-gray-800/60">
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wide">
+                      <HiOutlineClock className="text-sm" />
+                      <span>
+                        {new Date(draft.createdAt).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex items-center gap-1">
+                      Edit
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 px-4 mt-8 bg-white dark:bg-surfaceDark rounded-2xl border border-dashed border-gray-300 dark:border-gray-700">
