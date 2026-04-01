@@ -148,7 +148,7 @@ export default function Editor() {
     }
   };
 
-  // Load content from DB on mount
+  // Load Draft Blog from DB on mount
   useEffect(() => {
     if (blogId) {
       const getDraftBlog = async () => {

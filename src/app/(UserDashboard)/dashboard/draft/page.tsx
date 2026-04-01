@@ -42,7 +42,7 @@ const DraftPage = async () => {
               className="group block bg-white dark:bg-surfaceDark rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300 overflow-hidden relative"
             >
               {/* Image or Gradient */}
-              <div className="h-48 w-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-surfaceDark dark:to-gray-900 border-b border-gray-100 dark:border-gray-800 relative overflow-hidden">
+              <div className="h-48 w-full bg-linear-to-br from-gray-50 to-gray-200 dark:from-surfaceDark dark:to-gray-900 border-b border-gray-100 dark:border-gray-800 relative overflow-hidden">
                 {draft.image ? (
                   <Image
                     src={draft.image}
