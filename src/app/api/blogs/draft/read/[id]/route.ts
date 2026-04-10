@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  context: RouteContext<"/api/blogs/draft/read/[id]">,
+  context: { params: Promise<{ id: string }> },
 ) {
   const session = await getServerSession(authOptions);
   

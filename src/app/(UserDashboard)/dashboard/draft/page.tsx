@@ -13,6 +13,7 @@ const DraftPage = async () => {
   const id = session?.user.id;
   const draftBlogs = await getDraftBlogs(id as string);
 
+  console.log(draftBlogs)
   return (
     <SectionWrapper>
       {/* Heading Section */}

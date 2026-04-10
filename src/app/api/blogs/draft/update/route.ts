@@ -45,7 +45,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({
       message: "Draft updated successfully",
       blogId: updated.id,
-    });
+    }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

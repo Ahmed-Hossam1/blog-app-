@@ -9,7 +9,7 @@ import { createBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -19,7 +19,16 @@ export default function Editor() {
   const [previewContent, setPreviewContent] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSavingDraft, setIsSavingDraft] = useState<boolean>(false);
+
+  // Single source of truth for the active draft/blog ID.
+  // Initialized from the URL ?id= param; updated when a new draft is created.
   const searchParams = useSearchParams();
+  const urlBlogId = searchParams.get("id");
+  const activeIdRef = useRef<string | null>(urlBlogId);
+
+  // Prevent autosave from firing during initial draft load
+  const isLoadingDraftRef = useRef<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -31,62 +40,89 @@ export default function Editor() {
     resolver: yupResolver(createBlogSchema),
   });
 
-  const blogId = searchParams.get("id");
-
   /* ==== CONFIG ==== */
-  const left = formConfig?.content;
-  const settings = formConfig?.settings;
+  const leftColumn = formConfig?.content;
+  const rightColumn = formConfig?.settings;
+
+  /* ==== Helpers ==== */
+
+  /**
+   * Uploads a file to Cloudinary via /api/upload.
+   * Returns the secure image URL string.
+   */
+  const uploadImage = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch(`/api/upload`, { method: "POST", body: formData });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    // The upload API returns { url: <Cloudinary result object> }
+    // The Cloudinary result contains `.secure_url`
+    return data.url?.secure_url as string;
+  };
 
   /* ==== Handlers ==== */
 
-  // publish Blogs
+  // Publish blog
   const handlePublish = async (data: INewBlogForm) => {
     setIsLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", data.image[0]);
-      // Upload image to cloudinary
-      const uploadImageReq = await fetch(`/api/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const uploadImageRes = await uploadImageReq.json();
-      if (!uploadImageReq.ok) throw new Error(uploadImageRes.message);
-      const imageUrl = uploadImageRes.url;
-      const { url } = imageUrl;
+      // Upload image from the file input
+      const imageUrl = await uploadImage(data.image[0] as File);
 
-      const createBlogReq = await fetch(`/api/blogs/create`, {
-        method: "POST",
-        body: JSON.stringify({ ...data, image: url }),
-      });
-      const createBlogRes = await createBlogReq.json();
-      if (!createBlogReq.ok) throw new Error(createBlogRes.message);
-      toast.success(createBlogRes.message);
+      const activeId = activeIdRef.current;
+
+      if (activeId) {
+        // ── Promote existing draft to PUBLISHED 
+        const res = await fetch(`/api/blogs/update`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: activeId,
+            ...data,
+            image: imageUrl,
+            status: data.status ?? "PUBLISHED",
+          }),
+        });
+        const resData = await res.json();
+        if (!res.ok) throw new Error(resData.message);
+        toast.success(resData.message);
+      } else {
+        // ── Create brand-new published blog 
+        const res = await fetch(`/api/blogs/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, image: imageUrl }),
+        });
+        const resData = await res.json();
+        if (!res.ok) throw new Error(resData.message);
+        toast.success(resData.message);
+      }
+
       reset({
         title: "",
         content: "",
         category: "",
-        image: "",
+        status: "DRAFT",
+        image: undefined,
       });
-      // Reset preview image to null to hide preview after successful upload
       setPreviewImage(null);
-      // Clear localStorage after successful publish
-      localStorage.removeItem("draftId");
+      activeIdRef.current = null;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error((error as Error).message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // get the form values
+  // Watch form values for autosave
   const title = watch("title");
   const content = watch("content");
   const category = watch("category");
 
-  // Save draft
-  const handleSaveDraft = async () => {
+  // Save draft (manual or autosave)
+  const handleSaveDraft = useCallback(async () => {
     if (!title && !content && !category) return;
 
     setIsSavingDraft(true);
@@ -94,21 +130,10 @@ export default function Editor() {
     try {
       let imageUrl: string | undefined;
       const imageField = watch("image");
-      console.log(imageField);
-      if (!imageField) {
-        const formData = new FormData();
-        formData.append("file", imageField[0]);
 
-        const uploadRes = await fetch(`/api/upload`, {
-          method: "POST",
-          headers: { "Content-Type": "multipart/form-data" },
-          body: formData,
-        });
-
-        const uploadData = await uploadRes.json();
-        if (!uploadRes.ok) throw new Error(uploadData.message);
-
-        imageUrl = uploadData.url?.url;
+      // Only attempt image upload when a file is actually selected
+      if (imageField?.[0] instanceof File) {
+        imageUrl = await uploadImage(imageField[0]);
       }
 
       const payload = {
@@ -118,70 +143,73 @@ export default function Editor() {
         image: imageUrl,
       };
 
-      //  CREATE
-      if (!blogId) {
+      const activeId = activeIdRef.current;
+
+      if (!activeId) {
+        // ── CREATE new draft 
         const res = await fetch(`/api/blogs/draft/create`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        activeIdRef.current = data.blogId;
+      } else {
+        // ── UPDATE existing draft
+        const res = await fetch(`/api/blogs/draft/update`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: activeId, ...payload }),
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
       }
-
-      //  UPDATE
-      else {
-        await fetch(`/api/blogs/draft/update`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: blogId,
-            ...payload,
-          }),
-        });
-      }
     } catch (error) {
       console.error(error);
+      toast.error("Failed to save draft. Please try again.");
     } finally {
       setIsSavingDraft(false);
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, content, category]);
 
-  // Load Draft Blog from DB on mount
+  // Load draft blog from DB on mount (when ?id= is present)
   useEffect(() => {
-    if (blogId) {
-      const getDraftBlog = async () => {
-        try {
-          const res = await fetch(`/api/blogs/draft/read/${blogId}`);
-          const data = await res.json();
-          if (!res.ok) throw new Error(data.message);
-          reset(data.blog);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getDraftBlog();
-    }
-  }, [blogId]);
+    if (!urlBlogId) return;
 
-  // Autosave BLOG to DB as Draft
-  const isFirstRender = useRef(true);
+    const getDraftBlog = async () => {
+      isLoadingDraftRef.current = true; // suppress autosave during load
+      try {
+        const res = await fetch(`/api/blogs/draft/read/${urlBlogId}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        reset(data.blog);
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load draft.");
+      } finally {
+        // Small delay so the watch values have settled before re-enabling autosave
+        setTimeout(() => {
+          isLoadingDraftRef.current = false;
+        }, 500);
+      }
+    };
 
+    getDraftBlog();
+  }, [urlBlogId, reset]);
+
+  // Autosave to DB as draft (debounced 3 sec)
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     if (!title && !content && !category) return;
+    if (isLoadingDraftRef.current) return; // skip during initial load
 
     const timer = setTimeout(() => {
       handleSaveDraft();
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [title, content, category]);
+  }, [title, content, category, handleSaveDraft]);
 
   /* ==== JSX ==== */
   return (
@@ -197,7 +225,7 @@ export default function Editor() {
           <FormField
             ToolBar={true}
             textAreaRows={15}
-            Fields={left}
+            Fields={leftColumn}
             register={register}
             errors={errors}
             setValue={setValue}
@@ -217,7 +245,7 @@ export default function Editor() {
             <div className="space-y-5">
               {/* ==== SETTINGS ==== */}
               <FormField
-                Fields={settings}
+                Fields={rightColumn}
                 register={register}
                 errors={errors}
               />

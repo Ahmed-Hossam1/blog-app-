@@ -1,131 +1,152 @@
 import { prisma } from "./prisma";
 
+
 async function main() {
-  console.log("🌱 Starting seed...");
-
-  const userIds = [
-    "65f1234567890abcdef00001",
-    "65f1234567890abcdef00002",
-    "65f1234567890abcdef00003",
-    "65f1234567890abcdef00004",
-    "65f1234567890abcdef00005",
-    "65f1234567890abcdef00006",
-    "65f1234567890abcdef00007",
-    "65f1234567890abcdef00008",
-    "65f1234567890abcdef00009",
-    "65f1234567890abcdef00010",
-  ];
-
-  const firstNames = ["Ahmed", "Sara", "John", "Maria", "Omar", "Layla", "David", "Elena", "Youssef", "Nora"];
-  const lastNames = ["Hossam", "Smith", "Johnson", "Garcia", "Zayed", "Rashid", "Miller", "Ivanova", "Mansour", "Karem"];
-  const categories = ["Web Development", "Mobile Development", "UI/UX", "Data Science", "Cloud Computing"];
-  const blogImages = [
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
-    "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-    "https://images.unsplash.com/photo-1587620962725-abab7fe55159",
-    "https://images.unsplash.com/photo-1551650975-87deedd944c3",
-    "https://images.unsplash.com/photo-1550439062-609e1530277e",
-    "https://images.unsplash.com/photo-1511649475669-e288648b2339",
-    "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
-    "https://images.unsplash.com/photo-1542831371-29b0f74f9713",
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-  ];
-
-  // 1. Create Users
-  console.log("👤 Creating users...");
-  for (let i = 0; i < userIds.length; i++) {
-    const name = `${firstNames[i]} ${lastNames[i]}`;
-    await prisma.user.upsert({
-      where: { id: userIds[i] },
-      update: {},
-      create: {
-        id: userIds[i],
-        name,
-        email: `${firstNames[i].toLowerCase()}.${lastNames[i].toLowerCase()}@example.com`,
-        emailVerified: true,
-        image: `https://i.pravatar.cc/150?u=${userIds[i]}`,
-        title: `${categories[i % categories.length]} Enthusiast`,
-        bio: `Hi, I am ${name}. I love coding and sharing my knowledge with the community. Hope you enjoy my blogs!`,
-        password: "$2a$10$YourHashedPasswordHere", // Placeholder hashed password
+  // 🟡 Users
+  await prisma.user.createMany({
+    data: [
+      {
+        name: "Ahmed Hossam",
+        email: "ahmed@test.com",
+        image: "https://i.pravatar.cc/150?img=1",
+        title: "Frontend Developer",
+        bio: "Passionate about React & Next.js",
       },
-    });
-  }
+      {
+        name: "Sara Ali",
+        email: "sara@test.com",
+        image: "https://randomuser.me/api/portraits/women/44.jpg",
+        title: "UI/UX Designer",
+        bio: "Designing modern interfaces",
+      },
+      {
+        name: "John Doe",
+        email: "john@test.com",
+        image: "https://avatars.githubusercontent.com/u/1?v=4",
+        title: "Backend Engineer",
+        bio: "Node.js & Databases",
+      },
+    ],
+  });
 
-  // 2. Create Blogs with Comments
-  console.log("📝 Creating blogs and comments...");
-  let blogIndex = 0;
-  for (const authorId of userIds) {
-    for (let i = 1; i <= 5; i++) {
-      blogIndex++;
-      const title = `Exploring ${categories[blogIndex % categories.length]} #${i}`;
-      const slug = `${title.toLowerCase().replace(/ /g, "-")}-${Date.now()}`;
-      
-      const blog = await prisma.blog.create({
-        data: {
-          title,
-          slug,
-          category: categories[blogIndex % categories.length],
-          image: `${blogImages[blogIndex % blogImages.length]}?auto=format&fit=crop&w=800&q=80`,
-          readTime: `${Math.floor(Math.random() * 8) + 3} min read`,
-          status: "PUBLISHED",
-          views: Math.floor(Math.random() * 500) + 50,
-          likesCount: Math.floor(Math.random() * 50) + 10,
-          commentsCount: 3,
-          content: `This article discusses advanced topics in ${categories[blogIndex % categories.length]}. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-          authorId,
-        },
-      });
+  const allUsers = await prisma.user.findMany();
 
-      // Add 3 comments to each blog from other users
-      for (let j = 0; j < 3; j++) {
-        const commenterIndex = (userIds.indexOf(authorId) + j + 1) % userIds.length;
-        const commenterId = userIds[commenterIndex];
-        const commenter = firstNames[commenterIndex] + " " + lastNames[commenterIndex];
-        
-        await prisma.comment.create({
-          data: {
-            authorName: commenter,
-            image: `https://i.pravatar.cc/150?u=${commenterId}`,
-            comment: `Great article! I learned a lot about ${categories[blogIndex % categories.length]} from this. Keep it up!`,
-            blogId: blog.id,
-          },
-        });
-      }
-    }
-  }
+  // 🟢 Blogs
+  const blog1 = await prisma.blog.create({
+    data: {
+      title: "Getting Started with Next.js",
+      slug: "nextjs-guide",
+      category: "Programming",
+      image:
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+      readTime: "5 min read",
+      content: "This is a complete guide to Next.js...",
+      status: "PUBLISHED",
+      authorId: allUsers[0].id,
+    },
+  });
 
-  // 3. Create Follows
-  console.log("🤝 Creating follows...");
-  for (const userId of userIds) {
-    const userIndex = userIds.indexOf(userId);
-    // Follow next 3 users in the list
-    for (let i = 1; i <= 3; i++) {
-      const followingId = userIds[(userIndex + i) % userIds.length];
-      await prisma.follow.upsert({
-        where: {
-          followerId_followingId: {
-            followerId: userId,
-            followingId,
-          },
-        },
-        update: {},
-        create: {
-          followerId: userId,
-          followingId,
-        },
-      });
-    }
-  }
+  const blog2 = await prisma.blog.create({
+    data: {
+      title: "Design Tips for Beginners",
+      slug: "design-tips",
+      category: "Design",
+      image:
+        "https://images.unsplash.com/photo-1559028012-481c04fa702d",
+      readTime: "3 min read",
+      content: "Learn basic UI/UX principles...",
+      status: "PUBLISHED",
+      authorId: allUsers[1].id,
+    },
+  });
 
-  console.log("✅ Seed completed successfully!");
+  const blog3 = await prisma.blog.create({
+    data: {
+      title: "MongoDB Performance Tricks",
+      slug: "mongodb-performance",
+      category: "Database",
+      image:
+        "https://images.unsplash.com/photo-1518770660439-4636190af475",
+      readTime: "7 min read",
+      content: "Optimize your MongoDB queries...",
+      status: "PUBLISHED",
+      authorId: allUsers[2].id,
+    },
+  });
+
+  // 🟣 Comments
+  await prisma.comment.createMany({
+    data: [
+      {
+        authorName: "Sara Ali",
+        image: "https://randomuser.me/api/portraits/women/44.jpg",
+        comment: "Great article!",
+        blogId: blog1.id,
+      },
+      {
+        authorName: "Ahmed Hossam",
+        image: "https://i.pravatar.cc/150?img=1",
+        comment: "Very helpful 🔥",
+        blogId: blog2.id,
+      },
+      {
+        authorName: "John Doe",
+        image: "https://avatars.githubusercontent.com/u/1?v=4",
+        comment: "Nice tips!",
+        blogId: blog3.id,
+      },
+    ],
+  });
+
+  // 🔵 Likes
+  await prisma.like.createMany({
+    data: [
+      {
+        userId: allUsers[0].id,
+        blogId: blog2.id,
+      },
+      {
+        userId: allUsers[1].id,
+        blogId: blog1.id,
+      },
+      {
+        userId: allUsers[2].id,
+        blogId: blog1.id,
+      },
+    ],
+  });
+
+  // 🟡 Bookmarks
+  await prisma.bookMark.createMany({
+    data: [
+      {
+        userId: allUsers[0].id,
+        blogId: blog3.id,
+      },
+      {
+        userId: allUsers[1].id,
+        blogId: blog1.id,
+      },
+    ],
+  });
+
+  // 🟢 Follow System
+  await prisma.follow.createMany({
+    data: [
+      {
+        followerId: allUsers[0].id,
+        followingId: allUsers[1].id,
+      },
+      {
+        followerId: allUsers[1].id,
+        followingId: allUsers[2].id,
+      },
+    ],
+  });
+
+  console.log("✅ Seed data inserted successfully");
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .catch((e) => console.error(e))
+  .finally(() => prisma.$disconnect());
