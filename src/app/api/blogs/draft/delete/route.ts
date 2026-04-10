@@ -24,7 +24,7 @@ export async function DELETE(req: NextRequest): Promise<NextResponse> {
     // Verify the blog exists and belongs to the user
     const blog = await prisma.blog.findUnique({
       where: { id },
-      select: { authorId: true, status: true },
+      select: { authorId: true},
     });
 
     if (!blog) {

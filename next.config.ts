@@ -23,7 +23,7 @@ const nextConfig = {
         hostname: "avatars.githubusercontent.com",
       },
       {
-        protocol: "http",
+        protocol: "https",
         hostname: "res.cloudinary.com",
       },
     ],

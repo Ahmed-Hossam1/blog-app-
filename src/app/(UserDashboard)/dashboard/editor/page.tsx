@@ -185,6 +185,7 @@ export default function Editor() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
         reset(data.blog);
+        setPreviewImage(data.blog.image)
       } catch (error) {
         console.error(error);
         toast.error("Failed to load draft.");
@@ -209,7 +210,7 @@ export default function Editor() {
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [title, content, category, handleSaveDraft]);
+  }, [title, content, category,previewImage, handleSaveDraft]);
 
   /* ==== JSX ==== */
   return (

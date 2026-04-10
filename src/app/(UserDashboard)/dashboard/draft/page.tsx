@@ -13,7 +13,6 @@ const DraftPage = async () => {
   const id = session?.user.id;
   const draftBlogs = await getDraftBlogs(id as string);
 
-  console.log(draftBlogs)
   return (
     <SectionWrapper>
       {/* Heading Section */}
@@ -106,7 +105,7 @@ const DraftPage = async () => {
             You haven not saved any draft blogs yet. Start writing your next
             great article and save it as a draft to finish later.
           </p>
-          <Link href="/dashboard/create-blog">
+          <Link href="/dashboard/editor">
             <Button className="px-8 py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all">
               Write New Blog
             </Button>
