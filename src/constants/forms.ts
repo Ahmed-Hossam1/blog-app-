@@ -122,27 +122,6 @@ Happy writing 🚀`,
 
   settings: [
     {
-      id: "status",
-      name: "status",
-      placeholder: "Status",
-      type: "select",
-      label: "Status",
-      options: [
-        {
-          name: "Published",
-          value: "PUBLISHED",
-        },
-        {
-          name: "Draft",
-          value: "DRAFT",
-        },
-        {
-          name: "Archived",
-          value: "ARCHIVED",
-        },
-      ],
-    },
-    {
       id: "category",
       name: "category",
       placeholder: "Category",

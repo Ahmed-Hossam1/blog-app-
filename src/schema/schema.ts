@@ -32,12 +32,11 @@ export const resetPasswordSchema = yup.object({
   confirmPassword: yup.string().required("Please confirm your password").oneOf([yup.ref("password")], "Passwords must match"),
 });
 
-// createBlog Page schema
+  // createBlog Page schema
 export const createBlogSchema = yup.object({
   title: yup.string().required("Title is required").min(5, "Title must be at least 5 characters"),
   image: yup.mixed<string | FileList | File[]>().required("Cover image is required"),
   content: yup.string().required("Content is required").min(20, "Content must be at least 20 characters"),
-  status: yup.mixed<BlogStatus>().required("Status is required").oneOf(["PUBLISHED", "DRAFT", "ARCHIVED"], "Invalid status"),
   category: yup.string().required("Category is required"),
 });
 

@@ -63,7 +63,6 @@ const FormField = <T extends FieldValues>({
   ToolBar,
   textAreaRows,
   previewImage,
-  previewContent,
   setPreviewImage,
   disabled,
 }: FormFieldProps<T>) => {
@@ -80,7 +79,7 @@ const FormField = <T extends FieldValues>({
           {input.type === "textarea" ? (
             <div className="rounded-xl border border-gray-200  bg-white shadow-sm dark:border-gray-800 dark:bg-surfaceDark ">
               {/* Toolbar */}
-              {ToolBar && previewContent === false && (
+              {ToolBar === true && (
                 <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 px-4 py-2 dark:border-gray-700">
                   {TOOLBAR_BUTTONS.map((btn, i) =>
                     "divider" in btn ? (
@@ -110,30 +109,14 @@ const FormField = <T extends FieldValues>({
                   )}
                 </div>
               )}
-
-              {previewContent === true ? (
-                // preview content in markdown format
-                <div className="prose prose-sm dark:prose-invert max-w-none px-6 py-4">
-                  {watch?.(input.name) ? (
-                    <Markdown remarkPlugins={[remarkGfm]}>
-                      {watch(input.name) as string}
-                    </Markdown>
-                  ) : (
-                    <p className="text-gray-400 dark:text-gray-500 italic">
-                      Nothing to preview yet…
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <textarea
-                  id={input.id}
-                  rows={textAreaRows || 5}
-                  placeholder={input.placeholder}
-                  disabled={disabled}
-                  className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  {...register(input.name)}
-                />
-              )}
+              <textarea
+                id={input.id}
+                rows={textAreaRows || 5}
+                placeholder={input.placeholder}
+                disabled={disabled}
+                className="w-full resize-none bg-transparent px-6 py-4 text-sm leading-relaxed text-gray-700 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                {...register(input.name)}
+              />
             </div>
           ) : input.type === "file" ? (
             /* ───────── FILE ───────── */

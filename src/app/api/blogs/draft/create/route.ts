@@ -55,9 +55,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         category: category ?? undefined,
         slug,
         readTime: readTime ?? undefined,
-
         status: "DRAFT",
-
         authorId: session.user.id,
       },
     });

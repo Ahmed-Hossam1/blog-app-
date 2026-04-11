@@ -104,7 +104,7 @@ export interface INewBlogForm {
   slug?: string;
   image: string | FileList | File[];
   content: string;
-  status: BlogStatus;
+  status?: BlogStatus;
   category: string;
 }
 export interface IProfileForm {

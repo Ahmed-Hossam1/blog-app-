@@ -21,6 +21,23 @@ export async function PUT(req: NextRequest) {
       );
     }
 
+    // Verify the blog exists and belongs to the user
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      select: { authorId: true },
+    });
+
+    if (!blog) {
+      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+    }
+
+    if (blog.authorId !== session.user.id) {
+      return NextResponse.json(
+        { message: "You can only delete your own blogs" },
+        { status: 403 },
+      );
+    }
+
     // ===== Safe Read Time =====
     let readTime: string | undefined;
     if (content?.trim()) {
@@ -39,13 +56,17 @@ export async function PUT(req: NextRequest) {
         category: category ?? undefined,
         image: image ?? undefined,
         readTime,
+        status: "DRAFT",
       },
     });
 
-    return NextResponse.json({
-      message: "Draft updated successfully",
-      blogId: updated.id,
-    }, { status: 200 });
+    return NextResponse.json(
+      {
+        message: "Draft updated successfully",
+        blogId: updated.id,
+      },
+      { status: 200 },
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json(

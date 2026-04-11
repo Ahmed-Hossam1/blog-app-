@@ -10,9 +10,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
 
   const body = await req.json();
-  const { title, image, content, category, status } = body;
+  const { title, image, content, category } = body;
 
-  if (!title || !image || !content || !category || !status) {
+  if (!title || !image || !content || !category) {
     return NextResponse.json(
       { message: "Missing required fields" },
       { status: 400 },
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         image: image as string,
         content,
         category,
-        status,
+        status: "PUBLISHED",
         slug,
         readTime,
         authorId: session.user.id,

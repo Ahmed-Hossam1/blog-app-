@@ -12,3 +12,14 @@ export function formatDate(date: Date | string) {
     year: "numeric",
   });
 }
+
+  export const uploadImage = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch(`/api/upload`, { method: "POST", body: formData });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    // The upload API returns { url: <Cloudinary result object> }
+    // The Cloudinary result contains `.secure_url`
+    return data.url?.secure_url as string;
+  };
