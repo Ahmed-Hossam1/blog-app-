@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 
 const AuthLayout = async ({ children }: { children: ReactNode }) => {
   const session = await getServerSession();
+
   if (session) return redirect("/");
   return <>{children}</>;
 };
