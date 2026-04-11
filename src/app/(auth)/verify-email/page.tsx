@@ -11,6 +11,7 @@ const VerifyEmail = () => {
     "loading",
   );
 
+
   useEffect(() => {
     const verifyToken = async () => {
       try {
@@ -20,13 +21,12 @@ const VerifyEmail = () => {
         });
 
         const json = await res.json();
-
         if (!res.ok) throw new Error(json.message);
 
         setStatus("success");
         setTimeout(() => {
           router.push("/sign-in");
-        },1200)
+        }, 1200)
       } catch (error) {
         console.log(error);
         setStatus("error");
@@ -34,7 +34,7 @@ const VerifyEmail = () => {
     };
 
     if (token) verifyToken();
-  }, [token , router]);
+  }, [token, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-baseInk px-4 transition-colors duration-300">

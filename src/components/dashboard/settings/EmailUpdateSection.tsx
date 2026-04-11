@@ -1,27 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { toast } from "react-toastify";
-import MyInput from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import MyInput from "@/components/ui/Input";
 import { updateEmailSchema } from "@/schema/schema";
-import { FiEdit2 } from "react-icons/fi";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FiEdit2 } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 interface EmailUpdateSectionProps {
   initialEmail: string;
-  userId: string;
 }
 
 export default function EmailUpdateSection({
   initialEmail,
-  userId,
 }: EmailUpdateSectionProps) {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -40,7 +38,7 @@ export default function EmailUpdateSection({
       const response = await fetch("/api/user/update-email", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: userId, email: data.email }),
+        body: JSON.stringify({ newEmail: data.email }),
       });
 
       const result = await response.json();
@@ -48,13 +46,12 @@ export default function EmailUpdateSection({
       if (!response.ok)
         throw new Error(result.message || "Failed to update email");
       toast.success(result.message);
-      setIsEditing(false)
-      router.refresh()
+      router.refresh();
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
-    } finally {
       setLoading(false);
+
     }
   };
 
@@ -82,8 +79,9 @@ export default function EmailUpdateSection({
           placeholder="john@example.com"
           disabled={!isEditing}
           {...register("email")}
-          className={`disabled:opacity-50 disabled:cursor-not-allowed ${errors.email ? "border-red-500" : ""
-            }`}
+          className={`disabled:opacity-50 disabled:cursor-not-allowed ${
+            errors.email ? "border-red-500" : ""
+          }`}
         />
         {errors.email && (
           <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>

@@ -53,7 +53,6 @@ const SettingsPage = async () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <EmailUpdateSection
               initialEmail={author?.email as string}
-              userId={userId as string}
             />
             <PasswordUpdateSection userId={userId as string} />
           </div>
