@@ -137,24 +137,38 @@ const FormField = <T extends FieldValues>({
             </div>
           ) : input.type === "file" ? (
             /* ───────── FILE ───────── */
-            <label
-              htmlFor={input.id}
-              className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 py-12 transition hover:border-primary dark dark:hover/50"
-            >
-              {previewImage && (
-                <div className="relative w-48 h-48">
+            <label htmlFor={input.id} className="block cursor-pointer">
+              {previewImage ? (
+                /* ── Image preview: full-width cover with hover overlay ── */
+                <div className="group relative w-full overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700" style={{ aspectRatio: "16/9" }}>
                   <Image
                     src={previewImage}
-                    alt="Preview"
+                    alt="Cover preview"
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 rounded-xl">
+                    <FiUploadCloud className="text-3xl text-white" />
+                    <span className="text-sm font-medium text-white">Change Image</span>
+                  </div>
+                </div>
+              ) : (
+                /* ── Dropzone: shown when no image is selected ── */
+                <div className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-300 py-14 transition-colors hover:border-primary dark:border-gray-700 dark:hover:border-primary">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                    <FiUploadCloud className="text-2xl text-gray-400 dark:text-gray-500" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Click to upload cover image
+                    </p>
+                    <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                      PNG, JPG, WEBP up to 10MB
+                    </p>
+                  </div>
                 </div>
               )}
-              <FiUploadCloud className="text-3xl text-gray-400 dark:text-gray-500" />
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                Upload Image
-              </span>
               <MyInput
                 id={input.id}
                 type="file"
@@ -164,10 +178,8 @@ const FormField = <T extends FieldValues>({
                 onChange={async (e) => {
                   const file = e.target.files?.[0];
                   if (!file) return;
-                  //  preview image
-                  const imageUrl = URL.createObjectURL(file); // create preview link for image ** blob:http://localhost/...** instead of File
+                  const imageUrl = URL.createObjectURL(file);
                   setPreviewImage?.(imageUrl);
-                  // trigger onChange event when file is changed
                   register(input.name).onChange(e);
                 }}
               />

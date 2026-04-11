@@ -8,7 +8,7 @@ import { formConfig } from "@/constants/forms";
 import { createBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ export default function Editor() {
   const searchParams = useSearchParams();
   const urlBlogId = searchParams.get("id");
   const activeIdRef = useRef<string | null>(urlBlogId);
-
+  const router = useRouter();
   // Prevent autosave from firing during initial draft load
   const isLoadingDraftRef = useRef<boolean>(false);
 
@@ -43,6 +43,11 @@ export default function Editor() {
   /* ==== CONFIG ==== */
   const leftColumn = formConfig?.content;
   const rightColumn = formConfig?.settings;
+  // Watch form values for autosave
+  const formTitle = watch("title");
+  const formContent = watch("content");
+  const formCategory = watch("category");
+  const formImage = watch("image");
 
   /* ==== Helpers ==== */
 
@@ -70,35 +75,20 @@ export default function Editor() {
       // Upload image from the file input
       const imageUrl = await uploadImage(data.image[0] as File);
 
-      const activeId = activeIdRef.current;
-
-      if (activeId) {
-        // ── Promote existing draft to PUBLISHED 
-        const res = await fetch(`/api/blogs/update`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: activeId,
-            ...data,
-            image: imageUrl,
-            status: data.status ?? "PUBLISHED",
-          }),
-        });
-        const resData = await res.json();
-        if (!res.ok) throw new Error(resData.message);
-        toast.success(resData.message);
-      } else {
-        // ── Create brand-new published blog 
-        const res = await fetch(`/api/blogs/create`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...data, image: imageUrl }),
-        });
-        const resData = await res.json();
-        if (!res.ok) throw new Error(resData.message);
-        toast.success(resData.message);
-      }
-
+      // ── Promote existing draft to PUBLISHED
+      const res = await fetch(`/api/blogs/create`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          image: imageUrl,
+          status: "PUBLISHED",
+        }),
+      });
+      const resData = await res.json();
+      if (!res.ok) throw new Error(resData.message);
+      toast.success(resData.message);
+      router.refresh();
       reset({
         title: "",
         content: "",
@@ -115,38 +105,32 @@ export default function Editor() {
       setIsLoading(false);
     }
   };
-
-  // Watch form values for autosave
-  const title = watch("title");
-  const content = watch("content");
-  const category = watch("category");
-
+  console.log(formTitle, formContent, formImage);
   // Save draft (manual or autosave)
   const handleSaveDraft = useCallback(async () => {
-    if (!title && !content && !category) return;
+    if (!formTitle && !formContent && !formCategory) return;
 
     setIsSavingDraft(true);
 
     try {
-      let imageUrl: string | undefined;
-      const imageField = watch("image");
-
       // Only attempt image upload when a file is actually selected
-      if (imageField?.[0] instanceof File) {
-        imageUrl = await uploadImage(imageField[0]);
-      }
+      let imageUrl: string | null = null;
+      if (formImage instanceof FileList && formImage.length > 0) {
+        imageUrl = await uploadImage(formImage[0]);
+        setValue("image", imageUrl);
+      } 
 
       const payload = {
-        title: title || undefined,
-        content: content || undefined,
-        category: category || undefined,
+        title: formTitle || undefined,
+        content: formContent || undefined,
+        category: formCategory || undefined,
         image: imageUrl,
       };
 
       const activeId = activeIdRef.current;
 
       if (!activeId) {
-        // ── CREATE new draft 
+        // ── CREATE new draft
         const res = await fetch(`/api/blogs/draft/create`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -171,8 +155,8 @@ export default function Editor() {
     } finally {
       setIsSavingDraft(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, content, category]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formTitle, formContent, formCategory, formImage]);
 
   // Load draft blog from DB on mount (when ?id= is present)
   useEffect(() => {
@@ -185,7 +169,7 @@ export default function Editor() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
         reset(data.blog);
-        setPreviewImage(data.blog.image)
+        setPreviewImage(data.blog.image);
       } catch (error) {
         console.error(error);
         toast.error("Failed to load draft.");
@@ -202,7 +186,7 @@ export default function Editor() {
 
   // Autosave to DB as draft (debounced 3 sec)
   useEffect(() => {
-    if (!title && !content && !category) return;
+    if (!formTitle && !formContent && !formCategory) return;
     if (isLoadingDraftRef.current) return; // skip during initial load
 
     const timer = setTimeout(() => {
@@ -210,7 +194,7 @@ export default function Editor() {
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [title, content, category,previewImage, handleSaveDraft]);
+  }, [formTitle, formContent, formCategory, previewImage, handleSaveDraft]);
 
   /* ==== JSX ==== */
   return (
