@@ -29,8 +29,8 @@ export default function EmailUpdateSection({
     formState: { errors },
   } = useForm({
     resolver: yupResolver(updateEmailSchema),
-    defaultValues: {
-      email: initialEmail,
+    values: {
+      email: initialEmail || "",
     },
   });
 

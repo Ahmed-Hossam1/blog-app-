@@ -13,12 +13,13 @@ export async function PUT(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { name, title, bio } = body;
+    const { name, title, bio, image } = body;
 
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         name,
+        image,
         title,
         bio,
       },

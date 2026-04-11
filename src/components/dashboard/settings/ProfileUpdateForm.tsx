@@ -37,7 +37,7 @@ export default function ProfileUpdateForm({
     formState: { errors },
   } = useForm<IProfileForm>({
     resolver: yupResolver(updateProfileSchema),
-    defaultValues: {
+    values: {
       name: initialData?.name || "",
       title: initialData?.title || "",
       bio: initialData?.bio || "",

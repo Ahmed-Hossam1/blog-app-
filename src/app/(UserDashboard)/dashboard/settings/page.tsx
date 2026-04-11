@@ -2,13 +2,13 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import DangerZoneSection from "@/components/dashboard/settings/DangerZoneSection";
 import EmailUpdateSection from "@/components/dashboard/settings/EmailUpdateSection";
 import PasswordUpdateSection from "@/components/dashboard/settings/PasswordUpdateSection";
+import PictureSection from "@/components/dashboard/settings/PictureSection";
 import ProfileUpdateForm from "@/components/dashboard/settings/ProfileUpdateForm";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { getAuthorBasicInfo } from "@/services";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
-import { FiCamera, FiUser } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 
 const SettingsPage = async () => {
   const session = await getServerSession(authOptions);
@@ -35,25 +35,7 @@ const SettingsPage = async () => {
           </div>
 
           <div className="flex flex-col md:flex-row gap-8">
-            <div className="flex flex-col items-center gap-4">
-              <div className="relative group cursor-pointer">
-                <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-primary/10">
-                  <Image
-                    src={author?.image || "/default-image.png"}
-                    alt="Profile"
-                    width={128}
-                    height={128}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <FiCamera className="text-white" size={24} />
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 text-center">
-                JPG, GIF or PNG. <br /> Max size of 2MB
-              </p>
-            </div>
+            <PictureSection initialImage={author?.image as string} />
 
             <ProfileUpdateForm
               userId={userId as string}

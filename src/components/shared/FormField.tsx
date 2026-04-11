@@ -29,28 +29,6 @@ interface FormFieldProps<T extends FieldValues> {
   disabled?: boolean;
 }
 
-/**
- * Reusable form fields component (react-hook-form).
- *
- * Renders inputs dynamically based on `Fields` config.
- * Supports: input, textarea (with markdown), file (image preview), select.
- *
- * @template T
- *
- * @param {IField<T>[]} Fields - Fields configuration That gonna be rendered
- * @param {UseFormRegister<T>} register - react-hook-form register
- * @param {FieldErrors} errors - react-hook-form Validation errors
- * @param {SetFieldValue<T>} [setValue] - Set value manually (used in toolbar)
- * @param {UseFormWatch<T>} [watch] - Watch field values (preview, markdown)
- * @param {boolean} [ToolBar] - Enable markdown toolbar
- * @param {number} [textAreaRows] - Rows for textarea
- * @param {string|null} [previewImage] - Image preview URL
- * @param {(img: string|null) => void} [setPreviewImage] - Update preview image
- * @param {boolean} [previewContent] - Show markdown preview
- * @param {boolean} [disabled] - Disable inputs
- *
- * @returns {JSX.Element}
- */
 
 const FormField = <T extends FieldValues>({
   Fields,
