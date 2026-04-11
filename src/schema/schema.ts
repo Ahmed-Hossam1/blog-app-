@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { BlogStatus } from "@/types";
+
 
 // loginForm schema
 export const loginSchema = yup.object({

@@ -1,14 +1,19 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import StatusCard from "@/components/cards/StatusCard";
 import Charts from "@/components/dashboard/overView/Charts";
-import RecentBlogsTable from "@/components/dashboard/overView/RecentPostsTable";
 import TopBlogs from "@/components/dashboard/overView/TopPosts";
 import SectionWrapper from "@/components/shared/SectionWrapper";
+import Table from "@/components/shared/Table";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
-import { MOCK_PERFORMANCE_DATA, MOCK_STATS_CONFIG } from "@/data/mock/dashboard";
+import { tableHeaders } from "@/constants";
+import {
+  MOCK_PERFORMANCE_DATA,
+  MOCK_STATS_CONFIG,
+} from "@/data/mock/dashboard";
 import { calculators, computeStatValues } from "@/lib/helpers";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 const OverView = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user;
@@ -16,6 +21,7 @@ const OverView = async () => {
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
   const stats = computeStatValues(authorBlogs, MOCK_STATS_CONFIG, calculators);
+  const slicedData = authorBlogs.slice(0, 7);
 
   return (
     <SectionWrapper>
@@ -57,7 +63,37 @@ const OverView = async () => {
 
       {/* Row 3: Recent Posts Table */}
       <div className="mb-8">
-        <RecentBlogsTable data={authorBlogs} />
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-800">
+              {slicedData.length > 0 ? (
+                <Table
+                  tableTitle="Recent Blogs"
+                  tableHeader={tableHeaders}
+                  tableBody={slicedData}
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <div className="mb-4 rounded-full bg-gray-100 p-4 dark:bg-gray-800">
+                    📭
+                  </div>
+                  <h3 className="text-base font-semibold dark:text-white">
+                    No Blogs Yet
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Start by creating your first blog post.
+                  </p>
+                  <Link
+                    href={"/dashboard/create-blog"}
+                    className="mt-4 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                  >
+                    Create Blog
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </SectionWrapper>
   );

@@ -4,5 +4,4 @@ export const tableHeaders = [
   "Status",
   "Date",
   "Views",
-  "Actions",
 ];

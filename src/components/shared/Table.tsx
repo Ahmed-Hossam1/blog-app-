@@ -1,20 +1,14 @@
-import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2";
-import Button from "../ui/Button";
-import { IBlog } from "@/types";
-import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import { IBlog } from "@/types";
 
 interface TableProps {
   tableTitle?: string;
   tableHeader: string[];
   tableBody: IBlog[];
   needCheckbox?: boolean;
-  needsAction?: boolean;
   selectedIds?: string[];
   onSelectAll?: () => void;
   onSelectRow?: (id: string) => void;
-  onEdit?: (blog: IBlog) => void;
-  onDelete?: (blog: IBlog) => void;
 }
 
 const Table = ({
@@ -22,12 +16,9 @@ const Table = ({
   tableHeader,
   tableBody,
   needCheckbox = false,
-  needsAction = false,
   selectedIds = [],
   onSelectAll,
   onSelectRow,
-  onEdit,
-  onDelete,
 }: TableProps) => {
   const isAllSelected =
     tableBody.length > 0 && selectedIds.length === tableBody.length;
@@ -109,31 +100,7 @@ const Table = ({
               <td className="px-6 py-4 text-sm text-zinc-500 dark:text-zinc-400 font-medium">
                 {blog.views}
               </td>
-              {/* Actions */}
-              {needsAction && (
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Link
-                      href={`/blog/${blog.slug}`}
-                      className="p-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      <HiOutlineEye size={18} />
-                    </Link>
-                    <Button
-                      onClick={() => onEdit?.(blog)}
-                      className="p-2 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                    >
-                      <HiOutlinePencil size={18} />
-                    </Button>
-                    <Button
-                      onClick={() => onDelete?.(blog)}
-                      className="p-2 hover:text-rose-600 dark:hover:text-rose-400 transition-colors"
-                    >
-                      <HiOutlineTrash size={18} />
-                    </Button>
-                  </div>
-                </td>
-              )}
+            
             </tr>
           ))}
         </tbody>
