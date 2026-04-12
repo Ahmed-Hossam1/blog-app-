@@ -1,14 +1,15 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ConfirmEmailChangePage = () => {
-  const searchParams = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();  // xyz?token=2139lksajld12312&name=John&email=1k6xY@example.com
   const token = searchParams.get("token");
 
   const [status, setStatus] = useState<"loading" | "success" | "error">(
-    "loading"
+    "loading",
   );
   const [message, setMessage] = useState("");
 
@@ -25,10 +26,12 @@ const ConfirmEmailChangePage = () => {
 
         if (!res.ok) throw new Error(data.message);
 
-        setMessage(data.message);
         setStatus("success");
-      } catch (err: any) {
-        setMessage(err.message || "Something went wrong");
+        setTimeout(() => {
+          router.push("/dashboard/settings");
+        }, 1200);
+      } catch (error) {
+        console.error(error);
         setStatus("error");
       }
     };
@@ -39,12 +42,11 @@ const ConfirmEmailChangePage = () => {
       setStatus("error");
       setMessage("Missing token in URL");
     }
-  }, [token]);
+  }, [token, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full text-center">
-
         {/* Loading */}
         {status === "loading" && (
           <>

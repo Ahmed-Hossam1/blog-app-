@@ -32,6 +32,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    if (!user)
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+
     // check old password is not the same
     const isMatch = await bcrypt.compare(newPassword, user?.password as string);
 
