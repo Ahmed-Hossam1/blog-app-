@@ -58,9 +58,13 @@ export default function Editor() {
   const handlePublish = async (data: INewBlogForm) => {
     setIsLoading(true);
     try {
-      // Upload image from the file input
-      const imageUrl = await uploadImage(data.image[0] as File);
-
+      let imageUrl;
+      if (formImage instanceof FileList && formImage.length > 0) {
+        // Upload image from the file input
+        imageUrl = await uploadImage(data.image[0] as File);
+      } else {
+        imageUrl = formImage;
+      }
       // ── Promote existing draft to PUBLISHED
       const res = await fetch(`/api/blogs/create`, {
         method: "POST",
@@ -202,7 +206,9 @@ export default function Editor() {
 
             {/* Read Time mock */}
             <span className="absolute right-6 bottom-8 rounded-full bg-white/20 px-4 py-1 text-xs font-medium text-white backdrop-blur-md">
-              {formContent ? `${Math.max(1, Math.ceil(formContent.split(/\\s+/).length / 200))} min read` : "1 min read"}
+              {formContent
+                ? `${Math.max(1, Math.ceil(formContent.split(/\\s+/).length / 200))} min read`
+                : "1 min read"}
             </span>
 
             {/* Title Over Image */}
@@ -223,10 +229,16 @@ export default function Editor() {
                 You
               </div>
               <div>
-                <span className="text-sm font-medium dark:text-white">You (Author)</span>
+                <span className="text-sm font-medium dark:text-white">
+                  You (Author)
+                </span>
                 <p className="flex items-center gap-2 text-xs text-gray-500 mt-1">
                   <BsCalendar2Date />
-                  {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  {new Date().toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
                 </p>
               </div>
             </div>
@@ -234,7 +246,9 @@ export default function Editor() {
 
           {/* ======= CONTENT ======= */}
           <article className="prose prose-lg mx-auto max-w-none px-8 py-10 prose-headings:font-bold prose-h2:mt-10 prose-p:text-gray-600 prose-img:rounded-xl prose-img:shadow-md dark:prose-invert">
-            <Markdown remarkPlugins={[remarkGfm]}>{formContent || "*Start writing your blog...*"}</Markdown>
+            <Markdown remarkPlugins={[remarkGfm]}>
+              {formContent || "*Start writing your blog...*"}
+            </Markdown>
           </article>
         </div>
       ) : (

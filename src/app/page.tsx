@@ -6,6 +6,7 @@ import NewsletterSubscribe from "@/components/sections/NewsletterSubscribe";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import MeetOurAuthors from "@/components/sections/MeetOurAuthors";
 import { getBlogs, getAuthors } from "@/services";
+import HeroBanner from "@/components/sections/HeroBanner";
 export default async function Home() {
   const [blogs, authors] = await Promise.all([getBlogs(), getAuthors()]);
 
@@ -14,6 +15,7 @@ export default async function Home() {
       <Navbar />
       <main className="main pt-20">
         <SectionWrapper>
+          <HeroBanner />
           <FeaturedArticles blogs={blogs} numberOfShownArticles={5} />
           <ExploreCategories blogs={blogs} numberOfShownArticles={9} />
           <MeetOurAuthors authors={authors} numberOfShownAuthors={8} />

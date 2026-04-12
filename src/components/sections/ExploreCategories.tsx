@@ -21,38 +21,21 @@ const ExploreCategories = ({
   const [activeTab, setActiveTab] = useState<string>("All");
 
   /* ==== Filter ==== */
-  const filteredCards =
-    activeTab === "All"
-      ? blogs
-      : blogs.filter((blog: IBaseBlog) => blog.category === activeTab);
+  // const filteredCards =
+  //   activeTab === "All"
+  //     ? blogs
+  //     : blogs.filter((blog: IBaseBlog) => blog.category === activeTab);
 
   /* ==== Config ==== */
-  const slicedBlogs = filteredCards.slice(0, numberOfShownArticles);
+  const slicedBlogs = blogs.slice(0, numberOfShownArticles);
 
   return (
     <SectionWrapper>
       <div className="container mx-auto">
         {/* Title */}
-        <h2 className="text-3xl font-semibold text-center dark:text-white">
+        <h2 className="text-3xl font-semibold  dark:text-white">
           Explore Categories
         </h2>
-
-        <p className="mt-2 text-sm text-gray-500 text-center dark:text-gray-400">
-          Choose a category to explore related content - Find what interests you
-        </p>
-
-        {/* Tabs Categories */}
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {tabsData.map((tab) => (
-            <Tabs
-              key={tab.id}
-              isActive={tab.name === activeTab}
-              onActive={() => setActiveTab(tab.name)}
-            >
-              {tab.name}
-            </Tabs>
-          ))}
-        </div>
 
         {/* Cards Grid */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
