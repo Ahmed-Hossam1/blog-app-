@@ -1,4 +1,4 @@
-import { IBaseBlog } from "@/types";
+import { IBlog } from "@/types";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import RemoveBookmarkButton from "./RemoveBookmarkButton";
 import { formatDate, truncateText } from "@/lib/utils";
 
 type BookmarkCardProps = Pick<
-  IBaseBlog,
+  IBlog,
   | "id"
   | "title"
   | "image"
@@ -41,7 +41,7 @@ const BookmarkCard = ({
         <div className="relative h-48 w-full overflow-hidden">
           <Image
             src={image || "/default-image.png"}
-            alt={title}
+            alt={title || "image"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"

@@ -1,15 +1,13 @@
 "use client";
-import { IBaseBlog } from "@/types";
+import { IBlog } from "@/types";
 import React, { useState } from "react";
 import Pagination from "./Pagination";
 import Link from "next/link";
 import ExploreCard from "../cards/ExploreCard";
 
-interface IProps {
-  data: IBaseBlog[];
-}
 
-const PaginatedBlogs = ({ data: blogs }: IProps) => {
+
+const PaginatedBlogs = (blogs: IBlog[]) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const limit = 9;

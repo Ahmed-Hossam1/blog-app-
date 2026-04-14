@@ -1,4 +1,4 @@
-import ResetPasswordTemplate from "@/components/ResetPasswordTemplate";
+import ResetPasswordTemplate from "@/components/emailTemplates/ResetPasswordTemplate";
 import transporter from "@/lib/nodemailer";
 import { generateToken } from "@/lib/token";
 import { prisma } from "@/prisma/prisma";

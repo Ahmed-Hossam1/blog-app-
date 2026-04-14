@@ -1,10 +1,10 @@
+import { IBlog } from "@/types";
 import { formatDate } from "@/lib/utils";
-import { IBaseBlog } from "@/types";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
-interface FeaturedCardProps extends IBaseBlog {
+interface FeaturedCardProps extends Omit<IBlog, "comments"> {
   className?: string;
   comments?: { id: string }[];
 }
@@ -24,7 +24,7 @@ const FeaturedCard = ({
         {/* Image */}
         <Image
           src={image || "/default-image.png"}
-          alt={title}
+          alt={title || "image"}
           width={1200}
           height={600}
           className="h-105 w-full object-cover transition-transform duration-500 group-hover:scale-105"

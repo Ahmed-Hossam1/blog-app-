@@ -3,7 +3,7 @@ import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import FollowersAvatarGroup from "@/components/FollowersAvatarGroup";
 import { getAuthorProfile, getFollowersBasicInfo, isUserFollowing } from "@/services";
-import { IBaseBlog } from "@/types";
+import { IBlog } from "@/types";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,7 +77,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 )}
               </div>
 
-              
+
               {/* Social Links */}
               <div className="mt-6 flex justify-center gap-5 md:justify-start">
                 <Link
@@ -120,7 +120,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 Articles by {author.name}
               </h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {author.blogs.map((post: IBaseBlog) => (
+                {author.blogs.map((post: IBlog) => (
                   <Link href={`/blog/${post.slug}`} key={post.id}>
                     <ExploreCard
                       title={post.title}

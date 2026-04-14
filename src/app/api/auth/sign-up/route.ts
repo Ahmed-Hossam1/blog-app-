@@ -1,7 +1,7 @@
 import {
   default as ConfirmEmailTemplate,
   default as EmailTemplate,
-} from "@/components/ConfirmEmailTemplate";
+} from "@/components/emailTemplates/ConfirmEmailTemplate";
 import transporter from "@/lib/nodemailer";
 import { generateToken } from "@/lib/token";
 import { render } from "@react-email/render";

@@ -1,10 +1,10 @@
+import { IBlog } from "@/types";
 import { formatDate, truncateText } from "@/lib/utils";
-import { IBaseBlog } from "@/types";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 type ExploreCardProps = Pick<
-  IBaseBlog,
+  IBlog,
   "title" | "image" | "category" | "views" | "readTime" | "createdAt"
 > & {
   comments?: { id: string }[];
@@ -27,7 +27,7 @@ const ExploreCard = ({
       <div className="relative h-48">
         <Image
           src={image || "/default-image.png"}
-          alt={title}
+          alt={title || "Blog image"}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
@@ -38,7 +38,7 @@ const ExploreCard = ({
         <div className="absolute left-4 -bottom-4">
           <Image
             src={author?.image || "/default-image.png"}
-            alt={author?.name || "Author"}
+            alt={author?.name || "Author name"}
             width={40}
             height={40}
             className="rounded-full border-2 border-white"
@@ -53,7 +53,7 @@ const ExploreCard = ({
             {category}
           </span>
           <h3 className="mt-3 line-clamp-2 text-lg font-bold leading-snug dark:text-white group-hover:text-blue-600 transition-colors">
-            {truncateText(title)}
+            {truncateText(`${title}`)}
           </h3>
         </div>
 

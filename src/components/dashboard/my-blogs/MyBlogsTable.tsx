@@ -52,7 +52,7 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
     const matchCategory =
       activeCategory === "All" || blog.status === activeCategory.toUpperCase();
 
-    const matchSearch = blog.title
+    const matchSearch = (blog.title || "")
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 

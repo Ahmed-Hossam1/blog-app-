@@ -3,7 +3,7 @@
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import Input from "@/components/ui/Input";
-import { IBaseBlog } from "@/types";
+import { IBlog } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -11,7 +11,7 @@ import { FaSearch } from "react-icons/fa";
 const SearchPage = () => {
   /* ==== State ==== */
   const [query, setQuery] = useState<string>("");
-  const [blogs, setBlogs] = useState<IBaseBlog[]>([]);
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
   const [sortBy, setSortBy] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

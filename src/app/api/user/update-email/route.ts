@@ -1,4 +1,4 @@
-import UpdateEmailTemplate from "@/components/UpdateEmailTemplate";
+import UpdateEmailTemplate from "@/components/emailTemplates/UpdateEmailTemplate";
 import transporter from "@/lib/nodemailer";
 import { generateToken } from "@/lib/token";
 import { prisma } from "@/prisma/prisma";
@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest) {
     // convert jsx to html
     const html = await render(
       UpdateEmailTemplate({
-        name: userName,
+        name: userName || "User",
         newEmail: pendingEmail,
         verificationLink,
       }),
@@ -61,7 +61,6 @@ export async function PUT(req: NextRequest) {
       html,
     });
 
-    
     return NextResponse.json(
       { message: "Verification email sent check your email inbox" },
       { status: 200 },

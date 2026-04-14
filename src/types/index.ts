@@ -14,7 +14,7 @@ export interface ITab {
   name: string;
 }
 
-export interface IBaseBlog {
+export interface IBlog {
   id: string;
   authorId: string;
   title: string | null;
@@ -22,6 +22,7 @@ export interface IBaseBlog {
   category: string | null;
   image: string | null;
   readTime: string | null;
+  content: string | null;
   status: BlogStatus;
   views: number;
   likesCount: number;
@@ -29,6 +30,9 @@ export interface IBaseBlog {
   bookmarksCount: number;
   createdAt: Date;
   author?: IAuthor;
+  replies?: IComment[];
+  likes?: ILike[];
+  comments?: IComment[];
 }
 
 export interface IAuthor {
@@ -56,13 +60,6 @@ export interface IComment {
   parentId?: string | null;
   blogId: string;
   replies?: IComment[];
-}
-
-export interface IBlog extends IBaseBlog {
-  replies?: IComment[];
-  likes: ILike[];
-  content: string | null;
-  comments: IComment[];
 }
 
 export interface ILike {

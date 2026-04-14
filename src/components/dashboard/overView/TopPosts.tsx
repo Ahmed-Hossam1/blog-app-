@@ -3,11 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineChatBubbleLeft, HiOutlineEye } from "react-icons/hi2";
 
-interface IProps {
-  data: IBlog[];
-}
 
-const TopBlogs = ({ data }: IProps) => {
+const TopBlogs = (data: IBlog[]) => {
   const TopBlogs = data.sort((a, b) => b.views - a.views);
   const slicedData = TopBlogs.slice(0, 4);
   return (
@@ -28,8 +25,8 @@ const TopBlogs = ({ data }: IProps) => {
             >
               <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0">
                 <Image
-                  src={blog.image}
-                  alt={blog.title}
+                  src={blog.image || "/default-image.png"}
+                  alt={blog.title || "image"}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                 />
@@ -43,7 +40,7 @@ const TopBlogs = ({ data }: IProps) => {
                     <HiOutlineEye size={14} /> {blog.views}
                   </span>
                   <span className="flex items-center gap-1">
-                    <HiOutlineChatBubbleLeft size={14} /> {blog.comments.length}
+                    <HiOutlineChatBubbleLeft size={14} /> {blog.comments?.length ?? 0}
                   </span>
                 </div>
               </div>

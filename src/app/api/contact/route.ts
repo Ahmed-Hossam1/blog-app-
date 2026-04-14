@@ -1,4 +1,4 @@
-import ContactEmailTemplate from "@/components/ContactEmailTemplate";
+import ContactEmailTemplate from "@/components/emailTemplates/ContactEmailTemplate";
 import transporter from "@/lib/nodemailer";
 import { render } from "@react-email/render";
 import { NextRequest, NextResponse } from "next/server";

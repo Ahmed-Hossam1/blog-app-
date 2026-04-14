@@ -1,9 +1,9 @@
-import { IBaseBlog } from "@/types";
+import { IBlog } from "@/types";
 import FeaturedCard from "../cards/FeaturedCard";
 import SectionWrapper from "../shared/SectionWrapper";
 
 interface FeaturedArticlesProps {
-  blogs: IBaseBlog[];
+  blogs: IBlog[];
   numberOfShownArticles: number;
 }
 

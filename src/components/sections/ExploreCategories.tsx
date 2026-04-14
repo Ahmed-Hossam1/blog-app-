@@ -1,15 +1,13 @@
 "use client";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
-import { tabsData } from "@/constants";
-import { IBaseBlog } from "@/types";
+import { IBlog } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
 import ExploreCard from "../cards/ExploreCard";
-import Tabs from "../shared/Tab";
 
 interface ExploreCategoriesProps {
-  blogs: IBaseBlog[];
+  blogs: IBlog[];
   numberOfShownArticles: number;
 }
 
@@ -20,11 +18,7 @@ const ExploreCategories = ({
   /* ==== State ==== */
   const [activeTab, setActiveTab] = useState<string>("All");
 
-  /* ==== Filter ==== */
-  // const filteredCards =
-  //   activeTab === "All"
-  //     ? blogs
-  //     : blogs.filter((blog: IBaseBlog) => blog.category === activeTab);
+
 
   /* ==== Config ==== */
   const slicedBlogs = blogs.slice(0, numberOfShownArticles);
@@ -39,7 +33,7 @@ const ExploreCategories = ({
 
         {/* Cards Grid */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
-          {slicedBlogs.map((blog: IBaseBlog) => (
+          {slicedBlogs.map((blog: IBlog) => (
             <Link href={`/blog/${blog.slug}`} key={blog.slug}>
               <ExploreCard
                 title={blog.title}
