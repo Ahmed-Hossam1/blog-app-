@@ -48,6 +48,7 @@ export default function Editor() {
   /* ==== CONFIG ==== */
   const contentFields = formConfig?.content;
   const settingsFields = formConfig?.settings;
+  
   // Watch form values for autosave
   const formTitle = watch("title");
   const formContent = watch("content");
@@ -141,7 +142,7 @@ export default function Editor() {
     }
   }, [formTitle, formContent, formCategory, formImage]);
 
-  
+
   // Load draft blog from DB on mount (when ?id= is present)
   useEffect(() => {
     if (!urlBlogId) return;

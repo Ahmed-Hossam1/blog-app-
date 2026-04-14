@@ -2,6 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/prisma";
+import { calculateContentLength } from "@/lib/utils";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const session = await getServerSession(authOptions);
@@ -22,10 +23,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // ==== Read Time =====
-    const WORDS_PER_MINUTE = 200;
-    const wordCount = content.trim().split(/\s+/).length;
-    const readTime = `${Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE))} min read`;
-
+    const readTime = calculateContentLength(content);
     // ==== Slug ====
     const slug = title
       .toLowerCase()

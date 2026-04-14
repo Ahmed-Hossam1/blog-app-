@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { calculateContentLength } from "@/lib/utils";
 import { prisma } from "@/prisma/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,11 +12,7 @@ export async function POST(req: NextRequest) {
 
   const { id, title, content, category, image } = await req.json();
 
-  let readTime;
-  if (content?.trim()) {
-    const words = content.trim().split(/\s+/).length;
-    readTime = `${Math.ceil(words / 200)} min read`;
-  }
+  const readTime = calculateContentLength(content);
 
   try {
     // UPDATE
