@@ -81,7 +81,7 @@ export const getDraftBlogs = async (authorId: string) => {
           image: true,
         },
       },
-    },
+    },    
   });
   return blogs;
 };

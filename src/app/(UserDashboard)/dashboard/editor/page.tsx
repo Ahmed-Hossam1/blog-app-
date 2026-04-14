@@ -57,35 +57,41 @@ export default function Editor() {
   // Publish blog
   const handlePublish = async (data: INewBlogForm) => {
     setIsLoading(true);
+
     try {
-      let imageUrl;
+      let imageUrl: string | null = null;
+
       if (formImage instanceof FileList && formImage.length > 0) {
-        // Upload image from the file input
-        imageUrl = await uploadImage(data.image[0] as File);
-      } else {
+        imageUrl = await uploadImage(formImage[0]);
+      } else if (typeof formImage === "string") {
         imageUrl = formImage;
       }
-      // ── Promote existing draft to PUBLISHED
-      const res = await fetch(`/api/blogs/create`, {
+
+      const res = await fetch(`/api/blogs/publish`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: activeIdRef.current ?? undefined,
           ...data,
           image: imageUrl,
         }),
       });
+
       const resData = await res.json();
       if (!res.ok) throw new Error(resData.message);
+
       toast.success(resData.message);
-      router.refresh();
+
       reset({
         title: "",
         content: "",
         category: "",
         image: undefined,
       });
+
       setPreviewImage(null);
       activeIdRef.current = null;
+      router.refresh();
     } catch (error) {
       console.error(error);
       toast.error((error as Error).message);
@@ -97,54 +103,45 @@ export default function Editor() {
   // Save draft (manual or autosave)
   const handleSaveDraft = useCallback(async () => {
     if (!formTitle && !formContent && !formCategory) return;
-    setIsSavingDraft(true);
 
     try {
-      // Only attempt image upload when a file is actually selected
-      let imageUrl: string | null = null;
+      setIsSavingDraft(true);
+      let imageUrl;
+
       if (formImage instanceof FileList && formImage.length > 0) {
         imageUrl = await uploadImage(formImage[0]);
         setValue("image", imageUrl);
+      } else if (typeof formImage === "string") {
+        imageUrl = formImage;
       }
 
-      const payload = {
-        title: formTitle || undefined,
-        content: formContent || undefined,
-        category: formCategory || undefined,
-        image: imageUrl,
-      };
+      const res = await fetch(`/api/blogs/draft/save-draft`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: activeIdRef.current ?? undefined,
+          title: formTitle,
+          content: formContent,
+          category: formCategory,
+          image: imageUrl,
+        }),
+      });
 
-      const activeId = activeIdRef.current;
+      const data = await res.json();
 
-      if (!activeId) {
-        // ── CREATE new draft
-        const res = await fetch(`/api/blogs/draft/create`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-        activeIdRef.current = data.blogId;
-      } else {
-        // ── UPDATE existing draft
-        const res = await fetch(`/api/blogs/draft/update`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: activeId, ...payload }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to save draft. Please try again.");
+      if (!res.ok) throw new Error(data.message);
+
+      activeIdRef.current = data.blogId;
+    } catch (err) {
+      console.error(err);
     } finally {
       setIsSavingDraft(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formTitle, formContent, formCategory, formImage]);
 
+  
   // Load draft blog from DB on mount (when ?id= is present)
   useEffect(() => {
     if (!urlBlogId) return;
