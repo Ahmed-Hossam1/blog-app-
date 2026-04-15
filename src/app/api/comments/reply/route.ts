@@ -1,15 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
+  //===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json(
+      { message: "Please sign in first" },
+      { status: 401 },
+    );
+  }
+  const authorId = session.user.id;
+  const authorName = session.user.name;
+  const image = session.user.image;
+
   try {
     const body = await req.json();
-    const { authorName, image, comment, parentCommentId, blogId } = body;
+    const { comment, parentCommentId, blogId } = body;
 
     // ===== Validate Comment Content =====
-    if (!comment) {
+    if (!comment || !blogId) {
       return NextResponse.json(
-        { message: "Comment is required" },
+        { message: "missing required fields comment or blogId" },
         { status: 400 },
       );
     }
@@ -17,10 +31,11 @@ export async function POST(req: NextRequest) {
     // ===== Create Reply Comment =====
     await prisma.comment.create({
       data: {
-        comment,
         blogId,
+        authorId,
+        comment,
+        authorName: authorName || "Anonymous User",
         parentId: parentCommentId || null,
-        authorName: authorName,
         image: image || "/default-avatar.png",
       },
     });

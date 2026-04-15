@@ -24,9 +24,6 @@ const CommentSection = ({ blog }: IProps) => {
   const [replyToAuthorName, setReplyToAuthorName] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [reply, setReply] = useState({
-    authorName: "",
-    authorId: "",
-    image: "",
     comment: "",
     parentCommentId: "",
     blogId: "",
@@ -39,20 +36,12 @@ const CommentSection = ({ blog }: IProps) => {
   const postNewComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const payload = {
-      comment,
-      authorName: user?.name || "",
-      authorId: user?.id || "",
-      image: user?.image || "",
-      blogId: blog.id,
-    };
-
     try {
       setIsLoading(true);
       const res = await fetch(`/api/comments/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ comment, blogId: blog.id }),
       });
 
       const json = await res.json();
@@ -63,6 +52,7 @@ const CommentSection = ({ blog }: IProps) => {
       setComment("");
       router.refresh();
     } catch (err) {
+      console.error(err);
       toast.error((err as Error).message);
       setIsLoading(false);
     }
@@ -72,9 +62,6 @@ const CommentSection = ({ blog }: IProps) => {
     openModal();
     setReply({
       ...reply,
-      authorName: user?.name || "",
-      authorId: user?.id || "",
-      image: user?.image || "",
       blogId: blog.id,
       parentCommentId: parentId,
     });
@@ -98,9 +85,6 @@ const CommentSection = ({ blog }: IProps) => {
       toast.success("Reply posted successfully");
       setIsLoading(false);
       setReply({
-        authorName: "",
-        authorId: "",
-        image: "",
         comment: "",
         parentCommentId: "",
         blogId: "",
@@ -118,7 +102,7 @@ const CommentSection = ({ blog }: IProps) => {
       setIsLoading(true);
       const res = await fetch(`/api/comments/delete`, {
         method: "DELETE",
-        body: JSON.stringify({ id, authorId : user?.id, blogId }),
+        body: JSON.stringify({ id, blogId }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);

@@ -285,23 +285,17 @@ const MyBlogsTable = ({ authorBlogs }: IProps) => {
 
           {/* Bulk Actions */}
           <div
-            className={`flex items-center gap-3 w-full md:w-auto transition-all duration-300 ${selectedIds.length > 0
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4 pointer-events-none"
-              }`}
+            className={`flex items-center gap-3 w-full md:w-auto transition-all duration-300 ${
+              selectedIds.length > 0
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4 pointer-events-none"
+            }`}
           >
             <Button
               onClick={() => updateBlogStatus(selectedIds, "PUBLISHED")}
               className="bg-emerald-500 cursor-pointer hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
             >
               Publish
-            </Button>
-
-            <Button
-              onClick={() => updateBlogStatus(selectedIds, "ARCHIVED")}
-              className="bg-amber-500 cursor-pointer hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
-            >
-              Archive
             </Button>
 
             <Button

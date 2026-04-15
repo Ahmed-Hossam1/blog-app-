@@ -18,7 +18,7 @@ const BlogPage = async () => {
             designed for curious minds.
           </p>
         </div>
-        <PaginatedBlogs data={blogs} />
+        <PaginatedBlogs blogs={blogs} />
       </div>
     </SectionWrapper>
   );

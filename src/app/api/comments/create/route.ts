@@ -13,10 +13,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const body = await req.json();
-    const { authorName, authorId, image, comment, blogId } = body;
+  const body = await req.json();
+  const { comment, blogId } = body;
 
+  const authorName = session.user.name;
+  const authorId = session.user.id;
+  const image = session.user.image;
+
+  try {
     if (!comment)
       return NextResponse.json(
         { message: "Comment is required" },
@@ -31,8 +35,8 @@ export async function POST(req: NextRequest) {
 
     await prisma.comment.create({
       data: {
-        comment: comment,
-        blogId: blogId,
+        comment,
+        blogId,
         authorId,
         parentId: null,
         authorName: authorName || "Anonymous User",

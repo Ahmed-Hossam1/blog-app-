@@ -13,13 +13,14 @@ export async function DELETE(request: Request) {
     );
   }
 
+  const authorId = session.user.id;
 
   const body = await request.json();
-  const { id: commentId, authorId, blogId } = body;
+  const { id: commentId, blogId } = body;
 
-  if (!commentId || !authorId || !blogId) {
+  if (!commentId ||  !blogId) {
     return NextResponse.json(
-      { message: "Missing required fields id or authorId or blogId " },
+      { message: "Missing required fields id or blogId " },
       { status: 400 },
     );
   }
