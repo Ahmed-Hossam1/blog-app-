@@ -45,7 +45,8 @@ model Blog {
 model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
 
-  authorName String
+  authorName String  @db.ObjectId
+  authorId   String
   image      String
   comment    String
 

@@ -19,17 +19,13 @@ const CommentSection = ({ blog }: IProps) => {
   const router = useRouter();
 
   /* ==== State ==== */
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [replyToAuthorName, setReplyToAuthorName] = useState<string>("");
-  const [comment, setComment] = useState({
-    authorName: "",
-    image: "",
-    comment: "",
-    blogId: "",
-  });
+  const [comment, setComment] = useState<string>("");
   const [reply, setReply] = useState({
     authorName: "",
+    authorId: "",
     image: "",
     comment: "",
     parentCommentId: "",
@@ -42,11 +38,11 @@ const CommentSection = ({ blog }: IProps) => {
 
   const postNewComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (status !== "authenticated") return toast.error("Please sign in first");
 
     const payload = {
-      ...comment,
+      comment,
       authorName: user?.name || "",
+      authorId: user?.id || "",
       image: user?.image || "",
       blogId: blog.id,
     };
@@ -64,7 +60,7 @@ const CommentSection = ({ blog }: IProps) => {
 
       toast.success(json.message);
       setIsLoading(false);
-      setComment({ authorName: "", image: "", comment: "", blogId: "" });
+      setComment("");
       router.refresh();
     } catch (err) {
       toast.error((err as Error).message);
@@ -77,6 +73,7 @@ const CommentSection = ({ blog }: IProps) => {
     setReply({
       ...reply,
       authorName: user?.name || "",
+      authorId: user?.id || "",
       image: user?.image || "",
       blogId: blog.id,
       parentCommentId: parentId,
@@ -102,6 +99,7 @@ const CommentSection = ({ blog }: IProps) => {
       setIsLoading(false);
       setReply({
         authorName: "",
+        authorId: "",
         image: "",
         comment: "",
         parentCommentId: "",
@@ -120,7 +118,7 @@ const CommentSection = ({ blog }: IProps) => {
       setIsLoading(true);
       const res = await fetch(`/api/comments/delete`, {
         method: "DELETE",
-        body: JSON.stringify({ id, blogId }),
+        body: JSON.stringify({ id, authorId : user?.id, blogId }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
@@ -171,6 +169,7 @@ const CommentSection = ({ blog }: IProps) => {
               key={comment.id}
               comment={comment}
               level={0}
+              userId={user?.id}
               handleCommentReply={handleReplyClick}
               handleDeleteComment={handleDeleteComment}
             />
@@ -185,10 +184,8 @@ const CommentSection = ({ blog }: IProps) => {
 
         <form className="space-y-6" onSubmit={postNewComment}>
           <textarea
-            onChange={(e) =>
-              setComment({ ...comment, comment: e.target.value })
-            }
-            value={comment.comment}
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
             placeholder="Share your thoughts..."
             rows={4}
             className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all py-3 px-4 rounded-xl dark:text-white dark:placeholder-zinc-500 shadow-sm"

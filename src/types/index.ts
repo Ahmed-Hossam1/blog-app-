@@ -54,6 +54,7 @@ export interface Follower {
 export interface IComment {
   id: string;
   authorName: string;
+  authorId: string;
   image: string;
   comment: string;
   createdAt: Date;
@@ -132,4 +133,3 @@ export interface StatItem<T> {
   icon: IconType;
   color: string;
 }
-

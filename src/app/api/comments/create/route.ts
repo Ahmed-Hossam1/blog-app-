@@ -1,20 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
+  // ===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json(
+      { message: "Please sign in first" },
+      { status: 401 },
+    );
+  }
+
   try {
     const body = await req.json();
-    const { authorName, image, comment, blogId } = body;
+    const { authorName, authorId, image, comment, blogId } = body;
 
     if (!comment)
       return NextResponse.json(
         { message: "Comment is required" },
         { status: 400 },
       );
+
+    // check if blog exist
+    const blog = await prisma.blog.findUnique({ where: { id: blogId } });
+    if (!blog) {
+      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+    }
+
     await prisma.comment.create({
       data: {
         comment: comment,
         blogId: blogId,
+        authorId,
         parentId: null,
         authorName: authorName || "Anonymous User",
         image: image || "/default-avatar.png",

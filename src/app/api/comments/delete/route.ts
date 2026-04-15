@@ -7,15 +7,45 @@ export async function DELETE(request: Request) {
   // ===== Authenticate Session =====
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Please sign in first" }, { status: 401 });
+    return NextResponse.json(
+      { message: "Please sign in first" },
+      { status: 401 },
+    );
   }
 
+
   const body = await request.json();
-  const { id, blogId } = body;
+  const { id: commentId, authorId, blogId } = body;
+
+  if (!commentId || !authorId || !blogId) {
+    return NextResponse.json(
+      { message: "Missing required fields id or authorId or blogId " },
+      { status: 400 },
+    );
+  }
 
   try {
+    // get comment
+    const comment = await prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+    // check if it's exist
+    if (!comment) {
+      return NextResponse.json(
+        { message: "Comment not found" },
+        { status: 404 },
+      );
+    }
+    // check if authorId is the same as author who created the comment
+    if (authorId !== comment.authorId) {
+      return NextResponse.json(
+        { message: "Unauthorized to delete this comment" },
+        { status: 403 },
+      );
+    }
+
     await prisma.comment.update({
-      where: { id },
+      where: { id: commentId },
       data: {
         comment: "Deleted Comment",
       },

@@ -3,8 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineChatBubbleLeft, HiOutlineEye } from "react-icons/hi2";
 
-
-const TopBlogs = (data: IBlog[]) => {
+const TopBlogs = ({ data }: { data: IBlog[] }) => {
   const TopBlogs = data.sort((a, b) => b.views - a.views);
   const slicedData = TopBlogs.slice(0, 4);
   return (
@@ -40,7 +39,8 @@ const TopBlogs = (data: IBlog[]) => {
                     <HiOutlineEye size={14} /> {blog.views}
                   </span>
                   <span className="flex items-center gap-1">
-                    <HiOutlineChatBubbleLeft size={14} /> {blog.comments?.length ?? 0}
+                    <HiOutlineChatBubbleLeft size={14} />{" "}
+                    {blog.comments?.length ?? 0}
                   </span>
                 </div>
               </div>

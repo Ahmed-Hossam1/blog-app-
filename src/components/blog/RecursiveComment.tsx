@@ -8,6 +8,7 @@ import Button from "../ui/Button";
 import { formatDate } from "@/lib/utils";
 
 interface ICommentProps {
+  userId?: string;
   handleCommentReply: (
     parentCommentId: string,
     ReplyToAuthorName: string,
@@ -20,6 +21,7 @@ interface ICommentProps {
 const DELETED_MARKER = "Deleted Comment";
 
 const RecursiveComment = ({
+  userId,
   comment,
   level = 0,
   handleCommentReply,
@@ -28,6 +30,7 @@ const RecursiveComment = ({
   const {
     id,
     blogId,
+    authorId,
     authorName,
     image,
     comment: commentText,
@@ -102,12 +105,14 @@ const RecursiveComment = ({
                     <span className="hidden sm:inline">Reply</span>
                   </Button>
 
-                  <Button
-                    onClick={() => handleDeleteComment(id, blogId)}
-                    className="flex items-center justify-center bg-zinc-50 dark:bg-zinc-800/60 hover:bg-red-50 dark:hover:bg-red-500/10 text-zinc-400 hover:text-red-500 h-7.5 w-7.5 rounded-xl transition-all duration-200 border border-transparent hover:border-red-100 dark:hover:border-red-500/30"
-                  >
-                    <FaTrash size={12} />
-                  </Button>
+                  {userId === authorId && (
+                    <Button
+                      onClick={() => handleDeleteComment(id, blogId)}
+                      className="flex items-center justify-center bg-zinc-50 dark:bg-zinc-800/60 hover:bg-red-50 dark:hover:bg-red-500/10 text-zinc-400 hover:text-red-500 h-7.5 w-7.5 rounded-xl transition-all duration-200 border border-transparent hover:border-red-100 dark:hover:border-red-500/30"
+                    >
+                      <FaTrash size={12} />
+                    </Button>
+                  )}
                 </div>
               </div>
 
