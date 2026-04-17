@@ -1,10 +1,10 @@
+import I18nProvider from "@/providers/I18nProvider";
 import { Session } from "@/providers/Session";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
-
 
 
 const geistSans = Geist({
@@ -38,7 +38,9 @@ export default function RootLayout({
       >
         <Session>
           <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            {children}
+            <I18nProvider>
+              {children}
+            </I18nProvider>
           </ThemeProvider>
           <ToastContainer
             position="top-center"

@@ -1,7 +1,10 @@
+"use client"
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { FaArrowRight } from "react-icons/fa6";
 
 const HeroBanner = () => {
+ const {t } = useTranslation()
   return (
     <section className="relative overflow-hidden bg-gray-50 dark:bg-surfaceDark rounded-3xl mb-12 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border border-gray-100 dark:border-gray-800">
       <div className="mx-auto max-w-4xl text-center">
@@ -9,6 +12,7 @@ const HeroBanner = () => {
           Explore Insights, Stories, and <span className="text-blue-600 dark:text-blue-500">Perspectives</span>
         </h1>
 
+       <h2> {t("WelcomeMessage")}</h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg sm:text-xl text-gray-500 dark:text-gray-400 mb-10">
           A place to read, write, and deepen your understanding. Discover carefully curated articles on web development, design, and modern technology.
         </p>

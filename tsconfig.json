@@ -36,7 +36,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "src/lib/getProducts.ts"
-  ],
+, "src/lib/i18n.ts"  ],
   "exclude": [
     "node_modules"
   ]
