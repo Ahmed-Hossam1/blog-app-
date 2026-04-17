@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import StatusCard from "@/components/cards/StatusCard";
 import MyBlogsTable from "@/components/dashboard/my-blogs/MyBlogsTable";
@@ -22,19 +23,22 @@ const MyBlogs = async () => {
 
   return (
     <SectionWrapper>
-      {/* Heading */}
-      <div className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <DashboardHeadingTitle
-            title="My Blogs"
-            description="Manage your blog posts and categories."
-          />
-        </div>
+      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <DashboardHeadingTitle
+          title="My Blogs"
+          description="Manage, update, and organize your content."
+        />
+
+        <Link
+          href="/dashboard/editor"
+          className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-700"
+        >
+          + New Blog
+        </Link>
       </div>
 
-      {/* Row 1: Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        {stats.map((stat) => (
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {stats.slice(0, 4).map((stat) => (
           <StatusCard
             key={stat.key}
             title={stat.title}
@@ -45,10 +49,7 @@ const MyBlogs = async () => {
         ))}
       </div>
 
-      {/* Blogs Table */}
       <MyBlogsTable authorBlogs={authorBlogs} />
-
-      <div className="flex justify-center mt-10"></div>
     </SectionWrapper>
   );
 };

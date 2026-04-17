@@ -12,6 +12,7 @@ export const getBlogs = async () => {
         },
       },
     },
+    take : 20
   });
   return blogs;
 };

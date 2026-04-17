@@ -3,7 +3,6 @@ import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { IBlog } from "@/types";
 import Link from "next/link";
-import { useState } from "react";
 import ExploreCard from "../cards/ExploreCard";
 
 interface ExploreCategoriesProps {
@@ -15,11 +14,6 @@ const ExploreCategories = ({
   blogs,
   numberOfShownArticles,
 }: ExploreCategoriesProps) => {
-  /* ==== State ==== */
-  const [activeTab, setActiveTab] = useState<string>("All");
-
-
-
   /* ==== Config ==== */
   const slicedBlogs = blogs.slice(0, numberOfShownArticles);
 

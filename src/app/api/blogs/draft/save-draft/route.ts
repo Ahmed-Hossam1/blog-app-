@@ -27,12 +27,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: "Forbidden" }, { status: 403 });
       }
 
-      if (blog.status !== "DRAFT") {
-        return NextResponse.json(
-          { message: "Only drafts can be updated" },
-          { status: 400 },
-        );
-      }
 
       const updated = await prisma.blog.update({
         where: { id },
@@ -63,7 +57,15 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ blogId: created.id });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "Error" }, { status: 500 });
+    console.error(`[${req.method}] ${req.nextUrl.pathname}`, error);
+
+    return NextResponse.json(
+      {
+        message:
+          error instanceof Error ? error.message : "Something went wrong",
+        route: req.nextUrl.pathname,
+      },
+      { status: 500 },
+    );
   }
 }
