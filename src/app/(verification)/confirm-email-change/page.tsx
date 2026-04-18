@@ -2,10 +2,12 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const ConfirmEmailChangePage = () => {
+  const { t } = useTranslation("verification");
   const router = useRouter();
-  const searchParams = useSearchParams();  // xyz?token=2139lksajld12312&name=John&email=1k6xY@example.com
+  const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
   const [status, setStatus] = useState<"loading" | "success" | "error">(
@@ -40,7 +42,7 @@ const ConfirmEmailChangePage = () => {
       verifyEmail();
     } else {
       setStatus("error");
-      setMessage("Missing token in URL");
+      setMessage(t("confirmEmailChange.missingToken"));
     }
   }, [token, router]);
 
@@ -51,7 +53,7 @@ const ConfirmEmailChangePage = () => {
         {status === "loading" && (
           <>
             <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-6"></div>
-            <h2 className="text-xl font-semibold">Verifying your email...</h2>
+            <h2 className="text-xl font-semibold">{t("confirmEmailChange.verifying")}</h2>
           </>
         )}
 
@@ -59,7 +61,7 @@ const ConfirmEmailChangePage = () => {
         {status === "success" && (
           <>
             <div className="text-green-500 text-5xl mb-4">✅</div>
-            <h2 className="text-xl font-semibold">Email Verified!</h2>
+            <h2 className="text-xl font-semibold">{t("confirmEmailChange.success")}</h2>
             <p className="text-gray-600 mt-2">{message}</p>
           </>
         )}
@@ -68,7 +70,7 @@ const ConfirmEmailChangePage = () => {
         {status === "error" && (
           <>
             <div className="text-red-500 text-5xl mb-4">❌</div>
-            <h2 className="text-xl font-semibold">Verification Failed</h2>
+            <h2 className="text-xl font-semibold">{t("confirmEmailChange.failed")}</h2>
             <p className="text-gray-600 mt-2">{message}</p>
           </>
         )}
@@ -76,5 +78,6 @@ const ConfirmEmailChangePage = () => {
     </div>
   );
 };
+
 
 export default ConfirmEmailChangePage;

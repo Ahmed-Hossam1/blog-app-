@@ -2,8 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const VerifyEmail = () => {
+  const { t } = useTranslation("verification");
   const token = useSearchParams().get("token");
   const router = useRouter();
 
@@ -44,9 +46,9 @@ const VerifyEmail = () => {
           <>
             <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent mx-auto mb-6"></div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-              Verifying your email...
+              {t("verifyEmail.verifying")}
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Please wait a moment</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{t("verifyEmail.pleaseWait")}</p>
           </>
         )}
 
@@ -55,14 +57,14 @@ const VerifyEmail = () => {
           <>
             <div className="text-green-500 text-5xl mb-4">✅</div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-              Email Verified!
+              {t("verifyEmail.success")}
             </h2>
             <div className="flex flex-col items-center gap-2">
               <p className="text-gray-700 dark:text-gray-300 text-lg font-semibold tracking-wide">
-                Redirecting you...
+                {t("verifyEmail.redirecting")}
               </p>
               <span className="text-sm text-gray-400 animate-pulse">
-                Please wait a moment
+                {t("verifyEmail.pleaseWait")}
               </span>
             </div>
           </>
@@ -73,17 +75,17 @@ const VerifyEmail = () => {
           <>
             <div className="text-red-500 text-5xl mb-4">❌</div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-              Verification Failed
+              {t("verifyEmail.failed")}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              The link is invalid or expired.
+              {t("verifyEmail.invalidLink")}
             </p>
 
             <button
               onClick={() => router.push("/sign-up")}
               className="mt-6 w-full bg-gray-800 hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-200 text-white py-2 rounded-lg font-medium transition"
             >
-              Try Again
+              {t("verifyEmail.tryAgain")}
             </button>
           </>
         )}
@@ -91,5 +93,6 @@ const VerifyEmail = () => {
     </div>
   );
 };
+
 
 export default VerifyEmail;

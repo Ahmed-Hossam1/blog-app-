@@ -1,0 +1,17 @@
+{
+  "verifyEmail": {
+    "verifying": "Verifying your email...",
+    "pleaseWait": "Please wait a moment",
+    "success": "Email Verified!",
+    "redirecting": "Redirecting you...",
+    "failed": "Verification Failed",
+    "invalidLink": "The link is invalid or expired.",
+    "tryAgain": "Try Again"
+  },
+  "confirmEmailChange": {
+    "verifying": "Verifying your email...",
+    "success": "Email Verified!",
+    "failed": "Verification Failed",
+    "missingToken": "Missing token in URL"
+  }
+}

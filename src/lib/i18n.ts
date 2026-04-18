@@ -11,6 +11,7 @@ import enContact from "@/locales/en/contact.json";
 import enSearch from "@/locales/en/search.json";
 import enPrivacy from "@/locales/en/privacy.json";
 import enAuth from "@/locales/en/auth.json";
+import enVerification from "@/locales/en/verification.json";
 
 // Arabic namespaces
 import arHome from "@/locales/ar/home.json";
@@ -22,6 +23,7 @@ import arContact from "@/locales/ar/contact.json";
 import arSearch from "@/locales/ar/search.json";
 import arPrivacy from "@/locales/ar/privacy.json";
 import arAuth from "@/locales/ar/auth.json";
+import arVerification from "@/locales/ar/verification.json";
 
 // translations
 const resources = {
@@ -35,6 +37,7 @@ const resources = {
     search: enSearch,
     privacy: enPrivacy,
     auth: enAuth,
+    verification: enVerification,
   },
   ar: {
     home: arHome,
@@ -46,6 +49,7 @@ const resources = {
     search: arSearch,
     privacy: arPrivacy,
     auth: arAuth,
+    verification: arVerification,
   },
 };
 
@@ -66,7 +70,7 @@ i18n.use(initReactI18next).init({
   resources,
   lng: initialLang,
   fallbackLng: "en",
-  ns: ["home", "terms", "common", "blog", "authors", "contact", "search", "privacy", "auth"],
+  ns: ["home", "terms", "common", "blog", "authors", "contact", "search", "privacy", "auth", "verification"],
   defaultNS: "home",
   interpolation: {
     escapeValue: false,
