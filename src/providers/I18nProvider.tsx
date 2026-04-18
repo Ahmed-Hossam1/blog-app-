@@ -3,15 +3,14 @@
 /**
  * I18nProvider
  *
- * This client component initializes i18next and makes it available
- * to the entire React tree via the I18nextProvider context.
+ * A simple wrapper that makes i18n available to all components.
  *
- * WHY this file exists:
- * - `react-i18next`'s `useTranslation()` hook reads i18n from React context.
- * - Simply importing i18n.ts as a side effect in layout.tsx (a Server Component)
- *   does NOT inject it into the client-side React tree.
- * - This provider must wrap children in the client boundary so every
- *   component calling `useTranslation()` can access the initialized i18n instance.
+ * Why we need it:
+ * - `useTranslation()` needs i18n from React context.
+ * - Next.js layout is a Server Component, so it doesn't provide this context.
+ *
+ * Solution:
+ * - Wrap the app with this Client Component so all children can use translations.
  */
 
 import i18n from "@/lib/i18n";

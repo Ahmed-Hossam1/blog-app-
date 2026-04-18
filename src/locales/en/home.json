@@ -1,0 +1,27 @@
+{
+  "hero": {
+    "heading": "Explore Insights, Stories, and",
+    "headingHighlight": "Perspectives",
+    "subheading": "A place to read, write, and deepen your understanding. Discover carefully curated articles on web development, design, and modern technology.",
+    "startReading": "Start Reading",
+    "joinCommunity": "Join the Community",
+    "switchArabic": "Arabic",
+    "switchEnglish": "English"
+  },
+  "explore": {
+    "title": "Explore Categories",
+    "exploreAllBlogs": "Explore All Blogs",
+    "noArticles": "No articles found in this category yet."
+  },
+  "authors": {
+    "title": "Explore Authors",
+    "viewAll": "View all Authors",
+    "defaultTitle": "Author"
+  },
+  "newsletter": {
+    "title": "Subscribe to our newsletter",
+    "description": "Subscribe to our newsletter and be the first to know about new arrivals, exclusive offers, special promotions, and the latest news.",
+    "placeholder": "Enter your email address",
+    "subscribe": "Subscribe"
+  }
+}

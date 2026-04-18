@@ -1,28 +1,49 @@
-"use client"
+"use client";
+import { Button } from "@headlessui/react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { FaArrowRight } from "react-icons/fa6";
 
 const HeroBanner = () => {
- const {t } = useTranslation()
+  const { t, i18n } = useTranslation("home");
+
   return (
     <section className="relative overflow-hidden bg-gray-50 dark:bg-surfaceDark rounded-3xl mb-12 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border border-gray-100 dark:border-gray-800">
       <div className="mx-auto max-w-4xl text-center">
         <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl mb-6">
-          Explore Insights, Stories, and <span className="text-blue-600 dark:text-blue-500">Perspectives</span>
+          {t("hero.heading")}{" "}
+          <span className="text-blue-600 dark:text-blue-500">
+            {t("hero.headingHighlight")}
+          </span>
         </h1>
 
-       <h2> {t("WelcomeMessage")}</h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg sm:text-xl text-gray-500 dark:text-gray-400 mb-10">
-          A place to read, write, and deepen your understanding. Discover carefully curated articles on web development, design, and modern technology.
+          {t("hero.subheading")}
         </p>
 
+        {/* Language switcher */}
+        <div className="flex justify-center items-center gap-2 mb-6">
+          <Button
+            onClick={() => i18n.changeLanguage("ar")}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            {t("hero.switchArabic")}
+          </Button>
+          <Button
+            onClick={() => i18n.changeLanguage("en")}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            {t("hero.switchEnglish")}
+          </Button>
+        </div>
+
+        {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/blog"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200"
           >
-            Start Reading
+            {t("hero.startReading")}
             <FaArrowRight className="text-sm" />
           </Link>
 
@@ -30,7 +51,7 @@ const HeroBanner = () => {
             href="/sign-up"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
           >
-            Join the Community
+            {t("hero.joinCommunity")}
           </Link>
         </div>
       </div>

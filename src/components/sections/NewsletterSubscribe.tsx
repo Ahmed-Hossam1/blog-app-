@@ -1,8 +1,12 @@
+"use client";
+import { useTranslation } from "react-i18next";
 import SectionWrapper from "../shared/SectionWrapper";
 import MyInput from "../ui/Input";
 import Button from "../ui/Button";
 
 const NewsletterSubscribe = () => {
+  const { t } = useTranslation("home");
+
   return (
     <SectionWrapper>
       <div className="container mx-auto px-4">
@@ -11,27 +15,24 @@ const NewsletterSubscribe = () => {
             {/* Text */}
             <div className="max-w-xl">
               <h3 className="text-2xl font-semibold dark:text-white">
-                Subscribe to our newsletter
+                {t("newsletter.title")}
               </h3>
-
               <p className="mt-3 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-                Subscribe to our newsletter and be the first to know about new
-                arrivals, exclusive offers, special promotions, and the latest
-                news.
+                {t("newsletter.description")}
               </p>
             </div>
 
             {/* Input + Button */}
             <div className="flex h-12 w-full max-w-md items-center overflow-hidden rounded-sm bg-white shadow-md dark:bg-gray-800 dark:border dark:border-gray-700">
               <MyInput
-                id="email"
+                id="newsletter-email"
                 name="email"
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={t("newsletter.placeholder")}
                 className="h-full flex-1 py-1.5"
               />
               <Button className="whitespace-nowrap bg-primary px-9 py-5 text-sm font-medium text-white transition hover:bg-blue-800">
-                Subscribe
+                {t("newsletter.subscribe")}
               </Button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
-
 import { navLinksData } from "@/constants";
+import { signOut, useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -9,8 +10,6 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import Button from "../ui/Button";
-import { useTheme } from "next-themes";
-import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { status, data } = useSession();
