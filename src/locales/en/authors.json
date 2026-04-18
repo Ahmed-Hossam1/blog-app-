@@ -1,0 +1,13 @@
+{
+  "listing": {
+    "title": "Our Team",
+    "description": "Meet the talented individuals behind our content.",
+    "contributor": "Contributor"
+  },
+  "profile": {
+    "staffWriter": "Staff Writer",
+    "articlesBy": "Articles by {{name}}",
+    "noArticles": "{{name}} has not written any articles yet.",
+    "notFound": "Author not found"
+  }
+}

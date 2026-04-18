@@ -1,0 +1,13 @@
+{
+  "listing": {
+    "title": "فريقنا",
+    "description": "تعرف على الأفراد الموهوبين وراء محتوانا.",
+    "contributor": "مساهم"
+  },
+  "profile": {
+    "staffWriter": "كاتب رسمي",
+    "articlesBy": "مقالات بواسطة {{name}}",
+    "noArticles": "لم يكتب {{name}} أي مقالات بعد.",
+    "notFound": "الكاتب غير موجود"
+  }
+}

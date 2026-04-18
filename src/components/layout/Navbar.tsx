@@ -10,6 +10,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import Button from "../ui/Button";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const { status, data } = useSession();
@@ -19,6 +20,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
+  const { t } = useTranslation("common");
 
   /* ==== Handlers ==== */
   const changeTheme = () => {
@@ -44,7 +46,7 @@ const Navbar = () => {
       className="cursor-pointer capitalize text-sm font-medium transition hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
       href={link.to}
     >
-      {link.name}
+      {t(`navbar.${link.name.toLowerCase()}`)}
     </Link>
   ));
 
@@ -55,7 +57,7 @@ const Navbar = () => {
       href={link.to}
       onClick={closeMenu}
     >
-      {link.name}
+      {t(`navbar.${link.name.toLowerCase()}`)}
     </Link>
   ));
 
@@ -87,7 +89,7 @@ const Navbar = () => {
           className={`fixed right-0 top-0 h-full w-72 z-50 bg-white p-5 shadow-lg dark:bg-surfaceDark dark:text-white transform transition-transform duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="flex items-center justify-between border-b pb-3">
-            <h2 className="text-lg font-semibold capitalize">menu</h2>
+            <h2 className="text-lg font-semibold capitalize">{t("navbar.menu")}</h2>
             <MdOutlineCancel
               className="cursor-pointer text-2xl hover:text-red-500 transition-colors"
               onClick={closeMenu}
@@ -100,7 +102,7 @@ const Navbar = () => {
             <div className="mt-6 flex flex-col gap-2">
               <Link href={"/sign-in"} onClick={closeMenu}>
                 <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
-                  sign in
+                  {t("navbar.signIn")}
                 </Button>
               </Link>
               <Link href={"/sign-up"} onClick={closeMenu}>
@@ -108,7 +110,7 @@ const Navbar = () => {
                   bgColor="bg-black"
                   className="w-full capitalize py-2 font-medium text-white"
                 >
-                  sign up
+                  {t("navbar.signUp")}
                 </Button>
               </Link>
             </div>
@@ -190,14 +192,14 @@ const Navbar = () => {
                     href="/dashboard"
                     className="block rounded-lg px-3 py-2 text-sm transition hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
-                    Dashboard
+                    {t("navbar.dashboard")}
                   </Link>
 
                   <Button
                     onClick={() => signOut({ callbackUrl: "/" })}
                     className="mt-1 w-full text-left rounded-lg px-3 py-2 text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20"
                   >
-                    Logout
+                    {t("navbar.logout")}
                   </Button>
                 </div>
               </div>
@@ -206,7 +208,7 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-2">
               <Link href={"/sign-in"}>
                 <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
-                  sign in
+                  {t("navbar.signIn")}
                 </Button>
               </Link>
               <Link href={"/sign-up"}>
@@ -214,7 +216,7 @@ const Navbar = () => {
                   bgColor="bg-black"
                   className="capitalize px-6 py-1.5 font-medium text-white"
                 >
-                  sign up
+                  {t("navbar.signUp")}
                 </Button>
               </Link>
             </div>

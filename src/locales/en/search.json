@@ -1,0 +1,18 @@
+{
+  "hero": {
+    "title": "Explore our",
+    "highlight": "Knowledge Base",
+    "subtitle": "Discover the latest trends in development, design, and technology. Find exactly what you are looking for.",
+    "placeholder": "Search articles, topics, or authors..."
+  },
+  "results": {
+    "title": "Search Results",
+    "searching": "Searching...",
+    "showing": "Showing {{count}} results",
+    "sortBy": "Sort By...",
+    "mostViews": "Most Views",
+    "leastViews": "Least Views",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  }
+}

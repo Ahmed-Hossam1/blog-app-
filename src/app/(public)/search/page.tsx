@@ -7,8 +7,12 @@ import { IBlog } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import SkeletonCard from "@/components/shared/SkeletonCard";
 
 const SearchPage = () => {
+  const { t } = useTranslation("search");
+
   /* ==== State ==== */
   const [query, setQuery] = useState<string>("");
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -59,20 +63,7 @@ const SearchPage = () => {
   /* ==== Render Helpers ==== */
   const SkeletonLoader = () => (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-      {[...Array(10)].map((_, i) => (
-        <div
-          key={i}
-          className="flex flex-col gap-3 rounded-xl border border-gray-100 bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-surfaceDark animate-pulse"
-        >
-          <div className="h-40 w-full rounded-xl bg-gray-200 dark:bg-gray-700" />
-          <div className="mt-2 h-4 w-1/3 rounded-full bg-gray-200 dark:bg-gray-700" />
-          <div className="h-6 w-full rounded-md bg-gray-200 dark:bg-gray-700" />
-          <div className="mt-3 flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700" />
-            <div className="h-4 w-24 rounded-full bg-gray-200 dark:bg-gray-700" />
-          </div>
-        </div>
-      ))}
+      <SkeletonCard numberOfCards={10} />
     </div>
   );
 
@@ -88,11 +79,10 @@ const SearchPage = () => {
 
         <div className="container relative z-10 mx-auto px-4 text-center">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-baseInk dark:text-white md:text-6xl">
-            Explore our <span className="text-primary">Knowledge Base</span>
+            {t("hero.title")} <span className="text-primary">{t("hero.highlight")}</span>
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-            Discover the latest trends in development, design, and technology.
-            Find exactly what you are looking for.
+            {t("hero.subtitle")}
           </p>
 
           <div className="mx-auto max-w-2xl relative">
@@ -102,7 +92,7 @@ const SearchPage = () => {
                 id="search"
                 name="search"
                 type="text"
-                placeholder="Search articles, topics, or authors..."
+                placeholder={t("hero.placeholder")}
                 value={query}
                 autoFocus
                 onChange={(e) => setQuery(e.target.value.toLocaleLowerCase())}
@@ -118,10 +108,10 @@ const SearchPage = () => {
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end justify-between border-b border-gray-200 pb-4 dark:border-gray-800">
             <div>
               <h2 className="text-2xl font-bold text-baseInk dark:text-white">
-                Search Results
+                {t("results.title")}
               </h2>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                {isLoading ? "Searching..." : `Showing ${sortedBlogs.length} results`}
+                {isLoading ? t("results.searching") : t("results.showing", { count: sortedBlogs.length })}
               </p>
             </div>
 
@@ -135,12 +125,12 @@ const SearchPage = () => {
                 className="w-full sm:w-auto rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium shadow-sm transition hover:border-primary focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-surfaceDark dark:text-white dark:hover:border-primary cursor-pointer"
               >
                 <option disabled value="">
-                  Sort By...
+                  {t("results.sortBy")}
                 </option>
-                <option value="Most Views">Most Views</option>
-                <option value="Least Views">Least Views</option>
-                <option value="Newest">Newest</option>
-                <option value="Oldest">Oldest</option>
+                <option value="Most Views">{t("results.mostViews")}</option>
+                <option value="Least Views">{t("results.leastViews")}</option>
+                <option value="Newest">{t("results.newest")}</option>
+                <option value="Oldest">{t("results.oldest")}</option>
               </select>
             </div>
           </div>

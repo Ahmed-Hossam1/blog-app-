@@ -1,0 +1,25 @@
+{
+  "title": "Contact Us",
+  "subtitle": "We'd love to hear from you. Please fill out the form below or reach out to us directly.",
+  "getInTouch": "Get in Touch",
+  "description": "Have a question, suggestion, or just want to say hello? We are always here to help you. Whether you are a reader, a fellow blogger, or a potential partner, feel free to reach out.",
+  "location": "Our Location",
+  "locationText": "Based in Egypt\nServing Readers Globally",
+  "email": "Email Address",
+  "support": "Support Line",
+  "supportText": "Available Mon-Fri, 9am-6pm",
+  "followUs": "Follow Us",
+  "sendMessage": "Send Message",
+  "sending": "Sending...",
+  "success": "Message sent successfully",
+  "error": "Failed to send message",
+  "somethingWentWrong": "Something went wrong",
+  "form": {
+      "nameLabel": "Your Name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "John@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Write Your Message Here..."
+  }
+}

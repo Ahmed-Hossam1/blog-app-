@@ -13,11 +13,21 @@ import { FaEnvelope, FaLocationDot, FaPhone, FaShareNodes } from "react-icons/fa
 import { SOCIAL_LINKS } from "@/constants";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 /* ==== Config ==== */
-const contactForm = formConfig.contactForm;
+const baseContactForm = formConfig.contactForm;
 
 const Page = () => {
+  const { t } = useTranslation("contact");
+  
+  /* ==== Translated Form Config ==== */
+  const contactForm = baseContactForm.map(field => ({
+    ...field,
+    label: t(`form.${field.id}Label`),
+    placeholder: t(`form.${field.id}Placeholder`)
+  }));
+
   /* ==== State ==== */
   const {
     register,
@@ -45,13 +55,13 @@ const Page = () => {
       const result = await res.json();
 
       if (!res.ok) {
-        throw new Error(result.message || "Failed to send message");
+        throw new Error(result.message || t("error"));
       }
       
-      toast.success(result.message || "Message sent successfully");
+      toast.success(result.message || t("success"));
       reset();
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("somethingWentWrong"));
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -63,22 +73,20 @@ const Page = () => {
     <SectionWrapper>
       <div className="container mx-auto px-4 py-8">
         <h1 className="mb-4 text-center text-4xl font-bold dark:text-white">
-          Contact Us
+          {t("title")}
         </h1>
         <p className="mb-12 text-center text-lg text-gray-600 dark:text-gray-300">
-          We d love to hear from you. Please fill out the form below or reach
-          out to us directly.
+          {t("subtitle")}
         </p>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           <div className="flex flex-col gap-8">
             <div>
               <h2 className="mb-6 text-2xl font-semibold dark:text-white">
-                Get in Touch
+                {t("getInTouch")}
               </h2>
               <p className="mb-8 text-gray-600 dark:text-gray-300">
-                Have a question, suggestion, or just want to say hello? We are
-                always here to help you. Whether you are a reader, a fellow blogger, or a potential partner, feel free to reach out.
+                {t("description")}
               </p>
             </div>
 
@@ -89,12 +97,10 @@ const Page = () => {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-medium dark:text-white">
-                    Our Location
+                    {t("location")}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    Based in Egypt
-                    <br />
-                    Serving Readers Globally
+                  <p className="text-gray-600 dark:text-gray-400 whitespace-pre-line">
+                    {t("locationText")}
                   </p>
                 </div>
               </div>
@@ -105,7 +111,7 @@ const Page = () => {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-medium dark:text-white">
-                    Email Address
+                    {t("email")}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     info@blogy.com
@@ -121,12 +127,12 @@ const Page = () => {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-medium dark:text-white">
-                    Support Line
+                    {t("support")}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-gray-600 dark:text-gray-400 whitespace-pre-line">
                     +1 (555) BLOG-HELP
                     <br />
-                    Available Mon-Fri, 9am-6pm
+                    {t("supportText")}
                   </p>
                 </div>
               </div>
@@ -137,7 +143,7 @@ const Page = () => {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-medium dark:text-white">
-                    Follow Us
+                    {t("followUs")}
                   </h3>
                   <div className="flex items-center gap-4 mt-2">
                     {SOCIAL_LINKS.map((link) => (
@@ -158,7 +164,7 @@ const Page = () => {
 
           <div className="rounded-2xl bg-white p-8 shadow-sm dark:bg-surfaceDark">
             <h2 className="mb-6 text-2xl font-semibold dark:text-white">
-              Send Message
+              {t("sendMessage")}
             </h2>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <FormField
@@ -169,11 +175,11 @@ const Page = () => {
               <Button
                 disabled={isLoading}
                 isLoading={isLoading}
-                loadingText="Sending..."
+                loadingText={t("sending")}
                 bgColor="bg-primary hover:bg-blue-800 text-white"
                 className="w-full py-3 font-semibold"
               >
-                Send Message
+                {t("sendMessage")}
               </Button>
             </form>
           </div>

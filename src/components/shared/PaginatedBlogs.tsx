@@ -7,7 +7,7 @@ import ExploreCard from "../cards/ExploreCard";
 
 
 
-const PaginatedBlogs = ({blogs}: {blogs : IBlog[]}) => {
+const PaginatedBlogs = ({ blogs }: { blogs: IBlog[] }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const limit = 9;

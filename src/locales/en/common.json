@@ -1,0 +1,23 @@
+{
+  "navbar": {
+    "home": "Home",
+    "blogs": "Blogs",
+    "authors": "Authors",
+    "contact": "Contact",
+    "menu": "menu",
+    "signIn": "sign in",
+    "signUp": "sign up",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "search": "Search",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter"
+  },
+  "footer": {
+    "rights": "All Rights Reserved, Created by",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "contact": "Contact"
+  }
+}

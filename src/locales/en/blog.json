@@ -1,0 +1,18 @@
+{
+  "listing": {
+    "title": "Read, Learn & Grow",
+    "description": "From expert advice to behind-the-scenes stories – explore content designed for curious minds.",
+    "noBlogs": "No Blogs Found"
+  },
+  "post": {
+    "readTime": "min read",
+    "views": "views",
+    "comments": "comments",
+    "author": "Author",
+    "anonymous": "Anonymous",
+    "notFound": "Blog not found",
+    "relatedArticles": "Related Articles",
+    "articlesBy": "Articles by {{name}}",
+    "noArticles": "{{name}} has not written any articles yet."
+  }
+}
