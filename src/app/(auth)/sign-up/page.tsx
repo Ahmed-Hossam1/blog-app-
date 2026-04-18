@@ -15,9 +15,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
   /* ==== State ==== */
+  const { t } = useTranslation("auth");
   const {
     register,
     handleSubmit,
@@ -30,7 +32,10 @@ const Page = () => {
   const { theme } = useTheme();
 
   // ===== Config =====
-  const signUpFormFields = formConfig?.signUp ?? [];
+  const signUpFormFields = (formConfig?.signUp ?? []).map((field) => ({
+    ...field,
+    placeholder: t(`signUp.fields.${field.id}`),
+  }));
 
   // ===== Handlers =====
   const onSubmit: SubmitHandler<ISignUpForm> = async (data) => {
@@ -103,7 +108,7 @@ const Page = () => {
             disabled={authLoading}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
-            <span>Sign Up</span>
+            <span>{t("signUp.google")}</span>
             <FcGoogle className="text-2xl" />
           </Button>
 
@@ -112,14 +117,14 @@ const Page = () => {
             disabled={authLoading}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
-            <span>Sign Up</span>
+            <span>{t("signUp.github")}</span>
             <FaGithub className="text-2xl" />
           </Button>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
-          <p className="text-gray-400 text-sm uppercase">or</p>
+          <p className="text-gray-400 text-sm uppercase">{t("signUp.or")}</p>
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
         </div>
 
@@ -136,15 +141,15 @@ const Page = () => {
           <Button
             disabled={isLoading || authLoading}
             isLoading={isLoading}
-            loadingText="Creating Account..."
+            loadingText={t("signUp.submitting")}
             className="w-full bg-baseInk hover:bg-black transition text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >
-            Sign Up
+            {t("signUp.submit")}
           </Button>
 
           <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
             <Link href="/sign-in" className="hover:underline">
-              Already have an account? Sign In
+              {t("signUp.alreadyMember")}
             </Link>
           </div>
         </form>
@@ -152,5 +157,6 @@ const Page = () => {
     </div>
   );
 };
+
 
 export default Page;

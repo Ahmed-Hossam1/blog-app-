@@ -13,10 +13,12 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 type ResetPasswordForm = yup.InferType<typeof resetPasswordSchema>;
 
 const ResetPasswordPage = () => {
+  const { t } = useTranslation("auth");
   const token  = useSearchParams().get("token");
   const { theme } = useTheme();
   const router = useRouter();
@@ -78,10 +80,10 @@ const ResetPasswordPage = () => {
         )}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Reset Password
+            {t("resetPassword.title")}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Please enter your new password below.
+             {t("resetPassword.description")}
           </p>
         </div>
 
@@ -94,14 +96,14 @@ const ResetPasswordPage = () => {
               htmlFor="password"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              New Password
+              {t("resetPassword.newPasswordLabel")}
             </label>
             <div className="relative">
               <MyInput
                 id="password"
                 type="password"
                 {...register("password")}
-                placeholder="Enter new password"
+                placeholder={t("resetPassword.newPasswordPlaceholder")}
                 className="w-full pl-3 rounded-md border p-3 text-sm"
               />
             </div>
@@ -113,14 +115,14 @@ const ResetPasswordPage = () => {
               htmlFor="confirmPassword"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Confirm New Password
+              {t("resetPassword.confirmPasswordLabel")}
             </label>
             <div className="relative">
               <MyInput
                 id="confirmPassword"
                 type="password"
                 {...register("confirmPassword")}
-                placeholder="Confirm new password"
+                placeholder={t("resetPassword.confirmPasswordPlaceholder")}
                 className="w-full pl-3 rounded-md border p-3 text-sm"
               />
             </div>
@@ -133,10 +135,10 @@ const ResetPasswordPage = () => {
             type="submit"
             isLoading={isLoading}
             disabled={isLoading}
-            loadingText="Resetting"
+            loadingText={t("resetPassword.submitting")}
             className="w-full bg-baseInk hover:bg-black transition text-white py-2.5 mt-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >
-            Reset Password
+            {t("resetPassword.submit")}
           </Button>
 
           <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
@@ -157,7 +159,7 @@ const ResetPasswordPage = () => {
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              <span>Back to Sign In</span>
+              <span>{t("resetPassword.backToSignIn")}</span>
             </Link>
           </div>
         </form>
@@ -165,5 +167,6 @@ const ResetPasswordPage = () => {
     </div>
   );
 };
+
 
 export default ResetPasswordPage;

@@ -16,9 +16,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Page = () => {
   // ===== State =====
+  const { t } = useTranslation("auth");
   const { theme } = useTheme();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,7 +34,10 @@ const Page = () => {
   });
 
   // ===== Config =====
-  const signInFormFields = formConfig?.signIn ?? [];
+  const signInFormFields = (formConfig?.signIn ?? []).map((field) => ({
+    ...field,
+    placeholder: t(`signIn.fields.${field.id}`),
+  }));
 
   // ===== Handlers =====
   const onSubmit: SubmitHandler<ISignInForm> = async (data) => {
@@ -104,7 +109,7 @@ const Page = () => {
             disabled={authLoading}
             className="flex-1 flex items-center justify-center gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
-            <span>Sign In </span>
+            <span>{t("signIn.google")} </span>
             <FcGoogle className="text-2xl" />
           </Button>
           <Button
@@ -112,14 +117,14 @@ const Page = () => {
             disabled={authLoading}
             className="flex-1 flex items-center justify-center  gap-4 border border-gray p-3 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-white transition"
           >
-            <span>Sign In</span>
+            <span>{t("signIn.github")}</span>
             <FaGithub className="text-2xl" />
           </Button>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
-          <p className="text-gray-400 text-sm uppercase">or</p>
+          <p className="text-gray-400 text-sm uppercase">{t("signIn.or")}</p>
           <span className="bg-gray flex-1 h-px dark:bg-gray-700" />
         </div>
 
@@ -127,15 +132,19 @@ const Page = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col space-y-4"
         >
-          <FormField Fields={signInFormFields} register={register} errors={errors} />
+          <FormField
+            Fields={signInFormFields}
+            register={register}
+            errors={errors}
+          />
 
           <Button
             disabled={isLoading || authLoading}
             isLoading={isLoading}
-            loadingText="Signing In..."
+            loadingText={t("signIn.submitting")}
             className={`w-full bg-baseInk  hover:bg-black transition  text-white py-2 dark:bg-white dark:text-black dark:hover:bg-gray-200`}
           >
-            Sign In
+            {t("signIn.submit")}
           </Button>
 
           <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
@@ -143,11 +152,11 @@ const Page = () => {
               href={"/forgot-password"}
               className="mb-2 block cursor-pointer hover:underline"
             >
-              Forgot Password?
+              {t("signIn.forgotPassword")}
             </Link>
 
             <Link href="/sign-up" className="hover:underline ">
-              Not a member yet? Sign Up
+              {t("signIn.notMember")}
             </Link>
           </div>
         </form>
@@ -155,5 +164,6 @@ const Page = () => {
     </div>
   );
 };
+
 
 export default Page;

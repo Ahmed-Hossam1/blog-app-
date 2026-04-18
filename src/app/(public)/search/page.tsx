@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import SkeletonCard from "@/components/shared/SkeletonCard";
+import SkeletonCard from "@/components/ui/SkeletonCard";
 
 const SearchPage = () => {
   const { t } = useTranslation("search");
@@ -25,9 +25,7 @@ const SearchPage = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(
-          `/api/blogs/search?query=${query}`,
-        );
+        const res = await fetch(`/api/blogs/search?query=${query}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
         setBlogs(data.blogs);
@@ -79,7 +77,8 @@ const SearchPage = () => {
 
         <div className="container relative z-10 mx-auto px-4 text-center">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-baseInk dark:text-white md:text-6xl">
-            {t("hero.title")} <span className="text-primary">{t("hero.highlight")}</span>
+            {t("hero.title")}{" "}
+            <span className="text-primary">{t("hero.highlight")}</span>
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
             {t("hero.subtitle")}
@@ -111,13 +110,17 @@ const SearchPage = () => {
                 {t("results.title")}
               </h2>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                {isLoading ? t("results.searching") : t("results.showing", { count: sortedBlogs.length })}
+                {isLoading
+                  ? t("results.searching")
+                  : t("results.showing", { count: sortedBlogs.length })}
               </p>
             </div>
 
             {/* Enhanced Sort Dropdown */}
             <div>
-              <label htmlFor="sort-select" className="sr-only">Sort by</label>
+              <label htmlFor="sort-select" className="sr-only">
+                Sort by
+              </label>
               <select
                 id="sort-select"
                 value={sortBy}
@@ -142,9 +145,7 @@ const SearchPage = () => {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {sortedBlogs.map((blog) => (
               <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-                <ExploreCard
-                  {...blog}
-                />
+                <ExploreCard {...blog} />
               </Link>
             ))}
           </div>

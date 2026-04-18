@@ -11,11 +11,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface resetForm {
   email: string;
 }
 const ForgotPasswordPage = () => {
+  const { t } = useTranslation("auth");
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
@@ -66,10 +68,10 @@ const ForgotPasswordPage = () => {
 
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Forgot Password?
+            {t("forgotPassword.title")}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            No worries, we will send you reset instructions.
+            {t("forgotPassword.description")}
           </p>
         </div>
 
@@ -82,14 +84,14 @@ const ForgotPasswordPage = () => {
               htmlFor="email"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Email Address
+              {t("forgotPassword.emailLabel")}
             </label>
             <div className="relative">
               <MyInput
                 id="email"
                 type="email"
                 {...register("email")}
-                placeholder="Enter your email"
+                placeholder={t("forgotPassword.emailPlaceholder")}
                 className="w-full pl-10  rounded-md border p-3 text-sm"
               />
             </div>
@@ -100,10 +102,10 @@ const ForgotPasswordPage = () => {
             type="submit"
             isLoading={isLoading}
             disabled={isLoading}
-            loadingText="sending"
+            loadingText={t("forgotPassword.submitting")}
             className="w-full bg-baseInk hover:bg-black transition text-white py-2.5 mt-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >
-            Reset Password
+            {t("forgotPassword.submit")}
           </Button>
           <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
             <Link
@@ -123,7 +125,7 @@ const ForgotPasswordPage = () => {
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              <span>Back to Sign In</span>
+              <span>{t("forgotPassword.backToSignIn")}</span>
             </Link>
           </div>
         </form>
@@ -131,5 +133,6 @@ const ForgotPasswordPage = () => {
     </div>
   );
 };
+
 
 export default ForgotPasswordPage;

@@ -1,6 +1,6 @@
 import AuthorCard from "@/components/cards/AuthorCard";
 import SectionWrapper from "@/components/shared/SectionWrapper";
-import SkeletonCard from "@/components/shared/SkeletonCard";
+import SkeletonCard from "@/components/ui/SkeletonCard";
 import { Suspense } from "react";
 
 const AuthorsPage = () => {
