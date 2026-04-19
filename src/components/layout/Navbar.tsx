@@ -8,9 +8,10 @@ import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoSunnyOutline } from "react-icons/io5";
-import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineCancel, MdOutlineDarkMode, MdLanguage } from "react-icons/md";
 import Button from "../ui/Button";
 import { useTranslation } from "react-i18next";
+import { setLocaleCookie } from "@/lib/i18n";
 
 const Navbar = () => {
   const { status, data } = useSession();
@@ -20,7 +21,8 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
-  const { t } = useTranslation("common");
+  const [openLangMenu, setOpenLangMenu] = useState(false);
+  const { t, i18n } = useTranslation("common");
 
   /* ==== Handlers ==== */
   const changeTheme = () => {
@@ -37,6 +39,55 @@ const Navbar = () => {
         onClick={changeTheme}
         className="cursor-pointer transition-transform hover:scale-110"
       />
+    );
+  };
+
+  const handleLanguageChange = async (locale: "en" | "ar") => {
+    i18n.changeLanguage(locale);
+    await setLocaleCookie(locale);
+    setOpenLangMenu(false);
+  };
+
+  const renderLanguageMenu = () => {
+    return (
+      <div
+        className="relative flex items-center"
+        tabIndex={0}
+        onBlur={(e) => {
+          const nextElementFocus = e.relatedTarget as Node | null;
+          if (!e.currentTarget.contains(nextElementFocus)) {
+            setOpenLangMenu(false);
+          }
+        }}
+      >
+        <MdLanguage
+          className="cursor-pointer transition-transform hover:scale-110"
+          onClick={() => setOpenLangMenu((prev) => !prev)}
+        />
+        
+        <div
+          className={`absolute right-0 top-full mt-3 w-32 rounded-xl bg-white shadow-lg transition-all duration-200 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700
+            ${
+              openLangMenu
+                ? "opacity-100 translate-y-0"
+                : "pointer-events-none opacity-0 -translate-y-2"
+            }`}
+        >
+          <div className="p-2 space-y-1">
+            {["en", "ar"].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => handleLanguageChange(lang as "en" | "ar")}
+                className={`w-full text-left uppercase block rounded-lg px-3 py-2 text-sm transition hover:bg-gray-100 dark:hover:bg-zinc-700 ${
+                  i18n.language === lang ? "text-primary font-semibold" : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                {lang === "en" ? "EN - English" : "AR - العربية"}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     );
   };
 
@@ -119,6 +170,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <div className="hidden lg:flex items-center gap-4 text-xl">
+            {renderLanguageMenu()}
             {renderThemeIcon()}
             <Link href={`/search?query=`}>
               <CiSearch className="cursor-pointer dark:text-white" />
@@ -126,6 +178,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-4 text-xl lg:hidden">
+            {renderLanguageMenu()}
             {renderThemeIcon()}
             <Link href={`/search?query=`}>
               <CiSearch className="cursor-pointer dark:text-white" />

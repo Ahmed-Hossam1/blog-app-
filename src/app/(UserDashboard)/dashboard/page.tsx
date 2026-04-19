@@ -17,6 +17,7 @@ import { getTranslations } from "@/lib/i18n";
 import Link from "next/link";
 const OverView = async () => {
   const t = await getTranslations("dashboard");
+  const tCommon = await getTranslations("common");
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
@@ -75,7 +76,7 @@ const OverView = async () => {
               {slicedData.length > 0 ? (
                 <Table
                   tableTitle={t.recent_blogs}
-                  tableHeader={tableHeaders}
+                  tableHeader={tableHeaders.map((header) => tCommon.table.table_headers[header.toLowerCase()])}
                   tableBody={slicedData}
                 />
               ) : (

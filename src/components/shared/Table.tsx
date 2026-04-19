@@ -12,7 +12,6 @@ interface TableProps {
   selectedIds?: string[];
   onSelectAll?: () => void;
   onSelectRow?: (id: string) => void;
-
   showActions?: boolean;
   getViewHref?: (blog: IBlog) => string | null;
 }

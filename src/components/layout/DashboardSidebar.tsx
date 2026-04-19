@@ -8,11 +8,13 @@ import Button from "../ui/Button";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, closeSidebar } = useDashboard();
   const { theme } = useTheme();
+  const { t } = useTranslation("common");
 
   return (
     <>
@@ -78,7 +80,7 @@ export default function DashboardSidebar() {
                 `}
               >
                 <Icon size={20} />
-                {link.name}
+                {t(`aside.${link.name === "Manage Blogs" ? "manage_blogs" : link.name === "Draft" ? "drafts" : link.name.toLowerCase()}`)}
               </Link>
             );
           })}
@@ -100,12 +102,12 @@ export default function DashboardSidebar() {
             `}
           >
             <FiSettings size={20} />
-            Settings
+            {t("aside.settings")}
           </Link>
 
           <Button onClick={()=> signOut() } className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 dark:text-red-400 transition-all duration-200 hover:bg-red-50 dark:hover:bg-red-500/10">
             <FiLogOut size={20} />
-            Logout
+            {t("aside.logout")}
           </Button>
         </div>
       </aside>

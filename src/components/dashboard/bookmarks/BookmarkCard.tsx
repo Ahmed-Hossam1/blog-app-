@@ -68,7 +68,7 @@ const BookmarkCard = ({
             </span>
           </div>
           <h3 className="mb-4 line-clamp-2 text-lg font-bold leading-tight text-gray-900 dark:text-white group-hover:text-primary transition-colors duration-300">
-            {truncateText(title)}
+            {truncateText(title || "")}
           </h3>
 
           <div className="mt-auto pt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800">

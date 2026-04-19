@@ -57,5 +57,15 @@
   },
   "search": {
     "placeholder": "بحث..."
+  },
+  "aside": {
+    "overview": "نظرة عامة",
+    "manage_blogs": "إدارة المدونات",
+    "editor": "المحرر",
+    "drafts": "المسودات",
+    "bookmarks": "الإشارات المرجعية",
+    "analytics": "التحليلات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
   }
 }

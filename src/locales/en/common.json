@@ -57,5 +57,15 @@
   },
   "search": {
     "placeholder": "Search..."
+  },
+  "aside": {
+    "overview": "Overview",
+    "manage_blogs": "Manage Blogs",
+    "editor": "Editor",
+    "drafts": "Drafts",
+    "bookmarks": "Bookmarks",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "logout": "Logout"
   }
 }
