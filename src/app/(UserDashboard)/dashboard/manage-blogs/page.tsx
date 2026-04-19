@@ -8,8 +8,10 @@ import { MOCK_MY_BLOGS_STATS_CONFIG } from "@/data/mock/dashboard";
 import { calculators, computeStatValues } from "@/lib/helpers";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
+import { getTranslations } from "@/lib/i18n";
 
 const MyBlogs = async () => {
+  const t = await getTranslations("manage-blogs");
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
@@ -25,15 +27,15 @@ const MyBlogs = async () => {
     <SectionWrapper>
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <DashboardHeadingTitle
-          title="My Blogs"
-          description="Manage, update, and organize your content."
+          title={t.title}
+          description={t.description}
         />
 
         <Link
           href="/dashboard/editor"
           className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-700"
         >
-          + New Blog
+          {t.new_blog_button}
         </Link>
       </div>
 
@@ -41,7 +43,7 @@ const MyBlogs = async () => {
         {stats.slice(0, 4).map((stat) => (
           <StatusCard
             key={stat.key}
-            title={stat.title}
+            title={t.stats[stat.key as string] || stat.title}
             value={stat.value}
             icon={stat.icon}
             color={stat.color}

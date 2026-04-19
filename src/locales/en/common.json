@@ -20,5 +20,41 @@
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy",
     "contact": "Contact"
+  },
+  "table": {
+    "empty_blogs_title": "No blogs yet",
+    "empty_blogs_description": "Start by creating your first blog post.",
+    "create_blog_button": "Create Blog",
+    "publish_button": "Publish",
+    "draft_button": "Draft",
+    "delete_action_button": "Delete",
+    "no_filter_matches": "No results match your filter criteria.",
+    "delete_modal": {
+      "description": "Are you sure you want to delete the selected items? This action cannot be undone.",
+      "cancel_button": "Cancel",
+      "deleting_text": "Deleting...",
+      "delete_button": "Delete"
+    },
+    "table_headers": {
+      "title": "Title",
+      "category": "Category",
+      "status": "Status",
+      "date": "Date",
+      "views": "Views",
+      "actions": "Actions"
+    },
+    "toasts": {
+      "status_updated": "Successfully moved to {{state}}",
+      "deleted_successfully": "Deleted successfully"
+    }
+  },
+  "tabs": {
+    "all": "All",
+    "published": "Published",
+    "draft": "Draft",
+    "archived": "Archived"
+  },
+  "search": {
+    "placeholder": "Search..."
   }
 }

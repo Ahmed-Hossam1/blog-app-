@@ -1,0 +1,11 @@
+{
+  "title": "My Blogs",
+  "description": "Manage, update, and organize your content.",
+  "new_blog_button": "+ New Blog",
+  "stats": {
+    "blogs": "Total My Blogs",
+    "PUBLISHED": "Published",
+    "ARCHIVED": "Archived",
+    "DRAFT": "Drafts"
+  }
+}

@@ -12,12 +12,14 @@ import MyInput from "@/components/ui/Input";
 import MyModal from "@/components/ui/MyModal";
 
 import { DashboardTabsData, tableHeaders } from "@/constants";
+import { useTranslation } from "react-i18next";
 import { IBlog } from "@/types";
 import { BlogStatus } from "../../../../generated/prisma/enums";
 import Table from "@/components/shared/Table";
 
 const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -81,7 +83,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
         if (!res.ok) throw new Error(data.message);
       }
 
-      toast.success(`Blogs moved to ${state.toLowerCase()} successfully`);
+      toast.success(t("table.toasts.status_updated", { state: state.toLowerCase() }));
       setSelectedIds([]);
       router.refresh();
     } catch (error) {
@@ -107,7 +109,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
         if (!res.ok) throw new Error(data.message);
       }
 
-      toast.success("Blogs deleted successfully");
+      toast.success(t("table.toasts.deleted_successfully"));
       setSelectedIds([]);
       closeDeleteModal();
       router.refresh();
@@ -122,17 +124,17 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
     return (
       <div className="rounded-2xl border border-zinc-200 bg-white p-12 text-center shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
         <h3 className="mb-2 text-xl font-semibold text-gray-700 dark:text-gray-200">
-          No blogs yet
+          {t("table.empty_blogs_title")}
         </h3>
         <p className="text-gray-500 dark:text-gray-400">
-          Start by creating your first blog post.
+          {t("table.empty_blogs_description")}
         </p>
 
         <Link
           href="/dashboard/editor"
           className="mt-6 inline-flex rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700"
         >
-          Create Blog
+          {t("table.create_blog_button")}
         </Link>
       </div>
     );
@@ -141,17 +143,13 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
   return (
     <>
       <MyModal
-        title="Delete Blogs"
+        title={t("table.delete_modal.title")}
         isOpen={showDeleteModal}
         close={closeDeleteModal}
       >
         <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
-          <h3 className="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-200">
-            Delete Blogs
-          </h3>
           <p className="text-gray-500 dark:text-gray-400">
-            Are you sure you want to delete the selected blogs? This action
-            cannot be undone.
+            {t("table.delete_modal.description")}
           </p>
 
           <div className="mt-4 flex justify-end gap-3">
@@ -161,17 +159,17 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
               disabled={isLoading}
               className="border border-transparent bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700"
             >
-              Cancel
+              {t("table.delete_modal.cancel_button")}
             </Button>
 
             <Button
               type="button"
               onClick={() => deleteBlogs(selectedIds)}
               isLoading={isLoading}
-              loadingText="Deleting..."
+              loadingText={t("table.delete_modal.deleting_text")}
               className="overflow-hidden bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-rose-600"
             >
-              Delete
+              {t("table.delete_modal.delete_button")}
             </Button>
           </div>
         </div>
@@ -185,7 +183,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
               isActive={tab.name === activeCategory}
               onActive={() => setActiveCategory(tab.name)}
             >
-              {tab.name}
+              {t(`tabs.${tab.name.toLowerCase()}`)}
             </Tab>
           ))}
         </div>
@@ -193,7 +191,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="w-full lg:max-w-md">
             <MyInput
-              placeholder="Search your blogs..."
+              placeholder={t("search.placeholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="border-zinc-200 bg-zinc-50 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-800"
@@ -202,29 +200,29 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
 
           <div
             className={`flex flex-wrap items-center gap-3 transition-all duration-300 ${selectedIds.length > 0
-                ? "opacity-100 translate-y-0"
-                : "pointer-events-none opacity-0 translate-y-4"
+              ? "opacity-100 translate-y-0"
+              : "pointer-events-none opacity-0 translate-y-4"
               }`}
           >
             <Button
               onClick={() => updateBlogStatus(selectedIds, "PUBLISHED")}
               className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-600"
             >
-              Publish
+              {t("table.publish_button")}
             </Button>
 
             <Button
               onClick={() => updateBlogStatus(selectedIds, "DRAFT")}
               className="rounded-lg bg-zinc-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-zinc-600"
             >
-              Draft
+              {t("table.draft_button")}
             </Button>
 
             <Button
               onClick={openDeleteModal}
               className="rounded-lg bg-rose-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-rose-600"
             >
-              Delete
+              {t("table.delete_action_button")}
             </Button>
           </div>
         </div>
@@ -234,14 +232,14 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
         {filteredBlogs.length === 0 ? (
           <div className="p-8 text-center">
             <p className="italic text-gray-500 dark:text-gray-400">
-              No blogs match your filter criteria.
+              {t("table.no_filter_matches")}
             </p>
           </div>
         ) : (
           <>
             <div className="overflow-x-auto">
               <Table
-                tableHeader={tableHeaders}
+                tableHeader={tableHeaders.map(header => t(`table.table_headers.${header.toLowerCase()}`))}
                 tableBody={slicedData}
                 needCheckbox
                 selectedIds={selectedIds}

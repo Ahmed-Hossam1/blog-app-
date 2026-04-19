@@ -20,5 +20,42 @@
     "terms": "الأحكام والشروط",
     "privacy": "سياسة الخصوصية",
     "contact": "اتصل بنا"
+  },
+  "table": {
+    "empty_blogs_title": "لا توجد مدونات حتى الآن",
+    "empty_blogs_description": "ابدأ بإنشاء منشورك الأول.",
+    "create_blog_button": "إنشاء مدونة",
+    "publish_button": "نشر",
+    "draft_button": "مسودة",
+    "delete_action_button": "حذف",
+    "no_filter_matches": "لا توجد نتائج تطابق معايير التصفية الخاصة بك.",
+    "delete_modal": {
+      "title": "حذف العناصر",
+      "description": "هل أنت متأكد من أنك تريد حذف العناصر المحددة؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancel_button": "إلغاء",
+      "deleting_text": "جاري الحذف...",
+      "delete_button": "حذف"
+    },
+    "table_headers": {
+      "title": "العنوان",
+      "category": "الفئة",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "views": "المشاهدات",
+      "actions": "الإجراءات"
+    },
+    "toasts": {
+      "status_updated": "تم النقل إلى حالة {{state}} بنجاح",
+      "deleted_successfully": "تم الحذف بنجاح"
+    }
+  },
+  "tabs": {
+    "all": "الكل",
+    "published": "منشور",
+    "draft": "مسودة",
+    "archived": "مؤرشف"
+  },
+  "search": {
+    "placeholder": "بحث..."
   }
 }
