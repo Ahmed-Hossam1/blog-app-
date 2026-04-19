@@ -1,0 +1,10 @@
+{
+  "title": "My Bookmarks",
+  "description": "Manage and read your saved blog posts.",
+  "saved_single": "Blog",
+  "saved_plural": "Blogs",
+  "saved_count": "Saved",
+  "empty_title": "No Bookmarks Yet",
+  "empty_description": "You haven't saved any blogs to your bookmarks. Explore the latest articles and save the ones you love to read later.",
+  "explore_button": "Explore Blogs"
+}

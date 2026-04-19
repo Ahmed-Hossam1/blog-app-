@@ -1,0 +1,13 @@
+{
+  "title": "My Drafts",
+  "description": "Manage and edit your unpublished blog posts.",
+  "saved_single": "Draft",
+  "saved_plural": "Drafts",
+  "saved_count": "Saved",
+  "uncategorized": "Uncategorized",
+  "untitled": "Untitled Draft",
+  "edit_button": "Edit",
+  "empty_title": "No Drafts Yet",
+  "empty_description": "You haven't saved any draft blogs yet. Start writing your next great article and save it as a draft to finish later.",
+  "write_button": "Write New Blog"
+}

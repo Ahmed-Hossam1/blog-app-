@@ -15,8 +15,7 @@ const BookmarksPage = async () => {
 
   // Fetch user bookmarks
   const bookmarkedBlogs = (await getUserBookmarks(user?.id as string)) || [];
-  const translated = await getTranslations("common");
-  console.log(translated);
+  const t = await getTranslations("bookmarks");
 
   return (
     <SectionWrapper>
@@ -24,15 +23,15 @@ const BookmarksPage = async () => {
       <div className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <DashboardHeadingTitle
-            title="My Bookmarks"
-            description="Manage and read your saved blog posts."
+            title={t.title}
+            description={t.description}
           />
         </div>
         <div className="flex items-center gap-2 bg-white dark:bg-surfaceDark px-4 py-2 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
           <HiOutlineBookmark className="text-primary dark:text-primaryLight text-xl" />
           <span className="font-semibold text-gray-700 dark:text-gray-300">
-            {bookmarkedBlogs.length} Saved{" "}
-            {bookmarkedBlogs.length === 1 ? "Blog" : "Blogs"}
+            {bookmarkedBlogs.length} {t.saved_count}{" "}
+            {bookmarkedBlogs.length === 1 ? t.saved_single : t.saved_plural}
           </span>
         </div>
       </div>
@@ -62,15 +61,14 @@ const BookmarksPage = async () => {
             <HiOutlineBookmark className="text-primary/60 text-5xl" />
           </div>
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-            No Bookmarks Yet
+            {t.empty_title}
           </h3>
           <p className="text-gray-500 dark:text-gray-400 text-center max-w-md mb-8">
-            You haven not saved any blogs to your bookmarks. Explore the latest
-            articles and save the ones you love to read later.
+            {t.empty_description}
           </p>
           <Link href="/blog">
             <Button className="px-8 py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all">
-              Explore Blogs
+              {t.explore_button}
             </Button>
           </Link>
         </div>

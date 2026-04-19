@@ -15,6 +15,8 @@ import enSettings from "@/locales/en/settings.json";
 import enTerms from "@/locales/en/terms.json";
 import enVerification from "@/locales/en/verification.json";
 import enDashboard from "@/locales/en/dashboard.json";
+import enBookmarks from "@/locales/en/bookmarks.json";
+import enDrafts from "@/locales/en/drafts.json";
 
 // Arabic namespaces
 import arAuth from "@/locales/ar/auth.json";
@@ -30,6 +32,8 @@ import arSettings from "@/locales/ar/settings.json";
 import arTerms from "@/locales/ar/terms.json";
 import arVerification from "@/locales/ar/verification.json";
 import arDashboard from "@/locales/ar/dashboard.json";
+import arBookmarks from "@/locales/ar/bookmarks.json";
+import arDrafts from "@/locales/ar/drafts.json";
 import { getLocale } from "./server/get-locale";
 import { setLocaleCookie } from "./server/set-locale-cookie";
 
@@ -49,6 +53,8 @@ const resources = {
     editor: enEditor,
     settings: enSettings,
     dashboard: enDashboard,
+    bookmarks: enBookmarks,
+    drafts: enDrafts,
   },
   ar: {
     home: arHome,
@@ -64,6 +70,8 @@ const resources = {
     editor: arEditor,
     settings: arSettings,
     dashboard: arDashboard,
+    bookmarks: arBookmarks,
+    drafts: arDrafts,
   },
 };
 
@@ -90,6 +98,8 @@ i18n.use(initReactI18next).init({
     "editor",
     "settings",
     "dashboard",
+    "bookmarks",
+    "drafts",
   ],
   defaultNS: "home",
   interpolation: {

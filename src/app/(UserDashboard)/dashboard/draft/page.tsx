@@ -7,8 +7,10 @@ import Image from "next/image";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { getDraftBlogs } from "@/services";
+import { getTranslations } from "@/lib/i18n";
 
 const DraftPage = async () => {
+  const t = await getTranslations("drafts");
   const session = await getServerSession(authOptions);
   const id = session?.user.id;
   const draftBlogs = await getDraftBlogs(id as string);
@@ -19,15 +21,15 @@ const DraftPage = async () => {
       <div className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <DashboardHeadingTitle
-            title="My Drafts"
-            description="Manage and edit your unpublished blog posts."
+            title={t.title}
+            description={t.description}
           />
         </div>
         <div className="flex items-center gap-2 bg-white dark:bg-surfaceDark px-4 py-2 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
           <HiOutlineDocumentText className="text-primary dark:text-primaryLight text-xl" />
           <span className="font-semibold text-gray-700 dark:text-gray-300">
-            {draftBlogs.length} Saved{" "}
-            {draftBlogs.length === 1 ? "Draft" : "Drafts"}
+            {draftBlogs.length} {t.saved_count}{" "}
+            {draftBlogs.length === 1 ? t.saved_single : t.saved_plural}
           </span>
         </div>
       </div>
@@ -57,7 +59,7 @@ const DraftPage = async () => {
                 )}
                 <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1 shadow-sm">
                   <HiOutlinePencilSquare className="text-primary text-sm" />
-                  Draft
+                  {t.saved_single}
                 </div>
               </div>
 
@@ -66,11 +68,11 @@ const DraftPage = async () => {
                 <div className="flex flex-col h-full">
                   <div className="mb-3">
                     <span className="text-[10px] font-bold px-2.5 py-1 bg-primary/10 text-primary rounded-md uppercase tracking-wider">
-                      {draft.category || "Uncategorized"}
+                      {draft.category || t.uncategorized}
                     </span>
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                    {draft.title || "Untitled Draft"}
+                    {draft.title || t.untitled}
                   </h3>
 
                   <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100 dark:border-gray-800/60">
@@ -85,7 +87,7 @@ const DraftPage = async () => {
                       </span>
                     </div>
                     <div className="text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex items-center gap-1">
-                      Edit
+                      {t.edit_button}
                     </div>
                   </div>
                 </div>
@@ -99,15 +101,14 @@ const DraftPage = async () => {
             <HiOutlineDocumentText className="text-primary/60 text-5xl" />
           </div>
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-            No Drafts Yet
+            {t.empty_title}
           </h3>
           <p className="text-gray-500 dark:text-gray-400 text-center max-w-md mb-8">
-            You haven not saved any draft blogs yet. Start writing your next
-            great article and save it as a draft to finish later.
+            {t.empty_description}
           </p>
           <Link href="/dashboard/editor">
             <Button className="px-8 py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all">
-              Write New Blog
+              {t.write_button}
             </Button>
           </Link>
         </div>
