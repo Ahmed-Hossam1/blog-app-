@@ -21,22 +21,6 @@ const HeroBanner = () => {
           {t("hero.subheading")}
         </p>
 
-        {/* Language switcher */}
-        <div className="flex justify-center items-center gap-2 mb-6">
-          <Button
-            onClick={() => i18n.changeLanguage("ar")}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            {t("hero.switchArabic")}
-          </Button>
-          <Button
-            onClick={() => i18n.changeLanguage("en")}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            {t("hero.switchEnglish")}
-          </Button>
-        </div>
-
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
