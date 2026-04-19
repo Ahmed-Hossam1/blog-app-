@@ -14,9 +14,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updatePasswordSchema } from "@/schema/schema";
 
+import { useTranslation } from "react-i18next";
+
 export default function PasswordUpdateSection({
   userId,
 }: PasswordUpdateSectionProps) {
+  const { t } = useTranslation("settings");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -53,8 +56,8 @@ export default function PasswordUpdateSection({
       const result = await response.json();
 
       if (!response.ok)
-        throw new Error(result.message || "Failed to update password");
-      toast.success(result.message);
+        throw new Error(result.message || t("account.password.failed"));
+      toast.success(result.message || t("account.password.success"));
       setShowForm(false);
       reset();
     } catch (error) {
@@ -69,13 +72,13 @@ export default function PasswordUpdateSection({
     return (
       <div className="space-y-2">
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
-          Password
+          {t("account.password.title")}
         </label>
         <Button
           onClick={() => setShowForm(true)}
-          className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 flex items-center gap-2 w-full justify-center transition hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 flex items-center gap-2 w-full justify-center transition hover:bg-gray-200 dark:hover:bg-gray-700 active:scale-95"
         >
-          <FiLock size={16} /> Update Password
+          <FiLock size={16} /> {t("account.password.updateButton")}
         </Button>
       </div>
     );
@@ -88,45 +91,48 @@ export default function PasswordUpdateSection({
     >
       <div className="space-y-1">
         <label className="text-xs font-medium text-gray-500">
-          Current Password
+          {t("account.password.currentLabel")}
         </label>
         <MyInput
           type="password"
+          placeholder={t("account.password.currentPlaceholder")}
           {...register("oldPassword")}
           className={errors.oldPassword ? "border-red-500" : ""}
         />
         {errors.oldPassword && (
-          <p className="text-red-500 text-xs mt-0.5">
+          <p className="text-red-500 text-xs mt-0.5 font-medium">
             {errors.oldPassword.message}
           </p>
         )}
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium text-gray-500">
-          New Password
+          {t("account.password.newLabel")}
         </label>
         <MyInput
           type="password"
+          placeholder={t("account.password.newPlaceholder")}
           {...register("newPassword")}
           className={errors.newPassword ? "border-red-500" : ""}
         />
         {errors.newPassword && (
-          <p className="text-red-500 text-xs mt-0.5">
+          <p className="text-red-500 text-xs mt-0.5 font-medium">
             {errors.newPassword.message}
           </p>
         )}
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium text-gray-500">
-          Confirm Password
+          {t("account.password.confirmLabel")}
         </label>
         <MyInput
           type="password"
+          placeholder={t("account.password.confirmPlaceholder")}
           {...register("confirmPassword")}
           className={errors.confirmPassword ? "border-red-500" : ""}
         />
         {errors.confirmPassword && (
-          <p className="text-red-500 text-xs mt-0.5">
+          <p className="text-red-500 text-xs mt-0.5 font-medium">
             {errors.confirmPassword.message}
           </p>
         )}
@@ -138,18 +144,19 @@ export default function PasswordUpdateSection({
             setShowForm(false);
             reset();
           }}
-          className="flex-1 bg-white dark:bg-surfaceDark border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm"
+          className="flex-1 bg-white dark:bg-surfaceDark border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm transition active:scale-95"
         >
-          Cancel
+          {t("profile.cancelButton")}
         </Button>
         <Button
           type="submit"
           isLoading={loading}
-          className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm shadow-md"
+          className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm shadow-md transition active:scale-95 font-bold"
         >
-          Save
+          {t("profile.saveButton")}
         </Button>
       </div>
     </form>
   );
 }
+

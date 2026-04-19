@@ -14,7 +14,7 @@ export async function GET() {
     const user = await getAuthorBasicInfo(id);
     if (!user)
       return NextResponse.json({ message: "User not found" }, { status: 404 });
-    return NextResponse.json({ user }, { status: 200 });
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error("GET /api/author error:", error);
     return NextResponse.json(

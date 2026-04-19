@@ -1,5 +1,6 @@
 "use client";
 
+import i18n from "@/lib/i18n/i18n";
 /**
  * I18nProvider
  *
@@ -13,7 +14,6 @@
  * - Wrap the app with this Client Component so all children can use translations.
  */
 
-import i18n from "@/lib/i18n";
 import { I18nextProvider } from "react-i18next";
 
 export default function I18nProvider({

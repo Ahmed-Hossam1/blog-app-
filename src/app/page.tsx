@@ -16,7 +16,6 @@ export default async function Home() {
       <main className="main pt-20">
         <SectionWrapper>
           <HeroBanner />
-         
           <FeaturedArticles blogs={blogs} numberOfShownArticles={5} />
           <ExploreCategories blogs={blogs} numberOfShownArticles={9} />
           <MeetOurAuthors authors={authors} numberOfShownAuthors={8} />

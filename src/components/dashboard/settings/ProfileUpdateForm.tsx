@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEdit2 } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface ProfileUpdateFormProps {
   userId: string;
@@ -21,11 +22,11 @@ interface ProfileUpdateFormProps {
   };
 }
 
-const formInputs = formConfig.profileForm;
 export default function ProfileUpdateForm({
   initialData,
   userId,
 }: ProfileUpdateFormProps) {
+  const { t } = useTranslation("settings");
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { update } = useSession();
@@ -44,6 +45,12 @@ export default function ProfileUpdateForm({
     },
   });
 
+  const formInputs = (formConfig.profileForm ?? []).map((field) => ({
+    ...field,
+    label: t(`profile.fields.${field.id}.label`),
+    placeholder: t(`profile.fields.${field.id}.placeholder`),
+  }));
+
   const onSubmit = async (data: IProfileForm) => {
     setLoading(true);
     try {
@@ -56,15 +63,15 @@ export default function ProfileUpdateForm({
       const result = await response.json();
 
       if (response.ok) {
-        toast.success(result.message || "Profile updated successfully");
+        toast.success(t("messages.profileSuccess"));
         await update({ name: data.name });
         setIsEditing(false); // Stop editing after save
       } else {
-        toast.error(result.message || "Failed to update profile");
+        toast.error(result.message || t("messages.profileFailed"));
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error(t("messages.somethingWentWrong"));
     } finally {
       setLoading(false);
     }
@@ -74,7 +81,7 @@ export default function ProfileUpdateForm({
     <div className="flex-1">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
-          Personal Details
+          {t("sections.personalDetails")}
         </h3>
         {!isEditing && (
           <Button
@@ -83,7 +90,7 @@ export default function ProfileUpdateForm({
             className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors py-1 px-3 rounded-lg border border-primary/20 hover:bg-primary/5"
           >
             <FiEdit2 size={16} />
-            <span>Edit Profile</span>
+            <span>{t("profile.editButton")}</span>
           </Button>
         )}
       </div>
@@ -110,14 +117,14 @@ export default function ProfileUpdateForm({
               }}
               className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition"
             >
-              Cancel
+              {t("profile.cancelButton")}
             </Button>
             <Button
               type="submit"
               isLoading={loading}
               className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95"
             >
-              Save Changes
+              {t("profile.saveButton")}
             </Button>
           </div>
         )}
@@ -125,3 +132,4 @@ export default function ProfileUpdateForm({
     </div>
   );
 }
+

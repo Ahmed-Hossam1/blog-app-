@@ -2,28 +2,34 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 // English namespaces
-import enHome from "@/locales/en/home.json";
-import enTerms from "@/locales/en/terms.json";
-import enCommon from "@/locales/en/common.json";
-import enBlog from "@/locales/en/blog.json";
-import enAuthors from "@/locales/en/authors.json";
-import enContact from "@/locales/en/contact.json";
-import enSearch from "@/locales/en/search.json";
-import enPrivacy from "@/locales/en/privacy.json";
 import enAuth from "@/locales/en/auth.json";
+import enAuthors from "@/locales/en/authors.json";
+import enBlog from "@/locales/en/blog.json";
+import enCommon from "@/locales/en/common.json";
+import enContact from "@/locales/en/contact.json";
+import enEditor from "@/locales/en/editor.json";
+import enHome from "@/locales/en/home.json";
+import enPrivacy from "@/locales/en/privacy.json";
+import enSearch from "@/locales/en/search.json";
+import enSettings from "@/locales/en/settings.json";
+import enTerms from "@/locales/en/terms.json";
 import enVerification from "@/locales/en/verification.json";
 
 // Arabic namespaces
-import arHome from "@/locales/ar/home.json";
-import arTerms from "@/locales/ar/terms.json";
-import arCommon from "@/locales/ar/common.json";
-import arBlog from "@/locales/ar/blog.json";
-import arAuthors from "@/locales/ar/authors.json";
-import arContact from "@/locales/ar/contact.json";
-import arSearch from "@/locales/ar/search.json";
-import arPrivacy from "@/locales/ar/privacy.json";
 import arAuth from "@/locales/ar/auth.json";
+import arAuthors from "@/locales/ar/authors.json";
+import arBlog from "@/locales/ar/blog.json";
+import arCommon from "@/locales/ar/common.json";
+import arContact from "@/locales/ar/contact.json";
+import arEditor from "@/locales/ar/editor.json";
+import arHome from "@/locales/ar/home.json";
+import arPrivacy from "@/locales/ar/privacy.json";
+import arSearch from "@/locales/ar/search.json";
+import arSettings from "@/locales/ar/settings.json";
+import arTerms from "@/locales/ar/terms.json";
 import arVerification from "@/locales/ar/verification.json";
+import { setCookie } from "@/services/cookies-set";
+import { getInitialLanguage } from "@/services/detect-language";
 
 // translations
 const resources = {
@@ -38,6 +44,8 @@ const resources = {
     privacy: enPrivacy,
     auth: enAuth,
     verification: enVerification,
+    editor: enEditor,
+    settings: enSettings,
   },
   ar: {
     home: arHome,
@@ -50,18 +58,12 @@ const resources = {
     privacy: arPrivacy,
     auth: arAuth,
     verification: arVerification,
+    editor: arEditor,
+    settings: arSettings,
   },
 };
 
-function getInitialLanguage() {
-  const savedLang = localStorage.getItem("lang");
-  if (savedLang) return savedLang;
-
-  const browserLang = navigator.language.split("-")[0];
-  return browserLang === "ar" ? "ar" : "en";
-}
-
-const initialLang = getInitialLanguage();
+const initialLang = await getInitialLanguage();
 
 document.documentElement.dir = initialLang === "ar" ? "rtl" : "ltr";
 document.documentElement.lang = initialLang;
@@ -70,19 +72,30 @@ i18n.use(initReactI18next).init({
   resources,
   lng: initialLang,
   fallbackLng: "en",
-  ns: ["home", "terms", "common", "blog", "authors", "contact", "search", "privacy", "auth", "verification"],
+  ns: [
+    "home",
+    "terms",
+    "common",
+    "blog",
+    "authors",
+    "contact",
+    "search",
+    "privacy",
+    "auth",
+    "verification",
+    "editor",
+    "settings",
+  ],
   defaultNS: "home",
   interpolation: {
     escapeValue: false,
   },
 });
 
-
-i18n.on("languageChanged", (lng) => {
+i18n.on("languageChanged", async (lng) => {
+  await setCookie("lang", lng);
   document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
   document.documentElement.lang = lng;
-  localStorage.setItem("lang", lng);
-}
-);
+});
 
 export default i18n;

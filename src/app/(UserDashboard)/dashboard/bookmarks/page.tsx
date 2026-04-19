@@ -7,6 +7,7 @@ import BookmarkCard from "@/components/dashboard/bookmarks/BookmarkCard";
 import Link from "next/link";
 import { HiOutlineBookmark } from "react-icons/hi2";
 import Button from "@/components/ui/Button";
+import { getTranslations } from "@/lib/i18n/server/get-translations";
 
 const BookmarksPage = async () => {
   const session = await getServerSession(authOptions);
@@ -14,6 +15,8 @@ const BookmarksPage = async () => {
 
   // Fetch user bookmarks
   const bookmarkedBlogs = (await getUserBookmarks(user?.id as string)) || [];
+  const translated = await getTranslations("common");
+  console.log(translated);
 
   return (
     <SectionWrapper>

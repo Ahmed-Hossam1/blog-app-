@@ -17,9 +17,11 @@ import Image from "next/image";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BsCalendar2Date } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 export default function Editor() {
   /* ==== State ==== */
+  const { t } = useTranslation("editor");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [previewContent, setPreviewContent] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -46,8 +48,21 @@ export default function Editor() {
   });
 
   /* ==== CONFIG ==== */
-  const contentFields = formConfig?.content;
-  const settingsFields = formConfig?.settings;
+  const contentFields = (formConfig?.content ?? []).map(field => ({
+    ...field,
+    label: t(`fields.${field.id}.label`),
+    placeholder: t(`fields.${field.id}.placeholder`)
+  }));
+
+  const settingsFields = (formConfig?.settings ?? []).map(field => ({
+    ...field,
+    label: t(`fields.${field.id}.label`),
+    placeholder: t(`fields.${field.id}.placeholder`),
+    options: field.options?.map(opt => ({
+        ...opt,
+        name: t(`fields.category.options.${opt.value}`)
+    }))
+  }));
   
   // Watch form values for autosave
   const formTitle = watch("title");
@@ -81,7 +96,7 @@ export default function Editor() {
       const resData = await res.json();
       if (!res.ok) throw new Error(resData.message);
 
-      toast.success(resData.message);
+      toast.success(t("messages.publishSuccess"));
 
       reset({
         title: "",
@@ -140,7 +155,7 @@ export default function Editor() {
     } finally {
       setIsSavingDraft(false);
     }
-  }, [formTitle, formContent, formCategory, formImage]);
+  }, [formTitle, formContent, formCategory, formImage, setValue]);
 
 
   // Load draft blog from DB on mount (when ?id= is present)
@@ -157,7 +172,7 @@ export default function Editor() {
         setPreviewImage(data.blog.image);
       } catch (error) {
         console.error(error);
-        toast.error("Failed to load draft.");
+        toast.error(t("messages.loadDraftFailed"));
       } finally {
         // Small delay so the watch values have settled before re-enabling autosave
         setTimeout(() => {
@@ -167,7 +182,7 @@ export default function Editor() {
     };
 
     getDraftBlog();
-  }, [urlBlogId, reset]);
+  }, [urlBlogId, reset, t]);
 
   // Autosave to DB as draft (debounced 3 sec)
   useEffect(() => {
@@ -185,8 +200,8 @@ export default function Editor() {
   return (
     <SectionWrapper>
       <DashboardHeadingTitle
-        title="Create New Post"
-        description="Write and publish a new article."
+        title={t("heading.title")}
+        description={t("heading.description")}
       />
 
       {previewContent ? (
@@ -195,7 +210,7 @@ export default function Editor() {
           <div className="relative h-105 w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
             <Image
               src={previewImage || "/default-image.png"}
-              alt="Preview Cover"
+              alt={t("preview.coverAlt")}
               fill
               className="object-cover"
             />
@@ -205,18 +220,18 @@ export default function Editor() {
             {/* Read Time mock */}
             <span className="absolute right-6 bottom-8 rounded-full bg-white/20 px-4 py-1 text-xs font-medium text-white backdrop-blur-md">
               {formContent
-                ? `${Math.max(1, Math.ceil(formContent.split(/\\s+/).length / 200))} min read`
-                : "1 min read"}
+                ? t("preview.readTime", { count: Math.max(1, Math.ceil(formContent.split(/\s+/).length / 200)) })
+                : t("preview.readTime", { count: 1 })}
             </span>
 
             {/* Title Over Image */}
             <div className="absolute bottom-8 left-8 right-8 text-white">
               <span className="mb-3 inline-block rounded-full bg-primary/80 px-4 py-1 text-xs font-medium backdrop-blur">
-                {formCategory || "Category"}
+                {formCategory ? t(`fields.category.options.${formCategory}`) : t("preview.defaultCategory")}
               </span>
 
               <h1 className="mt-3 text-4xl font-bold leading-tight md:text-5xl">
-                {formTitle || "Your Blog Title"}
+                {formTitle || t("preview.defaultTitle")}
               </h1>
             </div>
           </div>
@@ -224,15 +239,15 @@ export default function Editor() {
           <div className="flex flex-wrap items-center justify-between gap-6 border-b border-gray-200 px-8 py-6 dark:border-gray-700">
             <div className="flex items-center gap-4">
               <div className="h-11 w-11 rounded-full bg-gray-300 dark:bg-gray-600 ring-2 ring-primary/30 flex items-center justify-center text-sm font-bold text-gray-600 dark:text-gray-300">
-                You
+                {t("preview.you")}
               </div>
               <div>
                 <span className="text-sm font-medium dark:text-white">
-                  You (Author)
+                  {t("preview.youAuthor")}
                 </span>
                 <p className="flex items-center gap-2 text-xs text-gray-500 mt-1">
                   <BsCalendar2Date />
-                  {new Date().toLocaleDateString("en-US", {
+                  {new Date().toLocaleDateString(t("common:locale") === "ar" ? "ar-EG" : "en-US", {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
@@ -245,7 +260,7 @@ export default function Editor() {
           {/* ======= CONTENT ======= */}
           <article className="prose prose-lg mx-auto max-w-none px-8 py-10 prose-headings:font-bold prose-h2:mt-10 prose-p:text-gray-600 prose-img:rounded-xl prose-img:shadow-md dark:prose-invert">
             <Markdown remarkPlugins={[remarkGfm]}>
-              {formContent || "*Start writing your blog...*"}
+              {formContent || t("preview.startWriting")}
             </Markdown>
           </article>
         </div>
@@ -270,7 +285,7 @@ export default function Editor() {
           <div className="lg:sticky lg:top-24">
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-surfaceDark">
               <h2 className="mb-5 text-lg font-bold text-gray-800 dark:text-gray-100">
-                Publish Settings
+                {t("settings.title")}
               </h2>
               <div className="space-y-5">
                 {/* ==== SETTINGS ==== */}
@@ -290,29 +305,30 @@ export default function Editor() {
           onClick={handleSaveDraft}
           isLoading={isSavingDraft}
           disabled={isSavingDraft || isLoading}
-          loadingText="Saving..."
+          loadingText={t("actions.saving")}
           className="border border-gray-300 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
         >
-          Save Draft
+          {t("actions.saveDraft")}
         </Button>
         <Button
           bgColor="bg-primary hover:bg-primary/90"
           className="px-5 py-2.5 text-sm text-white"
           onClick={() => setPreviewContent(!previewContent)}
         >
-          {previewContent ? "back to Editor" : "Preview"}
+          {previewContent ? t("preview.back") : t("actions.preview")}
         </Button>
         <Button
           onClick={handleSubmit(handlePublish)}
           bgColor="bg-primary hover:bg-primary/90"
           isLoading={isLoading}
           disabled={isLoading || isSavingDraft}
-          loadingText="Publishing..."
+          loadingText={t("actions.publishing")}
           className="px-5 py-2.5 text-sm text-white"
         >
-          Publish
+          {t("actions.publish")}
         </Button>
       </div>
     </SectionWrapper>
   );
 }
+

@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma/prisma";
 
-const userId = "69e22f170a5a3b3a9462f86e";
+const userId = "69e373bc89236d811f9fb13c";
 
 const titles = [
   "Getting Started with Next.js",

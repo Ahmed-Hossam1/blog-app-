@@ -1,0 +1,54 @@
+{
+  "heading": {
+    "title": "Create New Post",
+    "description": "Write and publish a new article."
+  },
+  "preview": {
+    "coverAlt": "Preview Cover",
+    "readTime": "{{count}} min read",
+    "readTime_plural": "{{count}} min read",
+    "defaultCategory": "Category",
+    "defaultTitle": "Your Blog Title",
+    "you": "You",
+    "youAuthor": "You (Author)",
+    "startWriting": "*Start writing your blog...*",
+    "back": "back to Editor"
+  },
+  "settings": {
+    "title": "Publish Settings"
+  },
+  "actions": {
+    "saveDraft": "Save Draft",
+    "saving": "Saving...",
+    "preview": "Preview",
+    "publish": "Publish",
+    "publishing": "Publishing..."
+  },
+  "fields": {
+    "title": {
+      "label": "Title",
+      "placeholder": "Title"
+    },
+    "image": {
+      "label": "cover image",
+      "placeholder": "Upload Your Image Here..."
+    },
+    "content": {
+      "label": "Content",
+      "placeholder": "# Start writing your article...\n\n## Headings\n# H1\n## H2\n### H3\n\n## Text Formatting\n**bold**\n*italic*\n~~strikethrough~~\n\n## Lists\n- Item 1\n- Item 2\n1. First\n2. Second\n\n## Code\n```ts\nconsole.log(\"Hello world\")\n```\n\n## Links\n[Google](https://google.com)\n\n> Blockquote\n\nHappy writing 🚀"
+    },
+    "category": {
+      "label": "Category",
+      "placeholder": "Category",
+      "options": {
+        "Mobile Development": "Mobile Development",
+        "Web Development": "Web Development",
+        "UI/UX": "UI/UX"
+      }
+    }
+  },
+  "messages": {
+    "publishSuccess": "Blog published successfully",
+    "loadDraftFailed": "Failed to load draft."
+  }
+}

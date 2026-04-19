@@ -1,0 +1,72 @@
+{
+  "heading": {
+    "title": "Settings",
+    "description": "Manage your profile, account preferences, and notifications."
+  },
+  "sections": {
+    "profileInfo": "Profile Information",
+    "personalDetails": "Personal Details",
+    "accountSettings": "Account Settings"
+  },
+  "profile": {
+    "editButton": "Edit Profile",
+    "cancelButton": "Cancel",
+    "saveButton": "Save Changes",
+    "picture": {
+        "changeButton": "Change Image",
+        "description": "Upload a new avatar. JPG, PNG or GIF. Max 2MB."
+    },
+    "fields": {
+      "name": {
+        "label": "Display Name",
+        "placeholder": "John Doe"
+      },
+      "title": {
+        "label": "Job Title",
+        "placeholder": "Software Engineer"
+      },
+      "bio": {
+        "label": "Bio",
+        "placeholder": "Tell us a bit about yourself..."
+      }
+    }
+  },
+  "account": {
+    "email": {
+        "title": "Update Email",
+        "description": "Change your account email address. This will require verification.",
+        "label": "New Email Address",
+        "placeholder": "Enter your new email",
+        "updateButton": "Update Email",
+        "resendButton": "Resend Verification Link",
+        "success": "Email updated successfully. Please check your inbox for verification.",
+        "failed": "Failed to update email"
+    },
+    "password": {
+        "title": "Update Password",
+        "description": "Ensure your account is using a long, random password to stay secure.",
+        "currentLabel": "Current Password",
+        "currentPlaceholder": "Enter current password",
+        "newLabel": "New Password",
+        "newPlaceholder": "Enter new password",
+        "confirmLabel": "Confirm New Password",
+        "confirmPlaceholder": "Confirm new password",
+        "updateButton": "Update Password",
+        "success": "Password updated successfully",
+        "failed": "Failed to update password"
+    }
+  },
+  "dangerZone": {
+    "title": "Danger Zone",
+    "description": "Permanently delete your account and all of your content. This action is irreversible.",
+    "deleteButton": "Delete My Account",
+    "confirm": "Are you sure you want to delete your account? This action is irreversible.",
+    "success": "Account deleted successfully",
+    "failed": "Failed to delete account"
+  },
+  "messages": {
+    "profileSuccess": "Profile updated successfully",
+    "profileFailed": "Failed to update profile",
+    "somethingWentWrong": "Something went wrong. Please try again."
+  }
+}

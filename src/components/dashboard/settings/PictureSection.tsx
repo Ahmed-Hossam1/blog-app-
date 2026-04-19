@@ -8,12 +8,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiCamera, FiX } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   initialImage: string;
 }
 
 const PictureSection = ({ initialImage }: IProps) => {
+  const { t } = useTranslation("settings");
   const { register, handleSubmit, reset } = useForm();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,14 +39,14 @@ const PictureSection = ({ initialImage }: IProps) => {
       
       if (!res.ok) throw new Error(resData.message);
       
-      toast.success("Profile picture updated successfully!");
+      toast.success(t("messages.profileSuccess"));
       setPreviewImage(null);
       reset(); // Clear file input
       router.refresh();
       
     } catch (error) {
       console.error(error);
-      toast.error("Failed to upload image. Please try again.");
+      toast.error(t("messages.somethingWentWrong"));
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +79,7 @@ const PictureSection = ({ initialImage }: IProps) => {
       {!previewImage ? (
         <div className="text-center">
           <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
-            JPG, GIF or PNG. <br /> Max size of 2MB
+            {t("profile.picture.description")}
           </p>
         </div>
       ) : (
@@ -90,15 +92,15 @@ const PictureSection = ({ initialImage }: IProps) => {
               disabled={isLoading}
               className="px-4 py-1.5 flex items-center gap-1.5 text-xs font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
             >
-              <FiX size={14} /> Cancel
+              <FiX size={14} /> {t("profile.cancelButton")}
             </Button>
             
             <Button
               type="submit"
               isLoading={isLoading}
-              className="px-4 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all"
+              className="px-4 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all  active:scale-95"
             >
-              Save Picture
+              {t("profile.saveButton")}
             </Button>
           </div>
         </div>
@@ -124,5 +126,6 @@ const PictureSection = ({ initialImage }: IProps) => {
     </form>
   );
 };
+
 
 export default PictureSection;

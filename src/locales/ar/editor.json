@@ -1,0 +1,54 @@
+{
+  "heading": {
+    "title": "إنشاء مقال جديد",
+    "description": "اكتب وانشر مقالاً جديداً."
+  },
+  "preview": {
+    "coverAlt": "معاينة الغلاف",
+    "readTime": "قراءة لمدة {{count}} دقيقة",
+    "readTime_plural": "قراءة لمدة {{count}} دقائق",
+    "defaultCategory": "الفئة",
+    "defaultTitle": "عنوان مقالك",
+    "you": "أنت",
+    "youAuthor": "أنت (المؤلف)",
+    "startWriting": "*ابدأ كتابة مقالك...*",
+    "back": "العودة للمحرر"
+  },
+  "settings": {
+    "title": "إعدادات النشر"
+  },
+  "actions": {
+    "saveDraft": "حفظ كمسودة",
+    "saving": "جاري الحفظ...",
+    "preview": "معاينة",
+    "publish": "نشر",
+    "publishing": "جاري النشر..."
+  },
+  "fields": {
+    "title": {
+      "label": "العنوان",
+      "placeholder": "العنوان"
+    },
+    "image": {
+      "label": "صورة الغلاف",
+      "placeholder": "قم برفع صورتك هنا..."
+    },
+    "content": {
+      "label": "المحتوى",
+      "placeholder": "# ابدأ كتابة مقالك...\n\n## العناوين\n# عنوان 1\n## عنوان 2\n### عنوان 3\n\n## تنسيق النص\n**عريض**\n*مائل*\n~~متوسط الخط~~\n\n## القوائم\n- عنصر 1\n- عنصر 2\n1. الأول\n2. الثاني\n\n## الكود\n```ts\nconsole.log(\"Hello world\")\n```\n\n## الروابط\n[جوجل](https://google.com)\n\n> اقتباس\n\nكتابة ممتعة 🚀"
+    },
+    "category": {
+      "label": "الفئة",
+      "placeholder": "الفئة",
+      "options": {
+        "Mobile Development": "تطوير تطبيقات الجوال",
+        "Web Development": "تطوير الويب",
+        "UI/UX": "تصميم واجهة المستخدم"
+      }
+    }
+  },
+  "messages": {
+    "publishSuccess": "تم نشر المقال بنجاح",
+    "loadDraftFailed": "فشل تحميل المسودة."
+  }
+}

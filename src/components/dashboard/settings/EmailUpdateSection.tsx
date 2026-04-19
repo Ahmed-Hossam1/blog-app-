@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEdit2 } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface EmailUpdateSectionProps {
   initialEmail: string;
@@ -17,6 +18,7 @@ interface EmailUpdateSectionProps {
 export default function EmailUpdateSection({
   initialEmail,
 }: EmailUpdateSectionProps) {
+  const { t } = useTranslation("settings");
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
@@ -44,14 +46,15 @@ export default function EmailUpdateSection({
       const result = await response.json();
 
       if (!response.ok)
-        throw new Error(result.message || "Failed to update email");
+        throw new Error(result.message || t("account.email.failed"));
       toast.success(result.message);
       router.refresh();
+      setIsEditing(false);
     } catch (error) {
       console.log(error);
       toast.error((error as Error).message);
+    } finally {
       setLoading(false);
-
     }
   };
 
@@ -59,7 +62,7 @@ export default function EmailUpdateSection({
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Email Address
+          {t("account.email.label")}
         </label>
         {!isEditing && (
           <button
@@ -68,7 +71,7 @@ export default function EmailUpdateSection({
             className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
           >
             <FiEdit2 size={14} />
-            <span>Change</span>
+            <span>{t("profile.editButton")}</span>
           </button>
         )}
       </div>
@@ -76,7 +79,7 @@ export default function EmailUpdateSection({
       <form onSubmit={handleSubmit(updateEmail)} className="space-y-2">
         <MyInput
           type="email"
-          placeholder="john@example.com"
+          placeholder={t("account.email.placeholder")}
           disabled={!isEditing}
           {...register("email")}
           className={`disabled:opacity-50 disabled:cursor-not-allowed ${
@@ -84,7 +87,7 @@ export default function EmailUpdateSection({
           }`}
         />
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          <p className="text-red-500 text-xs mt-1 font-medium">{errors.email.message}</p>
         )}
         {isEditing && (
           <div className="flex gap-2">
@@ -94,16 +97,16 @@ export default function EmailUpdateSection({
                 reset();
                 setIsEditing(false);
               }}
-              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium transition active:scale-95"
             >
-              Cancel
+              {t("profile.cancelButton")}
             </Button>
             <Button
               type="submit"
               isLoading={loading}
-              className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md"
+              className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition active:scale-95"
             >
-              Update
+              {t("account.email.updateButton")}
             </Button>
           </div>
         )}
@@ -111,3 +114,4 @@ export default function EmailUpdateSection({
     </div>
   );
 }
+
