@@ -68,5 +68,21 @@
     "profileSuccess": "تم تحديث الملف الشخصي بنجاح",
     "profileFailed": "فشل تحديث الملف الشخصي",
     "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
+  "validation": {
+    "nameRequired": "الاسم مطلوب",
+    "nameMin": "يجب أن يكون الاسم 3 أحرف على الأقل",
+    "nameMax": "لا يمكن أن يزيد الاسم عن 40 حرفاً",
+    "nameLetters": "يجب أن يحتوي الاسم على أحرف ومسافات فقط",
+    "titleRequired": "المسمى الوظيفي مطلوب",
+    "titleMin": "يجب أن يكون المسمى الوظيفي حرفين على الأقل",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "البريد الإلكتروني غير صالح",
+    "emailFormat": "تنسيق البريد الإلكتروني غير صالح",
+    "oldPasswordRequired": "كلمة المرور القديمة مطلوبة",
+    "passwordRequired": "كلمة المرور الجديدة مطلوبة",
+    "passwordMin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+    "passwordsMustMatch": "يجب أن تتطابق كلمات المرور"
   }
 }

@@ -11,8 +11,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { id, title, content, category, image } = await req.json();
-
-  const readTime = calculateContentLength(content);
+  const readTime = calculateContentLength(content).toString();
 
   try {
     // UPDATE

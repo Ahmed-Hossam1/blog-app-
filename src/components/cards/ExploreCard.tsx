@@ -1,5 +1,7 @@
-import { IBlog } from "@/types";
+"use client";
+import { getLocaleFromCookie } from "@/lib/i18n";
 import { formatDate, truncateText } from "@/lib/utils";
+import { IBlog } from "@/types";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
@@ -21,6 +23,7 @@ const ExploreCard = ({
   comments,
   author,
 }: ExploreCardProps) => {
+  const lang = getLocaleFromCookie();
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
@@ -67,7 +70,7 @@ const ExploreCard = ({
             </span>
           </div>
           <span className="font-medium text-gray-400 uppercase tracking-tighter">
-            {formatDate(createdAt)}
+            {formatDate(createdAt, lang)}
           </span>
         </div>
       </div>

@@ -14,11 +14,18 @@ interface Follower {
 interface FollowersAvatarGroupProps {
   followers: Follower[];
   total?: number;
+  labels: {
+    follower: string;
+    followers: string;
+    zero_followers: string;
+    modal_title: string;
+  };
 }
 
 export default function FollowersAvatarGroup({
   followers,
   total,
+  labels,
 }: FollowersAvatarGroupProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const totalCount = total ?? followers?.length ?? 0;
@@ -26,7 +33,7 @@ export default function FollowersAvatarGroup({
   if (totalCount === 0 || !followers) {
     return (
       <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
-        0 Followers
+        {labels.zero_followers}
       </div>
     );
   }
@@ -68,14 +75,14 @@ export default function FollowersAvatarGroup({
             <strong className="text-black dark:text-white text-base group-hover/btn:text-blue-600 dark:group-hover/btn:text-blue-400 transition-colors">
               {totalCount}
             </strong>{" "}
-            {totalCount === 1 ? "Follower" : "Followers"}
+            {totalCount === 1 ? labels.follower : labels.followers}
           </span>
         </div>
       </button>
 
       {/* Followers Modal */}
       <MyModal
-        title="Followers"
+        title={labels.modal_title}
         isOpen={isModalOpen}
         close={() => setIsModalOpen(false)}
       >

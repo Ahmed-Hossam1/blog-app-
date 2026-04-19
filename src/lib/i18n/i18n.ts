@@ -36,17 +36,13 @@ import arDashboard from "@/locales/ar/dashboard.json";
 import arBookmarks from "@/locales/ar/bookmarks.json";
 import arDrafts from "@/locales/ar/drafts.json";
 import arManageBlogs from "@/locales/ar/manage-blogs.json";
+import { getLocaleFromCookie } from "./client/get-browser-locale";
 
 /**
  * Reads the "lang" cookie synchronously on the client.
  * Falls back to "en" if the cookie is missing or invalid.
  */
-function getLocaleFromCookie(): "en" | "ar" {
-  if (typeof document === "undefined") return "en";
-  const match = document.cookie.match(/(?:^|;\s*)lang=([^;]*)/);
-  const value = match?.[1];
-  return value === "ar" || value === "en" ? value : "en";
-}
+
 
 // translations
 const resources = {

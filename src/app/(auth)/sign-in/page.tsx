@@ -3,7 +3,7 @@
 import FormField from "@/components/shared/FormField";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
-import { loginSchema } from "@/schema/schema";
+import { getLoginSchema } from "@/schema/schema";
 import { ISignInForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
@@ -30,7 +30,7 @@ const Page = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ISignInForm>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(getLoginSchema(t)),
   });
 
   // ===== Config =====

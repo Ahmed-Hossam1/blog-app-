@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
+import { useTranslation } from "react-i18next";
 
 interface FollowButtonProps {
   followingId: string;
@@ -16,6 +17,7 @@ export default function FollowButton({ followingId , isFollowing }: FollowButton
   const [isLoading, setIsLoading] = useState(false);
   const session = useSession();
   const router = useRouter();
+  const { t } = useTranslation("authors");
   const followerId = session.data?.user.id;
 
   const handleFollowToggle = async () => {
@@ -44,7 +46,7 @@ export default function FollowButton({ followingId , isFollowing }: FollowButton
     <Button
       onClick={handleFollowToggle}
       isLoading={isLoading}
-      loadingText={isFollowing ? "Unfollowing..." : "Following..."}
+      loadingText={isFollowing ? t("profile.unfollowing_text") : t("profile.following_text")}
       className={`
         flex items-center gap-2 rounded-full px-5 py-2 font-medium transition-all duration-300 active:scale-95
         ${
@@ -57,12 +59,12 @@ export default function FollowButton({ followingId , isFollowing }: FollowButton
       {isFollowing ? (
         <>
           <FaUserCheck size={16} />
-          Following
+          {t("profile.following")}
         </>
       ) : (
         <>
           <FaUserPlus size={16} />
-          Follow
+          {t("profile.follow")}
         </>
       )}
     </Button>

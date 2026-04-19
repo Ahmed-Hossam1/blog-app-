@@ -37,16 +37,27 @@
       "delete_button": "Delete"
     },
     "table_headers": {
-      "title": "Title",
-      "category": "Category",
-      "status": "Status",
-      "date": "Date",
-      "views": "Views",
       "actions": "Actions"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "continue": "Continue"
+    },
+    "placeholders": {
+      "untitled": "Untitled Blog",
+      "uncategorized": "Uncategorized"
     },
     "toasts": {
       "status_updated": "Successfully moved to {{state}}",
-      "deleted_successfully": "Deleted successfully"
+      "deleted_successfully": "Deleted successfully",
+      "success": "Success",
+      "error": "Error",
+      "something_went_wrong": "Something went wrong"
+    },
+    "metadata": {
+      "min_read": "{{count}} min read",
+      "views": "Views"
     }
   },
   "tabs": {
@@ -57,6 +68,10 @@
   },
   "search": {
     "placeholder": "Search..."
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next"
   },
   "aside": {
     "overview": "Overview",

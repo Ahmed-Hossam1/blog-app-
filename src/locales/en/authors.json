@@ -8,6 +8,13 @@
     "staffWriter": "Staff Writer",
     "articlesBy": "Articles by {{name}}",
     "noArticles": "{{name}} has not written any articles yet.",
-    "notFound": "Author not found"
+    "notFound": "Author not found",
+    "follow": "Follow",
+    "following": "Following",
+    "unfollowing_text": "Unfollowing...",
+    "following_text": "Following...",
+    "follower": "Follower",
+    "followers": "Followers",
+    "zero_followers": "0 Followers"
   }
 }

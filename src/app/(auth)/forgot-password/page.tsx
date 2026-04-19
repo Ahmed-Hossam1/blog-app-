@@ -3,7 +3,7 @@
 import ErrorMessage from "@/components/shared/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
-import { forgotPasswordSchema } from "@/schema/schema";
+import { getForgotPasswordSchema } from "@/schema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const ForgotPasswordPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<resetForm>({
-    resolver: yupResolver(forgotPasswordSchema),
+    resolver: yupResolver(getForgotPasswordSchema(t)),
   });
   const handleForgotPassword: SubmitHandler<resetForm> = async (data) => {
     setIsLoading(true);

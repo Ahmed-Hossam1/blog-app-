@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Button from "../ui/Button";
+import { useTranslation } from "react-i18next";
 
 interface IPaginationProps {
   currentPage: number;
@@ -16,6 +17,7 @@ const Pagination = ({
   onPageChange,
   scrollToTop,
 }: IPaginationProps) => {
+  const { t, i18n } = useTranslation("common");
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
@@ -44,7 +46,7 @@ const Pagination = ({
           dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
         "
       >
-        ← Prev
+        {i18n.language === "ar" ? "←" : "←"} {t("pagination.prev")}
       </Button>
 
       {/* Page Info */}
@@ -68,7 +70,7 @@ const Pagination = ({
           dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
         "
       >
-        Next →
+        {t("pagination.next")} {i18n.language === "ar" ? "→" : "→"}
       </Button>
     </div>
   );

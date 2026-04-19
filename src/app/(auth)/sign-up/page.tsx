@@ -3,7 +3,7 @@
 import FormField from "@/components/shared/FormField";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
-import { signUpSchema } from "@/schema/schema";
+import { getSignUpSchema } from "@/schema/schema";
 import { ISignUpForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
@@ -25,7 +25,7 @@ const Page = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ISignUpForm>({
-    resolver: yupResolver(signUpSchema),
+    resolver: yupResolver(getSignUpSchema(t)),
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [authLoading, setAuthLoading] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const Page = () => {
       });
       const res = await req.json();
       if (!req.ok) throw new Error(res.message);
-      toast.success(res.message,{
+      toast.success(res.message, {
         autoClose: false
       });
     } catch (error) {

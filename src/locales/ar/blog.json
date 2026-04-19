@@ -14,5 +14,23 @@
     "relatedArticles": "مقالات ذات صلة",
     "articlesBy": "مقالات بواسطة {{name}}",
     "noArticles": "لم يكتب {{name}} أي مقالات بعد."
+  },
+  "comments": {
+    "title": "التعليقات",
+    "noComments": "كن أول من يعلق!",
+    "signInToComment": "يرجى تسجيل الدخول للانضمام إلى المحادثة",
+    "placeholder": "شاركنا أفكارك...",
+    "submit": "نشر التعليق",
+    "submitting": "جاري نشر التعليق...",
+    "reply": "رد",
+    "postReply": "نشر الرد",
+    "postingReply": "جاري نشر الرد...",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "success": "تم نشر التعليق بنجاح",
+    "replySuccess": "تم نشر الرد بنجاح",
+    "deleteSuccess": "تم حذف التعليق بنجاح",
+    "leaveComment": "اترك تعليقاً",
+    "deletedMessage": "تم حذف هذه الرسالة"
   }
 }

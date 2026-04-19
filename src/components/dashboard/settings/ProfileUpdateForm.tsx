@@ -3,7 +3,7 @@
 import FormField from "@/components/shared/FormField";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
-import { updateProfileSchema } from "@/schema/schema";
+import { getUpdateProfileSchema } from "@/schema/schema";
 import { IProfileForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSession } from "next-auth/react";
@@ -37,7 +37,7 @@ export default function ProfileUpdateForm({
     reset,
     formState: { errors },
   } = useForm<IProfileForm>({
-    resolver: yupResolver(updateProfileSchema),
+    resolver: yupResolver(getUpdateProfileSchema(t)),
     values: {
       name: initialData?.name || "",
       title: initialData?.title || "",

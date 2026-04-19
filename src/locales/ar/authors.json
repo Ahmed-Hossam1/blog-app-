@@ -8,6 +8,13 @@
     "staffWriter": "كاتب رسمي",
     "articlesBy": "مقالات بواسطة {{name}}",
     "noArticles": "لم يكتب {{name}} أي مقالات بعد.",
-    "notFound": "الكاتب غير موجود"
+    "notFound": "الكاتب غير موجود",
+    "follow": "متابعة",
+    "following": "متابع",
+    "unfollowing_text": "إلغاء المتابعة...",
+    "following_text": "جاري المتابعة...",
+    "follower": "متابع",
+    "followers": "متابعين",
+    "zero_followers": "0 متابع"
   }
 }

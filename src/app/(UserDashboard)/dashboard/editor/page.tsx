@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { formConfig } from "@/constants/forms";
 import { uploadImage } from "@/lib/utils";
-import { createBlogSchema } from "@/schema/schema";
+import { getCreateBlogSchema } from "@/schema/schema";
 import { INewBlogForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -44,7 +44,7 @@ export default function Editor() {
     watch,
     formState: { errors },
   } = useForm<INewBlogForm>({
-    resolver: yupResolver(createBlogSchema),
+    resolver: yupResolver(getCreateBlogSchema(t)),
   });
 
   /* ==== CONFIG ==== */

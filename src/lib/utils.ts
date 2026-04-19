@@ -4,9 +4,9 @@ export function truncateText(text: string) {
 }
 
 /** Formats a Date or ISO string into a human-readable date (e.g. "Mar 12, 2026") */
-export function formatDate(date: Date | string) {
+export function formatDate(date: Date | string, locale: string = "en-US") {
   const d = new Date(date);
-  return d.toLocaleDateString("en-US", {
+  return d.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",

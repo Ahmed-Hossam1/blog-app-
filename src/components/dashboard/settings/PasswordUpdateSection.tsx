@@ -12,7 +12,7 @@ interface PasswordUpdateSectionProps {
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { updatePasswordSchema } from "@/schema/schema";
+import { getUpdatePasswordSchema } from "@/schema/schema";
 
 import { useTranslation } from "react-i18next";
 
@@ -29,7 +29,7 @@ export default function PasswordUpdateSection({
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(updatePasswordSchema),
+    resolver: yupResolver(getUpdatePasswordSchema(t)),
     defaultValues: {
       oldPassword: "",
       newPassword: "",

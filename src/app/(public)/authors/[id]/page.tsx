@@ -10,10 +10,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 import FollowButton from "@/components/blog/FollowButton";
+import { getTranslations } from "@/lib/i18n";
 
 const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const author = await getAuthorProfile(id);
+  const t = await getTranslations("authors");
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
@@ -51,7 +53,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </h1>
 
               <p className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
-                {author.title || "Staff Writer"}
+                {author.title || t.profile.staffWriter}
               </p>
 
               <p className="mt-4 max-w-xl text-gray-600 dark:text-gray-300">
@@ -65,6 +67,12 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   <FollowersAvatarGroup
                     followers={followers}
                     total={followers.length}
+                    labels={{
+                      follower: t.profile.follower,
+                      followers: t.profile.followers,
+                      zero_followers: t.profile.zero_followers,
+                      modal_title: t.profile.followers,
+                    }}
                   />
                 </div>
 
@@ -117,7 +125,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           {author.blogs.length > 0 ? (
             <>
               <h2 className="mb-8 text-2xl font-bold dark:text-white">
-                Articles by {author.name}
+                {t.profile.articlesBy.replace("{{name}}", author.name)}
               </h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {author.blogs.map((post: IBlog) => (
@@ -137,7 +145,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             </>
           ) : (
             <p className="text-gray-600 dark:text-gray-300 text-xl">
-              {author.name} has not written any articles yet.
+              {t.profile.noArticles.replace("{{name}}", author.name)}
             </p>
           )}
         </div>

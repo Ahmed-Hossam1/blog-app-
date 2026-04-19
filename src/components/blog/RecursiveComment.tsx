@@ -6,6 +6,7 @@ import { FaReply } from "react-icons/fa6";
 import { MdOutlineDoNotDisturbAlt } from "react-icons/md";
 import Button from "../ui/Button";
 import { formatDate } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface ICommentProps {
   userId?: string;
@@ -27,6 +28,7 @@ const RecursiveComment = ({
   handleCommentReply,
   handleDeleteComment,
 }: ICommentProps) => {
+  const { t } = useTranslation("blog");
   const {
     id,
     blogId,
@@ -62,7 +64,7 @@ const RecursiveComment = ({
             {/* Text */}
             <div className="relative flex flex-col min-w-0">
               <p className="text-[14px] italic text-zinc-500 dark:text-zinc-400 font-medium leading-snug">
-                This message was deleted
+                {t("comments.deletedMessage")}
               </p>
               <span className="text-[11px] font-semibold text-zinc-400/80 dark:text-zinc-500 mt-0.5 tracking-wider uppercase">
                 {formatDate(createdAt)}
@@ -102,7 +104,7 @@ const RecursiveComment = ({
                     className="flex items-center gap-1.5 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 hover:text-indigo-600 dark:hover:text-indigo-400 border border-transparent hover:border-indigo-100 dark:hover:border-indigo-500/30"
                   >
                     <FaReply size={13} />
-                    <span className="hidden sm:inline">Reply</span>
+                    <span className="hidden sm:inline">{t("comments.reply")}</span>
                   </Button>
 
                   {userId === authorId && (

@@ -1,9 +1,11 @@
 import { getAuthors } from "@/services";
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "@/lib/i18n";
 
 const AuthorCard = async () => {
   const authors = await getAuthors();
+  const t = await getTranslations("authors");
   return (
     <>
       {authors.map((author) => (
@@ -31,7 +33,7 @@ const AuthorCard = async () => {
 
           {/* Designation */}
           <p className="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-            {author.title || "contributor"}
+            {author.title || t.listing.contributor}
           </p>
 
           {/* Bio Preview */}

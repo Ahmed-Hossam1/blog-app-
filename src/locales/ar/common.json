@@ -37,16 +37,27 @@
       "delete_button": "حذف"
     },
     "table_headers": {
-      "title": "العنوان",
-      "category": "الفئة",
-      "status": "الحالة",
-      "date": "التاريخ",
-      "views": "المشاهدات",
       "actions": "الإجراءات"
+    },
+    "actions": {
+      "view": "عرض",
+      "edit": "تعديل",
+      "continue": "متابعة"
+    },
+    "placeholders": {
+      "untitled": "مدونة بدون عنوان",
+      "uncategorized": "غير مصنف"
     },
     "toasts": {
       "status_updated": "تم النقل إلى حالة {{state}} بنجاح",
-      "deleted_successfully": "تم الحذف بنجاح"
+      "deleted_successfully": "تم الحذف بنجاح",
+      "success": "نجاح",
+      "error": "خطأ",
+      "something_went_wrong": "حدث خطأ ما"
+    },
+    "metadata": {
+      "min_read": "{{count}} دقائق للقراءة",
+      "views": "المشاهدات"
     }
   },
   "tabs": {
@@ -57,6 +68,10 @@
   },
   "search": {
     "placeholder": "بحث..."
+  },
+  "pagination": {
+    "prev": "السابق",
+    "next": "التالي"
   },
   "aside": {
     "overview": "نظرة عامة",

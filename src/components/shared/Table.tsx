@@ -71,11 +71,10 @@ const Table = ({
             return (
               <tr
                 key={blog.id}
-                className={`group transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/30 ${
-                  selectedIds.includes(blog.id)
+                className={`group transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/30 ${selectedIds.includes(blog.id)
                     ? "bg-indigo-50/50 dark:bg-indigo-900/10"
                     : ""
-                }`}
+                  }`}
               >
                 {needCheckbox && (
                   <td className="w-10 px-6 py-4">
@@ -104,13 +103,12 @@ const Table = ({
 
                 <td className="px-6 py-4">
                   <span
-                    className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase ${
-                      blog.status === "PUBLISHED"
+                    className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase ${blog.status === "PUBLISHED"
                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400"
                         : blog.status === "DRAFT"
                           ? "bg-zinc-100 text-zinc-700 dark:bg-zinc-800/50 dark:text-zinc-400"
                           : "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400"
-                    }`}
+                      }`}
                   >
                     {blog.status}
                   </span>

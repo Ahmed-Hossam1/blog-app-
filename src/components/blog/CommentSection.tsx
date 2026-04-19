@@ -8,6 +8,7 @@ import Button from "../ui/Button";
 import { toast } from "react-toastify";
 import MyModal from "../ui/MyModal";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   blog: IBlog;
@@ -17,6 +18,7 @@ const CommentSection = ({ blog }: IProps) => {
   const { data, status } = useSession();
   const user = data?.user;
   const router = useRouter();
+  const { t } = useTranslation("blog");
 
   /* ==== State ==== */
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -47,7 +49,7 @@ const CommentSection = ({ blog }: IProps) => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
 
-      toast.success(json.message);
+      toast.success(t("comments.success") || json.message);
       setIsLoading(false);
       setComment("");
       router.refresh();
@@ -69,7 +71,7 @@ const CommentSection = ({ blog }: IProps) => {
   };
 
   const postReply = async () => {
-    if (status !== "authenticated") return toast.error("Please sign in first");
+    if (status !== "authenticated") return toast.error(t("comments.signInToComment"));
 
     try {
       setIsLoading(true);
@@ -82,7 +84,7 @@ const CommentSection = ({ blog }: IProps) => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
 
-      toast.success("Reply posted successfully");
+      toast.success(t("comments.replySuccess"));
       setIsLoading(false);
       setReply({
         comment: "",
@@ -106,7 +108,7 @@ const CommentSection = ({ blog }: IProps) => {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      toast.success(data.message);
+      toast.success(t("comments.deleteSuccess") || data.message);
       router.refresh();
       setIsLoading(false);
     } catch (error) {
@@ -119,7 +121,7 @@ const CommentSection = ({ blog }: IProps) => {
   return (
     <>
       <MyModal isOpen={isModalOpen} close={closeModal}>
-        <div>Reply: @{replyToAuthorName}</div>
+        <div>{t("comments.reply")}: @{replyToAuthorName}</div>
         <textarea
           rows={5}
           value={reply.comment}
@@ -132,16 +134,16 @@ const CommentSection = ({ blog }: IProps) => {
           onClick={postReply}
           disabled={isLoading}
           isLoading={isLoading}
-          loadingText="Posting Reply..."
+          loadingText={t("comments.postingReply")}
           className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
         >
-          Post Reply
+          {t("comments.postReply")}
         </Button>
       </MyModal>
 
       <div className="mt-12 pt-8 border-t border-zinc-100 dark:border-zinc-800">
         <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
-          Comments
+          {t("comments.title")}
           <span className="ml-3 inline-flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-bold px-2.5 py-0.5 rounded-full">
             {blog.commentsCount}
           </span>
@@ -163,24 +165,24 @@ const CommentSection = ({ blog }: IProps) => {
 
       <div className="mt-12">
         <h3 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-white">
-          Leave a Comment
+          {t("comments.leaveComment")}
         </h3>
 
         <form className="space-y-6" onSubmit={postNewComment}>
           <textarea
             onChange={(e) => setComment(e.target.value)}
             value={comment}
-            placeholder="Share your thoughts..."
+            placeholder={t("comments.placeholder")}
             rows={4}
             className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all py-3 px-4 rounded-xl dark:text-white dark:placeholder-zinc-500 shadow-sm"
           />
           <Button
             disabled={isLoading}
             isLoading={isLoading}
-            loadingText="Posting Comment..."
+            loadingText={t("comments.submitting")}
             className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
           >
-            Post Comment
+            {t("comments.submit")}
           </Button>
         </form>
       </div>

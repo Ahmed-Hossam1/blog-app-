@@ -2,7 +2,7 @@
 
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
-import { updateEmailSchema } from "@/schema/schema";
+import { getUpdateEmailSchema } from "@/schema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export default function EmailUpdateSection({
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(updateEmailSchema),
+    resolver: yupResolver(getUpdateEmailSchema(t)),
     values: {
       email: initialEmail || "",
     },

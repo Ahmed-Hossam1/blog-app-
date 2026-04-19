@@ -50,5 +50,13 @@
   "messages": {
     "publishSuccess": "تم نشر المقال بنجاح",
     "loadDraftFailed": "فشل تحميل المسودة."
+  },
+  "validation": {
+    "titleRequired": "العنوان مطلوب",
+    "titleMin": "يجب أن يكون العنوان 5 أحرف على الأقل",
+    "imageRequired": "صورة الغلاف مطلوبة",
+    "contentRequired": "المحتوى مطلوب",
+    "contentMin": "يجب أن يكون المحتوى 20 حرفاً على الأقل",
+    "categoryRequired": "الفئة مطلوبة"
   }
 }

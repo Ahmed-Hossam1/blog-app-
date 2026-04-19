@@ -68,5 +68,21 @@
     "profileSuccess": "Profile updated successfully",
     "profileFailed": "Failed to update profile",
     "somethingWentWrong": "Something went wrong. Please try again."
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "nameMin": "Name must be at least 3 characters",
+    "nameMax": "Name can't be more than 40 characters",
+    "nameLetters": "Name must contain only letters and spaces",
+    "titleRequired": "Job Title is required",
+    "titleMin": "Title must be at least 2 characters",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email",
+    "emailFormat": "Invalid email format",
+    "oldPasswordRequired": "Old password is required",
+    "passwordRequired": "New password is required",
+    "passwordMin": "Password must be at least 6 characters",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordsMustMatch": "Passwords must match"
   }
 }

@@ -4,7 +4,7 @@ import FormField from "@/components/shared/FormField";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { formConfig } from "@/constants/forms";
-import { contactSchema } from "@/schema/schema";
+import { getContactSchema } from "@/schema/schema";
 import { IContactForm } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
@@ -35,7 +35,7 @@ const Page = () => {
     reset,
     formState: { errors },
   } = useForm<IContactForm>({
-    resolver: yupResolver(contactSchema),
+    resolver: yupResolver(getContactSchema(t)),
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

@@ -15,11 +15,20 @@
   "error": "فشل إرسال الرسالة",
   "somethingWentWrong": "حدث خطأ ما",
   "form": {
-      "nameLabel": "اسمك",
-      "namePlaceholder": "أحمد محمد",
-      "emailLabel": "البريد الإلكتروني",
-      "emailPlaceholder": "ahmed@example.com",
-      "messageLabel": "الرسالة",
-      "messagePlaceholder": "اكتب رسالتك هنا..."
+    "nameLabel": "اسمك",
+    "namePlaceholder": "أحمد محمد",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "ahmed@example.com",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "اكتب رسالتك هنا..."
+  },
+  "validation": {
+    "nameRequired": "الاسم مطلوب",
+    "nameMin": "يجب أن يكون الاسم 3 أحرف على الأقل",
+    "nameMax": "لا يمكن أن يزيد الاسم عن 20 حرفاً",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "البريد الإلكتروني غير صالح",
+    "emailFormat": "تنسيق البريد الإلكتروني غير صالح",
+    "messageRequired": "الرسالة مطلوبة"
   }
 }

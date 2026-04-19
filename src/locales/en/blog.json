@@ -14,5 +14,23 @@
     "relatedArticles": "Related Articles",
     "articlesBy": "Articles by {{name}}",
     "noArticles": "{{name}} has not written any articles yet."
+  },
+  "comments": {
+    "title": "Comments",
+    "noComments": "Be the first to comment!",
+    "signInToComment": "Please sign in to join the conversation",
+    "placeholder": "Share your thoughts...",
+    "submit": "Post Comment",
+    "submitting": "Posting Comment...",
+    "reply": "Reply",
+    "postReply": "Post Reply",
+    "postingReply": "Posting Reply...",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "success": "Comment posted successfully",
+    "replySuccess": "Reply posted successfully",
+    "deleteSuccess": "Comment deleted successfully",
+    "leaveComment": "Leave a Comment",
+    "deletedMessage": "This message was deleted"
   }
 }

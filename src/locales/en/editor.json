@@ -50,5 +50,13 @@
   "messages": {
     "publishSuccess": "Blog published successfully",
     "loadDraftFailed": "Failed to load draft."
+  },
+  "validation": {
+    "titleRequired": "Title is required",
+    "titleMin": "Title must be at least 5 characters",
+    "imageRequired": "Cover image is required",
+    "contentRequired": "Content is required",
+    "contentMin": "Content must be at least 20 characters",
+    "categoryRequired": "Category is required"
   }
 }

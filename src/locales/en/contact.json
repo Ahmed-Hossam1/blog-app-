@@ -15,11 +15,20 @@
   "error": "Failed to send message",
   "somethingWentWrong": "Something went wrong",
   "form": {
-      "nameLabel": "Your Name",
-      "namePlaceholder": "John Doe",
-      "emailLabel": "Email Address",
-      "emailPlaceholder": "John@example.com",
-      "messageLabel": "Message",
-      "messagePlaceholder": "Write Your Message Here..."
+    "nameLabel": "Your Name",
+    "namePlaceholder": "John Doe",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "John@example.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write Your Message Here..."
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "nameMin": "Name must be at least 3 characters",
+    "nameMax": "Name can't be more than 20 characters",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email",
+    "emailFormat": "Invalid email format",
+    "messageRequired": "Message is required"
   }
 }

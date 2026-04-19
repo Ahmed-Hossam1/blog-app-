@@ -3,7 +3,7 @@
 import ErrorMessage from "@/components/shared/ErrorMessage";
 import Button from "@/components/ui/Button";
 import MyInput from "@/components/ui/Input";
-import { resetPasswordSchema } from "@/schema/schema";
+import { getResetPasswordSchema } from "@/schema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
-type ResetPasswordForm = yup.InferType<typeof resetPasswordSchema>;
+type ResetPasswordForm = yup.InferType<ReturnType<typeof getResetPasswordSchema>>;
 
 const ResetPasswordPage = () => {
   const { t } = useTranslation("auth");
@@ -29,7 +29,7 @@ const ResetPasswordPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ResetPasswordForm>({
-    resolver: yupResolver(resetPasswordSchema),
+    resolver: yupResolver(getResetPasswordSchema(t)),
   });
 
   const handleResetPassword: SubmitHandler<ResetPasswordForm> = async (
