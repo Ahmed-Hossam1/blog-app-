@@ -14,6 +14,7 @@ import enSearch from "@/locales/en/search.json";
 import enSettings from "@/locales/en/settings.json";
 import enTerms from "@/locales/en/terms.json";
 import enVerification from "@/locales/en/verification.json";
+import enDashboard from "@/locales/en/dashboard.json";
 
 // Arabic namespaces
 import arAuth from "@/locales/ar/auth.json";
@@ -28,8 +29,9 @@ import arSearch from "@/locales/ar/search.json";
 import arSettings from "@/locales/ar/settings.json";
 import arTerms from "@/locales/ar/terms.json";
 import arVerification from "@/locales/ar/verification.json";
-import { setCookie } from "@/services/cookies-set";
-import { getInitialLanguage } from "@/services/detect-language";
+import arDashboard from "@/locales/ar/dashboard.json";
+import { getLocale } from "./server/get-locale";
+import { setLocaleCookie } from "./server/set-locale-cookie";
 
 // translations
 const resources = {
@@ -46,6 +48,7 @@ const resources = {
     verification: enVerification,
     editor: enEditor,
     settings: enSettings,
+    dashboard: enDashboard,
   },
   ar: {
     home: arHome,
@@ -60,10 +63,11 @@ const resources = {
     verification: arVerification,
     editor: arEditor,
     settings: arSettings,
+    dashboard: arDashboard,
   },
 };
 
-const initialLang = await getInitialLanguage();
+const initialLang = await getLocale();
 
 document.documentElement.dir = initialLang === "ar" ? "rtl" : "ltr";
 document.documentElement.lang = initialLang;
@@ -85,6 +89,7 @@ i18n.use(initReactI18next).init({
     "verification",
     "editor",
     "settings",
+    "dashboard",
   ],
   defaultNS: "home",
   interpolation: {
@@ -92,8 +97,8 @@ i18n.use(initReactI18next).init({
   },
 });
 
-i18n.on("languageChanged", async (lng) => {
-  await setCookie("lang", lng);
+i18n.on("languageChanged", async (lng : string) => {
+  await setLocaleCookie(lng as "en" | "ar");
   document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
   document.documentElement.lang = lng;
 });

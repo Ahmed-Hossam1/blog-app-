@@ -1,0 +1,56 @@
+{
+  "heading": {
+    "title": "Welcome Back Admin",
+    "description": "Monitor your blog's performance and manage your latest posts."
+  },
+  "stats": {
+    "blogs": "Total Blogs",
+    "views": "Total Views",
+    "likes": "Total Likes",
+    "comments": "Total Comments"
+  },
+  "performance": {
+    "title": "Performance Overview",
+    "description": "Blogs growth over the last few months"
+  },
+  "top_blogs": {
+    "title": "Top Blogs",
+    "empty": "No Top Blogs Found"
+  },
+  "recent_blogs": "Recent Blogs",
+  "empty_state": {
+    "title": "No Blogs Yet",
+    "description": "Start by creating your first blog post.",
+    "button": "Create Blog"
+  },
+  "table_headers": {
+    "title": "Title",
+    "category": "Category",
+    "status": "Status",
+    "date": "Date",
+    "views": "Views"
+  },
+  "bookmarks": {
+    "title": "My Bookmarks",
+    "description": "Manage and read your saved blog posts.",
+    "saved_single": "Blog",
+    "saved_plural": "Blogs",
+    "saved_count": "Saved",
+    "empty_title": "No Bookmarks Yet",
+    "empty_description": "You haven't saved any blogs to your bookmarks. Explore the latest articles and save the ones you love to read later.",
+    "explore_button": "Explore Blogs"
+  },
+  "drafts": {
+    "title": "My Drafts",
+    "description": "Manage and edit your unpublished blog posts.",
+    "saved_single": "Draft",
+    "saved_plural": "Drafts",
+    "saved_count": "Saved",
+    "uncategorized": "Uncategorized",
+    "untitled": "Untitled Draft",
+    "edit_button": "Edit",
+    "empty_title": "No Drafts Yet",
+    "empty_description": "You haven't saved any draft blogs yet. Start writing your next great article and save it as a draft to finish later.",
+    "write_button": "Write New Blog"
+  }
+}

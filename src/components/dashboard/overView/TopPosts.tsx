@@ -3,14 +3,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineChatBubbleLeft, HiOutlineEye } from "react-icons/hi2";
 
-const TopBlogs = ({ data }: { data: IBlog[] }) => {
+const TopBlogs = ({
+  data,
+  title,
+  emptyMessage,
+}: {
+  data: IBlog[];
+  title: string;
+  emptyMessage: string;
+}) => {
   const TopBlogs = data.sort((a, b) => b.views - a.views);
   const slicedData = TopBlogs.slice(0, 4);
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800 h-full">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
-          Top Blogs
+          {title}
         </h3>
       </div>
 
@@ -48,7 +56,7 @@ const TopBlogs = ({ data }: { data: IBlog[] }) => {
           ))
         ) : (
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            No Top Blogs Found
+            {emptyMessage}
           </p>
         )}
       </div>

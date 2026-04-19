@@ -13,8 +13,10 @@ import {
 import { calculators, computeStatValues } from "@/lib/helpers";
 import { getAuthorBlogs } from "@/services";
 import { getServerSession } from "next-auth";
+import { getTranslations } from "@/lib/i18n";
 import Link from "next/link";
 const OverView = async () => {
+  const t = await getTranslations("dashboard");
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
@@ -27,8 +29,8 @@ const OverView = async () => {
     <SectionWrapper>
       <div className="mb-10">
         <DashboardHeadingTitle
-          title="Welcome Back Admin"
-          description="Monitor your blog is performance and manage your latest posts."
+          title={t.heading.title}
+          description={t.heading.description}
         />
       </div>
 
@@ -37,7 +39,7 @@ const OverView = async () => {
         {stats.map((stat, index) => (
           <StatusCard
             key={index}
-            title={stat.title}
+            title={t.stats[stat.key as string] || stat.title}
             value={stat.value}
             icon={stat.icon}
             color={stat.color}
@@ -50,14 +52,18 @@ const OverView = async () => {
         <div className="lg:col-span-2">
           <Charts
             data={MOCK_PERFORMANCE_DATA}
-            title=" Performance Overview"
-            description="blogs growth over the last few months"
+            title={t.performance.title}
+            description={t.performance.description}
           />
         </div>
 
         {/* Row 2 - Right: Top Posts */}
         <div className="lg:col-span-1">
-          <TopBlogs data={authorBlogs} />
+          <TopBlogs
+            data={authorBlogs}
+            title={t.top_blogs.title}
+            emptyMessage={t.top_blogs.empty}
+          />
         </div>
       </div>
 
@@ -68,7 +74,7 @@ const OverView = async () => {
             <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-800">
               {slicedData.length > 0 ? (
                 <Table
-                  tableTitle="Recent Blogs"
+                  tableTitle={t.recent_blogs}
                   tableHeader={tableHeaders}
                   tableBody={slicedData}
                 />
@@ -78,16 +84,16 @@ const OverView = async () => {
                     📭
                   </div>
                   <h3 className="text-base font-semibold dark:text-white">
-                    No Blogs Yet
+                    {t.empty_state.title}
                   </h3>
                   <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    Start by creating your first blog post.
+                    {t.empty_state.description}
                   </p>
                   <Link
                     href={"/dashboard/create-blog"}
                     className="mt-4 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
                   >
-                    Create Blog
+                    {t.empty_state.button}
                   </Link>
                 </div>
               )}
