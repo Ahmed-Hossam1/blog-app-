@@ -4,6 +4,7 @@ import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import Link from "next/link";
 import RemoveBookmarkButton from "./RemoveBookmarkButton";
 import { formatDate, truncateText } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 type BookmarkCardProps = Pick<
   IBlog,
@@ -30,6 +31,9 @@ const BookmarkCard = ({
   author,
   slug,
 }: BookmarkCardProps) => {
+  const { t, i18n } = useTranslation("common");
+  const lang = i18n.language || "en";
+
   return (
     <div className="relative group overflow-hidden rounded-2xl bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-xl hover:-translate-y-1 duration-300 border border-transparent dark:border-gray-800">
       <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -47,7 +51,7 @@ const BookmarkCard = ({
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <span className="absolute bottom-3 right-3 rounded-full bg-black/40 backdrop-blur-md text-white px-3 py-1 text-xs font-medium capitalize">
-            {readTime}
+            {t("table.metadata.min_read", { count: parseInt(readTime as string) || 5 })}
           </span>
           <div className="absolute left-4 -bottom-5">
             <Image
@@ -81,7 +85,7 @@ const BookmarkCard = ({
               </span>
             </div>
             <span className="font-medium uppercase tracking-wider text-[11px]">
-              {formatDate(createdAt)}
+              {formatDate(createdAt, lang)}
             </span>
           </div>
         </div>

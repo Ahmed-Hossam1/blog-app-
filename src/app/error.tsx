@@ -3,6 +3,7 @@
 import Button from "@/components/ui/Button";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const ErrorPage = ({
   error,
@@ -11,32 +12,36 @@ const ErrorPage = ({
   error: Error & { digest?: string };
   reset: () => void;
 }) => {
+  const { t } = useTranslation("common");
+
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-gray-50 dark:bg-baseInk transition-colors duration-300">
-      <h1 className="text-5xl font-bold mb-4">Something went wrong</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black px-6 transition-colors duration-300">
+      <div className="text-center max-w-md p-10 bg-white dark:bg-surfaceDark rounded-3xl shadow-xl dark:border dark:border-gray-800">
+        <h1 className="text-4xl font-bold mb-4 dark:text-white">500</h1>
 
-      <p className="text-gray-500 max-w-md mb-8">
-        An unexpected error occurred. Please try again or come back later.
-      </p>
+        <p className="text-gray-500 dark:text-gray-400 mb-8">
+          {t("table.toasts.something_went_wrong")}
+        </p>
 
-      <div className="flex gap-4">
-        <Button
-          onClick={() => reset()}
-          className="px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition"
-        >
-          Try again
-        </Button>
+        <div className="flex gap-4 justify-center">
+          <Button
+            onClick={() => reset()}
+            className="px-6 py-3 bg-primary text-white rounded-xl hover:scale-105 transition-transform"
+          >
+            {t("table.actions.continue")}
+          </Button>
 
-        <Link
-          href="/"
-          className="px-6 py-3 border rounded-md hover:bg-baseInk hover:text-white transition"
-        >
-          Go home
-        </Link>
+          <Link
+            href="/"
+            className="px-6 py-3 border dark:border-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition dark:text-white"
+          >
+            {t("navbar.home")}
+          </Link>
+        </div>
       </div>
     </div>
   );

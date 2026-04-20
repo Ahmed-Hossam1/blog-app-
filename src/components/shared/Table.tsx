@@ -3,6 +3,7 @@ import { FiEdit2, FiEye } from "react-icons/fi";
 
 import { formatDate } from "@/lib/utils";
 import { IBlog } from "@/types";
+import { useTranslation } from "react-i18next";
 
 interface TableProps {
   tableTitle?: string;
@@ -27,6 +28,8 @@ const Table = ({
   showActions = false,
   getViewHref,
 }: TableProps) => {
+  const { i18n } = useTranslation("common");
+  const lang = i18n.language || "en";
   const isAllSelected =
     tableBody.length > 0 && selectedIds.length === tableBody.length;
 
@@ -115,7 +118,7 @@ const Table = ({
                 </td>
 
                 <td className="px-6 py-4 text-sm text-zinc-500 dark:text-zinc-400">
-                  {formatDate(blog.createdAt)}
+                  {formatDate(blog.createdAt, lang)}
                 </td>
 
                 <td className="px-6 py-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">

@@ -180,7 +180,7 @@ const Navbar = () => {
             <div>
               {renderLanguageMenu()}
             </div>
-            <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xl transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-surfaceDark dark:hover:bg-gray-800">
+            <div className="flex h-9.5 w-9.5 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xl transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-surfaceDark dark:hover:bg-gray-800">
               {renderThemeIcon()}
             </div>
           </div>

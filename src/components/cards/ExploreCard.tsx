@@ -1,8 +1,8 @@
 "use client";
-import { getLocaleFromCookie } from "@/lib/i18n";
 import { formatDate, truncateText } from "@/lib/utils";
 import { IBlog } from "@/types";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 
 type ExploreCardProps = Pick<
@@ -23,7 +23,9 @@ const ExploreCard = ({
   comments,
   author,
 }: ExploreCardProps) => {
-  const lang = getLocaleFromCookie();
+  const { t, i18n } = useTranslation("common");
+  const lang = i18n.language || "en";
+  
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
@@ -36,7 +38,7 @@ const ExploreCard = ({
           className="object-cover"
         />
         <span className="absolute bottom-3 right-3 rounded-full backdrop-blur-3xl text-white px-4 py-2 text-xs font-semibold capitalize">
-          {readTime}
+          {t("table.metadata.min_read", { count: parseInt(readTime as string) || 5 })}
         </span>
         <div className="absolute left-4 -bottom-4">
           <Image

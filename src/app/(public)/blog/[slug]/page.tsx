@@ -11,6 +11,8 @@ import {
   isBlogLiked,
   isUserFollowing,
 } from "@/services";
+import { getLocale } from "@/lib/i18n/server/get-locale";
+import { getTranslations } from "@/lib/i18n/server/get-translations";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,6 +27,8 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const blog = await getBlogBySlug(slug);
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
+  const lang = await getLocale();
+  const cT = await getTranslations("common");
 
   if (!blog) return notFound();
 
@@ -51,7 +55,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
             {/* Read Time */}
             <span className="absolute right-6 bottom-8 rounded-full bg-white/20 px-4 py-1 text-xs font-medium text-white backdrop-blur-md">
-              {blog.readTime}
+              {cT.table?.metadata?.min_read?.replace("{{count}}", blog.readTime) || `${blog.readTime} min read`}
             </span>
 
             {/* Title Over Image */}
@@ -82,12 +86,12 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                   href={`/authors/${blog.authorId}`}
                   className="text-sm font-medium dark:text-white hover:text-primary-hover"
                 >
-                  {blog.author?.name || "Anonymous"}
+                  {blog.author?.name || cT.table?.placeholders?.anonymous || "Anonymous"}
                 </Link>
 
                 <p className="flex items-center gap-2 text-xs text-gray-500">
                   <BsCalendar2Date />
-                  {formatDate(blog.createdAt)}
+                  {formatDate(blog.createdAt, lang)}
                 </p>
               </div>
 

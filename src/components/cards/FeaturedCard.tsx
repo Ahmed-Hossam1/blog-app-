@@ -1,8 +1,10 @@
+"use client";
 import { IBlog } from "@/types";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 
 interface FeaturedCardProps extends Omit<IBlog, "comments"> {
   className?: string;
@@ -18,6 +20,9 @@ const FeaturedCard = ({
   author,
   className,
 }: FeaturedCardProps) => {
+  const { i18n } = useTranslation("common");
+  const lang = i18n.language || "en";
+
   return (
     <div className={`max-w-5xl ${className}`}>
       <div className="relative overflow-hidden rounded-2xl shadow-lg group">
@@ -64,7 +69,7 @@ const FeaturedCard = ({
             <div>
               <span className="flex items-center gap-1">
                 {" "}
-                <BsCalendar2Date /> {formatDate(createdAt)}
+                <BsCalendar2Date /> {formatDate(createdAt, lang)}
               </span>
             </div>
           </div>

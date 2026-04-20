@@ -1,11 +1,10 @@
 "use client";
-import { Button } from "@headlessui/react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { FaArrowRight } from "react-icons/fa6";
 
 const HeroBanner = () => {
-  const { t, i18n } = useTranslation("home");
+  const { t } = useTranslation("home");
 
   return (
     <section className="relative overflow-hidden bg-gray-50 dark:bg-surfaceDark rounded-3xl mb-12 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border border-gray-100 dark:border-gray-800">

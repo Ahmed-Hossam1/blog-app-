@@ -1,9 +1,12 @@
-/** Truncates text to 40 characters with ellipsis */
+/**
+ * Truncates a given text to a maximum of 40 characters, appending
+ * an ellipsis ("...") if the text is longer than 40 characters.
+ **/
+
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
 }
 
-/** Formats a Date or ISO string into a human-readable date (e.g. "Mar 12, 2026") */
 export function formatDate(date: Date | string, locale: string = "en-US") {
   const d = new Date(date);
   return d.toLocaleDateString(locale, {
@@ -40,7 +43,5 @@ export const uploadImage = async (file: File): Promise<string> => {
 export const calculateContentLength = (content: string): string => {
   const WORDS_PER_MINUTE = 200;
   const wordCount = content.trim().split(/\s+/).length;
-  const readTime = `${Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE))} min read`;
-
-  return readTime;
+  return Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE)).toString();
 };

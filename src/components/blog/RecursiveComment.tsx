@@ -28,7 +28,8 @@ const RecursiveComment = ({
   handleCommentReply,
   handleDeleteComment,
 }: ICommentProps) => {
-  const { t } = useTranslation("blog");
+  const { t, i18n } = useTranslation("blog");
+  const lang = i18n.language || "en";
   const {
     id,
     blogId,
@@ -67,7 +68,7 @@ const RecursiveComment = ({
                 {t("comments.deletedMessage")}
               </p>
               <span className="text-[11px] font-semibold text-zinc-400/80 dark:text-zinc-500 mt-0.5 tracking-wider uppercase">
-                {formatDate(createdAt)}
+                {formatDate(createdAt, lang)}
               </span>
             </div>
           </div>
@@ -92,7 +93,7 @@ const RecursiveComment = ({
                       {authorName}
                     </h4>
                     <p className="text-[11px] font-medium text-zinc-400/90 mt-0.5 uppercase tracking-wider">
-                      {formatDate(createdAt)}
+                      {formatDate(createdAt, lang)}
                     </p>
                   </div>
                 </div>
