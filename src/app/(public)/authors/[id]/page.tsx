@@ -2,7 +2,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ExploreCard from "@/components/cards/ExploreCard";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import FollowersAvatarGroup from "@/components/FollowersAvatarGroup";
-import { getAuthorProfile, getFollowersBasicInfo, isUserFollowing } from "@/services";
+import {
+  getAuthorProfile,
+  getFollowersBasicInfo,
+  isUserFollowing,
+} from "@/services";
 import { IBlog } from "@/types";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -57,8 +61,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </p>
 
               <p className="mt-4 max-w-xl text-gray-600 dark:text-gray-300">
-                {author.bio ||
-                  "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique inventore quos consequuntur sint ut, sed repellendus hic odit eum repudiandae!"}
+                {author.bio || t.profile.noBio}
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-6">
@@ -84,7 +87,6 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   />
                 )}
               </div>
-
 
               {/* Social Links */}
               <div className="mt-6 flex justify-center gap-5 md:justify-start">

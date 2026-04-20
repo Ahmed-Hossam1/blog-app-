@@ -1,24 +1,23 @@
 "use client";
 import { navLinksData } from "@/constants";
-import { signOut, useSession } from "next-auth/react";
+import { setLocaleCookie } from "@/lib/i18n";
+import { IAuthor } from "@/types";
+import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CiSearch } from "react-icons/ci";
 import { FaArrowDown, FaBarsStaggered } from "react-icons/fa6";
 import { IoSunnyOutline } from "react-icons/io5";
-import { MdOutlineCancel, MdOutlineDarkMode, MdLanguage } from "react-icons/md";
+import { MdLanguage, MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import Button from "../ui/Button";
-import { useTranslation } from "react-i18next";
-import { setLocaleCookie } from "@/lib/i18n";
 
 const Navbar = () => {
-  const { status, data } = useSession();
-  const src = data?.user?.image ?? "/default-user.png";
-
   /* ==== State ==== */
+  const [user, setUser] = useState<IAuthor | null>(null);
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -26,6 +25,19 @@ const Navbar = () => {
   const [openLangMenu, setOpenLangMenu] = useState(false);
   const { t, i18n } = useTranslation("common");
 
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const res = await fetch("/api/user/read");
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        setUser(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchUser();
+  }, []);
   /* ==== Handlers ==== */
   const changeTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -177,15 +189,13 @@ const Navbar = () => {
           <div className="mt-6 space-y-2">{renderMobileLinks}</div>
 
           <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-6 dark:border-gray-800">
-            <div>
-              {renderLanguageMenu()}
-            </div>
+            <div>{renderLanguageMenu()}</div>
             <div className="flex h-9.5 w-9.5 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xl transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-surfaceDark dark:hover:bg-gray-800">
               {renderThemeIcon()}
             </div>
           </div>
 
-          {status !== "authenticated" && (
+          {user === null && (
             <div className="mt-6 flex flex-col gap-2 border-t border-gray-100 pt-6 dark:border-gray-800">
               <Link href={"/sign-in"} onClick={closeMenu}>
                 <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
@@ -224,7 +234,7 @@ const Navbar = () => {
             />
           </div>
 
-          {status === "authenticated" ? (
+          {user !== null ? (
             <div
               className="relative "
               tabIndex={0}
@@ -242,14 +252,13 @@ const Navbar = () => {
             >
               <Button
                 onClick={() => setOpenUserMenu((prev) => !prev)}
-                className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
+                className="relative h-10 w-10 rounded-full overflow-hidden flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <Image
-                  src={src}
-                  alt={data?.user?.name || "user"}
-                  width={40}
-                  height={40}
-                  className="rounded-full border-2 border-white"
+                  src={user?.image || "/default-user.png"}
+                  alt={user?.name || "user"}
+                  fill
+                  className="object-cover rounded-full"
                 />
               </Button>
 
@@ -266,10 +275,10 @@ const Navbar = () => {
                   {/* User info */}
                   <div className="px-3 py-2">
                     <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                      {data?.user?.name}
+                      {user?.name}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                      {data?.user?.email}
+                      {user?.email}
                     </p>
                   </div>
 

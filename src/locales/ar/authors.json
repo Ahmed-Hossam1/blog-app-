@@ -9,6 +9,7 @@
     "articlesBy": "مقالات بواسطة {{name}}",
     "noArticles": "لم يكتب {{name}} أي مقالات بعد.",
     "notFound": "الكاتب غير موجود",
+    "noBio": "لا يوجد معلومات لهذا الكاتب.",
     "follow": "متابعة",
     "following": "متابع",
     "unfollowing_text": "إلغاء المتابعة...",

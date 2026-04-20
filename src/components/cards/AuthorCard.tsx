@@ -14,12 +14,12 @@ const AuthorCard = async () => {
           className="rounded-2xl bg-white px-6 py-10 text-center  shadow-sm duration-500 hover:scale-105 hover:shadow-lg hover:transition dark:bg-surfaceDark"
         >
           {/* Avatar */}
-          <div className="mx-auto mb-5 h-24 w-24 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+          <div className="mx-auto mb-5 relative h-24 w-24 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
             <Image
               src={author.image || "/default-image.png"}
               alt={author.name}
-              width={96}
-              height={96}
+              fill
+              className="object-cover"
             />
           </div>
 

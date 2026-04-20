@@ -9,6 +9,7 @@
     "articlesBy": "Articles by {{name}}",
     "noArticles": "{{name}} has not written any articles yet.",
     "notFound": "Author not found",
+    "noBio": "user has not provided a bio yet.",
     "follow": "Follow",
     "following": "Following",
     "unfollowing_text": "Unfollowing...",

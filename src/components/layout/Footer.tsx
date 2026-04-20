@@ -28,7 +28,7 @@ const Footer = () => {
                 key={link.name}
                 href={link.href}
                 title={t(`navbar.${link.name.toLowerCase()}`)}
-                className={`rounded-full bg-baseInk p-2 text-white transition duration-300 ${link.color} dark:bg-gray-700`}
+                className={`rounded-full bg-baseInk  p-2 text-white transition duration-300 ${link.color} dark:bg-gray-700`}
               >
                 <link.icon size={14} />
               </Link>

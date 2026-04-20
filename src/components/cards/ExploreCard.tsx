@@ -25,7 +25,7 @@ const ExploreCard = ({
 }: ExploreCardProps) => {
   const { t, i18n } = useTranslation("common");
   const lang = i18n.language || "en";
-  
+
   return (
     <div className="overflow-hidden rounded-2xl  bg-white dark:bg-surfaceDark shadow-sm transition hover:shadow-md hover:scale-105 hover:transition duration-500">
       {/* Image */}
@@ -38,16 +38,21 @@ const ExploreCard = ({
           className="object-cover"
         />
         <span className="absolute bottom-3 right-3 rounded-full backdrop-blur-3xl text-white px-4 py-2 text-xs font-semibold capitalize">
-          {t("table.metadata.min_read", { count: parseInt(readTime as string) || 5 })}
+          {t("table.metadata.min_read", {
+            count: parseInt(readTime as string) || 5,
+          })}
         </span>
-        <div className="absolute left-4 -bottom-4">
-          <Image
-            src={author?.image || "/default-image.png"}
-            alt={author?.name || "Author name"}
-            width={40}
-            height={40}
-            className="rounded-full border-2 border-white"
-          />
+        {/* Author image  */}
+        <div className="absolute left-4 -bottom-5">
+          <div className="h-11 w-11 overflow-hidden rounded-full border-2 border-white bg-white shadow-md dark:border-zinc-900">
+            <Image
+              src={author?.image || "/default-user.png"}
+              alt={author?.name || "Author name"}
+              width={44}
+              height={44}
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
