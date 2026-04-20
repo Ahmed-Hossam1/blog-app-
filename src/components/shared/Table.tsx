@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import { FiEdit2, FiEye } from "react-icons/fi";
 

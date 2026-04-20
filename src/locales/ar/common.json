@@ -37,7 +37,18 @@
       "delete_button": "حذف"
     },
     "table_headers": {
+      "title": "العنوان",
+      "category": "الفئة",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "views": "المشاهدات",
       "actions": "الإجراءات"
+    },
+    "errors": {
+      "not_found": "404 - الصفحة غير موجودة",
+      "server_error": "500 - خطأ في الخادم",
+      "not_found_desc": "الصفحة التي تبحث عنها غير موجودة.",
+      "something_went_wrong": "حدث خطأ ما"
     },
     "actions": {
       "view": "عرض",
@@ -46,14 +57,17 @@
     },
     "placeholders": {
       "untitled": "مدونة بدون عنوان",
-      "uncategorized": "غير مصنف"
+      "uncategorized": "غير مصنف",
+      "user_name": "مستخدم",
+      "user_email": "user@example.com"
     },
     "toasts": {
       "status_updated": "تم النقل إلى حالة {{state}} بنجاح",
       "deleted_successfully": "تم الحذف بنجاح",
       "success": "نجاح",
       "error": "خطأ",
-      "something_went_wrong": "حدث خطأ ما"
+      "something_went_wrong": "حدث خطأ ما",
+      "fetch_error": "فشل في جلب البيانات"
     },
     "metadata": {
       "min_read": "{{count}} دقائق للقراءة",
@@ -72,6 +86,13 @@
   "pagination": {
     "prev": "السابق",
     "next": "التالي"
+  },
+  "time": {
+    "day": "يوم",
+    "days": "أيام",
+    "month": "شهر",
+    "months": "أشهر",
+    "year": "سنة"
   },
   "aside": {
     "overview": "نظرة عامة",

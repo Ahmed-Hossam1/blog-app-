@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
+
 type CategoryItem = {
   name: string;
   value: number;
@@ -11,10 +13,11 @@ type Props = {
 };
 
 const TopCategoriesChart = ({ data }: Props) => {
+  const { t } = useTranslation("dashboard");
   return (
     <div className="w-full bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800 h-full">
       <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-6">
-        Top Categories Views
+        {t("analytics.charts.top_categories")}
       </h3>
 
       <div className="space-y-5">

@@ -29,7 +29,7 @@ const SettingsPage = () => {
           setAuthor(data);
         } catch (error) {
           console.error(error);
-          toast.error("messages.somethingWentWrong");
+          toast.error(t("messages.somethingWentWrong"));
         }
       }
 

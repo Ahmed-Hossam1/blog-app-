@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslation } from "react-i18next";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 type PieItem = {
@@ -13,12 +13,13 @@ type Props = {
 };
 
 const TrafficPieChart = ({ data }: Props) => {
+  const { t } = useTranslation("dashboard");
   const organicValue = data[0]?.value ?? 0;
 
   return (
     <div className="w-full bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800 flex flex-col items-center justify-center h-full">
       <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-4 self-start">
-        Traffic Sources
+        {t("analytics.charts.traffic_distribution")}
       </h3>
 
       <div className="relative w-40 h-40">
@@ -49,7 +50,7 @@ const TrafficPieChart = ({ data }: Props) => {
             {organicValue}%
           </span>
           <span className="text-xs text-zinc-500 dark:text-zinc-400">
-            Organic
+            {t("analytics.charts.labels.organic")}
           </span>
         </div>
       </div>
@@ -63,7 +64,7 @@ const TrafficPieChart = ({ data }: Props) => {
               style={{ backgroundColor: item.color }}
             />
             <span className="text-xs text-zinc-600 dark:text-zinc-400">
-              {item.name} {item.value}%
+              {t(`analytics.charts.labels.${item.name.toLowerCase()}`)} {item.value}%
             </span>
           </div>
         ))}

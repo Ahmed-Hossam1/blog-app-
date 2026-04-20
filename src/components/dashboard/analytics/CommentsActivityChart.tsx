@@ -10,15 +10,20 @@ import {
   YAxis,
 } from "recharts";
 
+import { useTranslation } from "react-i18next";
+
 type Props = {
   data: { day: string; comments: number }[];
 };
 
 const CommentsActivityChart = ({ data }: Props) => {
+  const { t } = useTranslation("dashboard");
+  const { t: tCommon } = useTranslation("common");
+
   return (
     <div className="w-full bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-xl border border-zinc-200 dark:border-zinc-800">
       <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-6">
-        Comments Activity (Last 30 Days)
+        {t("analytics.charts.comments_activity")}
       </h3>
 
       <div className="w-full h-56">
@@ -48,7 +53,7 @@ const CommentsActivityChart = ({ data }: Props) => {
                 boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
               }}
               labelStyle={{ color: "#a1a1aa" }}
-              labelFormatter={(label) => `Day ${label}`}
+              labelFormatter={(label) => `${tCommon("time.day")} ${label}`}
               cursor={{ fill: "rgba(99, 102, 241, 0.08)" }}
             />
 

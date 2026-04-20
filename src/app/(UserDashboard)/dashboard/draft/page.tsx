@@ -7,10 +7,11 @@ import Image from "next/image";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { getDraftBlogs } from "@/services";
-import { getTranslations } from "@/lib/i18n";
+import { getTranslations, getLocale } from "@/lib/i18n";
 
 const DraftPage = async () => {
   const t = await getTranslations("drafts");
+  const locale = await getLocale();
   const session = await getServerSession(authOptions);
   const id = session?.user.id;
   const draftBlogs = await getDraftBlogs(id as string);
@@ -79,7 +80,7 @@ const DraftPage = async () => {
                     <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wide">
                       <HiOutlineClock className="text-sm" />
                       <span>
-                        {new Date(draft.createdAt).toLocaleDateString("en-US", {
+                        {new Date(draft.createdAt).toLocaleDateString(locale, {
                           month: "short",
                           day: "numeric",
                           year: "numeric",

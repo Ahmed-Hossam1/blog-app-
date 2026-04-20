@@ -37,7 +37,18 @@
       "delete_button": "Delete"
     },
     "table_headers": {
+      "title": "Title",
+      "category": "Category",
+      "status": "Status",
+      "date": "Date",
+      "views": "Views",
       "actions": "Actions"
+    },
+    "errors": {
+      "not_found": "404 - Page Not Found",
+      "server_error": "500 - Server Error",
+      "not_found_desc": "The page you are looking for doesn't exist.",
+      "something_went_wrong": "Something went wrong"
     },
     "actions": {
       "view": "View",
@@ -46,14 +57,17 @@
     },
     "placeholders": {
       "untitled": "Untitled Blog",
-      "uncategorized": "Uncategorized"
+      "uncategorized": "Uncategorized",
+      "user_name": "User",
+      "user_email": "user@example.com"
     },
     "toasts": {
       "status_updated": "Successfully moved to {{state}}",
       "deleted_successfully": "Deleted successfully",
       "success": "Success",
       "error": "Error",
-      "something_went_wrong": "Something went wrong"
+      "something_went_wrong": "Something went wrong",
+      "fetch_error": "Failed to fetch data"
     },
     "metadata": {
       "min_read": "{{count}} min read",
@@ -72,6 +86,13 @@
   "pagination": {
     "prev": "Prev",
     "next": "Next"
+  },
+  "time": {
+    "day": "Day",
+    "days": "Days",
+    "month": "Month",
+    "months": "Months",
+    "year": "Year"
   },
   "aside": {
     "overview": "Overview",

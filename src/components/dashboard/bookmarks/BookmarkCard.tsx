@@ -1,3 +1,4 @@
+"use client";
 import { IBlog } from "@/types";
 import Image from "next/image";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";

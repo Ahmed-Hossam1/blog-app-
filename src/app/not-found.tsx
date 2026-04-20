@@ -17,12 +17,12 @@ export default function NotFound() {
 
         {/* Title */}
         <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-3">
-          404 - {t("navbar.home") ? t("table.toasts.something_went_wrong") : "Page Not Found"}
+          {t("table.errors.not_found")}
         </h1>
 
         {/* Description */}
         <p className="text-gray-500 dark:text-gray-400 mb-8 text-sm">
-          {t("table.toasts.error")} | The page you are looking for doesn't exist.
+          {t("table.errors.not_found_desc")}
         </p>
 
         {/* Buttons */}

@@ -1,3 +1,4 @@
+import { getTranslations } from "@/lib/i18n";
 import StatusCard from "@/components/cards/StatusCard";
 import CommentsActivityChart from "@/components/dashboard/analytics/CommentsActivityChart";
 import TopCategoriesChart from "@/components/dashboard/analytics/TopCategoriesChart";
@@ -16,14 +17,24 @@ import {
   MOCK_VIEWS_OVER_TIME
 } from "@/data/mock/analytics";
 
-const AnalyticsPage = () => {
+const AnalyticsPage = async () => {
+  const t = await getTranslations("dashboard");
+
+  const statKeys = [
+    "total_views",
+    "unique_visitors",
+    "avg_time",
+    "engagement",
+    "last_30_days",
+  ];
+
   return (
     <SectionWrapper>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
         <DashboardHeadingTitle
-          title="Analytics"
-          description="Data Insights for Ahmed's Blog"
+          title={t.analytics.title}
+          description={t.analytics.description}
         />
 
         {/* Time Range Selector */}
@@ -31,10 +42,10 @@ const AnalyticsPage = () => {
           id="analytics-time-range"
           className="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-sm font-medium text-zinc-700 dark:text-zinc-300 shadow-sm cursor-pointer transition-all hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
         >
-          <option>Last 30 Days</option>
-          <option>Last 7 Days</option>
-          <option>Last 90 Days</option>
-          <option>This Year</option>
+          <option>{t.analytics.time_ranges.last_30_days}</option>
+          <option>{t.analytics.time_ranges.last_7_days}</option>
+          <option>{t.analytics.time_ranges.last_90_days}</option>
+          <option>{t.analytics.time_ranges.this_year}</option>
         </select>
       </div>
 
@@ -43,7 +54,7 @@ const AnalyticsPage = () => {
         {MOCK_ANALYTICS_STATS.map((stat, index) => (
           <StatusCard
             key={index}
-            title={stat.title}
+            title={t.analytics.stats[statKeys[index]] || stat.title}
             value={stat.value}
             icon={stat.icon}
             color={stat.color}
