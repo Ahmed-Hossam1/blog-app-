@@ -54,8 +54,13 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
 
             {/* Read Time */}
-            <span className="absolute right-6 bottom-8 rounded-full bg-white/20 px-4 py-1 text-xs font-medium text-white backdrop-blur-md">
-              {cT.table?.metadata?.min_read?.replace("{{count}}", blog.readTime) || `${blog.readTime} min read`}
+            <span
+              className={`absolute ${lang === "ar" ? "left-8" : "right-8"} bottom-8 rounded-full bg-white/20 px-4 py-1 text-xs font-medium text-white backdrop-blur-md`}
+            >
+              {cT.table?.metadata?.min_read?.replace(
+                "{{count}}",
+                blog.readTime,
+              ) || `${blog.readTime}`}
             </span>
 
             {/* Title Over Image */}
@@ -73,20 +78,26 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           {/* ======= Author INFO ======= */}
           <div className="flex flex-wrap items-center justify-between gap-6 border-b border-gray-200 px-8 py-6 dark:border-gray-700">
             {/* Author */}
+
             <div className="flex items-center gap-4">
-              <Image
-                src={blog?.author?.image || "/default-image.png"}
-                alt={blog?.author?.name || "Author"}
-                width={45}
-                height={45}
-                className="rounded-full ring-2 ring-primary/30"
-              />
+              <div className="relative h-11 w-11 overflow-hidden rounded-full ring-2 ring-primary/30 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950">
+                <Image
+                  src={blog?.author?.image || "/default-image.png"}
+                  alt={blog?.author?.name || "Author"}
+                  fill
+                  sizes="44px"
+                  className="object-cover"
+                />
+              </div>
+
               <div>
                 <Link
                   href={`/authors/${blog.authorId}`}
                   className="text-sm font-medium dark:text-white hover:text-primary-hover"
                 >
-                  {blog.author?.name || cT.table?.placeholders?.anonymous || "Anonymous"}
+                  {blog.author?.name ||
+                    cT.table?.placeholders?.anonymous ||
+                    "Anonymous"}
                 </Link>
 
                 <p className="flex items-center gap-2 text-xs text-gray-500">
