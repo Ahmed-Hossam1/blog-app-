@@ -9,5 +9,6 @@
   "edit_button": "Edit",
   "empty_title": "No Drafts Yet",
   "empty_description": "You haven't saved any draft blogs yet. Start writing your next great article and save it as a draft to finish later.",
-  "write_button": "Write New Blog"
+  "write_button": "Write New Blog",
+  "draft": "Draft"
 }

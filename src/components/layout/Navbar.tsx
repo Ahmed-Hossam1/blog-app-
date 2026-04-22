@@ -1,29 +1,26 @@
 "use client";
 import { navLinksData } from "@/constants";
-import { setLocaleCookie } from "@/lib/i18n";
 import { IAuthor } from "@/types";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CiSearch } from "react-icons/ci";
-import { FaArrowDown, FaBarsStaggered } from "react-icons/fa6";
+import { FaBarsStaggered } from "react-icons/fa6";
 import { IoSunnyOutline } from "react-icons/io5";
-import { MdLanguage, MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
+import LanguageMenu from "../LanguageMenu";
 import Button from "../ui/Button";
 
 const Navbar = () => {
   /* ==== State ==== */
   const [user, setUser] = useState<IAuthor | null>(null);
-  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const [openUserMenu, setOpenUserMenu] = useState(false);
-  const [openLangMenu, setOpenLangMenu] = useState(false);
-  const { t, i18n } = useTranslation("common");
+  const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     async function fetchUser() {
@@ -53,78 +50,6 @@ const Navbar = () => {
         onClick={changeTheme}
         className="cursor-pointer transition-transform hover:scale-110"
       />
-    );
-  };
-
-  const handleLanguageChange = async (locale: "en" | "ar") => {
-    i18n.changeLanguage(locale);
-    await setLocaleCookie(locale);
-    router.refresh();
-    setOpenLangMenu(false);
-  };
-
-  const renderLanguageMenu = () => {
-    return (
-      <div
-        className="relative"
-        tabIndex={0}
-        onBlur={(e) => {
-          const nextElementFocus = e.relatedTarget as Node | null;
-          if (!e.currentTarget.contains(nextElementFocus)) {
-            setOpenLangMenu(false);
-          }
-        }}
-      >
-        <Button
-          type="button"
-          onClick={() => setOpenLangMenu((prev) => !prev)}
-          className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 dark:border-gray-700 dark:bg-surfaceDark dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-800"
-        >
-          <MdLanguage className="text-lg" />
-          <span>{i18n.language.startsWith("ar") ? "العربية" : "English"}</span>
-          <FaArrowDown size={12} />
-        </Button>
-
-        <div
-          className={`absolute right-0 top-[calc(100%+10px)] z-100 w-44 origin-top-right rounded-2xl border border-zinc-200 bg-white p-1.5 shadow-xl transition-all duration-200 dark:border-gray-800 dark:bg-surfaceDark dark:shadow-2xl ${
-            openLangMenu
-              ? "visible translate-y-0 opacity-100"
-              : "invisible -translate-y-2 opacity-0"
-          }`}
-        >
-          {[
-            { code: "en", label: "English" },
-            { code: "ar", label: "العربية" },
-          ].map((lang) => {
-            const isActive = i18n.language.startsWith(lang.code);
-
-            return (
-              <Button
-                key={lang.code}
-                type="button"
-                onClick={() => handleLanguageChange(lang.code as "en" | "ar")}
-                className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition ${
-                  isActive
-                    ? "bg-primary/10 text-primary dark:bg-primary/20"
-                    : "text-zinc-700 hover:bg-zinc-100 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
-                }`}
-              >
-                <span
-                  className={`${lang.code === "ar" ? "font-semibold" : ""}`}
-                >
-                  {lang.label}
-                </span>
-
-                {isActive && (
-                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 dark:bg-primary/20">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                )}
-              </Button>
-            );
-          })}
-        </div>
-      </div>
     );
   };
 
@@ -189,7 +114,10 @@ const Navbar = () => {
           <div className="mt-6 space-y-2">{renderMobileLinks}</div>
 
           <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-6 dark:border-gray-800">
-            <div>{renderLanguageMenu()}</div>
+            <div>
+              {" "}
+              <LanguageMenu />{" "}
+            </div>
             <div className="flex h-9.5 w-9.5 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xl transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-surfaceDark dark:hover:bg-gray-800">
               {renderThemeIcon()}
             </div>
@@ -216,7 +144,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <div className="hidden lg:flex items-center gap-4 text-xl">
-            {renderLanguageMenu()}
+            <LanguageMenu />
             {renderThemeIcon()}
             <Link href={`/search?query=`}>
               <CiSearch className="cursor-pointer dark:text-white" />
@@ -252,7 +180,7 @@ const Navbar = () => {
             >
               <Button
                 onClick={() => setOpenUserMenu((prev) => !prev)}
-                className="relative h-10 w-10 rounded-full overflow-hidden flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="relative h-10 w-10 rounded-full overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <Image
                   src={user?.image || "/default-user.png"}
