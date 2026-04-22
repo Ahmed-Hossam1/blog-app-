@@ -33,6 +33,7 @@ export const generateMetaData = async ({
   const slug = (await params).slug;
   const blog = await getBlogBySlug(slug);
   return {
+    metadataBase : new URL("http://localhost:3000"),
     title: blog?.title || "Blog title",
     description: blog?.content || "Blog content",
     openGraph: {

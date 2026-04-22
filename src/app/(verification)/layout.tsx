@@ -1,12 +1,14 @@
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
-const PublicLayout = ({ children }: { children: ReactNode }) => {
+const VerificationLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <main className="main pt-20">
-      {children}
+        <Suspense fallback={<div>Loading...</div>}>
+          {children}
+        </Suspense>
       </main>
     </>
   );
 };
-export default PublicLayout;
+export default VerificationLayout;

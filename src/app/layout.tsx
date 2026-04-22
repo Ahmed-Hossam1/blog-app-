@@ -1,11 +1,11 @@
 import I18nProvider from "@/providers/I18nProvider";
 import { Session } from "@/providers/Session";
 
+import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
-import { Metadata } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase : new URL("http://localhost:3000"),
   title: "Blog App | Modern Blogging Platform",
   description:
     "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
@@ -34,7 +35,6 @@ export const metadata: Metadata = {
     title: "Blog App | Modern Blogging Platform",
     description:
       "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
-    url: "https://nextjs-blog-app.vercel.app/",
     siteName: "Blog App",
     images: [
       {
