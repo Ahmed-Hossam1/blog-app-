@@ -4,7 +4,6 @@
  **/
 
 import { setLocaleCookie } from "./i18n";
-import i18n from "./i18n/i18n";
 
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
@@ -48,9 +47,4 @@ export const calculateContentLength = (content: string): string => {
   const wordCount = content.trim().split(/\s+/).length;
   return Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE)).toString();
 };
-
-
- export  const LanguageSwitcher = async (locale: "en" | "ar") : Promise<void> => {
-    i18n.changeLanguage(locale);
-    await setLocaleCookie(locale);
-  };
+

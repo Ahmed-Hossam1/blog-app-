@@ -7,6 +7,7 @@ import MeetOurAuthors from "@/components/sections/MeetOurAuthors";
 import NewsletterSubscribe from "@/components/sections/NewsletterSubscribe";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import { getAuthors, getBlogs } from "@/services";
+
 export default async function Home() {
   const [blogs, authors] = await Promise.all([getBlogs(), getAuthors()]);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import i18n from "@/lib/i18n/i18n";
-import { LanguageSwitcher } from "@/lib/utils";
+import { LanguageSwitcher } from "@/lib/i18n-client";
 import { Button } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

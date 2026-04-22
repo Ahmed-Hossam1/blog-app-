@@ -1,11 +1,11 @@
 import I18nProvider from "@/providers/I18nProvider";
 import { Session } from "@/providers/Session";
-import type { Metadata } from "next";
+
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
-
+import { Metadata } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +21,38 @@ export const metadata: Metadata = {
   title: "Blog App | Modern Blogging Platform",
   description:
     "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
+  keywords: [
+    "blog",
+    "nextjs",
+    "react",
+    "prisma",
+    "mongodb",
+    "fullstack",
+    "blogging",
+  ],
+  openGraph: {
+    title: "Blog App | Modern Blogging Platform",
+    description:
+      "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
+    url: "https://nextjs-blog-app.vercel.app/",
+    siteName: "Blog App",
+    images: [
+      {
+        url: "/Dark-Logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog App | Modern Blogging Platform",
+    description:
+      "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
+    images: ["/Dark-Logo.png"],
+  },
 };
 
 export default function RootLayout({
@@ -38,9 +70,7 @@ export default function RootLayout({
       >
         <Session>
           <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            <I18nProvider>
-              {children}
-            </I18nProvider>
+            <I18nProvider>{children}</I18nProvider>
           </ThemeProvider>
           <ToastContainer
             position="top-center"

@@ -21,6 +21,27 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegComment, FaRegEye } from "react-icons/fa6";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Metadata } from "next";
+
+type props = {
+  params: Promise<{ slug: string }>;
+};
+
+export const generateMetaData = async ({
+  params,
+}: props): Promise<Metadata> => {
+  const slug = (await params).slug;
+  const blog = await getBlogBySlug(slug);
+  return {
+    title: blog?.title || "Blog title",
+    description: blog?.content || "Blog content",
+    openGraph: {
+      title: blog?.title || "Blog title",
+      description: blog?.content || "Blog content",
+      images: [blog?.image || "/default-image.png"],
+    },
+  };
+};
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;

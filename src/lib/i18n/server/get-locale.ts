@@ -1,5 +1,5 @@
 "use server";
-import { getLocaleCookie } from "./get-locale-cookie ";
+import { getLocaleCookie } from "./get-locale-cookie";
 
 /**
  * Retrieves the current locale from the cookie store.
