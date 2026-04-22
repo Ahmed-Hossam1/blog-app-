@@ -21,9 +21,8 @@ import { getLocale } from "./get-locale";
 export async function getTranslations(
   namespace: string,
 ): Promise<Record<string, any>> {
+  const locale = await getLocale();
   try {
-    const locale = await getLocale();
-
     const { default: translations } = await import(
       `@/locales/${locale}/${namespace}.json`
     );
