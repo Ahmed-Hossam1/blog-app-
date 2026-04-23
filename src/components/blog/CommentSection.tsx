@@ -99,7 +99,7 @@ const CommentSection = ({ blog }: IProps) => {
     }
   };
 
-  const handleDeleteComment = async (id: string, blogId: string) => {
+  const handleDeleteComment = async (id: string, blogId: string) : Promise<void> => {
     try {
       setIsLoading(true);
       const res = await fetch(`/api/comments/delete`, {
