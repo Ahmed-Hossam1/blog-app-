@@ -1,5 +1,5 @@
 import { IBlog, IComment, StatItem, performanceItems } from "@/types";
-import { BlogStatus } from "../../generated/prisma/enums";
+import { BlogStatus } from "../../generated/prisma";
 
 // ===== Comment Tree Builder =====
 
