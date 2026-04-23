@@ -5,7 +5,10 @@ import { getBlogs } from "@/services";
 
 const BlogPage = async () => {
   const blogs = await getBlogs();
-  const { listing } = await getTranslations("blog");
+   const listing = {
+    title: "Blog",
+    description: "All blog posts",
+  };
   return (
     <SectionWrapper>
       <div className="container mx-auto">
