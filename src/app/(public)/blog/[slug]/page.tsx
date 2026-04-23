@@ -27,13 +27,11 @@ type props = {
   params: Promise<{ slug: string }>;
 };
 
-export const generateMetaData = async ({
-  params,
-}: props): Promise<Metadata> => {
-  const slug = (await params).slug;
+export async function generateMetadata({ params }: props): Promise<Metadata> {
+  const {slug} =await params
   const blog = await getBlogBySlug(slug);
   return {
-    metadataBase : new URL("http://localhost:3000"),
+    metadataBase: new URL("http://localhost:3000"),
     title: blog?.title || "Blog title",
     description: blog?.content || "Blog content",
     openGraph: {
@@ -42,7 +40,7 @@ export const generateMetaData = async ({
       images: [blog?.image || "/default-image.png"],
     },
   };
-};
+}
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
