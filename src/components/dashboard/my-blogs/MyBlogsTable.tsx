@@ -14,7 +14,7 @@ import MyModal from "@/components/ui/MyModal";
 import { DashboardTabsData, tableHeaders } from "@/constants";
 import { useTranslation } from "react-i18next";
 import { IBlog } from "@/types";
-import { BlogStatus } from "../../../../generated/prisma/enums";
+import { BlogStatus } from "@prisma/client";
 import Table from "@/components/shared/Table";
 
 const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {

@@ -1,5 +1,5 @@
 import { IBlog, IComment, StatItem, performanceItems } from "@/types";
-import { BlogStatus } from "../../generated/prisma";
+import { BlogStatus } from "@prisma/client";
 
 // ===== Comment Tree Builder =====
 
