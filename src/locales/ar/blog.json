@@ -31,6 +31,9 @@
     "replySuccess": "تم نشر الرد بنجاح",
     "deleteSuccess": "تم حذف التعليق بنجاح",
     "leaveComment": "اترك تعليقاً",
-    "deletedMessage": "تم حذف هذه الرسالة"
+    "deletedMessage": "تم حذف هذه الرسالة",
+    "delete_modal_title": "حذف التعليق",
+    "delete_modal_desc": "هل أنت متأكد من أنك تريد حذف هذا التعليق؟",
+    "deleting": "جاري الحذف..."
   }
 }

@@ -59,7 +59,7 @@ const RecursiveComment = ({
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
   return (
@@ -68,35 +68,33 @@ const RecursiveComment = ({
     >
       {/* Delete Modal  */}
       <MyModal
-        title="Delete Comment"
+        title={t("comments.delete_modal_title")}
         isOpen={deleteModal}
         close={closeDeleteModal}
       >
-        <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
-          <p className="text-gray-500 dark:text-gray-400">
-            are you sure you want to this delete comment
-          </p>
+        <p className="text-gray-500 dark:text-gray-400 mt-4">
+          {t("comments.delete_modal_desc")}
+        </p>
 
-          <div className="mt-4 flex justify-end gap-3">
-            <Button
-              type="button"
-              onClick={closeDeleteModal}
-              disabled={isLoading}
-              className="border border-transparent bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700"
-            >
-              cancel
-            </Button>
+        <div className="mt-6 flex justify-end gap-3">
+          <Button
+            type="button"
+            onClick={closeDeleteModal}
+            disabled={isLoading}
+            className="border border-transparent bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700"
+          >
+            {t("comments.cancel")}
+          </Button>
 
-            <Button
-              type="button"
-              onClick={() => deleteComment(id, blogId)}
-              isLoading={isLoading}
-              loadingText={t("table.delete_modal.deleting_text")}
-              className="overflow-hidden bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-rose-600"
-            >
-              Delete
-            </Button>
-          </div>
+          <Button
+            type="button"
+            onClick={() => deleteComment(id, blogId)}
+            isLoading={isLoading}
+            loadingText={t("comments.deleting")}
+            className="overflow-hidden bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-rose-600"
+          >
+            {t("comments.delete")}
+          </Button>
         </div>
       </MyModal>
 

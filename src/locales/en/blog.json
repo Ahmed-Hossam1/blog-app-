@@ -31,6 +31,9 @@
     "replySuccess": "Reply posted successfully",
     "deleteSuccess": "Comment deleted successfully",
     "leaveComment": "Leave a Comment",
-    "deletedMessage": "This message was deleted"
+    "deletedMessage": "This message was deleted",
+    "delete_modal_title": "Delete Comment",
+    "delete_modal_desc": "Are you sure you want to delete this comment?",
+    "deleting": "Deleting..."
   }
 }
