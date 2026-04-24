@@ -15,7 +15,56 @@ import { notFound } from "next/navigation";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 import FollowButton from "@/components/blog/FollowButton";
 import { getTranslations } from "@/lib/i18n";
+import { Metadata } from "next";
 
+type Props = {
+  params : Promise<{id : string}> 
+} 
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const author = await getAuthorProfile(id);
+  const t = await getTranslations("authors");
+
+  if (!author) {
+    return {
+      title: "Author Not Found",
+    };
+  }
+
+  const siteName = "Blog App";
+  const title = `${author.name} | ${siteName}`;
+  const description = author.bio || t.profile.noBio;
+  const image = author.image || "/default-user.png";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/authors/${id}`,
+    },
+    openGraph: {
+      title,
+      description,
+      type: "profile",
+      username: author.name,
+      images: [
+        {
+          url: image,
+          width: 800,
+          height: 800,
+          alt: author.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
+  };
+}
 const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const author = await getAuthorProfile(id);

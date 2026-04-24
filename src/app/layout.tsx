@@ -18,7 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase : new URL("http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  ),
   title: "Blog App | Modern Blogging Platform",
   description:
     "A full-stack blog application built with Next.js, MongoDB, and Prisma featuring authentication, blog management, and comments.",
