@@ -20,7 +20,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
-  const { t } = useTranslation("common");
+  const { t , i18n } = useTranslation("common");
 
   useEffect(() => {
     async function fetchUser() {
@@ -192,7 +192,7 @@ const Navbar = () => {
 
               {/* User Dropdown */}
               <div
-                className={`absolute right-0 mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
+                className={`absolute ${i18n.language === "ar" ? "left-0" : "right-0"} mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
                   ${
                     openUserMenu
                       ? "opacity-100 translate-y-0"

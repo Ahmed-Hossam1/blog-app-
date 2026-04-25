@@ -40,7 +40,7 @@ const LanguageMenu = () => {
       </Button>
 
       <div
-        className={`absolute right-0 top-[calc(100%+10px)] z-100 w-44 origin-top-right rounded-xl border border-zinc-200 bg-white p-1.5 shadow-xl transition-all duration-200 dark:border-gray-800 dark:bg-surfaceDark dark:shadow-2xl ${
+        className={`absolute ${i18n.language === "ar" ? "right-0" : "left-0"} top-[calc(100%+10px)] z-100 w-44 origin-top-right rounded-xl border border-zinc-200 bg-white p-1.5 shadow-xl transition-all duration-200 dark:border-gray-800 dark:bg-surfaceDark dark:shadow-2xl ${
           openLangMenu
             ? "visible translate-y-0 opacity-100"
             : "invisible -translate-y-2 opacity-0"
