@@ -229,7 +229,51 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
-        {filteredBlogs.length === 0 ? (
+        {isLoading ? (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[900px] table-fixed">
+              <tbody>
+                {[...Array(limit)].map((_, i) => (
+                  <tr
+                    key={i}
+                    className="animate-pulse border-b border-zinc-100 dark:border-zinc-800"
+                  >
+                    <td className="w-12 px-6 py-4">
+                      <div className="mx-auto h-4 w-4 rounded bg-zinc-200 dark:bg-zinc-700" />
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="h-4 w-full rounded bg-zinc-200 dark:bg-zinc-700" />
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="mx-auto h-5 w-24 rounded-md bg-zinc-200 dark:bg-zinc-700" />
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="mx-auto h-5 w-20 rounded-full bg-zinc-200 dark:bg-zinc-700" />
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="mx-auto h-4 w-28 rounded bg-zinc-200 dark:bg-zinc-700" />
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="mx-auto h-4 w-10 rounded bg-zinc-200 dark:bg-zinc-700" />
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="flex justify-center gap-2">
+                        <div className="h-8 w-16 rounded-lg bg-zinc-200 dark:bg-zinc-700" />
+                        <div className="h-8 w-16 rounded-lg bg-zinc-200 dark:bg-zinc-700" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : filteredBlogs.length === 0 ? (
           <div className="p-8 text-center">
             <p className="italic text-gray-500 dark:text-gray-400">
               {t("table.no_filter_matches")}
@@ -265,7 +309,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
             )}
           </>
         )}
-      </div>
+      </div >
     </>
   );
 };
