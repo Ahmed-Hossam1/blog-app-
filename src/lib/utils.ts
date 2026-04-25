@@ -63,7 +63,7 @@ export async function generateUniqueSlug(
   let slug = baseSlug;
   let counter = 1;
   while (true) {
-    const existingBlog = await prisma.blog.findFirst({
+    const existingBlog = await prisma.blog.findUnique({
       where: { slug },
     });
     if (!existingBlog || existingBlog.id === id) {

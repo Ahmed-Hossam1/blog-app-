@@ -53,9 +53,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         return NextResponse.json({ message: "Forbidden" }, { status: 403 });
       }
 
-      console.log("sluging");
       const slug = await generateUniqueSlug(title, existingBlog.id, local);
-      console.log("finished sluging ");
 
       const updatedBlog = await prisma.blog.update({
         where: { id },
@@ -80,9 +78,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // if no draft -> create new published blog
-    console.log("sluging");
     const slug = await generateUniqueSlug(title, undefined, local);
-    console.log("finished sluging ");
 
     const createdBlog = await prisma.blog.create({
       data: {

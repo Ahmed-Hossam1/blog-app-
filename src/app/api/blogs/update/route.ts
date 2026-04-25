@@ -11,11 +11,11 @@ export async function PUT(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { id, title, category, image, status, content } = body;
+  const { id, status } = body;
 
   if (!id) {
     return NextResponse.json(
-      { message: "Blog ID is required" },
+      { message: "Blog Id is required" },
       { status: 400 },
     );
   }
@@ -23,7 +23,6 @@ export async function PUT(req: NextRequest) {
   // Verify ownership
   const existingBlog = await prisma.blog.findUnique({
     where: { id },
-    select: { authorId: true },
   });
 
   if (!existingBlog) {
@@ -37,35 +36,28 @@ export async function PUT(req: NextRequest) {
     );
   }
 
-  // ===== Calculate Read Time (if content provided) =====
-  let readTime;
-  if (content) {
-    const WORDS_PER_MINUTE = 200;
-    const wordCount = content.split(/\s+/).length;
-    readTime = `${Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE))} min read`;
-  }
-
-  // ===== Generate URL-Safe Slug (if title provided) =====
-  let slug;
-  if (title) {
-    slug = title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
+  // check if published blog has title, content, category, image
+  if (
+    status === "PUBLISHED" &&
+    (!existingBlog.title ||
+      !existingBlog.content ||
+      !existingBlog.category ||
+      !existingBlog.image)
+  ) {
+    return NextResponse.json(
+      {
+        message:
+          "Published blog must have title and content and category and image",
+      },
+      { status: 400 },
+    );
   }
 
   try {
     await prisma.blog.update({
       where: { id },
       data: {
-        title: title && title,
-        slug: slug && slug,
-        category: category && category,
-        image: image && image,
-        status: status && status,
-        content: content && content,
-        ...(readTime && { readTime }),
+        status,
       },
     });
     return NextResponse.json(
