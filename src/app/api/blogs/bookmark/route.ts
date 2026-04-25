@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return NextResponse.json(
-      { message: "Please sign in first" },
+      { message: "auth:messages.signin_required" },
       { status: 401 },
     );
   }
@@ -22,10 +22,11 @@ export async function POST(req: NextRequest) {
 
     if (userId === authorId) {
       return NextResponse.json(
-        { message: "You can't bookmark your own blog" },
+        { message: "bookmarks:messages.bookmark_self_error" },
         { status: 400 },
       );
     }
+
 
     // ===== Check If Bookmark Exists =====
     const existingBookmark = await prisma.bookMark.findUnique({
@@ -76,7 +77,7 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json(
-        { message: "Bookmark removed successfully" },
+        { message: "bookmarks:messages.bookmark_removed" },
         { status: 200 },
       );
     }
@@ -99,13 +100,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Bookmark added successfully" },
+      { message: "bookmarks:messages.bookmark_added" },
       { status: 201 },
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Failed to add bookmark" },
+      { message: "bookmarks:messages.bookmark_failed" },
       { status: 500 },
     );
   }

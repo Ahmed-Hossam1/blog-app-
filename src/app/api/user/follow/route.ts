@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return NextResponse.json(
-      { message: "unauthorized" },
+      { message: "auth:messages.unauthorized" },
       { status: 401 },
     );
   }
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
   if (followerId === followingId) {
     return NextResponse.json(
-      { message: "You can't follow yourself" },
+      { message: "authors:messages.follow_self_error" },
       { status: 400 },
     );
   }
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         },
       });
       return NextResponse.json(
-        { message: "Unfollowed Author" },
+        { message: "authors:messages.unfollowed_success" },
         { status: 200 },
       );
     }
@@ -61,9 +61,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ message: "Followed Author" }, { status: 201 });
+    return NextResponse.json({ message: "authors:messages.followed_success" }, { status: 201 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ message: "Failed to follow" }, { status: 500 });
+    return NextResponse.json({ message: "authors:messages.follow_failed" }, { status: 500 });
   }
 }

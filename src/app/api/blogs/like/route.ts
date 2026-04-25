@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   // ===== Authenticate Session =====
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Please sign in first" }, { status: 401 });
+    return NextResponse.json({ message: "auth:messages.signin_required" }, { status: 401 });
   }
   const userId = session.user.id;
 
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     // ===== Prevent Self-Like =====
 
     if (userId === authorId) {
-      return NextResponse.json({ message: "You can't like your own blog" }, { status: 400 });
+      return NextResponse.json({ message: "blog:messages.like_self_error" }, { status: 400 });
     }
 
     // ===== Check If Like Exists =====
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json(
-        { message: "Like removed successfully" },
+        { message: "blog:messages.unliked_success" },
         { status: 201 },
       );
     }
@@ -94,13 +94,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Like added successfully" },
+      { message: "blog:messages.liked_success" },
       { status: 201 },
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Failed to add like" },
+      { message: "blog:messages.like_failed" },
       { status: 500 },
     );
   }

@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     if (!file) {
       return NextResponse.json(
-        { message: "No file uploaded" },
+        { message: "common:messages.no_file_uploaded" },
         { status: 400 },
       );
     }
@@ -59,14 +59,14 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Image uploaded successfully",
+        message: "common:messages.image_upload_success",
         url: result,
       },
       { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
-      { message: `Upload failed ${error}` },
+      { message: "common:messages.upload_failed" },
       { status: 500 },
     );
   }

@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return NextResponse.json(
-      { message: "Please sign in first" },
+      { message: "auth:messages.signin_required" },
       { status: 401 },
     );
   }
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     // ===== Validate Comment Content =====
     if (!comment || !blogId) {
       return NextResponse.json(
-        { message: "missing required fields comment or blogId" },
+        { message: "common:messages.fields_missing" },
         { status: 400 },
       );
     }
@@ -51,13 +51,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Reply added successfully" },
+      { message: "blog:messages.reply_success" },
       { status: 201 },
     );
   } catch (error) {
     console.error("Error creating comment:", error);
     return NextResponse.json(
-      { message: "Failed to create comment" },
+      { message: "blog:messages.comment_failed" },
       { status: 500 },
     );
   }

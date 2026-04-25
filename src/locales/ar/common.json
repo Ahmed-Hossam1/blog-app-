@@ -103,5 +103,17 @@
     "analytics": "التحليلات",
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج"
+  },
+  "messages": {
+    "something_went_wrong": "حدث خطأ ما",
+    "fields_missing": "حقول مطلوبة مفقودة",
+    "forbidden": "ممنوع",
+    "not_found": "غير موجود",
+    "not_implemented": "غير مطبق",
+    "unauthorized_delete": "غير مصرح لك بحذف هذا العنصر",
+    "no_file_uploaded": "لم يتم تحميل أي ملف",
+    "image_upload_success": "تم تحميل الصورة بنجاح",
+    "upload_failed": "فشل التحميل",
+    "all_fields_required": "جميع الحقول مطلوبة"
   }
 }

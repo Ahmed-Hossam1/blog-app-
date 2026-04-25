@@ -67,8 +67,14 @@
   "messages": {
     "profileSuccess": "Profile updated successfully",
     "profileFailed": "Failed to update profile",
-    "somethingWentWrong": "Something went wrong. Please try again."
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "email_verified": "Email updated and verified successfully",
+    "email_update_failed": "Failed to update email",
+    "password_updated": "Password updated successfully",
+    "password_update_failed": "Failed to update password",
+    "password_same": "New password must be different from current password"
   },
+
   "validation": {
     "nameRequired": "Name is required",
     "nameMin": "Name must be at least 3 characters",

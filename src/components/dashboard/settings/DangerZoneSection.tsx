@@ -27,15 +27,17 @@ export default function DangerZoneSection({ userId }: DangerZoneSectionProps) {
       });
 
       if (response.ok) {
-        toast.success(t("dangerZone.success"));
+        const result = await response.json();
+        toast.success(t(result.message) || t("dangerZone.success"));
         signOut({ callbackUrl: "/" });
       } else {
         const result = await response.json();
-        toast.error(result.message || t("dangerZone.failed"));
+        toast.error(t(result.message) || t("dangerZone.failed"));
       }
+
     } catch (error) {
       console.log(error);
-      toast.error(t("messages.somethingWentWrong"));
+      toast.error(t((error as Error).message) || t("messages.somethingWentWrong"));
     } finally {
       setLoading(false);
     }

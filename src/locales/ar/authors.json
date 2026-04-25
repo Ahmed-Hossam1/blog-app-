@@ -17,5 +17,12 @@
     "follower": "متابع",
     "followers": "متابعين",
     "zero_followers": "0 متابع"
+  },
+  "messages": {
+    "follow_self_error": "لا يمكنك متابعة نفسك",
+    "followed_success": "تمت المتابعة بنجاح",
+    "unfollowed_success": "تم إلغاء المتابعة بنجاح",
+    "follow_failed": "فشل في المتابعة"
   }
 }
+

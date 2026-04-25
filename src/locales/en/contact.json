@@ -30,5 +30,8 @@
     "emailInvalid": "Invalid email",
     "emailFormat": "Invalid email format",
     "messageRequired": "Message is required"
+  },
+  "messages": {
+    "message_sent": "Message sent successfully"
   }
 }

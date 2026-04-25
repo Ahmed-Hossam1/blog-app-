@@ -7,7 +7,7 @@ export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "auth:messages.unauthorized" }, { status: 401 });
   }
 
   const body = await req.json();
@@ -26,32 +26,33 @@ export async function PUT(req: NextRequest) {
   });
 
   if (!existingBlog) {
-    return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+    return NextResponse.json({ message: "blog:messages.blog_not_found" }, { status: 404 });
   }
 
   if (existingBlog.authorId !== session.user.id) {
     return NextResponse.json(
-      { message: "You can only update your own blogs" },
+      { message: "blog:messages.unauthorized_update" },
       { status: 403 },
     );
   }
 
+
   // check if published blog has title, content, category, image
-  if (
-    status === "PUBLISHED" &&
-    (!existingBlog.title ||
-      !existingBlog.content ||
-      !existingBlog.category ||
-      !existingBlog.image)
-  ) {
-    return NextResponse.json(
-      {
-        message:
-          "Published blog must have title and content and category and image",
-      },
-      { status: 400 },
-    );
-  }
+    if (
+      status === "PUBLISHED" &&
+      (!existingBlog.title ||
+        !existingBlog.content ||
+        !existingBlog.category ||
+        !existingBlog.image)
+    ) {
+      return NextResponse.json(
+        {
+          message: "blog:messages.publish_validation_error",
+        },
+        { status: 400 },
+      );
+    }
+
 
   try {
     await prisma.blog.update({
@@ -61,13 +62,13 @@ export async function PUT(req: NextRequest) {
       },
     });
     return NextResponse.json(
-      { message: "Blog updated successfully" },
+      { message: "blog:messages.blog_updated" },
       { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Failed to update blog" },
+      { message: "blog:messages.blog_update_failed" },
       { status: 500 },
     );
   }

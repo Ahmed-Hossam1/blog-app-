@@ -32,14 +32,15 @@ export default function FollowButton({ followingId , isFollowing }: FollowButton
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      toast.success(data.message);
+      toast.success(t(data.message));
       router.refresh();
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
       setIsLoading(false);
     }
+
   };
 
   return (

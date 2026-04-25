@@ -55,7 +55,7 @@ const CommentSection = ({ blog }: IProps) => {
       router.refresh();
     } catch (err) {
       console.error(err);
-      toast.error((err as Error).message);
+      toast.error(t((err as Error).message));
       setIsLoading(false);
     }
   };
@@ -94,7 +94,7 @@ const CommentSection = ({ blog }: IProps) => {
       closeModal();
       router.refresh();
     } catch (err) {
-      toast.error((err as Error).message);
+      toast.error(t((err as Error).message));
       setIsLoading(false);
     }
   };
@@ -112,9 +112,10 @@ const CommentSection = ({ blog }: IProps) => {
       router.refresh();
       setIsLoading(false);
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
       setIsLoading(false);
     }
+
   };
 
   /* ==== JSX ==== */

@@ -63,12 +63,13 @@ export default function ProfileUpdateForm({
       const result = await response.json();
 
       if (response.ok) {
-        toast.success(t("messages.profileSuccess"));
+        toast.success(t(result.message) || t("messages.profileSuccess"));
         await update({ name: data.name });
         setIsEditing(false); // Stop editing after save
       } else {
-        toast.error(result.message || t("messages.profileFailed"));
+        toast.error(t(result.message) || t("messages.profileFailed"));
       }
+
     } catch (error) {
       console.log(error);
       toast.error(t("messages.somethingWentWrong"));

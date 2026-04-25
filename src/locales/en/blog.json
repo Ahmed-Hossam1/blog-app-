@@ -35,5 +35,24 @@
     "delete_modal_title": "Delete Comment",
     "delete_modal_desc": "Are you sure you want to delete this comment?",
     "deleting": "Deleting..."
+  },
+  "messages": {
+    "blog_not_found": "Blog post not found",
+    "like_own_blog_error": "You cannot like your own blog",
+    "unauthorized_delete_blog": "Unauthorized to delete this blog",
+    "comment_success": "Comment created successfully",
+    "comment_failed": "Failed to create comment",
+    "comment_required": "Comment text is required",
+    "reply_success": "Reply added successfully",
+    "unauthorized_update": "You can only update your own blogs",
+    "publish_validation_error": "Published blog must have title, content, category, and image",
+    "blog_updated": "Blog updated successfully",
+    "blog_update_failed": "Failed to update blog",
+    "blog_deleted": "Blog deleted successfully",
+    "blog_delete_failed": "Failed to delete blog",
+    "liked_success": "Blog liked successfully",
+    "unliked_success": "Blog unliked successfully",
+    "like_failed": "Failed to like blog",
+    "like_self_error": "You can't like your own blog"
   }
 }

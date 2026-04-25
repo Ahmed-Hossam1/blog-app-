@@ -16,7 +16,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "auth:messages.unauthorized" }, { status: 401 });
   }
 
   try {
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     if (!title || !content || !category || !image) {
       return NextResponse.json(
-        { message: "Missing required fields title, content, category, image" },
+        { message: "blog:messages.publish_validation_error" },
         { status: 400 },
       );
     }
@@ -44,13 +44,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       if (!existingBlog) {
         return NextResponse.json(
-          { message: "Draft not found" },
+          { message: "common:messages.not_found" },
           { status: 404 },
         );
       }
 
       if (existingBlog.authorId !== session.user.id) {
-        return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+        return NextResponse.json({ message: "common:messages.forbidden" }, { status: 403 });
       }
 
       const slug = await generateUniqueSlug(title, existingBlog.id, local);
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       return NextResponse.json(
         {
-          message: "Blog published successfully",
+          message: "blog:messages.blog_updated",
           blogId: updatedBlog.id,
         },
         { status: 200 },
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json(
       {
-        message: "Blog created successfully",
+        message: "blog:messages.blog_updated",
         blogId: createdBlog.id,
       },
       { status: 201 },
@@ -103,7 +103,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Failed to publish blog" },
+      { message: "blog:messages.blog_update_failed" },
       { status: 500 },
     );
   }

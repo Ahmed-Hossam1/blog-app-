@@ -17,5 +17,12 @@
     "follower": "Follower",
     "followers": "Followers",
     "zero_followers": "0 Followers"
+  },
+  "messages": {
+    "follow_self_error": "You cannot follow yourself",
+    "followed_success": "Followed successfully",
+    "unfollowed_success": "Unfollowed successfully",
+    "follow_failed": "Failed to follow"
   }
 }
+

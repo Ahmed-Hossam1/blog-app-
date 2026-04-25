@@ -67,8 +67,14 @@
   "messages": {
     "profileSuccess": "تم تحديث الملف الشخصي بنجاح",
     "profileFailed": "فشل تحديث الملف الشخصي",
-    "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+    "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "email_verified": "تم تحديث البريد الإلكتروني والتحقق منه بنجاح",
+    "email_update_failed": "فشل تحديث البريد الإلكتروني",
+    "password_updated": "تم تحديث كلمة المرور بنجاح",
+    "password_update_failed": "فشل تحديث كلمة المرور",
+    "password_same": "يجب أن تكون كلمة المرور الجديدة مختلفة عن الحالية"
   },
+
   "validation": {
     "nameRequired": "الاسم مطلوب",
     "nameMin": "يجب أن يكون الاسم 3 أحرف على الأقل",

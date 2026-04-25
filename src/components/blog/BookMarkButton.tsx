@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 interface BookMarkButtonProps {
@@ -20,6 +21,7 @@ const BookMarkButton = ({
 }: BookMarkButtonProps) => {
   const session = useSession();
   const router = useRouter();
+  const { t } = useTranslation("bookmarks");
   const userId = session.data?.user?.id;
   const [isLoading, setIsLoading] = useState(false);
   async function addToBookmark() {
@@ -39,12 +41,13 @@ const BookMarkButton = ({
       if (!res.ok) throw new Error(data.message);
       router.refresh();
       setIsLoading(false);
-      toast.success(data.message);
+      toast.success(t(data.message));
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
       setIsLoading(false);
     }
+
   }
 
   return (

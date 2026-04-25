@@ -39,14 +39,14 @@ const PictureSection = ({ initialImage }: IProps) => {
       
       if (!res.ok) throw new Error(resData.message);
       
-      toast.success(t("messages.profileSuccess"));
+      toast.success(t(resData.message) || t("messages.profileSuccess"));
       setPreviewImage(null);
       reset(); // Clear file input
       router.refresh();
       
     } catch (error) {
       console.error(error);
-      toast.error(t("messages.somethingWentWrong"));
+      toast.error(t((error as Error).message) || t("messages.somethingWentWrong"));
     } finally {
       setIsLoading(false);
     }

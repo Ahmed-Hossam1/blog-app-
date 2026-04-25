@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaBookmark } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface RemoveBookmarkButtonProps {
   blogId: string;
@@ -13,6 +14,7 @@ interface RemoveBookmarkButtonProps {
 const RemoveBookmarkButton = ({ blogId }: RemoveBookmarkButtonProps) => {
   const session = useSession();
   const router = useRouter();
+  const { t } = useTranslation("bookmarks");
   const id = session.data?.user?.id;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,13 +31,14 @@ const RemoveBookmarkButton = ({ blogId }: RemoveBookmarkButtonProps) => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       router.refresh();
-      toast.success(data.message);
+      toast.success(t(data.message));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
       setIsLoading(false);
     }
+
   }
 
   return (

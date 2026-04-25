@@ -103,5 +103,17 @@
     "analytics": "Analytics",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "messages": {
+    "something_went_wrong": "Something went wrong",
+    "fields_missing": "Missing required fields",
+    "forbidden": "You don't have permission to perform this action",
+    "not_found": "Not found",
+    "not_implemented": "This feature is not implemented yet",
+    "unauthorized_delete": "You can't delete this item",
+    "no_file_uploaded": "No file uploaded",
+    "image_upload_success": "Image uploaded successfully",
+    "upload_failed": "Upload failed",
+    "all_fields_required": "All fields are required"
   }
 }

@@ -87,7 +87,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
       setSelectedIds([]);
       router.refresh();
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     } finally {
       setIsLoading(false);
     }
@@ -114,7 +114,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
       closeDeleteModal();
       router.refresh();
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     } finally {
       setIsLoading(false);
     }

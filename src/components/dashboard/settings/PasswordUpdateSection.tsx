@@ -56,13 +56,13 @@ export default function PasswordUpdateSection({
       const result = await response.json();
 
       if (!response.ok)
-        throw new Error(result.message || t("account.password.failed"));
-      toast.success(result.message || t("account.password.success"));
+        throw new Error(result.message || "settings:account.password.failed");
+      toast.success(t(result.message) || t("account.password.success"));
       setShowForm(false);
       reset();
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     } finally {
       setLoading(false);
     }

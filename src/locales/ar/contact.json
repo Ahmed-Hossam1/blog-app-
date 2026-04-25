@@ -30,5 +30,8 @@
     "emailInvalid": "البريد الإلكتروني غير صالح",
     "emailFormat": "تنسيق البريد الإلكتروني غير صالح",
     "messageRequired": "الرسالة مطلوبة"
+  },
+  "messages": {
+    "message_sent": "تم إرسال الرسالة بنجاح"
   }
 }

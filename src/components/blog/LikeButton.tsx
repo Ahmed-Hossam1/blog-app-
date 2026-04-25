@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Button from "../ui/Button";
+import { useTranslation } from "react-i18next";
 
 interface LikeButtonProps {
   likes: number;
@@ -15,6 +16,7 @@ interface LikeButtonProps {
 const LikeButton = ({ likes, blogId, isLiked , authorId }: LikeButtonProps) => {
   const session = useSession();
   const router = useRouter();
+  const { t } = useTranslation("blog");
   const userId = session.data?.user?.id;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,12 +37,13 @@ const LikeButton = ({ likes, blogId, isLiked , authorId }: LikeButtonProps) => {
       if (!res.ok) throw new Error(data.message);
       router.refresh();
       setIsLoading(false);
-      toast.success(data.message);
+      toast.success(t(data.message));
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
       setIsLoading(false);
     }
+
   }
 
   return (

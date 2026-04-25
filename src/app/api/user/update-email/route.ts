@@ -10,7 +10,7 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "auth:messages.unauthorized" }, { status: 401 });
   }
 
   const userName = session.user.name;
@@ -21,7 +21,7 @@ export async function PUT(req: NextRequest) {
   try {
     if (!pendingEmail) {
       return NextResponse.json(
-        { message: "missing required field newEmail" },
+        { message: "common:messages.fields_missing" },
         { status: 400 },
       );
     }
@@ -33,7 +33,7 @@ export async function PUT(req: NextRequest) {
 
     if (user) {
       return NextResponse.json(
-        { message: "email already exist" },
+        { message: "auth:messages.email_exists" },
         { status: 400 },
       );
     }
@@ -62,13 +62,18 @@ export async function PUT(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Verification email sent check your email inbox" },
+      { message: "auth:messages.verification_email_sent" },
       { status: 200 },
     );
   } catch (error) {
     console.error(error);
-    return NextResponse.json("message: failed to update email", {
-      status: 500,
-    });
+    return NextResponse.json(
+      { message: "settings:messages.email_update_failed" },
+      {
+        status: 500,
+      },
+    );
   }
 }
+
+

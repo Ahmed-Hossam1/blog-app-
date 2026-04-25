@@ -6,7 +6,7 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "auth:messages.unauthorized" }, { status: 401 });
   }
 
   const userId = session.user.id;
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   // ===== Validate Token Presence =====
   if (!token) {
     return NextResponse.json(
-      { message: "Token is required" },
+      { message: "auth:messages.token_required" },
       { status: 400 },
     );
   }
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     if (!verificationToken) {
       return NextResponse.json(
-        { message: "Verification token not found" },
+        { message: "auth:messages.token_not_found" },
         { status: 404 },
       );
     }
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const hasExpired = new Date() > verificationToken.expires;
     if (hasExpired) {
       return NextResponse.json(
-        { message: "Verification token has expired" },
+        { message: "auth:messages.token_expired" },
         { status: 400 },
       );
     }
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     if (!existingUser) {
       return NextResponse.json(
-        { message: "User not found" },
+        { message: "auth:messages.user_not_found" },
         { status: 404 },
       );
     }
@@ -72,13 +72,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Email updated and verified successfully" },
+      { message: "settings:messages.email_verified" },
       { status: 200 },
     );
   } catch (error) {
     console.error("verify-email error:", error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }

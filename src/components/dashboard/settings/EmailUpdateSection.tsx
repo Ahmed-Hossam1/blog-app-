@@ -46,13 +46,13 @@ export default function EmailUpdateSection({
       const result = await response.json();
 
       if (!response.ok)
-        throw new Error(result.message || t("account.email.failed"));
-      toast.success(result.message);
+        throw new Error(result.message || "settings:account.email.failed");
+      toast.success(t(result.message));
       router.refresh();
       setIsEditing(false);
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     } finally {
       setLoading(false);
     }

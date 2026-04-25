@@ -35,5 +35,24 @@
     "delete_modal_title": "حذف التعليق",
     "delete_modal_desc": "هل أنت متأكد من أنك تريد حذف هذا التعليق؟",
     "deleting": "جاري الحذف..."
+  },
+  "messages": {
+    "blog_not_found": "المدونة غير موجودة",
+    "like_own_blog_error": "لا يمكنك الإعجاب بمدونتك الخاصة",
+    "unauthorized_delete_blog": "غير مصرح لك بحذف هذه المدونة",
+    "comment_success": "تم إنشاء التعليق بنجاح",
+    "comment_failed": "فشل في إنشاء التعليق",
+    "comment_required": "نص التعليق مطلوب",
+    "reply_success": "تمت إضافة الرد بنجاح",
+    "unauthorized_update": "يمكنك فقط تحديث مدوناتك الخاصة",
+    "publish_validation_error": "يجب أن تحتوي المدونة المنشورة على عنوان ومحتوى وفئة وصورة",
+    "blog_updated": "تم تحديث المدونة بنجاح",
+    "blog_update_failed": "فشل تحديث المدونة",
+    "blog_deleted": "تم حذف المدونة بنجاح",
+    "blog_delete_failed": "فشل حذف المدونة",
+    "liked_success": "تم الإعجاب بالمدونة بنجاح",
+    "unliked_success": "تم إلغاء الإعجاب بالمدونة بنجاح",
+    "like_failed": "فشل في الإعجاب بالمدونة",
+    "like_self_error": "لا يمكنك الإعجاب بمدونتك الخاصة"
   }
 }

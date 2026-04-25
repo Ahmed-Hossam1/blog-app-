@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     if (!name || !email || !message) {
       return NextResponse.json(
-        { message: "All fields are required" },
+        { message: "common:messages.all_fields_required" },
         { status: 400 },
       );
     }
@@ -32,13 +32,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Message sent successfully" },
+      { message: "contact:messages.message_sent" },
       { status: 200 },
     );
   } catch (error) {
     console.error("Contact Form Error:", error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }

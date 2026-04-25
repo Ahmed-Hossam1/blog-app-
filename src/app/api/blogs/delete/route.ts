@@ -7,7 +7,7 @@ export async function DELETE(req: NextRequest) {
   // ===== Authenticate Session =====
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Please sign in first" }, { status: 401 });
+    return NextResponse.json({ message: "auth:messages.signin_required" }, { status: 401 });
   }
 
   const body = await req.json();
@@ -17,7 +17,7 @@ export async function DELETE(req: NextRequest) {
     // ===== Verify Blog Ownership =====
     const blog = await prisma.blog.findUnique({ where: { id } });
     if (!blog || blog.authorId !== session.user.id) {
-      return NextResponse.json({ message: "Unauthorized to delete this blog" }, { status: 403 });
+      return NextResponse.json({ message: "common:messages.unauthorized_delete" }, { status: 403 });
     }
 
     // ===== Delete Blog =====
@@ -25,13 +25,13 @@ export async function DELETE(req: NextRequest) {
       where: { id },
     });
     return NextResponse.json(
-      { message: "Blog deleted successfully" },
+      { message: "blog:messages.blog_deleted" },
       { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Failed to delete blog" },
+      { message: "blog:messages.blog_delete_failed" },
       { status: 500 },
     );
   }
