@@ -34,7 +34,7 @@ export const getResetPasswordSchema = (t: any) => yup.object({
 
 // createBlog Page schema
 export const getCreateBlogSchema = (t: any) => yup.object({
-  title: yup.string().required(t("validation.titleRequired")).min(5, t("validation.titleMin")),
+  title: yup.string().required(t("validation.titleRequired")),
   image: yup.mixed<string | FileList | File[]>().required(t("validation.imageRequired")),
   content: yup.string().required(t("validation.contentRequired")).min(20, t("validation.contentMin")),
   category: yup.string().required(t("validation.categoryRequired")),

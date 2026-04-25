@@ -1,9 +1,11 @@
+import slugify from "slugify";
+import { getLocale } from "./i18n";
+import { prisma } from "@/prisma/prisma";
+
 /**
  * Truncates a given text to a maximum of 40 characters, appending
  * an ellipsis ("...") if the text is longer than 40 characters.
  **/
-
-import { setLocaleCookie } from "./i18n";
 
 export function truncateText(text: string) {
   return text.length > 40 ? text.slice(0, 40) + "..." : text;
@@ -47,4 +49,29 @@ export const calculateContentLength = (content: string): string => {
   const wordCount = content.trim().split(/\s+/).length;
   return Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE)).toString();
 };
-
+
+export async function generateUniqueSlug(
+  title: string,
+  id: string | undefined,
+  locale: string,
+): Promise<string> {
+  const baseSlug = slugify(title, {
+    replacement: "-",
+    lower: true,
+    locale: locale,
+  });
+  let slug = baseSlug;
+  let counter = 1;
+  while (true) {
+    const existingBlog = await prisma.blog.findFirst({
+      where: { slug },
+    });
+    if (!existingBlog || existingBlog.id === id) {
+      break;
+    }
+
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+  return slug;
+}

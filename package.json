@@ -37,6 +37,7 @@
     "react-toastify": "^11.0.5",
     "recharts": "^3.7.0",
     "remark-gfm": "^4.0.1",
+    "slugify": "^1.6.9",
     "tailwindcss": "^4.1.18",
     "yup": "^1.7.1"
   },
