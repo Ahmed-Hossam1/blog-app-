@@ -231,7 +231,7 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
       <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
         {isLoading ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] table-fixed">
+            <table className="w-full min-w-225 table-fixed">
               <tbody>
                 {[...Array(limit)].map((_, i) => (
                   <tr
