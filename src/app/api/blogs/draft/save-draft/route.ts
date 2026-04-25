@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { calculateContentLength } from "@/lib/utils";
+import { getLocale } from "@/lib/i18n";
+import { calculateContentLength, generateUniqueSlug } from "@/lib/utils";
 import { prisma } from "@/prisma/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,8 +16,11 @@ export async function POST(req: NextRequest) {
 
   try {
     // UPDATE
+    const local = await getLocale();
+
     if (id) {
       const blog = await prisma.blog.findUnique({ where: { id } });
+      const slug = await generateUniqueSlug(title, id, local);
 
       if (!blog) {
         return NextResponse.json({ message: "Not found" }, { status: 404 });
@@ -26,11 +30,11 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: "Forbidden" }, { status: 403 });
       }
 
-
       const updated = await prisma.blog.update({
         where: { id },
         data: {
           title: title ?? undefined,
+          slug: slug ?? undefined,
           content: content ?? undefined,
           category: category ?? undefined,
           image: image ?? undefined,
@@ -40,11 +44,12 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json({ blogId: updated.id });
     }
-
+    const slug = await generateUniqueSlug(title, undefined, local);
     // CREATE
     const created = await prisma.blog.create({
       data: {
         title: title ?? undefined,
+        slug: slug,
         content: content ?? undefined,
         category: category ?? undefined,
         image: image ?? undefined,

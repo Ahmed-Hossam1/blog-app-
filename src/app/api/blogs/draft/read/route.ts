@@ -14,7 +14,7 @@ export async function GET() {
   try {
     const blogs = await getDraftBlogs(id);
 
-    return NextResponse.json({ blogs }, { status: 200 });
+    return NextResponse.json(blogs, { status: 200 });
   } catch (error) {
     console.error("GET /api/blogs/draft error:", error);
     return NextResponse.json(

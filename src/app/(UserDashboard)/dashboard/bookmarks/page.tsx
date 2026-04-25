@@ -22,10 +22,7 @@ const BookmarksPage = async () => {
       {/* Heading Section */}
       <div className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <DashboardHeadingTitle
-            title={t.title}
-            description={t.description}
-          />
+          <DashboardHeadingTitle title={t.title} description={t.description} />
         </div>
         <div className="flex items-center gap-2 bg-white dark:bg-surfaceDark px-4 py-2 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
           <HiOutlineBookmark className="text-primary dark:text-primaryLight text-xl" />
