@@ -55,13 +55,13 @@ const Page = () => {
       const result = await res.json();
 
       if (!res.ok) {
-        throw new Error(result.message || t("error"));
+        throw new Error(result.message || "error");
       }
       
-      toast.success(result.message || t("success"));
+      toast.success(result.message ? t(result.message) : t("success"));
       reset();
     } catch (error) {
-      toast.error(t("somethingWentWrong"));
+      toast.error(t((error as Error).message));
       console.error(error);
     } finally {
       setIsLoading(false);
