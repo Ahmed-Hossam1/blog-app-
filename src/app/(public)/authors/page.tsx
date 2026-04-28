@@ -1,4 +1,4 @@
-import AuthorCard from "@/components/cards/AuthorCard";
+import AuthorsList from "@/components/AuthorList";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import { getTranslations } from "@/lib/i18n";
@@ -18,7 +18,7 @@ const AuthorsPage = async () => {
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <Suspense fallback={<SkeletonCard numberOfCards={10} />}>
-            <AuthorCard />
+            <AuthorsList />
           </Suspense>
         </div>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 import { IAuthor } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import AuthorCard from "../cards/AuthorCard";
 
 interface MeetOurAuthorsProps {
   numberOfShownAuthors: number;
@@ -35,39 +35,7 @@ const MeetOurAuthors = ({
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {slicedAuthors.map((author) => (
-            <div
-              key={author.id}
-              className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm hover:shadow-md hover:scale-105 hover:transition duration-500 dark:bg-surfaceDark"
-            >
-              {/* Avatar */}
-              <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
-                <Image
-                  src={`${author.image ?? "/default-image.png"}`}
-                  alt={author.name}
-                  width={80}
-                  height={80}
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Name */}
-              <Link
-                href={`/authors/${author.id}`}
-                className="text-lg font-semibold hover:text-primary dark:text-white"
-              >
-                {author.name}
-              </Link>
-
-              {/* Role title */}
-              <div className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
-                {author.title || t("authors.defaultTitle")}
-              </div>
-
-              {/* Bio */}
-              <div className="mt-4 max-w-2xl text-base leading-relaxed text-gray-700 dark:text-gray-300">
-                {author.bio}
-              </div>
-            </div>
+            <AuthorCard key={author.id} {...author} />
           ))}
         </div>
       </div>
