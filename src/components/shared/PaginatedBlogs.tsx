@@ -5,8 +5,6 @@ import Pagination from "./Pagination";
 import Link from "next/link";
 import ExploreCard from "../cards/ExploreCard";
 
-
-
 const PaginatedBlogs = ({ blogs }: { blogs: IBlog[] }) => {
   const [currentPage, setCurrentPage] = useState(1);
 

@@ -109,7 +109,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 {author.title || t.profile.staffWriter}
               </p>
 
-              <p className="mt-4 max-w-xl text-gray-600 dark:text-gray-300">
+              <p className="mt-4  text-gray-600 dark:text-gray-300">
                 {author.bio || t.profile.noBio}
               </p>
 
