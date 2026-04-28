@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     if (!name || !email || !password) {
       return NextResponse.json(
-        { message: "missing required fields" },
+        { message: "common:messages.fields_missing" },
         { status: 400 },
       );
     }
@@ -46,14 +46,14 @@ export async function POST(req: NextRequest) {
 
         // update token
         return NextResponse.json(
-          { message: "Verification email resent check your email inbox" },
+          { message: "auth:messages.verification_email_resent" },
           { status: 200 },
         );
       }
 
       // if email is exist and already verified
       return NextResponse.json(
-        { message: "Email already exists" },
+        { message: "auth:messages.email_exists" },
         { status: 409 },
       );
     }
@@ -88,14 +88,14 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Verification email sent  successfully check your email inbox",
+        message: "auth:messages.verification_email_sent",
       },
       { status: 200 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }

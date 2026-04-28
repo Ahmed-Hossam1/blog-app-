@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   const { email } = body;
 
   if (!email) {
-    return NextResponse.json({ message: "Email is required" }, { status: 400 });
+    return NextResponse.json({ message: "common:messages.fields_missing" }, { status: 400 });
   }
 
   try {
@@ -40,14 +40,14 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json(
-        { message: "If this email exists, a reset link has been sent" },
+        { message: "auth:messages.reset_link_sent" },
         { status: 200 },
       );
     }
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }

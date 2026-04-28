@@ -49,12 +49,12 @@ const Page = () => {
       });
       const res = await req.json();
       if (!req.ok) throw new Error(res.message);
-      toast.success(res.message, {
+      toast.success(t(res.message), {
         autoClose: false
       });
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +66,7 @@ const Page = () => {
       await signIn("google", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     }
   };
 
@@ -76,7 +76,7 @@ const Page = () => {
       await signIn("github", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     }
   };
 

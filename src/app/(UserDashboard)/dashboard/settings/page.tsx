@@ -36,7 +36,6 @@ const SettingsPage = () => {
       fetchAuthor();
   }, [userId]);
 
-  console.log(author)
   return (
     <SectionWrapper>
       <div className="mb-10">

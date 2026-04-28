@@ -49,15 +49,15 @@ const Page = () => {
         password: data.password,
         redirect: false,
       });
-      if (result?.error) throw new Error("invalid credentials");
+      if (result?.error) throw new Error("messages.invalid_credentials");
 
-      toast.success("Logged in successfully");
+      toast.success(t("messages.signin_success"));
       setTimeout(() => {
         router.push("/");
       }, 1500);
     } catch (error) {
       setIsLoading(false);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     }
   };
 
@@ -67,7 +67,7 @@ const Page = () => {
       await signIn("google", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     }
   };
 
@@ -77,7 +77,7 @@ const Page = () => {
       await signIn("github", { callbackUrl: "/" });
     } catch (error) {
       setAuthLoading(false);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     }
   };
 

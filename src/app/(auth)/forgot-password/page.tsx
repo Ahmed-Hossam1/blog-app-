@@ -36,10 +36,10 @@ const ForgotPasswordPage = () => {
       });
       const res = await req.json();
       if (!req.ok) throw new Error(res.message);
-      toast.success(res.message);
+      toast.success(t(res.message));
     } catch (error) {
       console.log(error);
-      toast.error((error as Error).message);
+      toast.error(t((error as Error).message));
     } finally {
       setIsLoading(false);
     }

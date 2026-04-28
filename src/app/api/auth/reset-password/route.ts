@@ -15,13 +15,13 @@ export async function POST(req: NextRequest) {
     });
 
     if (!resetToken)
-      return NextResponse.json({ message: "Invalid token" }, { status: 400 });
+      return NextResponse.json({ message: "auth:messages.invalid_token" }, { status: 400 });
 
     const hasExpired = new Date() > resetToken.expires;
 
     if (hasExpired)
       return NextResponse.json(
-        { message: "Token has expired" },
+        { message: "auth:messages.token_expired" },
         { status: 400 },
       );
 
@@ -33,14 +33,14 @@ export async function POST(req: NextRequest) {
     });
 
     if (!user)
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return NextResponse.json({ message: "auth:messages.user_not_found" }, { status: 404 });
 
     // check old password is not the same
     const isMatch = await bcrypt.compare(newPassword, user?.password as string);
 
     if (isMatch)
       return NextResponse.json(
-        { message: "new Password cannot be the same as old password" },
+        { message: "settings:messages.password_same" },
         { status: 400 },
       );
 
@@ -66,13 +66,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Password reset successfully" },
+      { message: "auth:messages.password_reset_success" },
       { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }

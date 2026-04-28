@@ -62,7 +62,14 @@
     "deleteButton": "Delete My Account",
     "confirm": "Are you sure you want to delete your account? This action is irreversible.",
     "success": "Account deleted successfully",
-    "failed": "Failed to delete account"
+    "failed": "Failed to delete account",
+    "delete_modal": {
+      "title": "Delete Account",
+      "description": "Are you sure you want to delete your account? This action is irreversible and all your data will be lost.",
+      "cancel_button": "Cancel",
+      "deleting_text": "Deleting...",
+      "delete_button": "Delete My Account"
+    }
   },
   "messages": {
     "profileSuccess": "Profile updated successfully",
