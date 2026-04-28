@@ -18,8 +18,8 @@ import { getTranslations } from "@/lib/i18n";
 import { Metadata } from "next";
 
 type Props = {
-  params : Promise<{id : string}> 
-} 
+  params: Promise<{ id: string }>;
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -100,7 +100,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
 
             {/* Author Info */}
-            <div className="text-center md:text-left">
+            <div className="text-center flex-1 md:text-left">
               <h1 className="text-4xl font-bold text-black dark:text-white">
                 {author.name}
               </h1>
@@ -181,15 +181,7 @@ const AuthorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {author.blogs.map((post: IBlog) => (
                   <Link href={`/blog/${post.slug}`} key={post.id}>
-                    <ExploreCard
-                      title={post.title}
-                      image={post.image}
-                      category={post.category}
-                      views={post.views}
-                      readTime={post.readTime}
-                      createdAt={post.createdAt}
-                      author={author}
-                    />
+                    <ExploreCard {...post} />
                   </Link>
                 ))}
               </div>
