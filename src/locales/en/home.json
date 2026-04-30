@@ -23,5 +23,26 @@
     "description": "Subscribe to our newsletter and be the first to know about new arrivals, exclusive offers, special promotions, and the latest news.",
     "placeholder": "Enter your email address",
     "subscribe": "Subscribe"
+  },
+  "featured": {
+    "title": "Trending This Week"
+  },
+  "continue": {
+    "title": "Continue Reading",
+    "draft": "Draft Blog",
+    "lastRead": "Last Read",
+    "saved": "Saved Blog",
+    "noActivity": "No recent drafts or saved blogs found. Start exploring to see them here!"
+  },
+  "stats": {
+    "title": "Platform Stats",
+    "blogs": "Blogs",
+    "authors": "Authors",
+    "reads": "Reads"
+  },
+  "cta": {
+    "title": "Start writing your first blog today",
+    "description": "Share your stories, ideas, and expertise with our growing community of readers and writers.",
+    "button": "Create Blog Now"
   }
 }

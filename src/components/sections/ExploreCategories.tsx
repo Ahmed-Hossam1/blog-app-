@@ -5,6 +5,7 @@ import { IBlog } from "@/types";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import ExploreCard from "../cards/ExploreCard";
+import { HiOutlineSquares2X2 } from "react-icons/hi2";
 
 interface ExploreCategoriesProps {
   blogs: IBlog[];
@@ -21,24 +22,20 @@ const ExploreCategories = ({
   return (
     <SectionWrapper>
       <div className="container mx-auto">
-        {/* Title */}
-        <h2 className="text-3xl font-semibold dark:text-white">
-          {t("explore.title")}
-        </h2>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
+          <div className="flex items-center gap-3">
+            <HiOutlineSquares2X2 className="text-3xl text-blue-500" />
+            <h2 className="text-3xl font-bold dark:text-white">
+              {t("explore.title")}
+            </h2>
+          </div>
+        </div>
 
         {/* Cards Grid */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {slicedBlogs.map((blog: IBlog) => (
             <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-              <ExploreCard
-                title={blog.title}
-                image={blog.image}
-                category={blog.category}
-                views={blog.views}
-                readTime={blog.readTime}
-                createdAt={blog.createdAt}
-                author={blog.author}
-              />
+              <ExploreCard {...blog} />
             </Link>
           ))}
         </div>
