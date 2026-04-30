@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import ChatbotUI from "@/components/shared/ChatbotUI";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -85,6 +86,7 @@ export default function RootLayout({
             draggable
             pauseOnHover
           />
+          <ChatbotUI />
         </Session>
       </body>
     </html>
