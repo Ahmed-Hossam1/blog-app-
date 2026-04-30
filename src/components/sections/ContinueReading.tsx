@@ -14,7 +14,7 @@ interface ContinueReadingData {
   saved: IBlog | null;
 }
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const ContinueReading = () => {
   const { t } = useTranslation("home");
@@ -45,7 +45,7 @@ const ContinueReading = () => {
 
   if (status === "unauthenticated" || status === "loading") return null;
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -55,7 +55,7 @@ const ContinueReading = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.95 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
   };
