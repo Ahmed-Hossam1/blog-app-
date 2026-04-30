@@ -83,8 +83,8 @@ const Page = () => {
 
   /* ==== JSX ==== */
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black transition-colors duration-300">
-      <div className="bg-white shadow-md rounded-xl py-12 px-16 w-full max-w-md text-center dark:bg-surfaceDark transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-surface-secondary transition-colors duration-300">
+      <div className="bg-white shadow-md rounded-xl py-12 px-16 w-full max-w-md text-center dark:bg-surface transition-colors duration-300">
         {theme === "light" ? (
           <Image
             src="/Light-Logo.png"

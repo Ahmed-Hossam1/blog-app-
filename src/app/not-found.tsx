@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 export default function NotFound() {
   const { t } = useTranslation("common");
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black px-6 transition-colors duration-300">
-      <div className="text-center max-w-md p-10 bg-white dark:bg-surfaceDark rounded-3xl shadow-xl dark:border dark:border-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-surface-secondary px-6 transition-colors duration-300">
+      <div className="text-center max-w-md p-10 bg-white dark:bg-surface rounded-3xl shadow-xl dark:border dark:border-gray-800">
         {/* Icon */}
         <div className="flex justify-center mb-6">
           <div className="bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-400 p-5 rounded-full shadow-inner">

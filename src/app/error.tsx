@@ -19,8 +19,8 @@ const ErrorPage = ({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black px-6 transition-colors duration-300">
-      <div className="text-center max-w-md p-10 bg-white dark:bg-surfaceDark rounded-3xl shadow-xl dark:border dark:border-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-surface-secondary px-6 transition-colors duration-300">
+      <div className="text-center max-w-md p-10 bg-white dark:bg-surface rounded-3xl shadow-xl dark:border dark:border-gray-800">
         <h1 className="text-4xl font-bold mb-4 dark:text-white">
           {t("table.errors.server_error")}
         </h1>
