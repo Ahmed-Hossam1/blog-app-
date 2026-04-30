@@ -23,6 +23,7 @@
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.9.0",
     "dotenv": "^17.2.4",
+    "framer-motion": "^12.38.0",
     "i18next": "^26.0.5",
     "next": "16.1.1",
     "next-auth": "^4.24.13",

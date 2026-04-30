@@ -10,6 +10,8 @@ interface MeetOurAuthorsProps {
   authors: IAuthor[];
 }
 
+import { motion } from "framer-motion";
+
 const MeetOurAuthors = ({
   authors,
   numberOfShownAuthors,
@@ -17,11 +19,31 @@ const MeetOurAuthors = ({
   const { t } = useTranslation("home");
   const slicedAuthors = authors.slice(0, numberOfShownAuthors);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="mb-12 flex items-center justify-between">
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12 flex items-center justify-between"
+        >
           <div className="flex items-center gap-3">
             <HiOutlineUsers className="text-3xl text-primary" />
             <h2 className="text-3xl font-bold dark:text-white">
@@ -34,14 +56,22 @@ const MeetOurAuthors = ({
           >
             {t("authors.viewAll")}
           </Link>
-        </div>
+        </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        >
           {slicedAuthors.map((author) => (
-            <AuthorCard key={author.id} {...author} />
+            <motion.div key={author.id} variants={itemVariants}>
+              <AuthorCard {...author} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

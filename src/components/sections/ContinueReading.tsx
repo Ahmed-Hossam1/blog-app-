@@ -14,6 +14,8 @@ interface ContinueReadingData {
   saved: IBlog | null;
 }
 
+import { motion } from "framer-motion";
+
 const ContinueReading = () => {
   const { t } = useTranslation("home");
   const { data: session, status } = useSession();
@@ -43,6 +45,21 @@ const ContinueReading = () => {
 
   if (status === "unauthenticated" || status === "loading") return null;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
+  };
+
   const cards = [
     {
       title: t("continue.draft") || "Draft Blog",
@@ -70,60 +87,75 @@ const ContinueReading = () => {
   return (
     <SectionWrapper>
       <div className="container mx-auto px-4">
-        <div className="flex items-center gap-3 mb-8">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-3 mb-8"
+        >
           <HiOutlineBookOpen className="text-3xl text-primary" />
           <h2 className="text-3xl font-bold dark:text-white">
             {t("continue.title") || "Continue Reading"}
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {cards.filter(c => c.show).map((card, idx) => (
-            <Link 
-              key={idx} 
-              href={card.link}
-              className="group relative flex flex-col p-6 bg-white dark:bg-surface border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-primary transition-colors">
-                  {card.title}
-                </span>
-                <div className="text-2xl opacity-80 group-hover:scale-110 transition-transform">
-                  {card.icon}
+            <motion.div key={idx} variants={itemVariants}>
+              <Link 
+                href={card.link}
+                className="group relative flex flex-col p-6 bg-white dark:bg-surface border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden h-full"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-primary transition-colors">
+                    {card.title}
+                  </span>
+                  <div className="text-2xl opacity-80 group-hover:scale-110 transition-transform">
+                    {card.icon}
+                  </div>
                 </div>
-              </div>
-              
-              <h3 className="text-lg font-bold text-gray-800 dark:text-white line-clamp-2 mb-4 group-hover:text-primary transition-colors">
-                {card.blog?.title}
-              </h3>
+                
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white line-clamp-2 mb-4 group-hover:text-primary transition-colors">
+                  {card.blog?.title}
+                </h3>
 
-              <div className="mt-auto flex items-center gap-3">
-                <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-200">
-                  <Image 
-                    src={card.blog?.author?.image || "/default-user.png"} 
-                    alt="author"
-                    fill
-                    className="object-cover"
-                  />
+                <div className="mt-auto flex items-center gap-3">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-200">
+                    <Image 
+                      src={card.blog?.author?.image || "/default-user.png"} 
+                      alt="author"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                    {card.blog?.author?.name}
+                  </span>
                 </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                  {card.blog?.author?.name}
-                </span>
-              </div>
 
-              {/* Hover effect background */}
-              <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-gray-50 dark:bg-gray-800/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
+                {/* Hover effect background */}
+                <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-gray-50 dark:bg-gray-800/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Link>
+            </motion.div>
           ))}
           
           {cards.filter(c => c.show).length === 0 && (
-            <div className="col-span-full py-12 text-center bg-gray-50 dark:bg-surface-secondary/30 rounded-2xl border border-dashed border-gray-200 dark:border-gray-800">
+            <motion.div 
+              variants={itemVariants}
+              className="col-span-full py-12 text-center bg-gray-50 dark:bg-surface-secondary/30 rounded-2xl border border-dashed border-gray-200 dark:border-gray-800"
+            >
               <p className="text-gray-500 dark:text-gray-400 font-medium">
                 {t("continue.noActivity") || "No recent drafts or saved blogs found. Start exploring to see them here!"}
               </p>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </div>
     </SectionWrapper>
   );
