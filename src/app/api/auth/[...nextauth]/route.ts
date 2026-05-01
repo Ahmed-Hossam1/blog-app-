@@ -67,6 +67,34 @@ export const authOptions: NextAuthOptions = ({
   ],
   // ===== JWT & Session Callbacks =====
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google" || account?.provider === "github") {
+        if (!user.email) return false;
+        
+        // Manually create user to handle the emailVerified Boolean vs Date mismatch in PrismaAdapter
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email }
+        });
+
+        if (!dbUser) {
+          await prisma.user.create({
+            data: {
+              email: user.email,
+              name: user.name || "User",
+              image: user.image,
+              emailVerified: true, // Our schema expects a boolean!
+            }
+          });
+        } else if (!dbUser.emailVerified) {
+          // If they sign in with OAuth, verify their email
+          await prisma.user.update({
+            where: { email: user.email },
+            data: { emailVerified: true }
+          });
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;

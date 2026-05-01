@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
         // regenerate token + resend email
         const verificationToken = await generateToken(email);
 
-        const verificationLink = `${process.env.NEXT_LOCAL_URL}/verify-email?token=${verificationToken.token}`;
+        const verificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/verify-email?token=${verificationToken.token}`;
 
         const html = await render(
           ConfirmEmailTemplate({ name: existingUser.name, verificationLink }),
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     const verificationToken = await generateToken(email);
 
     // verification link that will be sent
-    const verificationLink = `${process.env.NEXT_LOCAL_URL}/verify-email?token=${verificationToken.token}`;
+    const verificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/verify-email?token=${verificationToken.token}`;
 
     //   ===== Send Verification Email  =====
     const html = await render(ConfirmEmailTemplate({ name, verificationLink }));

@@ -42,7 +42,7 @@ export async function PUT(req: NextRequest) {
     const verificationToken = await generateToken(pendingEmail);
 
     // make verification link with token generated
-    const verificationLink = `${process.env.NEXT_LOCAL_URL}/confirm-email-change?token=${verificationToken.token}`;
+    const verificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/confirm-email-change?token=${verificationToken.token}`;
 
     // convert jsx to html
     const html = await render(
