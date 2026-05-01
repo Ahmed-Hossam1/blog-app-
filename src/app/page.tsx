@@ -9,32 +9,28 @@ import MeetOurAuthors from "@/components/sections/MeetOurAuthors";
 import PlatformStats from "@/components/sections/PlatformStats";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import {
-  FeaturedArticlesSkeleton,
   ExploreCategoriesSkeleton,
+  FeaturedArticlesSkeleton,
   MeetOurAuthorsSkeleton,
 } from "@/components/ui/Skeletons";
 import { getAuthors, getBlogs } from "@/services";
 
-import { cache, Suspense } from "react";
-
-// to not call the same function multiple times
-const getCachedBlogs = cache(getBlogs);
-const getCachedAuthors = cache(getAuthors);
+import { Suspense } from "react";
 
 async function FeaturedArticlesWrapper() {
-  const blogs = await getCachedBlogs();
+  const blogs = await getBlogs();
 
   return <FeaturedArticles blogs={blogs} numberOfShownArticles={5} />;
 }
 
 async function ExploreCategoriesWrapper() {
-  const blogs = await getCachedBlogs();
+  const blogs = await getBlogs();
 
   return <ExploreCategories blogs={blogs} numberOfShownArticles={9} />;
 }
 
 async function MeetOurAuthorsWrapper() {
-  const authors = await getCachedAuthors();
+  const authors = await getAuthors();
 
   return <MeetOurAuthors authors={authors} numberOfShownAuthors={8} />;
 }
