@@ -53,6 +53,10 @@
     "liked_success": "Blog liked successfully",
     "unliked_success": "Blog unliked successfully",
     "like_failed": "Failed to like blog",
-    "like_self_error": "You can't like your own blog"
+    "like_self_error": "You can't like your own blog",
+    "blog_id_required": "Blog ID is required",
+    "invalid_status": "Invalid blog status",
+    "comment_deleted": "Comment deleted successfully",
+    "comment_delete_failed": "Failed to delete comment"
   }
 }

@@ -40,13 +40,20 @@ model Blog {
   likes                 Like[]
   comments              Comment[]
   bookMarks             BookMark[]
+
+  // Performance indexes
+  @@index([status])
+  @@index([authorId])
+  @@index([status, createdAt])
 }
 
 model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
 
   authorName String
-  authorId   String
+  // Proper FK relation so Prisma can join author data and enforce referential integrity
+  authorId   String   @db.ObjectId
+  author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   image      String
   comment    String
 
@@ -56,6 +63,8 @@ model Comment {
   //  for nested replies
   parentId String? @db.ObjectId
   createdAt DateTime @default(now())
+
+  @@index([blogId])
 }
 
 
@@ -72,6 +81,7 @@ model User {
 
   blogs         Blog[]
   likes         Like[]
+  comments      Comment[]
   bookMarks      BookMark[]
   accounts      Account[]
   followers     Follow[] @relation("UserFollowers")
@@ -107,7 +117,7 @@ model Account {
 model VerificationToken {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   email        String 
-  token        String
+  token        String   @unique
   expires      DateTime
 
   @@unique([email , token])
@@ -156,3 +166,4 @@ model BookMark  {
   
   @@unique([userId, blogId]) // unique to prevent user make 100 Bookmark to same blog
 }
+

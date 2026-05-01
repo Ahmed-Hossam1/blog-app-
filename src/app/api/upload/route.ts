@@ -1,4 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
 
 cloudinary.config({
@@ -7,14 +9,42 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET_KEY,
 });
 
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+
 export async function POST(req: NextRequest) {
+  // ===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json({ message: "auth:messages.unauthorized" }, { status: 401 });
+  }
+
   try {
     const formData = await req.formData();
-    const file = formData.get("file") as File;
+    const file = formData.get("file");
 
-    if (!file) {
+    if (!file || typeof file === "string") {
       return NextResponse.json(
         { message: "common:messages.no_file_uploaded" },
+        { status: 400 },
+      );
+    }
+
+    // ===== Validate File Type =====
+    // Allow any standard image type, fallback to application/octet-stream just in case
+    if (!file.type.startsWith("image/") && file.type !== "application/octet-stream") {
+      console.error("[POST /api/upload] Invalid file type:", file.type);
+      return NextResponse.json(
+        { message: `Invalid file type: ${file.type || "unknown"}` },
+        { status: 400 },
+      );
+    }
+
+    // ===== Validate File Size =====
+    if (!file.size || file.size > MAX_SIZE_BYTES) {
+      console.error("[POST /api/upload] File size invalid:", file.size);
+      return NextResponse.json(
+        { message: "common:messages.file_too_large" },
         { status: 400 },
       );
     }
@@ -64,10 +94,16 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error) {
+  } catch (error: any) {
+    console.error("[POST /api/upload]", error);
     return NextResponse.json(
-      { message: "common:messages.upload_failed" },
+      {
+        message: "common:messages.upload_failed",
+        error: error?.message || String(error),
+        stack: error?.stack
+      },
       { status: 500 },
     );
   }
 }
+

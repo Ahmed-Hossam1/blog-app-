@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (error) {
-    console.log(error);
+    console.error("[POST /api/blogs/bookmark]", error);
     return NextResponse.json(
       { message: "bookmarks:messages.bookmark_failed" },
       { status: 500 },

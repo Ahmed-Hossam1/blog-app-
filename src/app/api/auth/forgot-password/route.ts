@@ -6,20 +6,19 @@ import { render } from "@react-email/render";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { email } = body;
-
-  if (!email) {
-    return NextResponse.json({ message: "common:messages.fields_missing" }, { status: 400 });
-  }
-
   try {
-    // Check if user exist
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
+    const body = await req.json();
+    const { email } = body;
 
-    //  IMPORTANT: return same response for security reasons
+    if (!email) {
+      return NextResponse.json({ message: "common:messages.fields_missing" }, { status: 400 });
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    // IMPORTANT: Always return the same response whether the user exists or not.
+    // This prevents user enumeration attacks (attacker can't tell if an email is registered).
     if (user) {
       // Generate & save reset token in DB
       const token = await generateToken(email);
@@ -38,17 +37,19 @@ export async function POST(req: NextRequest) {
         subject: "Reset Password",
         html,
       });
-
-      return NextResponse.json(
-        { message: "auth:messages.reset_link_sent" },
-        { status: 200 },
-      );
     }
+
+    // Always return the same message
+    return NextResponse.json(
+      { message: "auth:messages.reset_link_sent" },
+      { status: 200 },
+    );
   } catch (error) {
-    console.log(error);
+    console.error("[POST /api/auth/forgot-password]", error);
     return NextResponse.json(
       { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }
 }
+

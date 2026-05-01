@@ -4,6 +4,7 @@ import { prisma } from "../prisma/prisma";
 export const getBlogs = async () => {
   const blogs = await prisma.blog.findMany({
     where: { status: "PUBLISHED" },
+    orderBy: { createdAt: "desc" },
     include: {
       author: {
         select: {
@@ -12,18 +13,19 @@ export const getBlogs = async () => {
         },
       },
     },
-    take : 20
+    take: 20,
   });
   return blogs;
 };
 
-/** Fetches a single blog by its slug, including comments tree and likes */
+/** Fetches a single blog by its slug, including comments tree and like count */
 export const getBlogBySlug = async (slug: string) => {
   const blog = await prisma.blog.findFirst({
     where: { slug, status: "PUBLISHED" },
     include: {
       comments: true,
-      likes: true,
+      // Use _count for the total — avoids loading thousands of like records
+      _count: { select: { likes: true } },
       author: {
         select: {
           id: true,
@@ -49,7 +51,7 @@ export const getAuthorBlogs = async (userId: string) => {
       blogs: {
         include: {
           comments: true,
-          likes: true,
+          _count: { select: { likes: true } },
           author: {
             select: {
               id: true,
@@ -75,6 +77,7 @@ export const getAuthorBlogs = async (userId: string) => {
 export const getDraftBlogs = async (authorId: string) => {
   const blogs = await prisma.blog.findMany({
     where: { status: "DRAFT", authorId },
+    orderBy: { createdAt: "desc" },
     include: {
       author: {
         select: {
@@ -82,7 +85,8 @@ export const getDraftBlogs = async (authorId: string) => {
           image: true,
         },
       },
-    },    
+    },
   });
   return blogs;
 };
+

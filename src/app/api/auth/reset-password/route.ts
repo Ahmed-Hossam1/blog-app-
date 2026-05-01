@@ -3,10 +3,9 @@ import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { token, password: newPassword } = body;
-
   try {
+    const body = await req.json();
+    const { token, password: newPassword } = body;
     // check if token is valid
     const resetToken = await prisma.verificationToken.findFirst({
       where: {

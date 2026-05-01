@@ -30,8 +30,10 @@ export const getAuthorProfile = async (id: string) => {
       followers: { select: { followerId: true } },
       blogs: {
         where: { status: "PUBLISHED" },
+        orderBy: { createdAt: "desc" },
         include: {
-          comments: true,
+          // Use _count instead of fetching all comment records
+          _count: { select: { comments: true, likes: true } },
           author: {
             select: {
               id: true,

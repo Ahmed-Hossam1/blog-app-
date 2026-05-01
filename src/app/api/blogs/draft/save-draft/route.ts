@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
   }
 
   const { id, title, content, category, image } = await req.json();
-  const readTime = calculateContentLength(content).toString();
+  // Guard against empty content before passing to calculateContentLength
+  const readTime = content ? calculateContentLength(content).toString() : "1";
 
   try {
     // UPDATE
@@ -62,13 +63,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ blogId: created.id });
   } catch (error) {
     console.error(`[${req.method}] ${req.nextUrl.pathname}`, error);
-
     return NextResponse.json(
-      {
-        message:
-          error instanceof Error ? error.message : "Something went wrong",
-        route: req.nextUrl.pathname,
-      },
+      { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }

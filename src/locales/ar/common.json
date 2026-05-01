@@ -114,6 +114,7 @@
     "no_file_uploaded": "لم يتم تحميل أي ملف",
     "image_upload_success": "تم تحميل الصورة بنجاح",
     "upload_failed": "فشل التحميل",
-    "all_fields_required": "جميع الحقول مطلوبة"
+    "all_fields_required": "جميع الحقول مطلوبة",
+    "file_too_large": "الملف كبير جداً (الحد الأقصى 5 ميجابايت)"
   }
 }

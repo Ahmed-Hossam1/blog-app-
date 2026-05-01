@@ -152,11 +152,11 @@ const FormField = <T extends FieldValues>({
               className="capitalize w-full border border-gray focus:outline-none focus:border-primary transition  px-3 py-2 dark:bg-transparent dark:text-white dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               defaultValue=""
             >
-              <option value="" disabled>
+              <option value="" disabled className="dark:bg-zinc-900">
                 -- Please choose an option --
               </option>
               {input.options?.map((opt) => (
-                <option key={opt.value} value={opt.value}>
+                <option key={opt.value} value={opt.value} className="dark:bg-zinc-900">
                   {opt.name}
                 </option>
               ))}

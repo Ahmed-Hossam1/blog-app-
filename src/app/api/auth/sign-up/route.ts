@@ -1,7 +1,4 @@
-import {
-  default as ConfirmEmailTemplate,
-  default as EmailTemplate,
-} from "@/components/emailTemplates/ConfirmEmailTemplate";
+import ConfirmEmailTemplate from "@/components/emailTemplates/ConfirmEmailTemplate";
 import transporter from "@/lib/nodemailer";
 import { generateToken } from "@/lib/token";
 import { render } from "@react-email/render";
@@ -77,7 +74,7 @@ export async function POST(req: NextRequest) {
     const verificationLink = `${process.env.NEXT_LOCAL_URL}/verify-email?token=${verificationToken.token}`;
 
     //   ===== Send Verification Email  =====
-    const html = await render(EmailTemplate({ name, verificationLink }));
+    const html = await render(ConfirmEmailTemplate({ name, verificationLink }));
 
     await transporter.sendMail({
       from: `"Blogy" <${process.env.EMAIL_USER}>`,
@@ -93,7 +90,7 @@ export async function POST(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.error(error);
+    console.error("[POST /api/auth/sign-up]", error);
     return NextResponse.json(
       { message: "common:messages.something_went_wrong" },
       { status: 500 },

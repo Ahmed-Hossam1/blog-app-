@@ -185,6 +185,7 @@ const RecursiveComment = ({
         <div className="mt-4 space-y-4">
           {replies.map((reply) => (
             <RecursiveComment
+              userId={userId}
               handleCommentReply={handleCommentReply}
               handleDeleteComment={handleDeleteComment}
               key={reply.id}

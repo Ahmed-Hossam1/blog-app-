@@ -114,6 +114,7 @@
     "no_file_uploaded": "No file uploaded",
     "image_upload_success": "Image uploaded successfully",
     "upload_failed": "Upload failed",
-    "all_fields_required": "All fields are required"
+    "all_fields_required": "All fields are required",
+    "file_too_large": "File is too large (Max 5MB)"
   }
 }

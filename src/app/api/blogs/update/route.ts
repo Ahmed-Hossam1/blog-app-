@@ -1,7 +1,10 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/prisma/prisma";
+import { BlogStatus } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+
+const VALID_STATUSES = Object.values(BlogStatus);
 
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -15,7 +18,14 @@ export async function PUT(req: NextRequest) {
 
   if (!id) {
     return NextResponse.json(
-      { message: "Blog Id is required" },
+      { message: "blog:messages.blog_id_required" },
+      { status: 400 },
+    );
+  }
+
+  if (status && !VALID_STATUSES.includes(status)) {
+    return NextResponse.json(
+      { message: "blog:messages.invalid_status" },
       { status: 400 },
     );
   }
@@ -66,7 +76,7 @@ export async function PUT(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.log(error);
+    console.error("[PUT /api/blogs/update]", error);
     return NextResponse.json(
       { message: "blog:messages.blog_update_failed" },
       { status: 500 },

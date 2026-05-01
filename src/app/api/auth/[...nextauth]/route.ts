@@ -42,6 +42,11 @@ export const authOptions: NextAuthOptions = ({
         });
         if (!user) return null;
 
+        // ===== Block Unverified Email Accounts =====
+        if (!user.emailVerified) {
+          throw new Error("EMAIL_NOT_VERIFIED");
+        }
+
         // ===== Compare Hashed Password =====
         const isPasswordValid = await bcrypt.compare(
           credentials?.password as string,

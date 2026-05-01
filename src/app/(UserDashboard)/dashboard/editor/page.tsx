@@ -59,11 +59,11 @@ export default function Editor() {
     label: t(`fields.${field.id}.label`),
     placeholder: t(`fields.${field.id}.placeholder`),
     options: field.options?.map(opt => ({
-        ...opt,
-        name: t(`fields.category.options.${opt.value}`)
+      ...opt,
+      name: t(`fields.category.options.${opt.value}`)
     }))
   }));
-  
+
   // Watch form values for autosave
   const formTitle = watch("title");
   const formContent = watch("content");

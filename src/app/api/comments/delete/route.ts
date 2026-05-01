@@ -15,30 +15,30 @@ export async function DELETE(request: Request) {
 
   const authorId = session.user.id;
 
-  const body = await request.json();
-  const { id: commentId, blogId } = body;
+  try {
+    const body = await request.json();
+    const { id: commentId, blogId } = body;
 
-    if (!commentId ||  !blogId) {
+    if (!commentId || !blogId) {
       return NextResponse.json(
         { message: "common:messages.fields_missing" },
         { status: 400 },
       );
     }
 
-
-  try {
-    // get comment
+    // Get comment and verify it exists
     const comment = await prisma.comment.findUnique({
       where: { id: commentId },
     });
-    // check if it's exist
+
     if (!comment) {
       return NextResponse.json(
         { message: "common:messages.not_found" },
         { status: 404 },
       );
     }
-    // check if authorId is the same as author who created the comment
+
+    // Verify the requester is the comment author
     if (authorId !== comment.authorId) {
       return NextResponse.json(
         { message: "common:messages.unauthorized_delete" },
@@ -46,11 +46,9 @@ export async function DELETE(request: Request) {
       );
     }
 
-    await prisma.comment.update({
+    // ===== Hard Delete =====
+    await prisma.comment.delete({
       where: { id: commentId },
-      data: {
-        comment: "Deleted Comment",
-      },
     });
 
     await prisma.blog.update({
@@ -63,14 +61,15 @@ export async function DELETE(request: Request) {
     });
 
     return NextResponse.json(
-      { message: "blog:messages.blog_deleted" },
+      { message: "blog:messages.comment_deleted" },
       { status: 200 },
     );
   } catch (error) {
-    console.log(error);
+    console.error("[DELETE /api/comments/delete]", error);
     return NextResponse.json(
-      { message: "blog:messages.blog_delete_failed" },
+      { message: "blog:messages.comment_delete_failed" },
       { status: 500 },
     );
   }
 }
+

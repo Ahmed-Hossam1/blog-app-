@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json(
         { message: "blog:messages.unliked_success" },
-        { status: 201 },
+        { status: 200 },
       );
     }
 
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (error) {
-    console.log(error);
+    console.error("[POST /api/blogs/like]", error);
     return NextResponse.json(
       { message: "blog:messages.like_failed" },
       { status: 500 },

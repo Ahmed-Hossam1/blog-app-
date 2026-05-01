@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: "authors:messages.followed_success" }, { status: 201 });
   } catch (error) {
-    console.log(error);
+    console.error("[POST /api/user/follow]", error);
     return NextResponse.json({ message: "authors:messages.follow_failed" }, { status: 500 });
   }
 }

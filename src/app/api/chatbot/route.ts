@@ -1,12 +1,20 @@
 import { chatBot } from "@/lib/chatbot";
 import { prisma } from "@/prisma/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
 
 const MAX_PROMPT_LENGTH = 1000; // characters
 
 export async function POST(req: NextRequest) {
+  // ===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json({ message: "auth:messages.unauthorized" }, { status: 401 });
+  }
+
   try {
-    const body = await req.json();
+    const body = await req.json()
     const { prompt } = body
 
     // --- Validation ---
@@ -83,3 +91,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

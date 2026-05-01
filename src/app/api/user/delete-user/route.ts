@@ -1,52 +1,42 @@
 import { prisma } from "@/prisma/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(req: NextRequest) {
+  // ===== Authenticate Session =====
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json(
+      { message: "auth:messages.unauthorized" },
+      { status: 401 },
+    );
+  }
+
   const body = await req.json();
   const { id } = body;
-  if (!id)
-    return NextResponse.json(
-      { message: "common:messages.fields_missing" },
-      { status: 400 },
-    );
 
-  const isUser = await prisma.user.findUnique({
-    where: { id },
-  });
-  if (!isUser)
+  // Users can only delete their OWN account
+  if (!id || id !== session.user.id) {
     return NextResponse.json(
-      { message: "auth:messages.user_not_found" },
-      { status: 404 },
+      { message: "common:messages.unauthorized_delete" },
+      { status: 403 },
     );
+  }
 
   try {
-    // ===== Delete User & everything associated =====
-    await prisma.comment.deleteMany({
-      where: { authorId: id },
-    });
-    await prisma.blog.deleteMany({
-      where: { authorId: id },
-    });
-    await prisma.bookMark.deleteMany({
-      where: { userId: id },
-    });
-    await prisma.like.deleteMany({
-      where: { userId: id },
-    });
-    await prisma.user.delete({
-      where: { id },
-    });
+    // ===== Delete User =====
+    await prisma.user.delete({ where: { id } });
+
     return NextResponse.json(
       { message: "auth:messages.user_deleted" },
       { status: 200 },
     );
   } catch (error) {
-    console.error(error);
+    console.error("[DELETE /api/user/delete-user]", error);
     return NextResponse.json(
       { message: "common:messages.something_went_wrong" },
       { status: 500 },
     );
   }
-
-  return NextResponse.json({ message: "common:messages.not_implemented" });
 }

@@ -74,19 +74,19 @@ export default function RootLayout({
         <Session>
           <ThemeProvider attribute="class" enableSystem defaultTheme="system">
             <I18nProvider>{children}</I18nProvider>
+            <ToastContainer
+              position="top-center"
+              autoClose={4000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+            <ChatbotUI />
           </ThemeProvider>
-          <ToastContainer
-            position="top-center"
-            autoClose={4000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-          <ChatbotUI />
         </Session>
       </body>
     </html>

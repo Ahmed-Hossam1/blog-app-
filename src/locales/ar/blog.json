@@ -53,6 +53,10 @@
     "liked_success": "تم الإعجاب بالمدونة بنجاح",
     "unliked_success": "تم إلغاء الإعجاب بالمدونة بنجاح",
     "like_failed": "فشل في الإعجاب بالمدونة",
-    "like_self_error": "لا يمكنك الإعجاب بمدونتك الخاصة"
+    "like_self_error": "لا يمكنك الإعجاب بمدونتك الخاصة",
+    "blog_id_required": "معرف المدونة مطلوب",
+    "invalid_status": "حالة المدونة غير صالحة",
+    "comment_deleted": "تم حذف التعليق بنجاح",
+    "comment_delete_failed": "فشل حذف التعليق"
   }
 }
