@@ -3,7 +3,10 @@ type EmailTemplateProps = {
   verificationLink: string;
 };
 
-const ConfirmEmailTemplate = ({ name, verificationLink }: EmailTemplateProps) => {
+const ConfirmEmailTemplate = ({
+  name,
+  verificationLink,
+}: EmailTemplateProps) => {
   return (
     <div
       style={{
@@ -75,19 +78,40 @@ const ConfirmEmailTemplate = ({ name, verificationLink }: EmailTemplateProps) =>
           >
             ⏳ This link will expire in 1 hour.
           </p>
-        </div>
 
-        {/* Footer */}
-        <div
-          style={{
-            textAlign: "center",
-            fontSize: "12px",
-            color: "#aaa",
-            padding: "20px",
-          }}
-        >
-          © 2026 Blogy. All rights reserved.
+          <p
+            style={{
+              marginTop: "10px",
+              fontSize: "12px",
+              color: "#bbb",
+            }}
+          >
+            If the button does not work, copy and paste this link into your
+            browser:
+          </p>
+
+          <p
+            style={{
+              fontSize: "12px",
+              wordBreak: "break-all",
+              color: "#4f46e5",
+            }}
+          >
+            {verificationLink}
+          </p>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "12px",
+          color: "#aaa",
+          padding: "20px",
+        }}
+      >
+        © 2026 Blogy. All rights reserved.
       </div>
     </div>
   );
