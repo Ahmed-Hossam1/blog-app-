@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     // ===== Update User Email (token.email holds the new email) =====
     await prisma.user.update({
       where: { id: userId },
-      data: { email: verificationToken.email, emailVerified: true },
+      data: { email: verificationToken.email, emailVerified: new Date() },
     });
 
     // ===== Delete Token After Use =====

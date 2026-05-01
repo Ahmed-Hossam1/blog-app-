@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.user.update({
       where: { email: verificationToken.email },
-      data: { emailVerified: true },
+      data: { emailVerified: new Date() },
     });
 
     return NextResponse.json(
