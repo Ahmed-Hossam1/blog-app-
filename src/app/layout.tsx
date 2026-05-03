@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     "fullstack",
     "blogging",
   ],
+  
   openGraph: {
     title: "Blog App | Modern Blogging Platform",
     description:

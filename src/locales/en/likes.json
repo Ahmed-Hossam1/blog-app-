@@ -1,0 +1,16 @@
+{
+  "title": "My Liked Blogs",
+  "description": "Blogs that you've liked and enjoyed reading.",
+  "liked_single": "Blog",
+  "liked_plural": "Blogs",
+  "liked_count": "Liked",
+  "empty_title": "No Liked Blogs Yet",
+  "empty_description": "You haven't liked any blogs yet. Explore the latest articles and show some love to the authors!",
+  "explore_button": "Explore Blogs",
+  "messages": {
+    "like_added": "Blog liked successfully",
+    "like_removed": "Like removed successfully",
+    "like_failed": "Failed to like",
+    "like_self_error": "You can't like your own blog"
+  }
+}

@@ -22,36 +22,5 @@
     "title": "No Blogs Yet",
     "description": "Start by creating your first blog post.",
     "button": "Create Blog"
-  },
-  "analytics": {
-    "title": "Analytics",
-    "description": "Data Insights for your Blog",
-    "time_ranges": {
-      "last_7_days": "Last 7 Days",
-      "last_30_days": "Last 30 Days",
-      "last_90_days": "Last 90 Days",
-      "this_year": "This Year"
-    },
-    "stats": {
-      "total_views": "Total Views",
-      "unique_visitors": "Unique Visitors",
-      "avg_time": "Avg Time",
-      "engagement": "Engagement",
-      "last_30_days": "Last 30 Days"
-    },
-    "charts": {
-      "views_over_time": "Views Over Time",
-      "traffic_sources": "Traffic Sources",
-      "traffic_distribution": "Traffic Distribution",
-      "top_categories": "Top Categories",
-      "comments_activity": "Comments Activity",
-      "labels": {
-        "organic": "Organic",
-        "paid": "Paid",
-        "direct": "Direct",
-        "social": "Social",
-        "other": "Other"
-      }
-    }
   }
 }

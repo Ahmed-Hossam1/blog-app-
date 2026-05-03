@@ -1,5 +1,5 @@
 import { INavLinks } from "@/types";
-import { HiOutlineBookmark, HiOutlineChartBar, HiOutlineDocumentText, HiOutlinePencilSquare, HiOutlineSquares2X2 } from "react-icons/hi2";
+import { HiOutlineBookmark, HiOutlineHeart, HiOutlineDocumentText, HiOutlinePencilSquare, HiOutlineSquares2X2 } from "react-icons/hi2";
 import { MdOutlineArticle } from "react-icons/md";
 
 export const navLinksData: INavLinks[] = [
@@ -15,7 +15,7 @@ export const asideLinksData = [
   { name: "editor", icon: HiOutlinePencilSquare, href: "/dashboard/editor" },
   { name: "Draft", icon: HiOutlineDocumentText, href: "/dashboard/draft" },
   { name: "Bookmarks", icon: HiOutlineBookmark, href: "/dashboard/bookmarks" },
-  { name: "Analytics", icon: HiOutlineChartBar, href: "/dashboard/analytics" },
+  { name: "Likes", icon: HiOutlineHeart, href: "/dashboard/likes" },
 ];
 
 export const FOOTER_QUICK_LINKS = [

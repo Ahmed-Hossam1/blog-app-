@@ -22,36 +22,5 @@
     "title": "لا توجد مدونات بعد",
     "description": "ابدأ بإنشاء أول منشور لمدونتك.",
     "button": "إنشاء مدونة"
-  },
-  "analytics": {
-    "title": "التحليلات",
-    "description": "رؤى البيانات لمدونتك",
-    "time_ranges": {
-      "last_7_days": "آخر 7 أيام",
-      "last_30_days": "آخر 30 يومًا",
-      "last_90_days": "آخر 90 يومًا",
-      "this_year": "هذه السنة"
-    },
-    "stats": {
-      "total_views": "إجمالي المشاهدات",
-      "unique_visitors": "الزوار المميزون",
-      "avg_time": "متوسط الوقت",
-      "engagement": "التفاعل",
-      "last_30_days": "آخر 30 يومًا"
-    },
-    "charts": {
-      "views_over_time": "المشاهدات بمرور الوقت",
-      "traffic_sources": "مصادر الزيارات",
-      "traffic_distribution": "توزيع الزيارات",
-      "top_categories": "أفضل الفئات",
-      "comments_activity": "نشاط التعليقات",
-      "labels": {
-        "organic": "بحث طبيعي",
-        "paid": "إعلانات ممولة",
-        "direct": "مباشر",
-        "social": "تواصل اجتماعي",
-        "other": "أخرى"
-      }
-    }
   }
 }
