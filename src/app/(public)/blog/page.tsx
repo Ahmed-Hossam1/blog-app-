@@ -4,7 +4,7 @@ import { getTranslations } from "@/lib/i18n";
 import { getBlogs } from "@/services";
 
 const BlogPage = async () => {
-  const blogs = await getBlogs(); 
+  const blogs = await getBlogs();
   const { listing } = await getTranslations("blog");
   return (
     <SectionWrapper>

@@ -1,11 +1,12 @@
 import AuthorsList from "@/components/AuthorList";
 import SectionWrapper from "@/components/shared/SectionWrapper";
-import SkeletonCard from "@/components/ui/SkeletonCard";
 import { getTranslations } from "@/lib/i18n";
-import { Suspense } from "react";
+import { getAuthors } from "@/services";
 
 const AuthorsPage = async () => {
   const t = await getTranslations("authors");
+  const authors = await getAuthors();
+
   return (
     <SectionWrapper>
       <div className="container mx-auto px-4 py-8">
@@ -17,13 +18,12 @@ const AuthorsPage = async () => {
         </p>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <Suspense fallback={<SkeletonCard numberOfCards={10} />}>
-            <AuthorsList />
-          </Suspense>
+          <AuthorsList authors={authors} />
         </div>
       </div>
     </SectionWrapper>
   );
 };
+
 
 export default AuthorsPage;

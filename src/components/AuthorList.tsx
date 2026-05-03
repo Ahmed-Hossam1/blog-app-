@@ -1,12 +1,37 @@
+"use client";
 import AuthorCard from "@/components/cards/AuthorCard";
-import { getAuthors } from "@/services";
+import { IAuthor } from "@/types";
+import { useState, useEffect, useCallback } from "react";
 
-const AuthorsList = async () => {
-  const authors = await getAuthors();
+const AuthorsList = ({ authors }: { authors: IAuthor[] }) => {
+
+  const [displayCount, setDisplayCount] = useState(8);
+  const [isThrottled, setIsThrottled] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    if (isThrottled) return;
+
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+      document.documentElement.offsetHeight - 100
+    ) {
+      setIsThrottled(true);
+      setDisplayCount((prev) => Math.min(prev + 4, authors.length));
+
+      setTimeout(() => {
+        setIsThrottled(false);
+      }, 500); // 500ms throttle
+    }
+  }, [isThrottled, authors.length]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <>
-      {authors.map((author) => (
+      {authors.slice(0, displayCount).map((author) => (
         <AuthorCard key={author.id} {...author} />
       ))}
     </>
@@ -14,3 +39,4 @@ const AuthorsList = async () => {
 };
 
 export default AuthorsList;
+

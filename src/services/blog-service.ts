@@ -13,10 +13,10 @@ export const getBlogs = async () => {
         },
       },
     },
-    take: 20,
   });
   return blogs;
 };
+
 
 /** Fetches a single blog by its slug, including comments tree and like count */
 export const getBlogBySlug = async (slug: string) => {
