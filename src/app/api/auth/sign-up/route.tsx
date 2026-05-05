@@ -4,18 +4,27 @@ import { generateToken } from "@/lib/token";
 import { render } from "@react-email/render";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../../prisma/prisma";
+import { prisma } from "@/prisma/prisma";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, password } = body;
+    const { name, email: rawEmail, password } = body;
+    const email = rawEmail?.trim().toLowerCase();
 
     if (!name || !email || !password) {
       return NextResponse.json(
         { message: "common:messages.fields_missing" },
         { status: 400 },
       );
+    }
+
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+       console.error("Email configuration is missing");
+       return NextResponse.json(
+         { message: "common:messages.something_went_wrong" },
+         { status: 500 },
+       );
     }
 
     const existingUser = await prisma.user.findUnique({
@@ -31,7 +40,10 @@ export async function POST(req: NextRequest) {
         const verificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/verify-email?token=${verificationToken.token}`;
 
         const html = await render(
-          ConfirmEmailTemplate({ name: existingUser.name, verificationLink }),
+          ConfirmEmailTemplate({ 
+            name: existingUser.name, 
+            verificationLink: verificationLink 
+          })
         );
 
         await transporter.sendMail({
@@ -41,7 +53,6 @@ export async function POST(req: NextRequest) {
           html,
         });
 
-        // update token
         return NextResponse.json(
           { message: "auth:messages.verification_email_resent" },
           { status: 200 },
@@ -74,7 +85,12 @@ export async function POST(req: NextRequest) {
     const verificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/verify-email?token=${verificationToken.token}`;
 
     //   ===== Send Verification Email  =====
-    const html = await render(ConfirmEmailTemplate({ name, verificationLink }));
+    const html = await render(
+      ConfirmEmailTemplate({ 
+        name: name, 
+        verificationLink: verificationLink 
+      })
+    );
 
     await transporter.sendMail({
       from: `"Blogy" <${process.env.EMAIL_USER}>`,
@@ -90,7 +106,7 @@ export async function POST(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.error("[POST /api/auth/sign-up]", error);
+    console.error("[POST /api/auth/sign-up] Error:", error);
     return NextResponse.json(
       { message: "common:messages.something_went_wrong" },
       { status: 500 },

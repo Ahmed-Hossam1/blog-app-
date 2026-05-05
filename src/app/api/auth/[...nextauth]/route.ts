@@ -12,7 +12,7 @@ import bcrypt from "bcryptjs";
  * Explicitly typed with NextAuthOptions to support
  * extending the session type with the user's Prisma `id`.
  */
-export const authOptions: NextAuthOptions = ({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -35,9 +35,13 @@ export const authOptions: NextAuthOptions = ({
         password: { type: "password" },
       },
       async authorize(credentials) {
+        const email = credentials?.email?.trim().toLowerCase();
+        const password = credentials?.password;
+
+        if (!email || !password) return null;
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials?.email,
+            email,
           },
         });
         if (!user) return null;
@@ -49,7 +53,7 @@ export const authOptions: NextAuthOptions = ({
 
         // ===== Compare Hashed Password =====
         const isPasswordValid = await bcrypt.compare(
-          credentials?.password as string,
+          password,
           user.password as string,
         );
 
@@ -61,10 +65,18 @@ export const authOptions: NextAuthOptions = ({
           image: user.image,
         };
       },
-
     }),
-
   ],
+
+  events: {
+    async createUser({ user }) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
+
   // ===== JWT & Session Callbacks =====
   callbacks: {
     async jwt({ token, user }) {
@@ -98,7 +110,7 @@ export const authOptions: NextAuthOptions = ({
   pages: {
     signIn: "/sign-in",
   },
-});
+};
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

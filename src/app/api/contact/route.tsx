@@ -15,13 +15,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const html = await render(
-      ContactEmailTemplate({
-        name,
-        email,
-        message,
-      }),
-    );
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error("Email configuration is missing");
+      return NextResponse.json(
+        { message: "common:messages.something_went_wrong" },
+        { status: 500 },
+      );
+    }
+
+      const html = await render(
+        ContactEmailTemplate({
+          name: name,
+          email: email,
+          message: message,
+        })
+      );
+  
 
     await transporter.sendMail({
       from: `"Blogy Contact" <${process.env.EMAIL_USER}>`,
@@ -36,7 +45,7 @@ export async function POST(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.error("Contact Form Error:", error);
+    console.error("[POST /api/contact] Error:", error);
     return NextResponse.json(
       { message: "common:messages.something_went_wrong" },
       { status: 500 },

@@ -38,10 +38,7 @@ export async function POST(req: NextRequest) {
     // ===== Delete Token & Verify User Email =====
     await prisma.verificationToken.delete({
       where: {
-        email_token: {
-          token: verificationToken.token,
-          email: verificationToken.email,
-        },
+        token: verificationToken.token,
       },
     });
 
