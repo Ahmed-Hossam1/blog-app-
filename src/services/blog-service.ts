@@ -89,4 +89,69 @@ export const getDraftBlogs = async (authorId: string) => {
   });
   return blogs;
 };
+// get Dashboard Data (Aggregation)
+export const getDashboardData = async (authorId: string) => {
+  if (!authorId) return;
 
+  // 1. Get Aggregate stats
+  const stats = await prisma.blog.aggregate({
+    where: { authorId },
+    _sum: {
+      views: true,
+      likesCount: true,
+      commentsCount: true,
+    },
+    _count: {
+      id: true,
+    },
+  });
+
+  // 2. Get Performance data (blogs per month)
+  const blogsDates = await prisma.blog.findMany({
+    where: { authorId },
+    select: { createdAt: true },
+    orderBy: { createdAt: "asc" },
+  });
+
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // Group by month
+  const performanceMap = blogsDates.reduce((acc, blog) => {
+    const date = new Date(blog.createdAt);
+    const month = monthNames[date.getMonth()];
+    acc[month] = (acc[month] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Last 6 months for the chart
+  const currentMonth = new Date().getMonth();
+  const last6Months = [];
+  for (let i = 5; i >= 0; i--) {
+    const index = (currentMonth - i + 12) % 12;
+    last6Months.push({
+      name: monthNames[index],
+      blogs: performanceMap[monthNames[index]] || 0,
+    });
+  }
+
+  return {
+    blogs: stats._count.id,
+    views: stats._sum.views || 0,
+    likes: stats._sum.likesCount || 0,
+    comments: stats._sum.commentsCount || 0,
+    performanceData: last6Months,
+  };
+};

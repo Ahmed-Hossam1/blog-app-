@@ -6,14 +6,11 @@ import SectionWrapper from "@/components/shared/SectionWrapper";
 import Table from "@/components/shared/Table";
 import DashboardHeadingTitle from "@/components/ui/HeadingTitle";
 import { tableHeaders } from "@/constants";
-import {
-  MOCK_PERFORMANCE_DATA,
-  MOCK_STATS_CONFIG,
-} from "@/data/mock/dashboard";
-import { calculators, computeStatValues } from "@/lib/helpers";
-import { getAuthorBlogs } from "@/services";
-import { getServerSession } from "next-auth";
+import { MOCK_STATS_CONFIG } from "@/data/mock/dashboard";
 import { getTranslations } from "@/lib/i18n";
+import { getAuthorBlogs, getDashboardData } from "@/services";
+import { IDashboardData, IDashboardStats } from "@/types";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 const OverView = async () => {
   const t = await getTranslations("dashboard");
@@ -21,9 +18,16 @@ const OverView = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
+  const dashboardData = (await getDashboardData(
+    user?.id as string,
+  )) as IDashboardData;
   const authorBlogs = (await getAuthorBlogs(user?.id as string)) || [];
 
-  const stats = computeStatValues(authorBlogs, MOCK_STATS_CONFIG, calculators);
+  const stats = MOCK_STATS_CONFIG.map((stat) => ({
+    ...stat,
+    value: dashboardData[stat.key as keyof IDashboardStats] || 0,
+  }));
+  const performanceData = dashboardData?.performanceData || [];
   const slicedData = authorBlogs.slice(0, 7);
 
   return (
@@ -52,7 +56,7 @@ const OverView = async () => {
         {/* Row 2 - Left: Performance Chart */}
         <div className="lg:col-span-2">
           <Charts
-            data={MOCK_PERFORMANCE_DATA}
+            data={performanceData}
             title={t.performance.title}
             description={t.performance.description}
           />
@@ -61,7 +65,7 @@ const OverView = async () => {
         {/* Row 2 - Right: Top Posts */}
         <div className="lg:col-span-1">
           <TopBlogs
-            data={authorBlogs}
+            session={session}
             title={t.top_blogs.title}
             emptyMessage={t.top_blogs.empty}
           />
@@ -76,7 +80,10 @@ const OverView = async () => {
               {slicedData.length > 0 ? (
                 <Table
                   tableTitle={t.recent_blogs}
-                  tableHeader={tableHeaders.map((header) => tCommon.table.table_headers[header.toLowerCase()])}
+                  tableHeader={tableHeaders.map(
+                    (header) =>
+                      tCommon.table.table_headers[header.toLowerCase()],
+                  )}
                   tableBody={slicedData}
                 />
               ) : (

@@ -133,3 +133,19 @@ export interface StatItem<T> {
   icon: IconType;
   color: string;
 }
+
+export interface IPerformanceData {
+  name: string;
+  blogs: number;
+}
+
+export interface IDashboardStats {
+  blogs: number;
+  views: number;
+  likes: number;
+  comments: number;
+}
+
+export interface IDashboardData extends IDashboardStats {
+  performanceData: IPerformanceData[];
+}
