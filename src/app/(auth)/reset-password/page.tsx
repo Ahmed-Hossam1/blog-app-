@@ -1,16 +1,14 @@
 "use client";
 
-import ErrorMessage from "@/components/shared/ErrorMessage";
 import Button from "@/components/ui/Button";
-import MyInput from "@/components/ui/Input";
+import Input from "@/components/ui/Input";
 import { getResetPasswordSchema } from "@/schema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useTheme } from "next-themes";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FiLayers, FiLock, FiArrowLeft } from "react-icons/fi";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -19,8 +17,7 @@ type ResetPasswordForm = yup.InferType<ReturnType<typeof getResetPasswordSchema>
 
 const ResetPasswordPage = () => {
   const { t } = useTranslation("auth");
-  const token  = useSearchParams().get("token");
-  const { theme } = useTheme();
+  const token = useSearchParams().get("token");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -32,16 +29,14 @@ const ResetPasswordPage = () => {
     resolver: yupResolver(getResetPasswordSchema(t)),
   });
 
-  const handleResetPassword: SubmitHandler<ResetPasswordForm> = async (
-    data,
-  ) => {
+  const handleResetPassword: SubmitHandler<ResetPasswordForm> = async (data) => {
     try {
       setIsLoading(true);
       const req = await fetch("/api/auth/reset-password", {
         method: "POST",
         body: JSON.stringify({ 
           token,
-          password : data.password
+          password: data.password
         }),
       });
       const res = await req.json();
@@ -59,31 +54,20 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-surface-secondary transition-colors duration-300">
-      <div className="bg-white shadow-md rounded-xl py-12 px-6 sm:px-16 w-full max-w-md text-center dark:bg-surface transition-colors duration-300">
-        {theme === "light" ? (
-          <Image
-            src="/Light-Logo.png"
-            alt="logo"
-            width={150}
-            height={40}
-            className="mx-auto mb-8"
-          />
-        ) : (
-          <Image
-            src="/Dark-Logo.png"
-            alt="logo"
-            width={150}
-            height={40}
-            className="mx-auto mb-8 mix-blend-screen"
-          />
-        )}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-surface-secondary px-4 transition-colors duration-300">
+      <div className="bg-surface shadow-xl border border-border rounded-2xl py-10 px-8 sm:px-12 w-full max-w-md text-start transition-colors duration-300">
+        
+        {/* Layer Stack Icon Box */}
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-primary mx-auto mb-4 ring-8 ring-blue-50/50 dark:ring-blue-950/20 transition-all duration-300">
+          <FiLayers size={22} />
+        </div>
+
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-extrabold text-text mb-2">
             {t("resetPassword.title")}
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-             {t("resetPassword.description")}
+          <p className="text-xs text-text-secondary font-medium max-w-sm mx-auto">
+            {t("resetPassword.description")}
           </p>
         </div>
 
@@ -91,74 +75,46 @@ const ResetPasswordPage = () => {
           className="flex flex-col space-y-4 text-left"
           onSubmit={handleSubmit(handleResetPassword)}
         >
-          <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              {t("resetPassword.newPasswordLabel")}
-            </label>
-            <div className="relative">
-              <MyInput
-                id="password"
-                type="password"
-                {...register("password")}
-                placeholder={t("resetPassword.newPasswordPlaceholder")}
-                className="w-full pl-3 rounded-md border p-3 text-sm"
-              />
-            </div>
-            {errors?.password && <ErrorMessage msg={errors.password.message} />}
-          </div>
+          <Input
+            id="password"
+            type="password"
+            label={t("resetPassword.newPasswordLabel")}
+            leftIcon={<FiLock size={16} className="text-text-secondary" />}
+            placeholder={t("resetPassword.newPasswordPlaceholder")}
+            variant="filled"
+            errorText={errors.password?.message}
+            {...register("password")}
+          />
 
-          <div className="space-y-2">
-            <label
-              htmlFor="confirmPassword"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              {t("resetPassword.confirmPasswordLabel")}
-            </label>
-            <div className="relative">
-              <MyInput
-                id="confirmPassword"
-                type="password"
-                {...register("confirmPassword")}
-                placeholder={t("resetPassword.confirmPasswordPlaceholder")}
-                className="w-full pl-3 rounded-md border p-3 text-sm"
-              />
-            </div>
-            {errors?.confirmPassword && (
-              <ErrorMessage msg={errors.confirmPassword.message} />
-            )}
-          </div>
+          <Input
+            id="confirmPassword"
+            type="password"
+            label={t("resetPassword.confirmPasswordLabel")}
+            leftIcon={<FiLock size={16} className="text-text-secondary" />}
+            placeholder={t("resetPassword.confirmPasswordPlaceholder")}
+            variant="filled"
+            errorText={errors.confirmPassword?.message}
+            {...register("confirmPassword")}
+          />
 
           <Button
             type="submit"
+            variant="primary"
             isLoading={isLoading}
             disabled={isLoading}
-            loadingText={t("resetPassword.submitting")}
-            className="w-full bg-baseInk hover:bg-black transition text-white py-2.5 mt-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+            size="lg"
+            fullWidth
+            className="mt-2"
           >
             {t("resetPassword.submit")}
           </Button>
 
-          <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-8 text-center">
             <Link
               href="/sign-in"
-              className="hover:underline flex items-center justify-center gap-2 group"
+              className="hover:underline flex items-center justify-center gap-2 group text-xs font-semibold text-text-secondary hover:text-text transition-colors duration-200"
             >
-              <svg
-                className="w-4 h-4 transition-transform group-hover:-translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
+              <FiArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               <span>{t("resetPassword.backToSignIn")}</span>
             </Link>
           </div>
@@ -167,6 +123,5 @@ const ResetPasswordPage = () => {
     </div>
   );
 };
-
 
 export default ResetPasswordPage;

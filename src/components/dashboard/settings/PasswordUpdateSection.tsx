@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import { FiLock } from "react-icons/fi";
-import MyInput from "@/components/ui/Input";
+import Input from "@/components/ui/Input";
 
 interface PasswordUpdateSectionProps {
   userId: string;
@@ -91,54 +91,33 @@ export default function PasswordUpdateSection({
       onSubmit={handleSubmit(updatePassword)}
       className="space-y-3 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800"
     >
-      <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-500">
-          {t("account.password.currentLabel")}
-        </label>
-        <MyInput
-          type="password"
-          placeholder={t("account.password.currentPlaceholder")}
-          {...register("oldPassword")}
-          className={errors.oldPassword ? "border-red-500" : ""}
-        />
-        {errors.oldPassword && (
-          <p className="text-red-500 text-xs mt-0.5 font-medium">
-            {errors.oldPassword.message}
-          </p>
-        )}
-      </div>
-      <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-500">
-          {t("account.password.newLabel")}
-        </label>
-        <MyInput
-          type="password"
-          placeholder={t("account.password.newPlaceholder")}
-          {...register("newPassword")}
-          className={errors.newPassword ? "border-red-500" : ""}
-        />
-        {errors.newPassword && (
-          <p className="text-red-500 text-xs mt-0.5 font-medium">
-            {errors.newPassword.message}
-          </p>
-        )}
-      </div>
-      <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-500">
-          {t("account.password.confirmLabel")}
-        </label>
-        <MyInput
-          type="password"
-          placeholder={t("account.password.confirmPlaceholder")}
-          {...register("confirmPassword")}
-          className={errors.confirmPassword ? "border-red-500" : ""}
-        />
-        {errors.confirmPassword && (
-          <p className="text-red-500 text-xs mt-0.5 font-medium">
-            {errors.confirmPassword.message}
-          </p>
-        )}
-      </div>
+      <Input
+        type="password"
+        label={t("account.password.currentLabel")}
+        placeholder={t("account.password.currentPlaceholder")}
+        {...register("oldPassword")}
+        errorText={errors.oldPassword?.message}
+        variant="outline"
+        fullWidth
+      />
+      <Input
+        type="password"
+        label={t("account.password.newLabel")}
+        placeholder={t("account.password.newPlaceholder")}
+        {...register("newPassword")}
+        errorText={errors.newPassword?.message}
+        variant="outline"
+        fullWidth
+      />
+      <Input
+        type="password"
+        label={t("account.password.confirmLabel")}
+        placeholder={t("account.password.confirmPlaceholder")}
+        {...register("confirmPassword")}
+        errorText={errors.confirmPassword?.message}
+        variant="outline"
+        fullWidth
+      />
       <div className="flex gap-2 pt-2">
         <Button
           type="button"

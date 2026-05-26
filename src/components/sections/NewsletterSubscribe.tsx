@@ -1,7 +1,7 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import SectionWrapper from "../shared/SectionWrapper";
-import MyInput from "../ui/Input";
+import Input from "../ui/Input";
 import Button from "../ui/Button";
 
 const NewsletterSubscribe = () => {
@@ -23,13 +23,15 @@ const NewsletterSubscribe = () => {
             </div>
 
             {/* Input + Button */}
-            <div className="flex h-12 w-full max-w-md items-center overflow-hidden rounded-sm bg-white shadow-md dark:bg-gray-800 dark:border dark:border-gray-700">
-              <MyInput
+            <div className="flex h-12 w-full max-w-md items-center overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800 dark:border dark:border-gray-700">
+              <Input
                 id="newsletter-email"
                 name="email"
                 type="email"
                 placeholder={t("newsletter.placeholder")}
-                className="h-full flex-1 py-1.5"
+                variant="ghost"
+                rounded="none"
+                className="h-full flex-1 border-0 ring-0 focus-within:ring-0"
               />
               <Button
                 variant="primary"

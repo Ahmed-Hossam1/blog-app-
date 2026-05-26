@@ -10,7 +10,7 @@ import {
 } from "react-hook-form";
 import { FiUploadCloud } from "react-icons/fi";
 import Button from "../ui/Button";
-import MyInput from "../ui/Input";
+import Input from "../ui/Input";
 import ErrorMessage from "./ErrorMessage";
 
 import { TOOLBAR_BUTTONS } from "@/constants";
@@ -130,7 +130,7 @@ const FormField = <T extends FieldValues>({
                   </div>
                 </div>
               )}
-              <MyInput
+              <Input
                 id={input.id}
                 type="file"
                 className="hidden"
@@ -165,13 +165,14 @@ const FormField = <T extends FieldValues>({
             </select>
           ) : (
             /* ───────── DEFAULT INPUT ───────── */
-            <MyInput
+            <Input
               id={input.id}
               type={input.type}
               disabled={disabled}
               {...register(input.name)}
               placeholder={input.placeholder}
-              className="w-full rounded-md border p-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              variant="outline"
+              fullWidth
             />
           )}
 

@@ -302,28 +302,26 @@ export default function Editor() {
 
       <div className="mt-8 flex flex-wrap items-center justify-end gap-3">
         <Button
+          variant="outline"
           onClick={handleSaveDraft}
           isLoading={isSavingDraft}
           disabled={isSavingDraft || isLoading}
           loadingText={t("actions.saving")}
-          className="border border-gray-300 px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
         >
           {t("actions.saveDraft")}
         </Button>
         <Button
-          bgColor="bg-primary hover:bg-primary/90"
-          className="px-5 py-2.5 text-sm text-white"
+          variant="primary"
           onClick={() => setPreviewContent(!previewContent)}
         >
           {previewContent ? t("preview.back") : t("actions.preview")}
         </Button>
         <Button
+          variant="success"
           onClick={handleSubmit(handlePublish)}
-          bgColor="bg-primary hover:bg-primary/90"
           isLoading={isLoading}
           disabled={isLoading || isSavingDraft}
           loadingText={t("actions.publishing")}
-          className="px-5 py-2.5 text-sm text-white"
         >
           {t("actions.publish")}
         </Button>

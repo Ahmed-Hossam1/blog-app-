@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import MyInput from "@/components/ui/Input";
+import Input from "@/components/ui/Input";
 import { getUpdateEmailSchema } from "@/schema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
@@ -79,18 +79,15 @@ export default function EmailUpdateSection({
       </div>
 
       <form onSubmit={handleSubmit(updateEmail)} className="space-y-2">
-        <MyInput
+        <Input
           type="email"
           placeholder={t("account.email.placeholder")}
           disabled={!isEditing}
           {...register("email")}
-          className={`disabled:opacity-50 disabled:cursor-not-allowed ${
-            errors.email ? "border-red-500" : ""
-          }`}
+          errorText={errors.email?.message}
+          variant="outline"
+          fullWidth
         />
-        {errors.email && (
-          <p className="text-red-500 text-xs mt-1 font-medium">{errors.email.message}</p>
-        )}
         {isEditing && (
           <div className="flex gap-2">
             <Button

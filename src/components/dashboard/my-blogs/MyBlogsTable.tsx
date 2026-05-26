@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import Pagination from "@/components/shared/Pagination";
 import Tab from "@/components/shared/Tab";
-import MyInput from "@/components/ui/Input";
+import Input from "@/components/ui/Input";
 import MyModal from "@/components/ui/MyModal";
 
 import { DashboardTabsData, tableHeaders } from "@/constants";
@@ -189,11 +189,12 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
 
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="w-full lg:max-w-md">
-            <MyInput
+            <Input
               placeholder={t("search.placeholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="border-zinc-200 bg-zinc-50 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-800"
+              variant="filled"
+              fullWidth
             />
           </div>
 
