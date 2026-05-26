@@ -8,7 +8,7 @@ import ExploreCard from "../cards/ExploreCard";
 const PaginatedBlogs = ({ blogs }: { blogs: IBlog[] }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const limit = 9;
+  const limit = 20;
   const totalPages = Math.ceil(blogs.length / limit);
   const firstIndex = (currentPage - 1) * limit;
   const lastIndex = firstIndex + limit;
