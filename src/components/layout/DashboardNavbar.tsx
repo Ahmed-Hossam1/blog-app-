@@ -23,7 +23,9 @@ export default function DashboardNavbar() {
           {/* Mobile Menu Toggle */}
           <Button
             onClick={openSidebar}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
           >
             <FiMenu size={20} />
           </Button>
@@ -39,7 +41,8 @@ export default function DashboardNavbar() {
           {/* Theme Toggle */}
           <Button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition shadow-sm border border-zinc-200 dark:border-gray-700"
+            variant="outline"
+            size="icon"
           >
             {theme === "light" ? (
               <MdOutlineDarkMode size={20} />

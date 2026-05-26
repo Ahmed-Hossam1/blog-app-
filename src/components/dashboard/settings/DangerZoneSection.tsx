@@ -63,19 +63,18 @@ export default function DangerZoneSection({ userId }: DangerZoneSectionProps) {
           <div className="mt-4 flex justify-end gap-3">
             <Button
               type="button"
+              variant="outline"
               onClick={closeDeleteModal}
               disabled={loading}
-              className="border border-transparent bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700"
             >
               {t("dangerZone.delete_modal.cancel_button")}
             </Button>
 
             <Button
               type="button"
+              variant="danger"
               onClick={() => handleDelete(userId)}
               isLoading={loading}
-              loadingText={t("dangerZone.delete_modal.deleting_text")}
-              className="overflow-hidden bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-rose-600"
             >
               {t("dangerZone.delete_modal.delete_button")}
             </Button>
@@ -91,9 +90,9 @@ export default function DangerZoneSection({ userId }: DangerZoneSectionProps) {
         {t("dangerZone.description")}
       </p>
       <Button
+        variant="danger"
         onClick={openDeleteModal}
         isLoading={loading}
-        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors duration-200 shadow-lg shadow-red-500/20 active:scale-95"
       >
         {t("dangerZone.deleteButton")}
       </Button>

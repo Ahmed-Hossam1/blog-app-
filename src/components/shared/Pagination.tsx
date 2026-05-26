@@ -39,12 +39,8 @@ const Pagination = ({
       <Button
         onClick={handlePrevious}
         disabled={isFirstPage}
-        className="
-          px-3 py-2 text-sm font-medium text-gray-600
-          hover:text-black transition
-          disabled:text-gray-300 disabled:cursor-not-allowed
-          dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
-        "
+        variant="ghost"
+        size="sm"
       >
         {i18n.language === "ar" ? "←" : "←"} {t("pagination.prev")}
       </Button>
@@ -63,12 +59,8 @@ const Pagination = ({
       <Button
         onClick={handleNext}
         disabled={isLastPage}
-        className="
-          px-3 py-2 text-sm font-medium text-gray-600
-          hover:text-black transition
-          disabled:text-gray-300 disabled:cursor-not-allowed
-          dark:text-gray-400 dark:hover:text-white dark:disabled:text-gray-600
-        "
+        variant="ghost"
+        size="sm"
       >
         {t("pagination.next")} {i18n.language === "ar" ? "→" : "→"}
       </Button>

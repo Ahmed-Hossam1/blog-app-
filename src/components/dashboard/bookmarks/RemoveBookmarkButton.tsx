@@ -43,9 +43,12 @@ const RemoveBookmarkButton = ({ blogId }: RemoveBookmarkButtonProps) => {
 
   return (
     <Button
+      variant="outline"
+      size="icon"
+      rounded="full"
       onClick={removeBookmark}
       disabled={isLoading}
-      className={`p-2 bg-white/80 dark:bg-black/60 backdrop-blur-md rounded-full text-indigo-600 dark:text-indigo-400 hover:bg-white dark:hover:bg-black hover:text-indigo-700 dark:hover:text-indigo-300 hover:scale-110 shadow-lg border border-white/20 dark:border-white/10 `}
+      className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 hover:scale-110 shadow-md backdrop-blur-sm"
     >
       <FaBookmark size={16} />
     </Button>

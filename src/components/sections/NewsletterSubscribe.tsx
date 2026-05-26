@@ -31,7 +31,10 @@ const NewsletterSubscribe = () => {
                 placeholder={t("newsletter.placeholder")}
                 className="h-full flex-1 py-1.5"
               />
-              <Button className="whitespace-nowrap bg-primary px-9 py-5 text-sm font-medium text-white transition hover:bg-blue-800">
+              <Button
+                variant="primary"
+                className="h-full rounded-l-none whitespace-nowrap shadow-none border-0 px-9 active:scale-100"
+              >
                 {t("newsletter.subscribe")}
               </Button>
             </div>

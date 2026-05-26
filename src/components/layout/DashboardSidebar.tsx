@@ -39,7 +39,9 @@ export default function DashboardSidebar() {
         {/* Close button for mobile */}
         <Button
           onClick={closeSidebar}
-          className="absolute right-4 top-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden transition"
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4 lg:hidden"
         >
           <FiX size={20} />
         </Button>
@@ -105,7 +107,11 @@ export default function DashboardSidebar() {
             {t("aside.settings")}
           </Link>
 
-          <Button onClick={()=> signOut() } className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 dark:text-red-400 transition-all duration-200 hover:bg-red-50 dark:hover:bg-red-500/10">
+          <Button
+            variant="ghost"
+            onClick={()=> signOut() }
+            className="flex w-full items-center gap-3 justify-start rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 transition-all duration-200"
+          >
             <FiLogOut size={20} />
             {t("aside.logout")}
           </Button>

@@ -79,19 +79,18 @@ const RecursiveComment = ({
         <div className="mt-6 flex justify-end gap-3">
           <Button
             type="button"
+            variant="outline"
             onClick={closeDeleteModal}
             disabled={isLoading}
-            className="border border-transparent bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700"
           >
             {t("comments.cancel")}
           </Button>
 
           <Button
             type="button"
+            variant="danger"
             onClick={() => deleteComment(id, blogId)}
             isLoading={isLoading}
-            loadingText={t("comments.deleting")}
-            className="overflow-hidden bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-rose-600"
           >
             {t("comments.delete")}
           </Button>
@@ -151,8 +150,10 @@ const RecursiveComment = ({
                 <div className="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity">
                   <Button
                     type="button"
+                    variant="outline"
+                    size="sm"
                     onClick={() => handleCommentReply(id, authorName)}
-                    className="flex items-center gap-1.5 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 hover:text-indigo-600 dark:hover:text-indigo-400 border border-transparent hover:border-indigo-100 dark:hover:border-indigo-500/30"
+                    className="flex items-center gap-1.5 rounded-xl text-xs font-bold"
                   >
                     <FaReply size={13} />
                     <span className="hidden sm:inline">
@@ -162,8 +163,10 @@ const RecursiveComment = ({
 
                   {userId === authorId && (
                     <Button
+                      variant="outline"
+                      size="icon"
                       onClick={() => showDeleteModal()}
-                      className="flex items-center justify-center bg-zinc-50 dark:bg-zinc-800/60 hover:bg-red-50 dark:hover:bg-red-500/10 text-zinc-400 hover:text-red-500 h-7.5 w-7.5 rounded-xl transition-all duration-200 border border-transparent hover:border-red-100 dark:hover:border-red-500/30"
+                      className="h-8 w-8 rounded-xl text-zinc-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-50 dark:hover:bg-red-950/30"
                     >
                       <FaTrash size={12} />
                     </Button>

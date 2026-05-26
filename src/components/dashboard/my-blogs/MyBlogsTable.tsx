@@ -155,19 +155,18 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
           <div className="mt-4 flex justify-end gap-3">
             <Button
               type="button"
+              variant="outline"
               onClick={closeDeleteModal}
               disabled={isLoading}
-              className="border border-transparent bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700"
             >
               {t("table.delete_modal.cancel_button")}
             </Button>
 
             <Button
               type="button"
+              variant="danger"
               onClick={() => deleteBlogs(selectedIds)}
               isLoading={isLoading}
-              loadingText={t("table.delete_modal.deleting_text")}
-              className="overflow-hidden bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-rose-600"
             >
               {t("table.delete_modal.delete_button")}
             </Button>
@@ -205,22 +204,22 @@ const MyBlogsTable = ({ authorBlogs }: { authorBlogs: IBlog[] }) => {
               }`}
           >
             <Button
+              variant="success"
               onClick={() => updateBlogStatus(selectedIds, "PUBLISHED")}
-              className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-600"
             >
               {t("table.publish_button")}
             </Button>
 
             <Button
+              variant="outline"
               onClick={() => updateBlogStatus(selectedIds, "DRAFT")}
-              className="rounded-lg bg-zinc-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-zinc-600"
             >
               {t("table.draft_button")}
             </Button>
 
             <Button
+              variant="danger"
               onClick={openDeleteModal}
-              className="rounded-lg bg-rose-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-rose-600"
             >
               {t("table.delete_action_button")}
             </Button>

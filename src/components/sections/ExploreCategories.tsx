@@ -83,11 +83,11 @@ const ExploreCategories = ({
               {t("explore.noArticles")}
             </p>
           ) : (
-            <Link href="/blog">
-              <Button className="border px-6 py-3 text-sm font-medium hover:bg-baseInk hover:text-white transition duration-500 dark:text-white dark:hover:bg-white dark:hover:text-black">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/blog">
                 {t("explore.exploreAllBlogs")}
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           )}
         </motion.div>
       </div>

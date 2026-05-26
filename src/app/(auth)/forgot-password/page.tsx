@@ -100,10 +100,10 @@ const ForgotPasswordPage = () => {
 
           <Button
             type="submit"
+            variant="primary"
             isLoading={isLoading}
-            disabled={isLoading}
-            loadingText={t("forgotPassword.submitting")}
-            className="w-full bg-baseInk hover:bg-black transition text-white py-2.5 mt-2 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+            fullWidth
+            className="mt-2"
           >
             {t("forgotPassword.submit")}
           </Button>

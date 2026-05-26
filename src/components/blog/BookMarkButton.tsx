@@ -52,9 +52,11 @@ const BookMarkButton = ({
 
   return (
     <Button
+      variant="outline"
+      rounded="full"
       onClick={addToBookmark}
       disabled={isLoading}
-      className={` flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-black/60 backdrop-blur-md rounded-full text-indigo-600 dark:text-indigo-400 hover:bg-white dark:hover:bg-black hover:text-indigo-700 dark:hover:text-indigo-300 hover:scale-105 transition-all shadow-md border border-gray-200 dark:border-white/10 `}
+      className="flex items-center gap-2 px-4 py-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 hover:scale-105 shadow-md backdrop-blur-sm"
     >
       {isBookmarked ? <FaBookmark size={16} /> : <FaRegBookmark size={16} />}{" "}
       {bookmarkNumber}

@@ -42,9 +42,12 @@ const RemoveLikeButton = ({ blogId }: RemoveLikeButtonProps) => {
 
   return (
     <Button
+      variant="outline"
+      size="icon"
+      rounded="full"
       onClick={removeLike}
       disabled={isLoading}
-      className={`p-2 bg-white/80 dark:bg-black/60 backdrop-blur-md rounded-full text-red-600 dark:text-red-400 hover:bg-white dark:hover:bg-black hover:text-red-700 dark:hover:text-red-300 hover:scale-110 shadow-lg border border-white/20 dark:border-white/10 `}
+      className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:scale-110 shadow-md backdrop-blur-sm"
     >
       <FaHeart size={16} />
     </Button>

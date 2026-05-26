@@ -65,14 +65,16 @@ export default function EmailUpdateSection({
           {t("account.email.label")}
         </label>
         {!isEditing && (
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="sm"
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
+            className="flex items-center gap-1.5"
           >
             <FiEdit2 size={14} />
             <span>{t("profile.editButton")}</span>
-          </button>
+          </Button>
         )}
       </div>
 
@@ -93,18 +95,20 @@ export default function EmailUpdateSection({
           <div className="flex gap-2">
             <Button
               type="button"
+              variant="outline"
               onClick={() => {
                 reset();
                 setIsEditing(false);
               }}
-              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium transition active:scale-95"
+              className="flex-1"
             >
               {t("profile.cancelButton")}
             </Button>
             <Button
               type="submit"
+              variant="primary"
               isLoading={loading}
-              className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition active:scale-95"
+              className="flex-1"
             >
               {t("account.email.updateButton")}
             </Button>

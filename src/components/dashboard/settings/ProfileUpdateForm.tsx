@@ -87,8 +87,10 @@ export default function ProfileUpdateForm({
         {!isEditing && (
           <Button
             type="button"
+            variant="outline"
+            size="sm"
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors py-1 px-3 rounded-lg border border-primary/20 hover:bg-primary/5"
+            className="flex items-center gap-2"
           >
             <FiEdit2 size={16} />
             <span>{t("profile.editButton")}</span>
@@ -112,18 +114,18 @@ export default function ProfileUpdateForm({
           <div className="md:col-span-2 flex justify-end gap-3 pt-4 border-t border-gray-100 dark:border-gray-800 mt-4">
             <Button
               type="button"
+              variant="outline"
               onClick={() => {
                 reset();
                 setIsEditing(false);
               }}
-              className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition"
             >
               {t("profile.cancelButton")}
             </Button>
             <Button
               type="submit"
+              variant="primary"
               isLoading={loading}
-              className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95"
             >
               {t("profile.saveButton")}
             </Button>

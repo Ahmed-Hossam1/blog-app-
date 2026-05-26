@@ -173,11 +173,11 @@ const Page = () => {
                 errors={errors}
               />
               <Button
-                disabled={isLoading}
+                variant="primary"
                 isLoading={isLoading}
                 loadingText={t("sending")}
-                bgColor="bg-primary hover:bg-blue-800 text-white"
-                className="w-full py-3 font-semibold"
+                fullWidth
+                className="py-3 font-semibold"
               >
                 {t("sendMessage")}
               </Button>

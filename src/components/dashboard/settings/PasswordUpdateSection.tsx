@@ -76,7 +76,9 @@ export default function PasswordUpdateSection({
         </label>
         <Button
           onClick={() => setShowForm(true)}
-          className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 flex items-center gap-2 w-full justify-center transition hover:bg-gray-200 dark:hover:bg-gray-700 active:scale-95"
+          variant="outline"
+          fullWidth
+          className="flex items-center gap-2 justify-center"
         >
           <FiLock size={16} /> {t("account.password.updateButton")}
         </Button>
@@ -140,18 +142,20 @@ export default function PasswordUpdateSection({
       <div className="flex gap-2 pt-2">
         <Button
           type="button"
+          variant="outline"
           onClick={() => {
             setShowForm(false);
             reset();
           }}
-          className="flex-1 bg-white dark:bg-surfaceDark border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm transition active:scale-95"
+          className="flex-1"
         >
           {t("profile.cancelButton")}
         </Button>
         <Button
           type="submit"
+          variant="primary"
           isLoading={loading}
-          className="flex-1 bg-primary text-white px-4 py-2 rounded-lg text-sm shadow-md transition active:scale-95 font-bold"
+          className="flex-1"
         >
           {t("profile.saveButton")}
         </Button>

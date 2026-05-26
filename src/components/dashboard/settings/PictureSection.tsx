@@ -88,17 +88,20 @@ const PictureSection = ({ initialImage }: IProps) => {
           <div className="flex items-center gap-2">
             <Button
               type="button"
+              variant="outline"
+              size="sm"
               onClick={handleCancel}
               disabled={isLoading}
-              className="px-4 py-1.5 flex items-center gap-1.5 text-xs font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
+              className="flex items-center gap-1.5"
             >
               <FiX size={14} /> {t("profile.cancelButton")}
             </Button>
             
             <Button
               type="submit"
+              variant="primary"
+              size="sm"
               isLoading={isLoading}
-              className="px-4 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all  active:scale-95"
             >
               {t("profile.saveButton")}
             </Button>

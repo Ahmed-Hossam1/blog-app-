@@ -13,6 +13,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineCancel, MdOutlineDarkMode } from "react-icons/md";
 import LanguageMenu from "../LanguageMenu";
 import Button from "../ui/Button";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   /* ==== State ==== */
@@ -20,7 +21,8 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
-  const { t , i18n } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
+  const pathName = usePathname()
 
   useEffect(() => {
     async function fetchUser() {
@@ -53,15 +55,20 @@ const Navbar = () => {
     );
   };
 
-  const renderDesktopLinks = navLinksData.map((link) => (
-    <Link
-      key={link.id}
-      className="cursor-pointer capitalize text-sm font-medium transition hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
-      href={link.to}
-    >
-      {t(`navbar.${link.name.toLowerCase()}`)}
-    </Link>
-  ));
+  const renderDesktopLinks = navLinksData.map((link) => {
+    const isActive = pathName.toLowerCase() === link.to.toLowerCase()
+    return (
+      <Link
+        key={link.id}
+        className={`${isActive ? "text-blue-500" : ""} cursor-pointer capitalize text-sm font-medium transition hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400`}
+        href={link.to}
+      >
+        {t(`navbar.${link.name.toLowerCase()}`)}
+      </Link>
+    )
+  })
+
+
 
   const renderMobileLinks = navLinksData.map((link) => (
     <Link
@@ -125,19 +132,26 @@ const Navbar = () => {
 
           {user === null && (
             <div className="mt-6 flex flex-col gap-2 border-t border-gray-100 pt-6 dark:border-gray-800">
-              <Link href={"/sign-in"} onClick={closeMenu}>
-                <Button className="w-full capitalize border py-2 transition hover:bg-black hover:text-white">
+              <Button
+                asChild
+                variant="outline"
+                fullWidth
+                className="capitalize"
+              >
+                <Link href={"/sign-in"} onClick={closeMenu}>
                   {t("navbar.signIn")}
-                </Button>
-              </Link>
-              <Link href={"/sign-up"} onClick={closeMenu}>
-                <Button
-                  bgColor="bg-black"
-                  className="w-full capitalize py-2 font-medium text-white"
-                >
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="primary"
+                fullWidth
+                className="capitalize"
+              >
+                <Link href={"/sign-up"} onClick={closeMenu}>
                   {t("navbar.signUp")}
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           )}
         </aside>
@@ -193,10 +207,9 @@ const Navbar = () => {
               {/* User Dropdown */}
               <div
                 className={`absolute ${i18n.language === "ar" ? "left-0" : "right-0"} mt-3 w-52 rounded-xl border-gray bg-white shadow-lg transition-all duration-200 dark:bg-surfaceDark
-                  ${
-                    openUserMenu
-                      ? "opacity-100 translate-y-0"
-                      : "pointer-events-none opacity-0 -translate-y-2"
+                  ${openUserMenu
+                    ? "opacity-100 translate-y-0"
+                    : "pointer-events-none opacity-0 -translate-y-2"
                   }`}
               >
                 <div className="p-2">
@@ -212,16 +225,20 @@ const Navbar = () => {
 
                   <div className="my-2 h-px bg-gray-200 dark:bg-gray-700" />
 
-                  <Link
-                    href="/dashboard"
-                    className="block rounded-lg px-3 py-2 text-sm transition hover:bg-gray-100 dark:hover:bg-gray-800"
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="w-full justify-start rounded-lg px-3 py-2 text-sm text-text hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
-                    {t("navbar.dashboard")}
-                  </Link>
+                    <Link href="/dashboard">
+                      {t("navbar.dashboard")}
+                    </Link>
+                  </Button>
 
                   <Button
+                    variant="ghost"
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="mt-1 w-full text-left rounded-lg px-3 py-2 text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20"
+                    className="mt-1 w-full justify-start rounded-lg px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600"
                   >
                     {t("navbar.logout")}
                   </Button>
@@ -230,19 +247,24 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="hidden lg:flex items-center gap-2">
-              <Link href={"/sign-in"}>
-                <Button className="capitalize border px-6 py-1.5 transition hover:bg-black hover:text-white">
+              <Button
+                asChild
+                variant="outline"
+                className="capitalize"
+              >
+                <Link href={"/sign-in"}>
                   {t("navbar.signIn")}
-                </Button>
-              </Link>
-              <Link href={"/sign-up"}>
-                <Button
-                  bgColor="bg-black"
-                  className="capitalize px-6 py-1.5 font-medium text-white"
-                >
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="primary"
+                className="capitalize"
+              >
+                <Link href={"/sign-up"}>
                   {t("navbar.signUp")}
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           )}
         </div>
