@@ -5,6 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "../../../../prisma/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
+import { notifyAdminOnLogin } from "@/lib/notify-admin";
 
 // ===== NextAuth Configuration =====
 
@@ -74,7 +75,19 @@ export const authOptions: NextAuthOptions = {
         where: { id: user.id },
         data: { emailVerified: new Date() },
       });
+      await notifyAdminOnLogin({
+        name: user.name as string,
+        email: user.email as string,
+      });
     },
+    async signIn({ user }) {
+      if (user?.email) {
+        await notifyAdminOnLogin({
+          name: user.name as string,
+          email: user.email as string,
+        });
+      }
+    }
   },
 
   // ===== JWT & Session Callbacks =====
