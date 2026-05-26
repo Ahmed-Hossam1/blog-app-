@@ -84,20 +84,19 @@ const SearchPage = () => {
             {t("hero.subtitle")}
           </p>
 
-          <div className="mx-auto max-w-2xl relative">
-            <div className="relative flex items-center">
-              <FaSearch className="absolute left-4 text-gray-400 z-10" />
-              <Input
-                id="search"
-                name="search"
-                type="text"
-                placeholder={t("hero.placeholder")}
-                value={query}
-                autoFocus
-                onChange={(e) => setQuery(e.target.value.toLocaleLowerCase())}
-                className="w-full pl-12 py-4 text-lg shadow-lg border-transparent focus:border-primary rounded-xl"
-              />
-            </div>
+          <div className="mx-auto max-w-2xl">
+            <Input
+              id="search"
+              name="search"
+              type="text"
+              placeholder={t("hero.placeholder")}
+              value={query}
+              autoFocus
+              onChange={(e) => setQuery(e.target.value.toLocaleLowerCase())}
+              leftIcon={<FaSearch className="text-text-secondary/60 w-5 h-5" />}
+              Size="lg"
+              className="w-full shadow-lg"
+            />
           </div>
         </div>
       </div>
